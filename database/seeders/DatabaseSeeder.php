@@ -317,17 +317,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Settings\webSettings::create([
-            'school_apps' => 'ESEC Apps v1.0 ',
-            'school_name' => 'ESEC Academy',
-            'school_head' => 'Dr. Mulawarman Frietz, M.Kom',
-            'school_desc' => 'Salam sejahtera bagi seluruh mahasiswa dan dosen! Saya sebagai Rektor ESEC Academy dengan bangga menyambut Anda di portal Siakad kami. Platform ini adalah jembatan digital yang memudahkan akses dan meningkatkan efisiensi dalam proses akademik dan kemahasiswaan. Mari bersama-sama kita manfaatkan Siakad untuk menciptakan pengalaman belajar yang lebih baik dan membangun masa depan yang cerah bagi pendidikan kita.',
-            'school_link' => 'https://instagram.com/mjaya69703',
-            'school_email' => 'jaya.kusuma@internal-dev.id',
+            'school_apps' => 'si-idbc v1.0 ',
+            'school_name' => 'IDBC',
+            'school_head' => 'Ust. Junadi Alfan',
+            'school_desc' => 'Salam sejahtera bagi seluruh mahasiswa dan dosen! Saya sebagai Rektor IDBC dengan bangga menyambut Anda di portal Siakad kami. Platform ini adalah jembatan digital yang memudahkan akses dan meningkatkan efisiensi dalam proses akademik dan kemahasiswaan. Mari bersama-sama kita manfaatkan Siakad untuk menciptakan pengalaman belajar yang lebih baik dan membangun masa depan yang cerah bagi pendidikan kita.',
+            'school_link' => 'https://instagram.com/ziyad_fazyan',
+            'school_email' => 'idbc@internal-dev.id',
             'school_phone' => '+6287848799145',
-            'social_ig' => 'https://instagram.com/mjaya69703',
-            'social_fb' => 'https://facebook.com/kyouma052',
-            'social_in' => 'https://id.linkedin.com/in/mjaya69703',
-            'social_tw' => 'https://x.com/mjaya69703',
+            'social_ig' => 'https://instagram.com/ziyad_fazyan',
+            'social_fb' => 'https://facebook.com/ziyad-fazyan',
+            'social_in' => 'https://id.linkedin.com/in/ziyad-fazyan-292a07303',
+            'social_tw' => 'https://x.com/ziyad_fazyan',
         ]);
 
         $this->call([

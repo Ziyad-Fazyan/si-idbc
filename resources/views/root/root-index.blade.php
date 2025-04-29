@@ -78,7 +78,7 @@
                     <h4 class="card-title text-center">Sambutan Rektor</h4>
                     <img src="{{ asset('storage/images/default/default-profile.jpg') }}" class="card-img-top mb-2"
                         alt="">
-                    <p class="text-center">{{ $web->school_head }} <br>Rektor Utama Esec Academy</p>
+                    <p class="text-center">{{ $web->school_head }} <br>Rektor Utama IDBC</p>
                     <hr>
                     <p style="text-align: justify">{!! $web->school_desc !!}</p>
                 </div>
