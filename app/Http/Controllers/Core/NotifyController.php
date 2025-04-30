@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Core;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Auth;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
 use App\Helper\roleTrait;
-// SECTION AUTH
+use Illuminate\Support\Str;
 use App\Models\Notification;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class NotifyController extends Controller
 {

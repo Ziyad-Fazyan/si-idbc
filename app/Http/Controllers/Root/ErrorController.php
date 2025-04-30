@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// EKSTENSION
-use Alert;
-use Auth;
-// Models
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ErrorController extends Controller
 {

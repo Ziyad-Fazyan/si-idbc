@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers\Mahasiswa\Pages;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
 use App\Models\TicketSupport;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SupportController extends Controller
 {

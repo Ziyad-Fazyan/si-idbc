@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Services\Convert;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use Rap2hpoutre\FastExcel\FastExcel;
-// SECTION MODELS
 use App\Models\User;
-use App\Models\Mahasiswa;
 use App\Models\Dosen;
+use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Rap2hpoutre\FastExcel\FastExcel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ImportController extends Controller
 {

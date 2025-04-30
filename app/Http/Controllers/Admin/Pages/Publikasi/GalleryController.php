@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Pages\Publikasi;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-use Storage;
-// SECTION ADDONS EXTERNAL
-use Alert;
 use App\Helper\roleTrait;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
-use App\Models\User;
+use Illuminate\Support\Str;
 use App\Models\GalleryAlbum;
-use App\Models\GalleryPhotos;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GalleryController extends Controller
 {

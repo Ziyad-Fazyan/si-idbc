@@ -3,17 +3,7 @@
 namespace App\Http\Controllers\Services\Convert;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-use Carbon\Carbon;
-// SECTION ADDONS EXTERNAL
-use Alert;
 use Rap2hpoutre\FastExcel\FastExcel;
-// SECTION MODELS
 use App\Models\User;
 use App\Models\Mahasiswa;
 use App\Models\Dosen;

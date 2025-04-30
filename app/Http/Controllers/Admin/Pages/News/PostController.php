@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Pages\News;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
-use App\Models\newsCategory;
 use App\Models\newsPost;
-use App\Models\Settings\webSettings;
 use App\Helper\roleTrait;
+use Illuminate\Support\Str;
+use App\Models\newsCategory;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PostController extends Controller
 {

@@ -2,29 +2,20 @@
 
 namespace App\Http\Controllers\Root;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
 use App\Models\Fakultas;
 use App\Models\newsPost;
-use App\Models\newsCategory;
 use App\Models\KotakSaran;
-use App\Models\ProgramStudi;
-use App\Models\Settings\webSettings;
-use App\Models\Notification;
-use App\Models\GalleryAlbum;
 use App\Models\docsResource;
+use App\Models\GalleryAlbum;
+use App\Models\Notification;
+use App\Models\ProgramStudi;
+use Illuminate\Http\Request;
 use App\Models\ProgramKuliah;
+use App\Http\Controllers\Controller;
+use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {

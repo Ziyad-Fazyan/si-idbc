@@ -2,31 +2,16 @@
 
 namespace App\Http\Controllers\Core;
 
-use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use App\Helper\roleTrait;
 use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
+use App\Http\Controllers\Controller;
+use App\Models\Settings\webSettings;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-use Auth;
-use Str;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use CzProject\GitPhp\GitRepository;
-use CzProject\GitPhp\Git;
-// SECTION ADDONS EXTERNAL
-use GuzzleHttp\Client;
-use Alert;
-use App\Helper\roleTrait;
-// SECTION AUTH
-use App\Models\Settings\webSettings;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class WebSettingController extends Controller
 {

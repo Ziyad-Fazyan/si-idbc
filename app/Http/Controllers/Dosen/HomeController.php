@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\Dosen;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
-use Auth;
-use Hash;
-use Str;
-use PDF;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
-use App\Models\Dosen;
-use App\Models\FeedBack\FBPerkuliahan;
 use App\Models\Notification;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManager;
+use App\Models\FeedBack\FBPerkuliahan;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class HomeController extends Controller
 {

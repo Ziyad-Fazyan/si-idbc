@@ -3,15 +3,7 @@
 namespace App\Http\Controllers\Services\Ajax;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-// SECTION MODELS
+use Illuminate\Support\Facades\Auth;
 use App\Models\FeedBack\FBPerkuliahan;
 
 class GraphicController extends Controller

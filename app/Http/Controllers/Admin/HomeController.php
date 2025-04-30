@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// UNTUK PLUGIN TAMBAHAN
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Alert;
-use App\Helper\roleTrait;
-use Auth;
-use Hash;
-use Str;
-use App\Models\uAttendance;
 use Carbon\Carbon;
-use App\Models\Mahasiswa;
-use App\Models\Dosen;
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Balance;
+use App\Helper\roleTrait;
+use App\Models\Mahasiswa;
+use App\Models\uAttendance;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManager;
+use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class HomeController extends Controller
 {

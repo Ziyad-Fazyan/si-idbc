@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Mahasiswa;
 
-use App\Http\Controllers\Controller;
+use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
+use App\Http\Controllers\Controller;
+use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Coderflex\LaravelTurnstile\Rules\TurnstileCheck;
-use Coderflex\LaravelTurnstile\Facades\LaravelTurnstile;
-use Auth;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-// SECTION AUTH
-use App\Models\Mahasiswa;
-use App\Models\Settings\webSettings;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {

@@ -2,25 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Pages\Core;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// SECTION ADDONS SYSTEM
-use Illuminate\Support\Facades\File;
-use Auth;
-use Hash;
-use Str;
-// SECTION ADDONS EXTERNAL
-use Alert;
-use App\Helper\roleTrait;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-// SECTION MODELS
-use App\Models\ProgramStudi;
-use App\Models\MataKuliah;
-use App\Models\Kurikulum;
 use App\Models\Dosen;
+use App\Helper\roleTrait;
+use App\Models\Kurikulum;
+use App\Models\MataKuliah;
+use App\Models\ProgramStudi;
+use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
+use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MataKuliahController extends Controller
 {
