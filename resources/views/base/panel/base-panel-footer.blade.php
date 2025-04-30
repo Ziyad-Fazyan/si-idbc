@@ -4,7 +4,7 @@
         </p>
     </div>
     <div class="float-end">
-        <p>Crafted with by
+        <p>Crafted by
             <a href="https://www.instagram.com/ziyad_fazyan/">Ziyad Fazyan</a>
         </p>
     </div>
