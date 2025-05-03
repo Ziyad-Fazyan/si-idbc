@@ -1,9 +1,12 @@
+
+
+
 ## About Project
 Proyek Sistem Informasi Akademik (SIAKAD) ini bertujuan untuk menyediakan platform digital yang komprehensif dan efisien bagi perguruan tinggi dalam mengelola data akademik dan administratif. yang dibangun dengan Menggunakan framework Laravel 11, proyek ini dirancang untuk memenuhi kebutuhan modern dari proses pendidikan tinggi, dari manajemen mahasiswa dan staf pengajar hingga pengelolaan kurikulum dan penjadwalan.
 
 ## Feature List
 
-Pada proyek SiakadPT, terdapat 5 tingkat akses kontrol yang diperuntukkan bagi admin, 2 untuk dosen, dan 2 untuk mahasiswa. Namun, seiring dengan perkembangan proyek ini, diperkirakan jumlah akses kontrol akan terus bertambah seiring dengan peningkatan fitur dan kebutuhan pengguna. Hal ini menunjukkan fleksibilitas dan skalabilitas sistem yang dirancang untuk dapat menyesuaikan diri dengan tuntutan dan perubahan dalam lingkungan pendidikan tinggi secara efektif. 
+Pada proyek SiakadPT, terdapat 5 tingkat akses kontrol yang diperuntukkan bagi admin, 2 untuk dosen, dan 2 untuk mahasiswa. Namun, seiring dengan perkembangan proyek ini, diperkirakan jumlah akses kontrol akan terus bertambah seiring dengan peningkatan fitur dan kebutuhan pengguna. Hal ini menunjukkan fleksibilitas dan skalabilitas sistem yang dirancang untuk dapat menyesuaikan diri dengan tuntutan dan perubahan dalam lingkungan pendidikan tinggi secara efektif.
 
 Berikut kami informasikan Fitur Utama SiakadPT yang kami bangun.
 
@@ -31,14 +34,14 @@ Berikut kami informasikan Fitur Utama SiakadPT yang kami bangun.
 
 <b>Fitur Untuk Dosen</b>
 1. Dashboard Mahasiswa
-2. Kelola Profile ( Edit Data Pribadi &  Ubah Password) 
+2. Kelola Profile ( Edit Data Pribadi &  Ubah Password)
 3. Menu Akademik
     - Lihat Jadwal Perkuliahan ( Lihat Jadwal, Lihat Absen dan Lihat FeedBack )
     - Kelola Tugas Perkuliahan ( Kelola Tugas, Lihat Tugas Mahasiswa, Beri Skor Nilai)
 
 <b>Fitur Untuk Mahasiswa</b>
 1. Dashboard Mahasiswa
-2. Kelola Profile ( Edit Data Pribadi &  Ubah Password) 
+2. Kelola Profile ( Edit Data Pribadi &  Ubah Password)
 3. Menu Akademik
     - Lihat Jadwal Kuliah ( Absen Per Matakuliah & Beri FeedBack pada Dosen )
     - Lihat Tugas Kuliah ( Lihat Tugas & Pengumpulan Tugas Secara Online )
