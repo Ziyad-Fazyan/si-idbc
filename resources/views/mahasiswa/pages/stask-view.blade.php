@@ -15,8 +15,6 @@
     Halaman untuk melihat detail Tugas Kuliah
 @endsection
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.css">
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/compiled/css/form-editor-summernote.css">
 @endsection
 @section('content')
     <section class="section">
@@ -124,8 +122,4 @@
     </section>
 @endsection
 @section('custom-js')
-    <script src="{{ asset('dist') }}/assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/form-element-select.js"></script>
-    <script src="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.min.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/summernote.js"></script>
 @endsection

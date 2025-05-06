@@ -26,7 +26,6 @@
 </head>
 
 <body>
-    <script src="{{ asset('dist') }}/assets/static/js/initTheme.js"></script>
     <div id="app">
         <div id="sidebar">
             <div class="sidebar-wrapper active">
@@ -35,7 +34,6 @@
                         <div class="logo">
                             <a href="/"><img src="{{ asset('storage/images/' . $web->school_logo) }}"
                                     alt="Logo" srcset="" style="max-height:100px;"></a>
-                            {{-- <a href="index.html"><img src="{{ asset('dist') }}/assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a> --}}
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

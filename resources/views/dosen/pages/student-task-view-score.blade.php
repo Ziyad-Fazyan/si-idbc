@@ -15,8 +15,6 @@
     Halaman untuk melihat detail Tugas Kuliah Mahasiswa
 @endsection
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.css">
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/compiled/css/form-editor-summernote.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4-dark.css" rel="stylesheet">
 @endsection
 @section('content')
@@ -94,8 +92,4 @@
     </section>
 @endsection
 @section('custom-js')
-    <script src="{{ asset('dist') }}/assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/form-element-select.js"></script>
-    <script src="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.min.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/summernote.js"></script>
 @endsection

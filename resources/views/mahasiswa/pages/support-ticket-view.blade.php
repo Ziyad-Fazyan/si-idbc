@@ -12,9 +12,6 @@
     {{ route('mahasiswa.support.ticket-index') }}
 @endsection
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.css">
-
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/compiled/css/form-editor-summernote.css">
 @endsection
 @section('subdesc')
     Halaman untuk melihat Ticket #{{ $ticket->code }}
@@ -151,8 +148,6 @@
     </section>
 @endsection
 @section('custom-js')
-    <script src="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.min.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/summernote.js"></script>
     <script>
         let autoRefreshTimer; // Timer untuk auto-refresh
 

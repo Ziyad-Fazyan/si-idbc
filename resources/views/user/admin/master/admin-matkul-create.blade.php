@@ -162,6 +162,4 @@
     </section>
 @endsection
 @section('custom-js')
-    <script src="{{ asset('dist') }}/assets/extensions/tinymce/tinymce.min.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/tinymce.js"></script>
 @endsection

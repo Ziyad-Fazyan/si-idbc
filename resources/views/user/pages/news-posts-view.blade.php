@@ -18,8 +18,6 @@
     Halaman untuk mengelola Postingan
 @endsection
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.css">
-    <link rel="stylesheet" href="{{ asset('dist') }}/assets/compiled/css/form-editor-summernote.css">
     <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
     <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
 
@@ -153,8 +151,6 @@
             reader.readAsDataURL(event.target.files[0]);
         };
     </script>
-    <script src="{{ asset('dist') }}/assets/extensions/summernote/summernote-lite.min.js"></script>
-    <script src="{{ asset('dist') }}/assets/static/js/pages/summernote.js"></script>
     <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
     <script src="https://unpkg.com/@wangeditor/editor@latest/dist/i18n/en.js"></script> <!-- Tambahkan ini -->
     {{-- <script>
