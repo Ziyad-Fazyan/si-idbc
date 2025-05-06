@@ -1,72 +1,100 @@
-        <!-- Bagian menu untuk pengguna yang telah login -->
-        {{-- HAK AKSES WEB ADMINISTRATOR --}}
-        <li class="sidebar-item {{ Route::is($prefix . 'home-index', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'home-index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-home"></i>
-                <span>Home</span>
-            </a>
-        </li>
-        <li class="sidebar-item {{ Route::is($prefix . 'home-profile', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'home-profile') }}" class='sidebar-link'>
-                <i class="fa-solid fa-user-edit"></i>
-                <span>Profile User</span>
-            </a>
-        </li>
+<!-- Bagian menu untuk pengguna yang telah login -->
+{{-- HAK AKSES WEB ADMINISTRATOR --}}
+<li class="list-none {{ Route::is($prefix . 'home-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'home-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-home w-5 text-center mr-3"></i>
+        <span>Home</span>
+    </a>
+</li>
+<li class="list-none {{ Route::is($prefix . 'home-profile', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'home-profile') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-user-edit w-5 text-center mr-3"></i>
+        <span>Profile User</span>
+    </a>
+</li>
 
-        <li class="sidebar-title">Menu Rutinitas</li>
-        <li class="sidebar-item  {{ Route::is($prefix . 'presensi.absen-harian', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'presensi.absen-harian') }}" class='sidebar-link'>
-                <i class="fa-solid fa-calendar-check"></i>
-                <span>Absen Harian</span>
-            </a>
-        </li>
-        <li
-            class="sidebar-item  {{ Route::is($prefix . 'presensi.absen-izin-cuti', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'presensi.absen-izin-cuti') }}" class='sidebar-link'>
-                <i class="fa-solid fa-calendar-xmark"></i>
-                <span>Absen Izin & Cuti</span>
-            </a>
-        </li>
-        <li class="sidebar-item  {{ Route::is($prefix . 'support.ticket-index', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'support.ticket-index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-ticket"></i>
-                <span>Support Ticket</span>
-            </a>
-        </li>
+<li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Rutinitas</li>
+<li class="list-none {{ Route::is($prefix . 'presensi.absen-harian', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'presensi.absen-harian') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-calendar-check w-5 text-center mr-3"></i>
+        <span>Absen Harian</span>
+    </a>
+</li>
+<li class="list-none {{ Route::is($prefix . 'presensi.absen-izin-cuti', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'presensi.absen-izin-cuti') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-calendar-xmark w-5 text-center mr-3"></i>
+        <span>Absen Izin & Cuti</span>
+    </a>
+</li>
+<li class="list-none {{ Route::is($prefix . 'support.ticket-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'support.ticket-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-ticket w-5 text-center mr-3"></i>
+        <span>Support Ticket</span>
+    </a>
+</li>
 
-        <li class="sidebar-title">Menu Publikasi</li>
-        <li class="sidebar-item  {{ Route::is($prefix . 'system.notify-index', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'system.notify-index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-bell"></i>
-                <span>Data Pemberitahuan</span>
-            </a>
-        </li>
+<li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Publikasi</li>
+<li class="list-none {{ Route::is($prefix . 'system.notify-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'system.notify-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-bell w-5 text-center mr-3"></i>
+        <span>Data Pemberitahuan</span>
+    </a>
+</li>
 
+<!-- Dropdown Menu -->
+<li class="list-none {{ Route::is($prefix . 'news.*', request()->path()) ? 'border-l-3 border-green-600' : '' }}">
+    <button type="button" class="flex items-center justify-between w-full px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 focus:outline-none" onclick="toggleSubmenu(this)">
+        <div class="flex items-center">
+            <i class="fa-solid fa-newspaper w-5 text-center mr-3"></i>
+            <span>Data Berita</span>
+        </div>
+        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+    </button>
+    <ul class="pl-12 mt-1 space-y-1 max-h-0 overflow-hidden transition-all duration-300">
+        <li class="{{ Route::is($prefix . 'news.post-*', request()->path()) ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+            <a href="{{ route($prefix . 'news.post-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Berita</a>
+        </li>
+        <li class="{{ Route::is($prefix . 'news.category-*', request()->path()) ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+            <a href="{{ route($prefix . 'news.category-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Kategori Berita</a>
+        </li>
+    </ul>
+</li>
 
-        <li class="sidebar-item has-sub {{ Route::is($prefix . 'news.*', request()->path()) ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-newspaper"></i>
-                <span>Data Berita</span>
-            </a>
-            <ul class="submenu">
-                <li class="submenu-item {{ Route::is($prefix . 'news.post-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route($prefix . 'news.post-index') }}" class="submenu-link">Berita</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is($prefix . 'news.category-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route($prefix . 'news.category-index') }}" class="submenu-link">Kategori Berita</a>
-                </li>
-            </ul>
-        </li>
-        <li class="sidebar-item  {{ Route::is($prefix . 'publish.album-index', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'publish.album-index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-images"></i>
-                <span>Data Album Foto</span>
-            </a>
-        </li>
-        <li class="sidebar-item  {{ Route::is($prefix . 'document-index', request()->path()) ? 'active' : '' }}">
-            <a href="{{ route($prefix . 'document-index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-file-pdf"></i>
-                <span>Data Document</span>
-            </a>
-        </li>
+<li class="list-none {{ Route::is($prefix . 'publish.album-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'publish.album-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-images w-5 text-center mr-3"></i>
+        <span>Data Album Foto</span>
+    </a>
+</li>
+<li class="list-none {{ Route::is($prefix . 'document-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+    <a href="{{ route($prefix . 'document-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+        <i class="fa-solid fa-file-pdf w-5 text-center mr-3"></i>
+        <span>Data Document</span>
+    </a>
+</li>
+
+<script>
+function toggleSubmenu(element) {
+    // Toggle the submenu visibility
+    const submenu = element.nextElementSibling;
+    const icon = element.querySelector('.fa-chevron-down');
+    
+    if (submenu.style.maxHeight === '0px' || submenu.style.maxHeight === '') {
+        submenu.style.maxHeight = submenu.scrollHeight + 'px';
+        icon.classList.add('rotate-180');
+    } else {
+        submenu.style.maxHeight = '0px';
+        icon.classList.remove('rotate-180');
+    }
+}
+
+// Auto-expand submenu if it contains active item
+document.addEventListener('DOMContentLoaded', function() {
+    const activeSubmenuItem = document.querySelector('.submenu .active');
+    if (activeSubmenuItem) {
+        const parentSubmenu = activeSubmenuItem.closest('ul');
+        const parentButton = parentSubmenu.previousElementSibling;
+        toggleSubmenu(parentButton);
+    }
+});
+</script>

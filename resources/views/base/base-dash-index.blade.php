@@ -1,121 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('menu') - {{ $web->school_name }}</title>
-    @php
-        $web = \App\Models\Settings\WebSettings::where('id', 1)->first();
-    @endphp
-
-    @include('base.panel.base-panel-header-script')
-
-    <style>
-        @media screen and (max-width: 767px) {
-            .footer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                /* Tulisan menjadi rata tengah secara horizontal */
-            }
-
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
-<body>
-    <div id="app">
-        <div id="sidebar">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="/"><img src="{{ asset('storage/images/' . $web->school_logo) }}"
-                                    alt="Logo" srcset="" style="max-height:100px;"></a>
-                        </div>
-                        <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
-                                height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
-                                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
-                                        opacity=".3"></path>
-                                    <g transform="translate(-210 -1)">
-                                        <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
-                                        <circle cx="220.5" cy="11.5" r="4"></circle>
-                                        <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                            <div class="form-check form-switch fs-6">
-                                <input class="form-check-input  me-0" type="checkbox" id="toggle-dark"
-                                    style="cursor: pointer">
-                                <label class="form-check-label"></label>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                aria-hidden="true" role="img" class="iconify iconify--mdi" width="20"
-                                height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i
-                                    class="bi bi-x bi-middle"></i></a>
-                        </div>
+<body class="bg-gray-50 font-[Poppins]">
+    <div class="min-h-screen flex flex-col">
+        <!-- Sidebar overlay for mobile -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-60 z-20 hidden lg:hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-lg z-30 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full overflow-hidden flex flex-col">
+            <!-- Sidebar Header -->
+            <div class="flex items-center justify-between p-4 bg-white text-gray-800 border-b shadow-sm">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <img src="{{ asset('storage/images/' . $web->school_logo) }}" alt="Al-Wafa' Logo" class="h-12 w-auto border border-green-200 shadow object-contain rounded-md p-1 bg-white">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-lg tracking-tight text-gray-800">{{ $web->school_name }}</span>
+                        <span class="text-sm text-green-600 font-medium">Islamic School</span>
                     </div>
                 </div>
-                <div class="sidebar-menu">
+            </div>            
+            
+            <!-- Sidebar Menu -->
+            <div class="py-4 overflow-y-auto flex-1 px-3">
+                <div class="space-y-1">
                     @include('base.panel.base-panel-sidebar')
-
+                </div>
+            </div>
+            
+            <!-- Sidebar Footer Info -->
+            <div class="p-4 border-t border-gray-200 bg-green-50">
+                <div class="flex items-center px-3 py-2 rounded-lg text-green-700 text-sm">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <span class="truncate">{{ $web->school_name }}</span>
                 </div>
             </div>
         </div>
-        <div id="main" class='layout-navbar navbar-fixed'>
-            <header>
-                @include('base.panel.base-panel-header')
-            </header>
-            <div id="main-content">
-
-                <div class="page-heading">
-                    <div class="page-title">
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>@yield('submenu')</h3>
-                                <p class="text-subtitle text-muted">@yield('subdesc')</p>
-                            </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
-                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="@yield('urlmenu')">@yield('menu')</a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">@yield('submenu')</li>
-                                    </ol>
-                                </nav>
-                            </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 lg:ml-64 transition-all duration-300">
+            <!-- Navbar -->
+            <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <!-- Left side - Mobile menu button -->
+                        <div class="flex items-center">
+                            <button onclick="toggleSidebar()" class="p-2 rounded-lg text-gray-500 hover:text-green-600 hover:bg-green-50 transition-colors duration-200 lg:hidden focus:outline-none">
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Right side navbar items -->
+                        <div class="flex items-center">
+                            @include('base.panel.base-panel-header')
                         </div>
                     </div>
-
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="p-4 md:p-6 transition-opacity duration-300 opacity-100">
+                <!-- Page Title and Breadcrumbs -->
+                <div class="mb-6 bg-white rounded-lg shadow-sm p-4 border-l-4 border-green-600">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <h1 class="text-2xl font-bold text-gray-800">@yield('submenu')</h1>
+                            <p class="text-sm text-gray-500 mt-1">@yield('subdesc')</p>
+                        </div>
+                        
+                        <!-- Breadcrumbs -->
+                        <nav class="text-sm bg-gray-50 px-3 py-2 rounded-lg">
+                            <ol class="flex items-center space-x-2">
+                                <li><a href="@yield('urlmenu')" class="text-green-600 hover:text-green-800 font-medium">@yield('menu')</a></li>
+                                <li class="text-gray-500 flex items-center">
+                                    <svg class="w-3 h-3 mx-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>@yield('submenu')</span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                
+                <!-- Page Content -->
+                <div class="bg-white rounded-lg shadow-md p-4 md:p-6 border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                     @include('sweetalert::alert')
                     @yield('content')
-
                 </div>
-
-            </div>
+            </main>
+            
+            <!-- Footer -->
             <footer>
-                @include('base.panel.base-panel-footer')
+                        @include('base.panel.base-panel-footer')
             </footer>
         </div>
     </div>
-
-    @include('base.panel.base-panel-footer-script')
-
+    
+    <script>
+        // Sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            // Toggle sidebar
+            sidebar.classList.toggle('-translate-x-full');
+            
+            // Handle overlay
+            if (sidebar.classList.contains('-translate-x-full')) {
+                overlay.classList.add('hidden');
+            } else {
+                overlay.classList.remove('hidden');
+            }
+        }
+        
+        // Dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle dropdown toggles
+            document.querySelectorAll('.dropdown-container').forEach(dropdown => {
+                const button = dropdown.querySelector('.dropdown-toggle');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                
+                if (button && menu) {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(otherMenu => {
+                            if (otherMenu !== menu && !otherMenu.classList.contains('hidden')) {
+                                otherMenu.classList.add('hidden');
+                            }
+                        });
+                        
+                        // Toggle current dropdown
+                        menu.classList.toggle('hidden');
+                    });
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 </body>
-
 </html>

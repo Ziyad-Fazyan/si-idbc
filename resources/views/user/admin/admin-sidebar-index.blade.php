@@ -1,149 +1,289 @@
-        {{-- MENU KHUSUS UNTUK FINANCE DEPARTEMENT --}}
-        <li class="sidebar-title">Menu Finansial</li>
-        <li class="sidebar-item has-sub {{ Route::is('web-admin.finance.*', request()->path()) ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-vault"></i>
+<div class="sidebar-menu">
+    <!-- Home and Profile Links -->
+    <li class="list-none {{ Route::is($prefix . 'home-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'home-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-home w-5 text-center mr-3"></i>
+            <span>Home</span>
+        </a>
+    </li>
+    <li class="list-none {{ Route::is($prefix . 'home-profile', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'home-profile') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-user-edit w-5 text-center mr-3"></i>
+            <span>Profile User</span>
+        </a>
+    </li>
+
+    <!-- Routine Menu Section -->
+    <li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Rutinitas</li>
+    <li class="list-none {{ Route::is($prefix . 'presensi.absen-harian', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'presensi.absen-harian') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-calendar-check w-5 text-center mr-3"></i>
+            <span>Absen Harian</span>
+        </a>
+    </li>
+    <li class="list-none {{ Route::is($prefix . 'presensi.absen-izin-cuti', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'presensi.absen-izin-cuti') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-calendar-xmark w-5 text-center mr-3"></i>
+            <span>Absen Izin & Cuti</span>
+        </a>
+    </li>
+    <li class="list-none {{ Route::is($prefix . 'support.ticket-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'support.ticket-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-ticket w-5 text-center mr-3"></i>
+            <span>Support Ticket</span>
+        </a>
+    </li>
+
+    <!-- Financial Menu Section -->
+    <li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Finansial</li>
+
+    <!-- Financial Data Dropdown -->
+    @php
+        $financeActive = Str::startsWith(request()->path(), 'web-admin/finance');
+    @endphp
+    <li class="list-none">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $financeActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-finance">
+            <div class="flex items-center">
+                <i class="fa-solid fa-vault w-5 text-center mr-3"></i>
                 <span>Data Keuangan</span>
-            </a>
-            <ul class="submenu">
-                <li
-                    class="submenu-item {{ Route::is('web-admin.finance.tagihan-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.finance.tagihan-index') }}" class="submenu-link">Data Tagihan</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.finance.pembayaran-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.finance.pembayaran-index') }}" class="submenu-link">Data Pembayaran</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.finance.keuangan-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.finance.keuangan-index') }}" class="submenu-link">Data Keuangan</a>
-                </li>
-            </ul>
-        </li>
-        <li class="sidebar-item has-sub {{ Route::is('web-admin.approval.*', request()->path()) ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-finance" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $financeActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.finance.tagihan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.finance.tagihan-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Tagihan</a>
+            </li>
+            <li class="{{ Route::is('web-admin.finance.pembayaran-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.finance.pembayaran-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Pembayaran</a>
+            </li>
+            <li class="{{ Route::is('web-admin.finance.keuangan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.finance.keuangan-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Keuangan</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Approval Data Dropdown -->
+    @php
+        $approvalActive = Str::startsWith(request()->path(), 'web-admin/approval');
+    @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $approvalActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-approval">
+            <div class="flex items-center">
+                <i class="fa-solid fa-file-signature w-5 text-center mr-3"></i>
                 <span>Data Approval</span>
-            </a>
-            <ul class="submenu">
-                <li
-                    class="submenu-item {{ Route::is($prefix . 'approval.absen-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route($prefix . 'approval.absen-index') }}" class="submenu-link">Approval Absensi</a>
-                </li>
-            </ul>
-        </li>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-approval" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $approvalActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is($prefix . 'approval.absen-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route($prefix . 'approval.absen-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Approval Absensi</a>
+            </li>
+        </ul>
+    </li>
 
+    <!-- Information Center Menu Section -->
+    <li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Pusat Informasi</li>
 
-        {{-- MENU KHUSUS UNTUK WEB ADMINISTRATOR --}}
-        <li class="sidebar-title">Menu Pusat Informasi</li>
-        <li class="sidebar-item has-sub {{ Route::is('web-admin.workers.*', request()->path()) ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-users"></i>
+    <!-- User Data Dropdown -->
+    @php
+        $penggunaActive = Str::startsWith(request()->path(), 'web-admin/workers');
+    @endphp
+    <li class="list-none">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $penggunaActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-pengguna">
+            <div class="flex items-center">
+                <i class="fa-solid fa-users w-5 text-center mr-3"></i>
                 <span>Data Pengguna</span>
-            </a>
-            <ul class="submenu">
-                <li
-                    class="submenu-item {{ Route::is('web-admin.workers.admin-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.workers.admin-index') }}" class="submenu-link">Data Admin</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.workers.staff-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.workers.staff-index') }}" class="submenu-link">Data Pegawai</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.workers.lecture-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.workers.lecture-index') }}" class="submenu-link">Data Dosen</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.workers.student-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.workers.student-index') }}" class="submenu-link">Data Mahasiswa</a>
-                </li>
-            </ul>
-        </li>
-        <li
-            class="sidebar-item has-sub {{ Route::is('web-admin.master.taka-*', 'web-admin.master.fakultas-*', 'web-admin.master.pstudi-*') ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-school"></i>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-pengguna" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $penggunaActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.workers.admin-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.workers.admin-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Admin</a>
+            </li>
+            <li class="{{ Route::is('web-admin.workers.staff-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.workers.staff-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Pegawai</a>
+            </li>
+            <li class="{{ Route::is('web-admin.workers.lecture-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.workers.lecture-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Dosen</a>
+            </li>
+            <li class="{{ Route::is('web-admin.workers.student-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.workers.student-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Mahasiswa</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Academic Data Dropdown -->
+    @php
+        $akademikActive =
+            Route::is('web-admin.master.taka-*') ||
+            Route::is('web-admin.master.fakultas-*') ||
+            Route::is('web-admin.master.pstudi-*');
+    @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $akademikActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-akademik">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
                 <span>Data Akademik</span>
-            </a>
-            <ul class="submenu">
-                <li class="submenu-item {{ Route::is('web-admin.master.taka-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.taka-index') }}" class="submenu-link">Data Tahun Akademik</a>
-                </li>
-                <li class="submenu-item {{ Route::is('web-admin.master.fakultas-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.fakultas-index') }}" class="submenu-link">Data Fakultas</a>
-                </li>
-                <li class="submenu-item {{ Route::is('web-admin.master.pstudi-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.pstudi-index') }}" class="submenu-link">Data Program Studi</a>
-                </li>
-            </ul>
-        </li>
-        <li class="sidebar-item has-sub {{ Route::is('web-admin.master.proku-*') ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-school"></i>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-akademik" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $akademikActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.master.taka-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.taka-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Tahun Akademik</a>
+            </li>
+            <li class="{{ Route::is('web-admin.master.fakultas-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.fakultas-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Fakultas</a>
+            </li>
+            <li class="{{ Route::is('web-admin.master.pstudi-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.pstudi-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Program Studi</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- PMB Data Dropdown -->
+    @php $pmbActive = Route::is('web-admin.master.proku-*'); @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $pmbActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-pmb">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
                 <span>Data PMB</span>
-            </a>
-            <ul class="submenu">
-                <li class="submenu-item {{ Route::is('web-admin.master.proku-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.proku-index') }}" class="submenu-link">Data Program Kuliah</a>
-                </li>
-            </ul>
-        </li>
-        <li
-            class="sidebar-item has-sub {{ Route::is('web-admin.master.kurikulum-*', 'web-admin.master.kelas-*', 'web-admin.master.matkul-*', 'web-admin.master.jadkul-*') ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-school"></i>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-pmb" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $pmbActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.master.proku-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.proku-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Program Kuliah</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- KBM Data Dropdown -->
+    @php
+        $kbmActive =
+            Route::is('web-admin.master.kurikulum-*') ||
+            Route::is('web-admin.master.kelas-*') ||
+            Route::is('web-admin.master.matkul-*') ||
+            Route::is('web-admin.master.jadkul-*');
+    @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $kbmActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-kbm">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
                 <span>Data KBM</span>
-            </a>
-            <ul class="submenu">
-                <li class="submenu-item {{ Route::is('web-admin.master.kurikulum-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.kurikulum-index') }}" class="submenu-link">Data Kurikulum</a>
-                </li>
-                <li class="submenu-item {{ Route::is('web-admin.master.kelas-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.kelas-index') }}" class="submenu-link">Data Kelas</a>
-                </li>
-                <li class="submenu-item {{ Route::is('web-admin.master.matkul-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.matkul-index') }}" class="submenu-link">Data Mata Kuliah</a>
-                </li>
-                <li class="submenu-item {{ Route::is('web-admin.master.jadkul-*') ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.master.jadkul-index') }}" class="submenu-link">Data Jadwal Kuliah</a>
-                </li>
-            </ul>
-        </li>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-kbm" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $kbmActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.master.kurikulum-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.kurikulum-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Kurikulum</a>
+            </li>
+            <li class="{{ Route::is('web-admin.master.kelas-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.kelas-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Kelas</a>
+            </li>
+            <li class="{{ Route::is('web-admin.master.matkul-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.matkul-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Mata Kuliah</a>
+            </li>
+            <li class="{{ Route::is('web-admin.master.jadkul-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.master.jadkul-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Jadwal Kuliah</a>
+            </li>
+        </ul>
+    </li>
 
-        <li class="sidebar-item has-sub {{ Route::is('web-admin.inventory.*', request()->path()) ? 'active' : '' }}">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-school"></i>
+    <!-- Inventory Data Dropdown -->
+    @php $inventoryActive = Str::startsWith(request()->path(), 'web-admin/inventory'); @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $inventoryActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-inventory">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
                 <span>Data Inventaris</span>
-            </a>
-            <ul class="submenu">
-                <li
-                    class="submenu-item {{ Route::is('web-admin.inventory.gedung-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.inventory.gedung-index') }}" class="submenu-link">Data Gedung</a>
-                </li>
-                <li
-                    class="submenu-item {{ Route::is('web-admin.inventory.ruang-*', request()->path()) ? 'active' : '' }}">
-                    <a href="{{ route('web-admin.inventory.ruang-index') }}" class="submenu-link">Data Ruangan</a>
-                </li>
-            </ul>
-        </li>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-inventory" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $inventoryActive ? '' : 'hidden' }}">
+            <li class="{{ Route::is('web-admin.inventory.gedung-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.inventory.gedung-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Gedung</a>
+            </li>
+            <li class="{{ Route::is('web-admin.inventory.ruang-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.inventory.ruang-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Ruangan</a>
+            </li>
+        </ul>
+    </li>
+</div>
 
-        {{-- <li class="sidebar-title">Talent Management</li>
-        <li class="sidebar-item has-sub">
-            <a href="#" class='sidebar-link'>
-                <i class="fa-solid fa-list-check"></i>
-                <span>Report Manager</span>
-            </a>
-            <ul class="submenu">
-                <li class="submenu-item">
-                    <a href="#" class="submenu-link">Daily Report</a>
-                </li>
-                <li class="submenu-item">
-                    <a href="#" class="submenu-link">Monthly Report</a>
-                </li>
-                <li class="submenu-item">
-                    <a href="#" class="submenu-link">Presence Report</a>
-                </li>
-            </ul>
-        </li> --}}
-        {{-- END -- MENU KHUSUS UNTUK WEB ADMINISTRATOR --}}
+<style>
+    /* Dropdown Animation Styles */
+    .dropdown-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        padding-left: 0.5rem;
+    }
+
+    .dropdown-menu:not(.hidden) {
+        max-height: 500px;
+        transition: max-height 0.3s ease-in;
+    }
+
+    .dropdown-toggle .fa-chevron-down {
+        transition: transform 0.3s ease;
+    }
+
+    .dropdown-toggle.active .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+
+    /* Active state for dropdown parent when child is active */
+    .list-none.active {
+        border-left: 3px solid #059669;
+        background-color: #f0fdf4;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle dropdown toggle clicks
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const targetDropdown = document.getElementById(targetId);
+            const icon = this.querySelector('.fa-chevron-down');
+            
+            // Toggle dropdown visibility
+            targetDropdown.classList.toggle('hidden');
+            
+            // Toggle icon rotation
+            if (targetDropdown.classList.contains('hidden')) {
+                icon.classList.remove('rotate-180');
+                this.classList.remove('active');
+            } else {
+                icon.classList.add('rotate-180');
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Auto-expand dropdown if it contains active item
+    const activeDropdownItems = document.querySelectorAll('.dropdown-menu li.bg-green-50');
+    
+    activeDropdownItems.forEach(item => {
+        const parentDropdown = item.closest('.dropdown-menu');
+        if (parentDropdown) {
+            parentDropdown.classList.remove('hidden');
+            const toggle = document.querySelector(`.dropdown-toggle[data-target="${parentDropdown.id}"]`);
+            if (toggle) {
+                toggle.querySelector('.fa-chevron-down').classList.add('rotate-180');
+                toggle.classList.add('active');
+            }
+        }
+    });
+});
+</script>

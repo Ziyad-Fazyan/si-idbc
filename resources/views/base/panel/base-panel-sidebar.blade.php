@@ -1,54 +1,71 @@
-<ul class="menu">
+<div class="space-y-2">
     @guest
         <!-- Bagian menu ini akan disembunyikan ketika pengguna adalah "guest" -->
     @else
-        @include('user.sidebar-index')
+        <!-- User Menu Section -->
+        <div class="py-1">
+            <div class="text-xs font-semibold uppercas text-gray-500 mt-5 mb-2 ml-3">MENU UTAMA</div>
+            @include('user.sidebar-index')
+        </div>
+
+        <!-- Role-based Menu Sections -->
         @if (Auth::user()->raw_type === 0)
-            {{-- MENU KHUSUS UNTUK WEB ADMINISTRATOR --}}
-            @include('user.admin.admin-sidebar-index')
-            {{-- END -- MENU KHUSUS UNTUK WEB ADMINISTRATOR --}}
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">ADMINISTRATOR</div>
+                @include('user.admin.admin-sidebar-index')
+            </div>
         @elseif(Auth::user()->raw_type === 1)
-            {{-- MENU KHUSUS UNTUK DEPARTEMENT FINANCE --}}
-            @include('user.finance.home-sidebar')
-            {{-- END -- MENU KHUSUS UNTUK DEPARTEMENT FINANCE --}}
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">KEUANGAN</div>
+                @include('user.finance.home-sidebar')
+            </div>
         @elseif(Auth::user()->raw_type === 2)
-            {{-- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
-            @include('user.officer.home-sidebar')
-            {{-- END -- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">OFFICER</div>
+                @include('user.officer.home-sidebar')
+            </div>
         @elseif(Auth::user()->raw_type === 3)
-            {{-- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
-            @include('user.academic.home-sidebar')
-            {{-- END -- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">AKADEMIK</div>
+                @include('user.academic.home-sidebar')
+            </div>
         @elseif(Auth::user()->raw_type === 5)
-            {{-- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
-            @include('user.support.home-sidebar')
-            {{-- END -- MENU KHUSUS UNTUK DEPARTEMENT OFFICER --}}
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">SUPPORT</div>
+                @include('user.support.home-sidebar')
+            </div>
         @endif
     @endguest
 
     <!-- Menu untuk mahasiswa -->
     @auth('mahasiswa')
-        @include('mahasiswa.sidebar-index')
+        <div class="py-1">
+            <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">MAHASISWA</div>
+            @include('mahasiswa.sidebar-index')
+        </div>
     @endauth
 
     <!-- Menu untuk dosen -->
     @auth('dosen')
-        @include('dosen.home-sidebar')
+        <div class="py-1">
+            <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">DOSEN</div>
+            @include('dosen.home-sidebar')
+        </div>
     @endauth
 
-
+    <!-- Special Admin Menu -->
     @guest
     @else
         @if (Auth::user()->raw_type === 0)
-            <li class="sidebar-title">Special Menu</li>
-
-            <li class="sidebar-item  {{ Route::is($prefix . 'system.setting-index', request()->path()) ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'system.setting-index') }}" class='sidebar-link'>
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Web Settings</span>
-                </a>
-            </li>
+            <div class="py-1 mt-2">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">PENGATURAN</div>
+                <div class="{{ Route::is($prefix . 'system.setting-index', request()->path()) ? 'bg-green-50 border-l-4 border-green-600 font-semibold text-green-700' : '' }}">
+                    <a href="{{ route($prefix . 'system.setting-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-4 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+                        <i class="fa-solid fa-gear w-5 text-center mr-3"></i>
+                        <span>Pengaturan Web</span>
+                    </a>
+                </div>
+            </div>
         @endif
     @endguest
-
-</ul>
+</div>
