@@ -27,6 +27,11 @@
         nyoba doang
     </p>
 </div>
+<div>
+    <p>
+        adu
+    </p>
+</div>
     <div id="app">
         <div id="main" class="layout-horizontal">
             <header class="mb-5">
