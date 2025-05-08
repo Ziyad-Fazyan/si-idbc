@@ -14,15 +14,72 @@
     Halaman untuk melihat daftar ticket support
 @endsection
 @section('content')
-    <section class="content">
-        <div class="row">
-            <div class="col-lg-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Daftar Ticket Support</h4>
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-[#0C6E71] px-6 py-4 border-b border-[#E4E2DE]">
+                    <h1 class="text-2xl font-semibold text-white">Daftar Ticket Support</h1>
+                </div>
+                
+                <!-- Card Body -->
+                <div class="p-6 bg-white">
+                    <!-- Table (Placeholder - akan diisi dengan data) -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-[#E4E2DE]">
+                            <thead class="bg-[#F3EFEA]">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">ID</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Judul</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-[#E4E2DE]">
+                                <!-- Placeholder row -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">#12345</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">Masalah login</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Selesai</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">
+                                        <button class="text-[#FF6B35] hover:text-[#e65a2b] font-medium">Detail</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination (Placeholder) -->
+                    <div class="mt-6 flex items-center justify-between">
+                        <div class="text-sm text-[#3B3B3B]">
+                            Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">10</span> dari <span class="font-medium">24</span> hasil
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border border-[#E4E2DE] rounded text-sm text-[#3B3B3B] bg-white hover:bg-[#F3EFEA]">Sebelumnya</button>
+                            <button class="px-3 py-1 border border-[#E4E2DE] rounded text-sm text-white bg-[#0C6E71] hover:bg-[#0a5c5f]">1</button>
+                            <button class="px-3 py-1 border border-[#E4E2DE] rounded text-sm text-[#3B3B3B] bg-white hover:bg-[#F3EFEA]">Selanjutnya</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- JavaScript untuk interaktivitas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contoh interaksi: toggle detail ticket
+            document.querySelectorAll('[data-toggle="ticket-detail"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const ticketId = this.getAttribute('data-ticket-id');
+                    // Implementasi logika untuk menampilkan detail ticket
+                    console.log(Menampilkan detail ticket ${ticketId});
+                });
+            });
+            
+            // Tambahkan interaksi lainnya sesuai kebutuhan
+        });
+    </script>
 @endsection
