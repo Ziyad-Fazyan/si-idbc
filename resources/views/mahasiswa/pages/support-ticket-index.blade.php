@@ -21,74 +21,99 @@
     </style>
 @endsection
 @section('content')
-    <section class="content">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                    @yield('menu')
-                    <div class="">
-                        {{-- <a href="{{ route('web-admin.master.tagihan-index') }}" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i></a> --}}
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-[#0C6E71] px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-white">
+                        @yield('menu')
+                    </h2>
+                    <div class="flex space-x-2">
+                        <!-- Empty for now, but kept for potential future buttons -->
                     </div>
-                </h5>
+                </div>
             </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1" style="width: 100%;">
-                    <thead>
+            
+            <div class="p-4 overflow-x-auto">
+                <table class="min-w-full divide-y divide-[#E4E2DE]">
+                    <thead class="bg-[#E4E2DE]">
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Prioritas</th>
-                            <th class="text-center">Departement</th>
-                            <th class="text-center subject-column">Subject</th> <!-- Menambahkan class "subject-column" -->
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Last Reply</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">#</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Prioritas</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Departement</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Subject</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Last Reply</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bg-white divide-y divide-[#E4E2DE]">
                         @foreach ($ticket as $key => $item)
-                            <tr>
-                                <td data-label="Number">{{ ++$key }}</td>
-                                <td data-label="Prioritas">
+                            <tr class="hover:bg-[#F3EFEA] transition-colors duration-150">
+                                <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-sm">
                                     @if ($item->raw_prio_id === 0)
-                                        <span class="text-info">{{ $item->prio_id }}</span>
+                                        <span class="text-blue-500">{{ $item->prio_id }}</span>
                                     @elseif ($item->raw_prio_id === 1)
-                                        <span class="text-warning">{{ $item->prio_id }}</span>
+                                        <span class="text-yellow-500">{{ $item->prio_id }}</span>
                                     @elseif ($item->raw_prio_id === 2)
-                                        <span class="text-danger">{{ $item->prio_id }}</span>
+                                        <span class="text-red-500">{{ $item->prio_id }}</span>
                                     @elseif ($item->raw_prio_id === 3)
-                                        <span class="text-danger"><b>{{ $item->prio_id }}</b></span>
+                                        <span class="text-red-600 font-bold">{{ $item->prio_id }}</span>
                                     @endif
                                 </td>
-                                <td data-label="Departement">{{ $item->dept_id }}</td>
-                                <td data-label="Subject"><a
-                                        href="{{ route('mahasiswa.support.ticket-view', $item->code) }}">#{{ $item->code . ' - ' . $item->subject }}</a>
-                                </td> <!-- Menambahkan style="width: 50%" -->
-                                <td data-label="Status">
+                                <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">{{ $item->dept_id }}</td>
+                                <td class="px-4 py-3 text-sm text-[#2E2E2E]">
+                                    <a href="{{ route('mahasiswa.support.ticket-view', $item->code) }}" 
+                                       class="text-[#0C6E71] hover:text-[#FF6B35] transition-colors duration-150">
+                                        #{{ $item->code }} - {{ $item->subject }}
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                     @if ($item->raw_stat_id === 0)
-                                        <span class="text-success"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-green-600 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 1)
-                                        <span class="text-danger"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-red-600 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 2)
-                                        <span class="text-light"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-gray-400 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 3)
-                                        <span class="text-success"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-green-600 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 4)
-                                        <span class="text-primary"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-blue-600 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 5)
-                                        <span class="text-info"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-blue-400 font-bold">{{ $item->stat_id }}</span>
                                     @elseif ($item->raw_stat_id === 6)
-                                        <span class="text-warning"><b>{{ $item->stat_id }}</b></span>
+                                        <span class="text-yellow-500 font-bold">{{ $item->stat_id }}</span>
                                     @endif
                                 </td>
-                                <td data-label="Last Reply">{{ $item->updated_at->diffForHumans() }}</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">{{ $item->updated_at->diffForHumans() }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-
-
             </div>
         </div>
     </section>
+
+    <script>
+        // Basic table interaction enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                // Add click event to make entire row clickable (for the link in subject)
+                row.addEventListener('click', (e) => {
+                    const link = row.querySelector('td:nth-child(4) a');
+                    // Check if we didn't click on a link directly
+                    if (e.target.tagName !== 'A' && link) {
+                        window.location.href = link.href;
+                    }
+                });
+                
+                // Add hover effect
+                row.style.cursor = 'pointer';
+            });
+        });
+    </script>
 @endsection
 @section('custom-js')
     <script>
