@@ -15,121 +15,169 @@
     Halaman untuk melihat data pengguna Dosen
 @endsection
 @section('content')
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
+    <section class="p-4">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-4 border-b border-gray-200">
+                <h5 class="text-lg font-semibold flex justify-between items-center">
                     @yield('menu')
-                    <div class="">
-                        <a href="{{ route('web-admin.workers.lecture-create') }}" class="btn btn-outline-primary"><i
-                                class="fa-solid fa-plus"></i></a>
+                    <div>
+                        <a href="{{ route('web-admin.workers.lecture-create') }}" class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah</span>
+                        </a>
                     </div>
                 </h5>
             </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
-                    <thead>
+            <div class="p-4 overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">NIDN</th>
-                            <th class="text-center">Nama Dosen</th>
-                            <th class="text-center">Gender</th>
-                            <th class="text-center">Join Date</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Button</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">NIDN</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Dosen</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Button</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($dosen as $key => $item)
-                            <tr>
-                                <td data-label="Number">{{ ++$key }}</td>
-                                <td data-label="NIDN">{{ $item->dsn_nidn }}</td>
-                                <td data-label="Nama Karyawan">{{ $item->dsn_name }}</td>
-                                <td data-label="Gender">{{ $item->dsn_gend }}</td>
-                                <td data-label="Join Date">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-center">{{ ++$key }}</td>
+                                <td class="px-6 py-4 text-center">{{ $item->dsn_nidn }}</td>
+                                <td class="px-6 py-4 text-center">{{ $item->dsn_name }}</td>
+                                <td class="px-6 py-4 text-center">{{ $item->dsn_gend }}</td>
+                                <td class="px-6 py-4 text-center">
                                     {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y') }}</td>
                                 @if ($item->raw_dsn_stat === 1)
-                                    <td data-label="Status"><span class="text-success">Active</span></td>
+                                    <td class="px-6 py-4 text-center"><span class="text-green-600">Active</span></td>
                                 @elseif($item->raw_dsn_stat === 0)
-                                    <td data-label="Status"><span class="text-danger">Non-Active</span></td>
+                                    <td class="px-6 py-4 text-center"><span class="text-red-600">Non-Active</span></td>
                                 @endif
-                                <td class="d-flex justify-content-center align-items-center">
-                                    <a href="#" style="margin-right: 10px" data-bs-toggle="modal"
-                                        data-bs-target="#viewContact{{ $item->dsn_code }}" class="btn btn-outline-info"><i
-                                            class="fas fa-phone"></i></a>
-                                    <a href="{{ route('web-admin.workers.lecture-edit', $item->dsn_code) }}"
-                                        style="margin-right: 10px" class="btn btn-outline-primary"><i
-                                            class="fas fa-edit"></i></a>
-                                    <form id="delete-form-{{ $item->dsn_code }}"
-                                        action="{{ route('web-admin.workers.lecture-destroy', $item->dsn_code) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a type="button" class="bs-tooltip btn btn-rounded btn-outline-danger"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                            data-original-title="Delete"
-                                            data-url="{{ route('web-admin.workers.lecture-destroy', $item->dsn_code) }}"
-                                            data-name="{{ $item->name }}" onclick="deleteData('{{ $item->dsn_code }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </form>
+                                <td class="px-6 py-4 flex justify-center items-center space-x-2">
+                                    <button onclick="openContactModal('{{ $item->dsn_code }}')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
+                                        <i class="fas fa-phone"></i>
+                                    </button>
+                                    <a href="{{ route('web-admin.workers.lecture-edit', $item->dsn_code) }}" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="confirmDelete('{{ $item->dsn_code }}', '{{ $item->name }}')" class="bg-red-100 hover:bg-red-200 text-red-800 p-2 rounded-full">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
-
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        @foreach ($dosen as $item)
-            <div class="modal fade text-left w-100" id="viewContact{{ $item->dsn_code }}" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel16">Lihat Data Kontak - {{ $item->dsn_name }} </h4>
-                            <div class="">
-
-                                <button type="button" class="btn btn-outline-danger mt-1" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
+    <!-- Contact Modal Template -->
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h4 class="text-lg font-semibold">Lihat Data Kontak - <span id="modalDosenName"></span></h4>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
+                        <div class="flex">
+                            <input type="text" id="modalPhone" class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
+                            <a id="modalWhatsapp" target="_blank" class="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
+                                <i class="fa-solid fa-square-phone"></i>
+                            </a>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Nomor Telepon</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->dsn_phone }}">
-                                        <a href="https://wa.me/{{ $item->dsn_phone }}" target="_blank"
-                                            class="btn btn-outline-success" style="margin-left: 10px"><i
-                                                class="fa-solid fa-square-phone"></i></a>
-                                    </div>
-
-                                </div>
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Alamat Email</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->dsn_mail }}">
-                                        <a href="mailto:{{ $item->dsn_mail }}" class="btn btn-outline-danger"
-                                            style="margin-left: 10px"><i class="fa-solid fa-envelope"></i></a>
-                                    </div>
-
-                                </div>
-
-                            </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
+                        <div class="flex">
+                            <input type="text" id="modalEmail" class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
+                            <a id="modalMailto" class="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
+                                <i class="fa-solid fa-envelope"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+            <div class="p-4 border-t flex justify-end">
+                <button onclick="closeModal()" class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4">
+            <div class="p-4 border-b">
+                <h4 class="text-lg font-semibold">Konfirmasi Hapus</h4>
+            </div>
+            <div class="p-4">
+                <p>Anda yakin ingin menghapus data <span id="deleteItemName" class="font-semibold"></span>?</p>
+            </div>
+            <div class="p-4 border-t flex justify-end space-x-2">
+                <button onclick="closeDeleteModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">
+                    Batal
+                </button>
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                        Hapus
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
-@section('custom-js')
-@endsection
+
+@push('scripts')
+<script>
+    // Contact Modal Functions
+    function openContactModal(dsnCode) {
+        // In a real implementation, you would fetch the data via AJAX or have it in a data attribute
+        // For this example, we'll simulate getting the data
+        const item = {!! json_encode($dosen->keyBy('dsn_code')->toArray()) !!}[dsnCode];
+
+        document.getElementById('modalDosenName').textContent = item.dsn_name;
+        document.getElementById('modalPhone').value = item.dsn_phone;
+        document.getElementById('modalEmail').value = item.dsn_mail;
+        document.getElementById('modalWhatsapp').href = `https://wa.me/${item.dsn_phone}`;
+        document.getElementById('modalMailto').href = `mailto:${item.dsn_mail}`;
+
+        document.getElementById('contactModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('contactModal').classList.add('hidden');
+    }
+
+    // Delete Confirmation Functions
+    function confirmDelete(dsnCode, name) {
+        document.getElementById('deleteItemName').textContent = name;
+        document.getElementById('deleteForm').action = `{{ route('web-admin.workers.lecture-destroy', '') }}/${dsnCode}`;
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === document.getElementById('contactModal')) {
+            closeModal();
+        }
+        if (event.target === document.getElementById('deleteModal')) {
+            closeDeleteModal();
+        }
+    });
+</script>
+@endpush
