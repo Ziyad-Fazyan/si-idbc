@@ -1,282 +1,240 @@
 @extends('base.base-dash-index')
+
 @section('title')
     Data Pengguna Karyawan - Siakad By Internal Developer
 @endsection
+
 @section('menu')
     Data Pengguna Karyawan
 @endsection
+
 @section('submenu')
     Data Pengguna Karyawan
 @endsection
+
 @section('urlmenu')
     #
 @endsection
+
 @section('subdesc')
     Halaman untuk melihat data pengguna Karyawan
 @endsection
+
 @section('content')
     <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
+        <div class="bg-white shadow-md rounded-md overflow-hidden">
+            <div class="px-6 py-4 bg-[#f0f9ff]">
+                <h5 class="text-lg font-semibold text-gray-900 flex justify-between items-center">
                     @yield('submenu')
-                    <div class="">
-                        <a href="{{ route('web-admin.workers.staff-create') }}" class="btn btn-outline-primary"><i
-                                class="fa-solid fa-plus"></i></a>
-                    </div>
+                    <a href="{{ route('web-admin.workers.staff-create') }}"
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
                 </h5>
             </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
+            <div class="p-6">
+                <table class="min-w-full leading-normal" id="table1">
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Nama Karyawan</th>
-                            <th class="text-center">Role Karyawan</th>
-                            <th class="text-center">Gender</th>
-                            <th class="text-center">Join Date</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Button</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                #
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Nama Karyawan
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Role Karyawan
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Gender
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Join Date
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                Aksi
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($admin as $key => $item)
                             <tr>
-                                <td data-label="Number">{{ ++$key }}</td>
-                                <td data-label="Nama Karyawan">{{ $item->name }}</td>
-                                <td data-label="Role Karyawan">{{ $item->type }}</td>
-                                <td data-label="Gender">{{ $item->gend }}</td>
-                                <td data-label="Join Date">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y') }}</td>
-                                @if ($item->status === 1)
-                                    <td data-label="Status"><span class="text-success">Active</span></td>
-                                @elseif($item->status === 0)
-                                    <td data-label="Status"><span class="text-danger">Non-Active</span></td>
-                                @endif
-                                <td class="d-flex justify-content-center align-items-center">
-                                    <a href="#" style="margin-right: 10px" data-bs-toggle="modal"
-                                        data-bs-target="#viewContact{{ $item->code }}" class="btn btn-outline-info"><i
-                                            class="fas fa-phone"></i></a>
-                                    <a href="{{ route('web-admin.workers.staff-edit', $item->code) }}"
-                                        style="margin-right: 10px" class="btn btn-outline-primary"><i
-                                            class="fas fa-edit"></i></a>
-                                    <form id="delete-form-{{ $item->code }}"
-                                        action="{{ route('web-admin.workers.staff-destroy', $item->code) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a type="button" class="bs-tooltip btn btn-rounded btn-outline-danger"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                            data-original-title="Delete"
-                                            data-url="{{ route('web-admin.workers.staff-destroy', $item->code) }}"
-                                            data-name="{{ $item->name }}" onclick="deleteData('{{ $item->code }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </form>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Number">
+                                    {{ ++$key }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Nama Karyawan">
+                                    {{ $item->name }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Role Karyawan">
+                                    {{ $item->type }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Gender">
+                                    {{ $item->gend }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Join Date">
+                                    {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y') }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center" data-label="Status">
+                                    @if ($item->status === 1)
+                                        <span class="text-green-500">Active</span>
+                                    @elseif($item->status === 0)
+                                        <span class="text-red-500">Non-Active</span>
+                                    @endif
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" data-label="Button">
+                                    <div class="flex justify-center items-center">
+                                        <button onclick="openModal('contactModal{{ $item->code }}')"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                            <i class="fas fa-phone"></i>
+                                        </button>
+                                        <button onclick="openModal('editModal{{ $item->code }}')"
+                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <form id="delete-form-{{ $item->code }}"
+                                              action="{{ route('web-admin.workers.staff-destroy', $item->code) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button"
+                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                                    onclick="deleteData('{{ $item->code }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
-
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        {{-- <!--Extra Large Modal -->
-    @foreach ($matkul as $item)
-    <form action="{{ route('web-admin.master.matkul-update', $item->code) }}" method="POST" enctype="multipart/form-data">
-        @method('patch')
-        @csrf
-        <div class="modal fade text-left w-100" id="updateMatkul{{$item->code}}" tabindex="-1" role="dialog"
-            aria-labelledby="myModalLabel16" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
-                role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel16">Edit Mata Kuliah - {{ $item->name }}</h4>
-                        <div class="">
-    
-                            <button type="submit" class="btn btn-outline-primary" >
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                                aria-label="Close">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+    {{-- Contact Modal --}}
+    @foreach ($admin as $item)
+        <div id="contactModal{{ $item->code }}" class="modal hidden fixed z-10 inset-0 overflow-y-auto"
+             aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-[#f0f9ff] px-4 py-3 sm:px-6 sm:py-4">
+                        <h3 class="text-lg font-semibold text-gray-900" id="modal-title">
+                            Lihat Data Kontak - {{ $item->name }}
+                        </h3>
+                        <button type="button" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('contactModal{{ $item->code }}')">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="name">Nama Mata Kuliah</label>
-                                <input type="text" name="name" id="name" class="form-control" value="{{ $item->name }}">
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                    <div class="bg-white px-4 pb-5 sm:p-6 sm:pb-4">
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="col-span-1">
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                                <div class="flex justify-between items-center">
+                                    <input type="text" id="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]" value="{{ $item->phone }}" readonly>
+                                    <a href="https://wa.me/{{ $item->phone }}" target="_blank"
+                                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">
+                                        <i class="fa-solid fa-square-phone"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="code">Kode Mata Kuliah</label>
-                                <input type="text" name="code" id="code" class="form-control" value="{{ $item->code }}">
-                                @error('code')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="requ_id">Persyaratan Mata Kuliah</label>
-                                <select name="requ_id" id="requ_id" class="form-select" name="requ_id" id="requ_id">
-                                    <option value="" selected>Pilih Persyaratan Mata Kuliah</option>
-                                    @foreach ($matkul as $item_r)
-                                    <option value="{{ $item_r->id }}" {{ $item->requ_id == $item_r->id ? 'selected' : '' }}>{{ $item_r->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('requ_id')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="bsks">Bebas SKS Mata Kuliah</label>
-                                <input type="number" min="10" max="40" name="bsks" id="bsks" class="form-control" value="{{ $item->bsks }}">
-                                @error('bsks')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="kuri_id">Kurikulum</label>
-                                <select name="kuri_id" id="kuri_id" class="form-select" name="kuri_id" id="kuri_id">
-                                    <option value="" selected>Pilih Kurikulum</option>
-                                    @foreach ($kuri as $item_k)
-                                    <option value="{{ $item_k->id }}" {{ $item->kuri_id == $item_k->id ? 'selected' : '' }}>{{ $item_k->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('kuri_id')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="taka_id">Tahun Akademik</label>
-                                <select name="taka_id" id="taka_id" class="form-select" name="taka_id" id="taka_id">
-                                    <option value="" selected>Pilih Tahun Akademik</option>
-                                    @foreach ($taka as $item_t)
-                                    <option value="{{ $item_t->id }}" {{ $item->taka_id == $item_t->id ? 'selected' : '' }}>{{ $item_t->name . ' - ' . $item_t->semester }}</option>
-                                    @endforeach
-                                </select>
-                                @error('taka_id')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="pstudi_id">Program Studi</label>
-                                <select name="pstudi_id" id="pstudi_id" class="form-select" name="pstudi_id" id="pstudi_id">
-                                    <option value="" selected>Pilih Program Studi</option>
-                                    @foreach ($pstudi as $item_p)
-                                    <option value="{{ $item_p->id }}" {{ $item->pstudi_id == $item_p->id ? 'selected' : '' }}>{{ $item_p->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('pstudi_id')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="dosen_1">Dosen Pengampu</label>
-                                <select name="dosen_1" id="dosen_1" class="form-select" name="dosen_1" id="dosen_1">
-                                    <option value="" selected>Pilih Dosen Pengampu</option>
-                                    @foreach ($dosen as $item_d1)
-                                    <option value="{{ $item_d1->id }}" {{ $item->dosen_1 == $item_d1->id ? 'selected' : '' }}>{{ $item_d1->dsn_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dosen_1')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror 
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="dosen_2">Dosen Cadangan 1</label>
-                                <select name="dosen_2" id="dosen_2" class="form-select" name="dosen_2" id="dosen_2">
-                                    <option value="" selected>Pilih Dosen Cadangan 1</option>
-                                    @foreach ($dosen as $item_d2)
-                                    <option value="{{ $item_d2->id }}" {{ $item->dosen_2 == $item_d2->id ? 'selected' : '' }}>{{ $item_d2->dsn_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dosen_2')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror 
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="dosen_3">Dosen Cadangan 2</label>
-                                <select name="dosen_3" id="dosen_3" class="form-select" name="dosen_3" id="dosen_3">
-                                    <option value="" selected>Pilih Dosen Cadangan 1</option>
-                                    @foreach ($dosen as $item_d3)
-                                    <option value="{{ $item_d3->id }}" {{ $item->dosen_3 == $item_d3->id ? 'selected' : '' }}>{{ $item_d3->dsn_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dosen_3')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror                               
-                            </div>
-
-                            <div class="form-group col-lg-12 col-12">
-                                <label for="desc">Deskripsi Mata Kuliah</label>
-                                <textarea name="desc" id="dark" class="form-control" placeholder="isikan deskripsi matakuliah ...." cols="30" rows="10">{{ $item->desc == null ? '' : $item->desc }}</textarea>
-                                @error('desc')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                            <div class="col-span-1">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
+                                <div class="flex justify-between items-center">
+                                    <input type="text" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]" value="{{ $item->email }}" readonly>
+                                    <a href="mailto:{{ $item->email }}"
+                                       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-    @endforeach --}}
-    </div>
-    <div class="me-1 mb-1 d-inline-block">
 
-        @foreach ($admin as $item)
-            <div class="modal fade text-left w-100" id="viewContact{{ $item->code }}" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel16">Lihat Data Kontak - {{ $item->name }} </h4>
-                            <div class="">
-
-                                <button type="button" class="btn btn-outline-danger mt-1" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i class="fas fa-times"></i>
+         {{-- Edit Modal --}}
+         <div id="editModal{{ $item->code }}" class="modal hidden fixed z-10 inset-0 overflow-y-auto"
+         aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-[#f0f9ff] px-4 py-3 sm:px-6 sm:py-4">
+                        <h3 class="text-lg font-semibold text-gray-900" id="modal-title">
+                            Edit Data Karyawan - {{ $item->name }}
+                        </h3>
+                        <button type="button" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('editModal{{ $item->code }}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="bg-white px-4 pb-5 sm:p-6 sm:pb-4">
+                        <form action="{{ route('web-admin.workers.staff-update', $item->code) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="grid grid-cols-1 gap-4">
+                                <div class="col-span-1">
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Karyawan</label>
+                                    <input type="text" name="name" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]" value="{{ $item->name }}">
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="type" class="block text-sm font-medium text-gray-700">Role Karyawan</label>
+                                    <select name="type" id="type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]">
+                                        <option value="admin" {{ $item->type == 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="staff" {{ $item->type == 'staff' ? 'selected' : '' }}>Staff</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="gend" class="block text-sm font-medium text-gray-700">Gender</label>
+                                    <select name="gend" id="gend" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]">
+                                        <option value="male" {{ $item->gend == 'male' ? 'selected' : '' }}>Laki-laki</option>
+                                        <option value="female" {{ $item->gend == 'female' ? 'selected' : '' }}>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-1">
+                                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                    <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71]">
+                                        <option value="1" {{ $item->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $item->status == 0 ? 'selected' : '' }}>Non-Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex justify-end">
+                                <button type="submit" class="bg-[#0C6E71] hover:bg-[#085558] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
+                                    Simpan
+                                </button>
+                                <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="closeModal('editModal{{ $item->code }}')">
+                                    Batal
                                 </button>
                             </div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Nomor Telepon</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->phone }}">
-                                        <a href="https://wa.me/{{ $item->phone }}" target="_blank"
-                                            class="btn btn-outline-success" style="margin-left: 10px"><i
-                                                class="fa-solid fa-square-phone"></i></a>
-                                    </div>
-
-                                </div>
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Alamat Email</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->email }}">
-                                        <a href="mailto:{{ $item->email }}" class="btn btn-outline-danger"
-                                            style="margin-left: 10px"><i class="fa-solid fa-envelope"></i></a>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
+    @endforeach
 
-    </div>
 @endsection
+
 @section('custom-js')
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function deleteData(code) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                document.getElementById('delete-form-' + code).submit();
+            }
+        }
+    </script>
 @endsection
