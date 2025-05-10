@@ -11,195 +11,207 @@
 @section('urlmenu')
     {{ route($prefix . 'support.ticket-index') }}
 @endsection
-@section('custom-css')
-@endsection
 @section('subdesc')
     Halaman untuk melihat Ticket #{{ $ticket->code }}
 @endsection
 @section('content')
-    <section class="content">
-        <form action="{{ route($prefix . 'support.ticket-store-reply', $ticket->code) }}" method="POST"
-            enctype="multipart/form-data">
+    <section class="p-4 space-y-4">
+        <!-- Ticket Reply Form -->
+        <form action="{{ route($prefix . 'support.ticket-store-reply', $ticket->code) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
             @csrf
-
-            <div class="card mb-2">
-                <div class="card-header">
-                    <h5 class="card-title d-flex justify-content-between align-items-center">
-                        Lihat @yield('menu')
-                        <div class="">
-                            <a href="@yield('urlmenu')" class="btn btn-warning"><i class="fa-solid fa-backward"></i></a>
-                        </div>
-                    </h5>
+            <div class="border-b p-4 flex justify-between items-center bg-gray-50">
+                <h2 class="text-lg font-semibold text-gray-800">Reply to Ticket #{{ $ticket->code }}</h2>
+                <a href="@yield('urlmenu')" class="flex items-center text-yellow-600 hover:text-yellow-800">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                </a>
+            </div>
+            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Student Name -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
+                    <input type="text" readonly value="{{ Auth::user()->name }}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
                 </div>
-                <div class="card-body row">
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="name">Nama Mahasiswa</label>
-                        <input type="text" name="name" id="name" class="form-control" readonly
-                            value="{{ Auth::user()->name }}">
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="dept_id">Pilih Departement</label>
-                        <input type="text" name="dept_id" id="dept_id" class="form-control" readonly
-                            value="{{ $ticket->dept_id }}">
 
-                        @error('dept_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="prio_id">Level Prioritas</label>
-                        <input type="text" name="prio_id" id="prio_id" class="form-control" readonly
-                            value="{{ $ticket->prio_id }}">
+                <!-- Department -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Departement</label>
+                    <input type="text" readonly value="{{ $ticket->dept_id }}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+                </div>
 
-                        @error('prio_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-8 col-12">
-                        <label for="subject">Subject</label>
-                        <input type="text" name="subject" id="subject" required class="form-control" readonly
-                            value="{{ $ticket->subject }}">
-                        @error('subject')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="stat_id">Status</label>
-                        <select name="stat_id" id="stat_id" class="form-select">
-                            <option value="" selected>Pilih Status</option>
-                            <option value="0" {{ $ticket->raw_stat_id === 0 ? 'selected' : '' }}>Open</option>
-                            <option value="1" {{ $ticket->raw_stat_id === 1 ? 'selected' : '' }}>In Progress</option>
-                            <option value="2" {{ $ticket->raw_stat_id === 2 ? 'selected' : '' }}>Closed</option>
-                            <option value="3" {{ $ticket->raw_stat_id === 3 ? 'selected' : '' }}>Answered</option>
-                            <option value="3" {{ $ticket->raw_stat_id === 4 ? 'selected' : '' }}>Student Reply
-                            </option>
-                            <option value="5" {{ $ticket->raw_stat_id === 5 ? 'selected' : '' }}>On Hold</option>
-                            <option value="6" {{ $ticket->raw_stat_id === 6 ? 'selected' : '' }}>Pending Student
-                            </option>
-                        </select>
-                        @error('stat_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-12 col-12">
-                        <label for="message">Message</label>
-                        <textarea name="message" id="summernote" cols="30" rows="10"></textarea>
-                        @error('message')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="d-flex justify-content-end align-items-center">
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send
-                            Ticket</button>
-                    </div>
+                <!-- Priority Level -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Level Prioritas</label>
+                    <input type="text" readonly value="{{ $ticket->prio_id }}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+                </div>
+
+                <!-- Subject -->
+                <div class="md:col-span-2 space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Subject</label>
+                    <input type="text" readonly value="{{ $ticket->subject }}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+                </div>
+
+                <!-- Status -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="stat_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Pilih Status</option>
+                        <option value="0" {{ $ticket->raw_stat_id === 0 ? 'selected' : '' }}>Open</option>
+                        <option value="1" {{ $ticket->raw_stat_id === 1 ? 'selected' : '' }}>In Progress</option>
+                        <option value="2" {{ $ticket->raw_stat_id === 2 ? 'selected' : '' }}>Closed</option>
+                        <option value="3" {{ $ticket->raw_stat_id === 3 ? 'selected' : '' }}>Answered</option>
+                        <option value="4" {{ $ticket->raw_stat_id === 4 ? 'selected' : '' }}>Student Reply</option>
+                        <option value="5" {{ $ticket->raw_stat_id === 5 ? 'selected' : '' }}>On Hold</option>
+                        <option value="6" {{ $ticket->raw_stat_id === 6 ? 'selected' : '' }}>Pending Student</option>
+                    </select>
+                    @error('stat_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Message -->
+                <div class="md:col-span-3 space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea name="message" id="summernote" class="w-full"></textarea>
+                    @error('message')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Submit Button -->
+                <div class="md:col-span-3 flex justify-end">
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Send Ticket
+                    </button>
                 </div>
             </div>
         </form>
-        <hr class="mb-2">
 
-        <div id="support-container">
-
+        <!-- Support Thread -->
+        <div id="support-container" class="space-y-4">
             @foreach ($support as $item)
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-lg-3">
-                                <div class="d-flex align-items-center mb-3">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- User Info -->
+                            <div class="md:w-1/4 space-y-3">
+                                <div class="flex items-start">
                                     @if ($item->users_id !== null)
-                                        <div class="avatar avatar-lg me-3">
-                                            <img src="{{ asset('storage/images/' . $item->users->mhs_image) }}"
-                                                class="avatar-sm" alt="">
+                                        <img src="{{ asset('storage/images/' . $item->users->mhs_image) }}" 
+                                             class="w-12 h-12 rounded-full mr-3 object-cover">
+                                        <div>
+                                            <p class="font-semibold">{{ $item->users->mhs_name }}</p>
+                                            <p class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
+                                            <p class="text-sm">Kelas {{ $item->users->kelas->name }}</p>
                                         </div>
-                                        <span><b>{{ $item->users->mhs_name . ' - ' . $item->created_at->diffForHumans() }}</b><br>Kelas
-                                            {{ $item->users->kelas->name }}</span>
                                     @elseif ($item->admin_id !== null)
-                                        <div class="avatar avatar-lg me-3">
-                                            <img src="{{ asset('storage/images/' . $item->admin->image) }}"
-                                                class="avatar-sm" alt="">
+                                        <img src="{{ asset('storage/images/' . $item->admin->image) }}" 
+                                             class="w-12 h-12 rounded-full mr-3 object-cover">
+                                        <div>
+                                            <p class="font-semibold">{{ $item->admin->name }}</p>
+                                            <p class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
+                                            <p class="text-sm">{{ $item->admin->type }}</p>
                                         </div>
-                                        <span><b>{{ $item->admin->name . ' - ' . $item->created_at->diffForHumans() }}</b><br>{{ $item->admin->type }}</span>
                                     @endif
-
                                 </div>
-                                <div class="d-flex justify-content-between">
-
-                                    <a href="" class="btn btn-primary text-center"><i
-                                            class="fa-solid fa-edit"></i></a>
-                                    <a href="" class="btn btn-danger text-center"><i
-                                            class="fa-solid fa-trash"></i></a>
+                                <div class="flex space-x-2">
+                                    <button class="p-2 text-blue-600 hover:text-blue-800">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </button>
+                                    <button class="p-2 text-red-600 hover:text-red-800">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
-                                <p>{!! $item->message !!}</p>
+                            
+                            <!-- Message Content -->
+                            <div class="md:w-3/4">
+                                <div class="prose max-w-none">
+                                    {!! $item->message !!}
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-        <div class="card mb-2">
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-lg-3">
-                        <div class="d-flex">
+
+        <!-- Original Ticket -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- User Info -->
+                    <div class="md:w-1/4">
+                        <div class="flex items-start">
                             @if ($ticket->users_id !== null)
-                                <div class="avatar avatar-lg me-3">
-                                    <img src="{{ asset('storage/images/' . $ticket->users->mhs_image) }}"
-                                        class="avatar-sm" alt="">
+                                <img src="{{ asset('storage/images/' . $ticket->users->mhs_image) }}" 
+                                     class="w-12 h-12 rounded-full mr-3 object-cover">
+                                <div>
+                                    <p class="font-semibold">{{ $ticket->users->mhs_name }}</p>
+                                    <p class="text-sm text-gray-500">{{ $ticket->created_at->diffForHumans() }}</p>
+                                    <p class="text-sm">Kelas {{ $ticket->users->kelas->name }}</p>
                                 </div>
-                                <span><b>{{ $ticket->users->mhs_name . ' - ' . $ticket->created_at->diffForHumans() }}</b><br>Kelas
-                                    {{ $ticket->users->kelas->name }}</span>
                             @elseif ($ticket->admin_id !== null)
-                                <div class="avatar avatar-lg me-3">
-                                    <img src="{{ asset('storage/images/' . $ticket->admin->image) }}" class="avatar-sm"
-                                        alt="">
+                                <img src="{{ asset('storage/images/' . $ticket->admin->image) }}" 
+                                     class="w-12 h-12 rounded-full mr-3 object-cover">
+                                <div>
+                                    <p class="font-semibold">{{ $ticket->admin->name }}</p>
+                                    <p class="text-sm text-gray-500">{{ $ticket->created_at->diffForHumans() }}</p>
+                                    <p class="text-sm">{{ $ticket->admin->type }}</p>
                                 </div>
-                                <span><b>{{ $ticket->admin->name . ' - ' . $ticket->created_at->diffForHumans() }}</b><br>{{ $ticket->admin->type }}</span>
                             @endif
                         </div>
                     </div>
-                    <div class="col-lg-9">
-                        <p>{!! $ticket->message !!}</p>
+                    
+                    <!-- Message Content -->
+                    <div class="md:w-3/4">
+                        <div class="prose max-w-none">
+                            {!! $ticket->message !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
-@section('custom-js')
-    <script>
-        let autoRefreshTimer; // Timer untuk auto-refresh
 
-        // Fungsi untuk memulai auto-refresh setiap 5 detik
+@section('custom-js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let autoRefreshTimer;
+        const refreshInterval = 15000; // 15 seconds
+
         function startAutoRefresh() {
-            autoRefreshTimer = setInterval(function() {
-                // Lakukan refresh halaman
+            autoRefreshTimer = setInterval(() => {
                 location.reload();
-            }, 15000); // Refresh setiap 5 detik
+            }, refreshInterval);
         }
 
-        // Fungsi untuk menghentikan auto-refresh
         function stopAutoRefresh() {
             if (autoRefreshTimer) {
                 clearInterval(autoRefreshTimer);
             }
         }
 
-        // Memulai auto-refresh secara default
+        // Initialize auto-refresh
         startAutoRefresh();
 
-        // Menangani event ketika pengguna mulai mengetik di summernote
-        $('#summernote').on('summernote.keyup', function() {
-            stopAutoRefresh(); // Menghentikan auto-refresh saat pengguna mengetik
-        });
+        // Handle Summernote events
+        const summernote = $('#summernote');
+        summernote.on('summernote.keyup', stopAutoRefresh);
+        summernote.on('summernote.blur', startAutoRefresh);
 
-        // Menangani event ketika pengguna berhenti mengetik di summernote
-        $('#summernote').on('summernote.blur', function() {
-            startAutoRefresh(); // Mengaktifkan kembali auto-refresh saat pengguna berhenti mengetik
+        // Pause refresh when tab is inactive
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopAutoRefresh();
+            } else {
+                startAutoRefresh();
+            }
         });
-    </script>
+    });
+</script>
 @endsection
