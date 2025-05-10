@@ -25,27 +25,27 @@
                         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                             <h4 class="text-lg font-semibold text-gray-700">Ubah Foto Profile</h4>
                             <div class="flex space-x-2">
-                                <a href="@yield('urlmenu')" class="px-3 py-2 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded transition-colors">
+                                <a href="@yield('urlmenu')"
+                                    class="px-3 py-2 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded transition-colors">
                                     <i class="fa-solid fa-backward"></i>
                                 </a>
-                                <button type="submit" class="px-3 py-2 border border-[#0C6E71] text-[#0C6E71] hover:bg-[#0C6E71] hover:text-white rounded transition-colors">
+                                <button type="submit"
+                                    class="px-3 py-2 border border-[#0C6E71] text-[#0C6E71] hover:bg-[#0C6E71] hover:text-white rounded transition-colors">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="p-6">
                             <img src="{{ asset('storage/images/default/default-profile.jpg') }}"
-                                class="w-full h-auto rounded-lg object-cover"
-                                id="profile-preview"
-                                alt="Profile Image">
+                                class="w-full h-auto rounded-lg object-cover" id="profile-preview" alt="Profile Image">
                             <div class="border-t border-gray-200 my-4"></div>
                             <div class="space-y-2">
-                                <label for="image" class="text-sm font-medium text-gray-700 block">Upload Foto Profile</label>
+                                <label for="image" class="text-sm font-medium text-gray-700 block">Upload Foto
+                                    Profile</label>
                                 <div class="flex items-center">
                                     <input type="file"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                        name="image"
-                                        id="image">
+                                        name="image" id="image">
                                 </div>
                                 @error('image')
                                     <small class="text-red-500">{{ $message }}</small>
@@ -61,25 +61,22 @@
                             <div class="border-b border-gray-200" x-data="{ activeTab: 'personal' }">
                                 <ul class="flex flex-wrap -mb-px">
                                     <li class="mr-2">
-                                        <button type="button"
-                                            @click="activeTab = 'personal'"
-                                            :class="{'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'personal', 'text-gray-500 hover:text-gray-700': activeTab !== 'personal'}"
+                                        <button type="button" @click="activeTab = 'personal'"
+                                            :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'personal', 'text-gray-500 hover:text-gray-700': activeTab !== 'personal' }"
                                             class="inline-block py-4 px-4 font-medium">
                                             Personal
                                         </button>
                                     </li>
                                     <li class="mr-2">
-                                        <button type="button"
-                                            @click="activeTab = 'contact'"
-                                            :class="{'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'contact', 'text-gray-500 hover:text-gray-700': activeTab !== 'contact'}"
+                                        <button type="button" @click="activeTab = 'contact'"
+                                            :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'contact', 'text-gray-500 hover:text-gray-700': activeTab !== 'contact' }"
                                             class="inline-block py-4 px-4 font-medium">
                                             Kontak
                                         </button>
                                     </li>
                                     <li class="mr-2">
-                                        <button type="button"
-                                            @click="activeTab = 'security'"
-                                            :class="{'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'security', 'text-gray-500 hover:text-gray-700': activeTab !== 'security'}"
+                                        <button type="button" @click="activeTab = 'security'"
+                                            :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'security', 'text-gray-500 hover:text-gray-700': activeTab !== 'security' }"
                                             class="inline-block py-4 px-4 font-medium">
                                             Keamanan
                                         </button>
@@ -92,10 +89,9 @@
                                 <div x-show="activeTab === 'personal'" class="space-y-6">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                         <div class="space-y-2">
-                                            <label for="name" class="text-sm font-medium text-gray-700 block">Nama Lengkap</label>
-                                            <input type="text"
-                                                name="name"
-                                                id="name"
+                                            <label for="name" class="text-sm font-medium text-gray-700 block">Nama
+                                                Lengkap</label>
+                                            <input type="text" name="name" id="name"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Nama lengkap...">
                                             @error('name')
@@ -103,10 +99,9 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="user" class="text-sm font-medium text-gray-700 block">Username</label>
-                                            <input type="text"
-                                                name="user"
-                                                id="user"
+                                            <label for="user"
+                                                class="text-sm font-medium text-gray-700 block">Username</label>
+                                            <input type="text" name="user" id="user"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Username...">
                                             @error('user')
@@ -114,9 +109,9 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="gend" class="text-sm font-medium text-gray-700 block">Jenis Kelamin</label>
-                                            <select name="gend"
-                                                id="gend"
+                                            <label for="gend" class="text-sm font-medium text-gray-700 block">Jenis
+                                                Kelamin</label>
+                                            <select name="gend" id="gend"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                                 <option value="" selected>Pilih Jenis Kelamin</option>
                                                 <option value="L">Laki Laki</option>
@@ -127,10 +122,9 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="birth_place" class="text-sm font-medium text-gray-700 block">Tempat Lahir</label>
-                                            <input type="text"
-                                                name="birth_place"
-                                                id="birth_place"
+                                            <label for="birth_place" class="text-sm font-medium text-gray-700 block">Tempat
+                                                Lahir</label>
+                                            <input type="text" name="birth_place" id="birth_place"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Tempat Lahir...">
                                             @error('birth_place')
@@ -138,19 +132,18 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="birth_date" class="text-sm font-medium text-gray-700 block">Tanggal Lahir</label>
-                                            <input type="date"
-                                                name="birth_date"
-                                                id="birth_date"
+                                            <label for="birth_date" class="text-sm font-medium text-gray-700 block">Tanggal
+                                                Lahir</label>
+                                            <input type="date" name="birth_date" id="birth_date"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                             @error('birth_date')
                                                 <small class="text-red-500">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="reli" class="text-sm font-medium text-gray-700 block">Agama</label>
-                                            <select name="reli"
-                                                id="reli"
+                                            <label for="reli"
+                                                class="text-sm font-medium text-gray-700 block">Agama</label>
+                                            <select name="reli" id="reli"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                                 <option value="" selected>Pilih Agama</option>
                                                 <option value="1">Agama Islam</option>
@@ -171,10 +164,9 @@
                                 <div x-show="activeTab === 'contact'" class="space-y-6">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                         <div class="space-y-2">
-                                            <label for="phone" class="text-sm font-medium text-gray-700 block">Nomor HandPhone</label>
-                                            <input type="text"
-                                                name="phone"
-                                                id="phone"
+                                            <label for="phone" class="text-sm font-medium text-gray-700 block">Nomor
+                                                HandPhone</label>
+                                            <input type="text" name="phone" id="phone"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan nomor telepon...">
                                             @error('phone')
@@ -182,10 +174,9 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="email" class="text-sm font-medium text-gray-700 block">Alamat Email</label>
-                                            <input type="email"
-                                                name="email"
-                                                id="email"
+                                            <label for="email" class="text-sm font-medium text-gray-700 block">Alamat
+                                                Email</label>
+                                            <input type="email" name="email" id="email"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan alamat email...">
                                             @error('email')
@@ -193,10 +184,10 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="contact_name_1" class="text-sm font-medium text-gray-700 block">Nama Kontak Darurat 1</label>
-                                            <input type="text"
-                                                name="contact_name_1"
-                                                id="contact_name_1"
+                                            <label for="contact_name_1"
+                                                class="text-sm font-medium text-gray-700 block">Nama Kontak Darurat
+                                                1</label>
+                                            <input type="text" name="contact_name_1" id="contact_name_1"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan nama kontak darurat...">
                                             @error('contact_name_1')
@@ -204,10 +195,10 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="contact_phone_1" class="text-sm font-medium text-gray-700 block">Nomor Kontak Darurat 1</label>
-                                            <input type="text"
-                                                name="contact_phone_1"
-                                                id="contact_phone_1"
+                                            <label for="contact_phone_1"
+                                                class="text-sm font-medium text-gray-700 block">Nomor Kontak Darurat
+                                                1</label>
+                                            <input type="text" name="contact_phone_1" id="contact_phone_1"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan nomor telepon kontak darurat...">
                                             @error('contact_phone_1')
@@ -215,10 +206,10 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="contact_name_2" class="text-sm font-medium text-gray-700 block">Nama Kontak Darurat 2</label>
-                                            <input type="text"
-                                                name="contact_name_2"
-                                                id="contact_name_2"
+                                            <label for="contact_name_2"
+                                                class="text-sm font-medium text-gray-700 block">Nama Kontak Darurat
+                                                2</label>
+                                            <input type="text" name="contact_name_2" id="contact_name_2"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan nama kontak darurat...">
                                             @error('contact_name_2')
@@ -226,10 +217,10 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="contact_phone_2" class="text-sm font-medium text-gray-700 block">Nomor Kontak Darurat 2</label>
-                                            <input type="text"
-                                                name="contact_phone_2"
-                                                id="contact_phone_2"
+                                            <label for="contact_phone_2"
+                                                class="text-sm font-medium text-gray-700 block">Nomor Kontak Darurat
+                                                2</label>
+                                            <input type="text" name="contact_phone_2" id="contact_phone_2"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                 placeholder="Inputkan nomor telepon kontak darurat...">
                                             @error('contact_phone_2')
@@ -243,9 +234,9 @@
                                 <div x-show="activeTab === 'security'" class="space-y-6">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                         <div class="space-y-2">
-                                            <label for="type" class="text-sm font-medium text-gray-700 block">Type Users</label>
-                                            <select name="type"
-                                                id="type"
+                                            <label for="type" class="text-sm font-medium text-gray-700 block">Type
+                                                Users</label>
+                                            <select name="type" id="type"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                                 <option value="" selected>Pilih Role Users</option>
                                                 <option value="0">Web Administrator</option>
@@ -259,9 +250,9 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="status" class="text-sm font-medium text-gray-700 block">Status Member</label>
-                                            <select name="status"
-                                                id="status"
+                                            <label for="status" class="text-sm font-medium text-gray-700 block">Status
+                                                Member</label>
+                                            <select name="status" id="status"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                                 <optgroup label="Pilih Status Users">
                                                     <option value="0">Non-Active</option>
@@ -273,11 +264,10 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="newPassword" class="text-sm font-medium text-gray-700 block">Password Baru</label>
+                                            <label for="newPassword"
+                                                class="text-sm font-medium text-gray-700 block">Password Baru</label>
                                             <div class="flex">
-                                                <input type="password"
-                                                    name="password"
-                                                    id="newPassword"
+                                                <input type="password" name="password" id="newPassword"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                     placeholder="Inputkan password...">
                                                 <button type="button"
@@ -291,11 +281,11 @@
                                             @enderror
                                         </div>
                                         <div class="space-y-2">
-                                            <label for="newPasswordKonfirm" class="text-sm font-medium text-gray-700 block">Konfirmasi Password Baru</label>
+                                            <label for="newPasswordKonfirm"
+                                                class="text-sm font-medium text-gray-700 block">Konfirmasi Password
+                                                Baru</label>
                                             <div class="flex">
-                                                <input type="password"
-                                                    name="password_confirm"
-                                                    id="newPasswordKonfirm"
+                                                <input type="password" name="password_confirm" id="newPasswordKonfirm"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                                     placeholder="Inputkan konfirmasi password...">
                                                 <button type="button"
@@ -320,37 +310,37 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Profile image preview
-    document.getElementById("image").onchange = function(event) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const output = document.getElementById('profile-preview');
-            output.src = reader.result;
+    <script>
+        // Profile image preview
+        document.getElementById("image").onchange = function(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profile-preview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
         };
-        reader.readAsDataURL(event.target.files[0]);
-    };
 
-    // Password toggle visibility
-    document.querySelectorAll('.toggle-password').forEach(button => {
-        button.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
-            const icon = this.querySelector('i');
+        // Password toggle visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                const icon = this.querySelector('i');
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
-<!-- Alpine.js - include this if not already in your layout -->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js - include this if not already in your layout -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endpush

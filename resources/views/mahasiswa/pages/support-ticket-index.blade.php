@@ -33,17 +33,29 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="p-4 overflow-x-auto">
                 <table class="min-w-full divide-y divide-[#E4E2DE]">
                     <thead class="bg-[#E4E2DE]">
                         <tr>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">#</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Prioritas</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Departement</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Subject</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Last Reply</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">#
+                            </th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
+                                Prioritas</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
+                                Departement</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
+                                Subject</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
+                                Status</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Last
+                                Reply</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-[#E4E2DE]">
@@ -63,8 +75,8 @@
                                 </td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">{{ $item->dept_id }}</td>
                                 <td class="px-4 py-3 text-sm text-[#2E2E2E]">
-                                    <a href="{{ route('mahasiswa.support.ticket-view', $item->code) }}" 
-                                       class="text-[#0C6E71] hover:text-[#FF6B35] transition-colors duration-150">
+                                    <a href="{{ route('mahasiswa.support.ticket-view', $item->code) }}"
+                                        class="text-[#0C6E71] hover:text-[#FF6B35] transition-colors duration-150">
                                         #{{ $item->code }} - {{ $item->subject }}
                                     </a>
                                 </td>
@@ -85,7 +97,8 @@
                                         <span class="text-yellow-500 font-bold">{{ $item->stat_id }}</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">{{ $item->updated_at->diffForHumans() }}</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-sm text-[#2E2E2E]">
+                                    {{ $item->updated_at->diffForHumans() }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -98,7 +111,7 @@
         // Basic table interaction enhancements
         document.addEventListener('DOMContentLoaded', function() {
             const rows = document.querySelectorAll('tbody tr');
-            
+
             rows.forEach(row => {
                 // Add click event to make entire row clickable (for the link in subject)
                 row.addEventListener('click', (e) => {
@@ -108,7 +121,7 @@
                         window.location.href = link.href;
                     }
                 });
-                
+
                 // Add hover effect
                 row.style.cursor = 'pointer';
             });

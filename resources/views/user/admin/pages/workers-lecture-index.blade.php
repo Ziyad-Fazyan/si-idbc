@@ -21,7 +21,8 @@
                 <h5 class="text-lg font-semibold flex justify-between items-center">
                     @yield('menu')
                     <div>
-                        <a href="{{ route('web-admin.workers.lecture-create') }}" class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md flex items-center gap-2">
+                        <a href="{{ route('web-admin.workers.lecture-create') }}"
+                            class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i>
                             <span>Tambah</span>
                         </a>
@@ -32,13 +33,20 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">NIDN</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Dosen</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Button</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#
+                            </th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                NIDN</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Nama Dosen</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Gender</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Join Date</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Button</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -56,13 +64,16 @@
                                     <td class="px-6 py-4 text-center"><span class="text-red-600">Non-Active</span></td>
                                 @endif
                                 <td class="px-6 py-4 flex justify-center items-center space-x-2">
-                                    <button onclick="openContactModal('{{ $item->dsn_code }}')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
+                                    <button onclick="openContactModal('{{ $item->dsn_code }}')"
+                                        class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
                                         <i class="fas fa-phone"></i>
                                     </button>
-                                    <a href="{{ route('web-admin.workers.lecture-edit', $item->dsn_code) }}" class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
+                                    <a href="{{ route('web-admin.workers.lecture-edit', $item->dsn_code) }}"
+                                        class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button onclick="confirmDelete('{{ $item->dsn_code }}', '{{ $item->name }}')" class="bg-red-100 hover:bg-red-200 text-red-800 p-2 rounded-full">
+                                    <button onclick="confirmDelete('{{ $item->dsn_code }}', '{{ $item->name }}')"
+                                        class="bg-red-100 hover:bg-red-200 text-red-800 p-2 rounded-full">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -88,8 +99,10 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
                         <div class="flex">
-                            <input type="text" id="modalPhone" class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
-                            <a id="modalWhatsapp" target="_blank" class="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
+                            <input type="text" id="modalPhone"
+                                class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
+                            <a id="modalWhatsapp" target="_blank"
+                                class="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
                                 <i class="fa-solid fa-square-phone"></i>
                             </a>
                         </div>
@@ -97,8 +110,10 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
                         <div class="flex">
-                            <input type="text" id="modalEmail" class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
-                            <a id="modalMailto" class="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
+                            <input type="text" id="modalEmail"
+                                class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
+                            <a id="modalMailto"
+                                class="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
                                 <i class="fa-solid fa-envelope"></i>
                             </a>
                         </div>
@@ -123,7 +138,8 @@
                 <p>Anda yakin ingin menghapus data <span id="deleteItemName" class="font-semibold"></span>?</p>
             </div>
             <div class="p-4 border-t flex justify-end space-x-2">
-                <button onclick="closeDeleteModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">
+                <button onclick="closeDeleteModal()"
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">
                     Batal
                 </button>
                 <form id="deleteForm" method="POST">
@@ -139,45 +155,46 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Contact Modal Functions
-    function openContactModal(dsnCode) {
-        // In a real implementation, you would fetch the data via AJAX or have it in a data attribute
-        // For this example, we'll simulate getting the data
-        const item = {!! json_encode($dosen->keyBy('dsn_code')->toArray()) !!}[dsnCode];
+    <script>
+        // Contact Modal Functions
+        function openContactModal(dsnCode) {
+            // In a real implementation, you would fetch the data via AJAX or have it in a data attribute
+            // For this example, we'll simulate getting the data
+            const item = {!! json_encode($dosen->keyBy('dsn_code')->toArray()) !!}[dsnCode];
 
-        document.getElementById('modalDosenName').textContent = item.dsn_name;
-        document.getElementById('modalPhone').value = item.dsn_phone;
-        document.getElementById('modalEmail').value = item.dsn_mail;
-        document.getElementById('modalWhatsapp').href = `https://wa.me/${item.dsn_phone}`;
-        document.getElementById('modalMailto').href = `mailto:${item.dsn_mail}`;
+            document.getElementById('modalDosenName').textContent = item.dsn_name;
+            document.getElementById('modalPhone').value = item.dsn_phone;
+            document.getElementById('modalEmail').value = item.dsn_mail;
+            document.getElementById('modalWhatsapp').href = `https://wa.me/${item.dsn_phone}`;
+            document.getElementById('modalMailto').href = `mailto:${item.dsn_mail}`;
 
-        document.getElementById('contactModal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-        document.getElementById('contactModal').classList.add('hidden');
-    }
-
-    // Delete Confirmation Functions
-    function confirmDelete(dsnCode, name) {
-        document.getElementById('deleteItemName').textContent = name;
-        document.getElementById('deleteForm').action = `{{ route('web-admin.workers.lecture-destroy', '') }}/${dsnCode}`;
-        document.getElementById('deleteModal').classList.remove('hidden');
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.add('hidden');
-    }
-
-    // Close modals when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === document.getElementById('contactModal')) {
-            closeModal();
+            document.getElementById('contactModal').classList.remove('hidden');
         }
-        if (event.target === document.getElementById('deleteModal')) {
-            closeDeleteModal();
+
+        function closeModal() {
+            document.getElementById('contactModal').classList.add('hidden');
         }
-    });
-</script>
+
+        // Delete Confirmation Functions
+        function confirmDelete(dsnCode, name) {
+            document.getElementById('deleteItemName').textContent = name;
+            document.getElementById('deleteForm').action =
+                `{{ route('web-admin.workers.lecture-destroy', '') }}/${dsnCode}`;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('contactModal')) {
+                closeModal();
+            }
+            if (event.target === document.getElementById('deleteModal')) {
+                closeDeleteModal();
+            }
+        });
+    </script>
 @endpush

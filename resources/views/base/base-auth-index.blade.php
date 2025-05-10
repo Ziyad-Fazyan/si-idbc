@@ -92,7 +92,8 @@
             <div class="container mx-auto px-4 py-4">
                 <div class="w-full">
                     <!-- Navbar -->
-                    <nav class="backdrop-blur-md bg-white/80 rounded-lg shadow-lg py-3 px-6 mx-4 transition-all duration-300">
+                    <nav
+                        class="backdrop-blur-md bg-white/80 rounded-lg shadow-lg py-3 px-6 mx-4 transition-all duration-300">
                         <div class="container mx-auto">
                             <div class="flex justify-between items-center">
                                 <!-- Logo / Brand -->
@@ -119,13 +120,16 @@
                                 <!-- Desktop Navigation -->
                                 <div class="hidden md:flex md:items-center md:justify-between md:flex-1 md:ml-10">
                                     <div class="flex space-x-1">
-                                        <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin.auth-signin-page') }}">
+                                        <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}"
+                                            href="{{ route('admin.auth-signin-page') }}">
                                             <i class="fas fa-user-shield mr-1"></i> Admin
                                         </a>
-                                        <a class="nav-link {{ Request::is('mahasiswa*') ? 'active' : '' }}" href="{{ route('mahasiswa.auth-signin-page') }}">
+                                        <a class="nav-link {{ Request::is('mahasiswa*') ? 'active' : '' }}"
+                                            href="{{ route('mahasiswa.auth-signin-page') }}">
                                             <i class="fas fa-user-graduate mr-1"></i> Siswa
                                         </a>
-                                        <a class="nav-link {{ Request::is('dosen*') ? 'active' : '' }}" href="{{ route('dosen.auth-signin-page') }}">
+                                        <a class="nav-link {{ Request::is('dosen*') ? 'active' : '' }}"
+                                            href="{{ route('dosen.auth-signin-page') }}">
                                             <i class="fas fa-chalkboard-teacher mr-1"></i> Guru
                                         </a>
                                     </div>
@@ -140,13 +144,16 @@
                             <!-- Mobile menu, show/hide based on menu state -->
                             <div class="hidden md:hidden mt-4 border-t border-gray-200 pt-4" id="mobileMenu">
                                 <div class="flex flex-col space-y-2">
-                                    <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin.auth-signin-page') }}">
+                                    <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}"
+                                        href="{{ route('admin.auth-signin-page') }}">
                                         <i class="fas fa-user-shield mr-2"></i> Portal Admin
                                     </a>
-                                    <a class="nav-link {{ Request::is('mahasiswa*') ? 'active' : '' }}" href="{{ route('mahasiswa.auth-signin-page') }}">
+                                    <a class="nav-link {{ Request::is('mahasiswa*') ? 'active' : '' }}"
+                                        href="{{ route('mahasiswa.auth-signin-page') }}">
                                         <i class="fas fa-user-graduate mr-2"></i> Portal Siswa
                                     </a>
-                                    <a class="nav-link {{ Request::is('dosen*') ? 'active' : '' }}" href="{{ route('dosen.auth-signin-page') }}">
+                                    <a class="nav-link {{ Request::is('dosen*') ? 'active' : '' }}"
+                                        href="{{ route('dosen.auth-signin-page') }}">
                                         <i class="fas fa-chalkboard-teacher mr-2"></i> Portal Guru
                                     </a>
                                     <div class="mt-4">
@@ -198,18 +205,27 @@
         <div class="container mx-auto px-4 relative">
             <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="text-center md:text-left flex items-center space-x-4">
-                    <svg class="h-10 w-10 text-white transform hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-10 w-10 text-white transform hover:scale-110 transition-transform duration-300"
+                        fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
-                    <span class="font-bold text-xl hover:text-green-300 transition-colors duration-300">{{ $web->school_name }}</span>
+                    <span
+                        class="font-bold text-xl hover:text-green-300 transition-colors duration-300">{{ $web->school_name }}</span>
                 </div>
                 <div class="flex flex-wrap justify-center gap-6">
-                    <a href="#" class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Kebijakan Privasi</a>
-                    <a href="#" class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Syarat & Ketentuan</a>
-                    <a href="#" class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Peta Situs</a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Kebijakan
+                        Privasi</a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Syarat
+                        & Ketentuan</a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-white hover:underline transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base">Peta
+                        Situs</a>
                 </div>
                 <div class="text-center md:text-right">
-                    <p class="text-sm text-gray-300 hover:text-white transition-colors duration-300">© {{ date('Y') }} {{ $web->school_name }}. Hak Cipta Dilindungi.</p>
+                    <p class="text-sm text-gray-300 hover:text-white transition-colors duration-300">©
+                        {{ date('Y') }} {{ $web->school_name }}. Hak Cipta Dilindungi.</p>
                 </div>
             </div>
         </div>

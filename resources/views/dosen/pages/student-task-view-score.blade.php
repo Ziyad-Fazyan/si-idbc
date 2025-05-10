@@ -19,7 +19,8 @@
 @endsection
 @section('content')
     <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-8">
-        <form action="{{ route('dosen.akademik.stask-update-score', $score->code) }}" method="post" enctype="multipart/form-data" class="max-w-6xl mx-auto">
+        <form action="{{ route('dosen.akademik.stask-update-score', $score->code) }}" method="post"
+            enctype="multipart/form-data" class="max-w-6xl mx-auto">
             @method('PATCH')
             @csrf
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -30,48 +31,51 @@
                             Jawaban @yield('submenu')
                         </h2>
                         <div class="flex space-x-2 mt-2 md:mt-0">
-                            <button type="submit" class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                            <button type="submit"
+                                class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
                                 <i class="fa-solid fa-paper-plane"></i>
                                 <span>Simpan</span>
                             </button>
-                            <a href="@yield('urlmenu')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                            <a href="@yield('urlmenu')"
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
                                 <i class="fa-solid fa-backward"></i>
                                 <span>Kembali</span>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Card Body -->
                 <div class="p-6 space-y-6">
                     <!-- Student Info Row -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Nama Mahasiswa -->
                         <div>
-                            <label for="mhs_name" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Mahasiswa</label>
-                            <input type="text" readonly id="mhs_name" name="mhs_name" 
+                            <label for="mhs_name" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama
+                                Mahasiswa</label>
+                            <input type="text" readonly id="mhs_name" name="mhs_name"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
                                 value="{{ $score->student->mhs_name }}">
                             @error('mhs_name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        
+
                         <!-- Nama Kelas -->
                         <div>
                             <label for="mhs_class" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Kelas</label>
-                            <input type="text" readonly id="mhs_class" name="mhs_class" 
+                            <input type="text" readonly id="mhs_class" name="mhs_class"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
                                 value="{{ $score->student->kelas->name }}">
                             @error('mhs_class')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        
+
                         <!-- Hidden Student ID -->
                         <div class="hidden">
                             <label for="student_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">ID Student</label>
-                            <input type="text" readonly id="student_id" name="student_id" 
+                            <input type="text" readonly id="student_id" name="student_id"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
                                 value="{{ $score->student->id }}">
                             @error('student_id')
@@ -79,12 +83,13 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <!-- Score Input -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
                             <label for="score" class="block text-sm font-medium text-[#2E2E2E] mb-1">Score Tugas</label>
-                            <input type="number" {{ $score->score == null ? '' : 'readonly' }} id="score" name="score"
+                            <input type="number" {{ $score->score == null ? '' : 'readonly' }} id="score"
+                                name="score"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md text-[#2E2E2E] focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
                                 min="0" max="10" value="{{ $score->score == null ? null : $score->score }}"
                                 placeholder="Masukkan Nilai (0-10)">
@@ -93,18 +98,18 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <!-- Answer Detail -->
                     <div>
                         <label for="summernote" class="block text-sm font-medium text-[#2E2E2E] mb-1">Detail Jawaban</label>
-                        <textarea readonly name="desc" id="summernote" 
+                        <textarea readonly name="desc" id="summernote"
                             class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md text-[#2E2E2E] bg-gray-50 min-h-[200px]"
                             placeholder="Inputkan keterangan singkat mengenai jawaban tugas kamu...">{!! $score->desc !!}</textarea>
                         @error('desc')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <!-- Attachments -->
                     <div class="flex flex-wrap gap-2">
                         @for ($i = 1; $i <= 8; $i++)
@@ -124,29 +129,29 @@
 @endsection
 
 @section('custom-js')
-<script>
-    // Add any necessary JavaScript here
-    document.addEventListener('DOMContentLoaded', function() {
-        // Make the score input more interactive
-        const scoreInput = document.getElementById('score');
-        
-        if (scoreInput) {
-            scoreInput.addEventListener('focus', function() {
-                this.classList.add('ring-2', 'ring-[#FF6B35]', 'border-transparent');
-            });
-            
-            scoreInput.addEventListener('blur', function() {
-                this.classList.remove('ring-2', 'ring-[#FF6B35]', 'border-transparent');
-            });
-            
-            // Validate on change
-            scoreInput.addEventListener('change', function() {
-                if (this.value < 0) this.value = 0;
-                if (this.value > 10) this.value = 10;
-            });
-        }
-    });
-</script>
+    <script>
+        // Add any necessary JavaScript here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make the score input more interactive
+            const scoreInput = document.getElementById('score');
+
+            if (scoreInput) {
+                scoreInput.addEventListener('focus', function() {
+                    this.classList.add('ring-2', 'ring-[#FF6B35]', 'border-transparent');
+                });
+
+                scoreInput.addEventListener('blur', function() {
+                    this.classList.remove('ring-2', 'ring-[#FF6B35]', 'border-transparent');
+                });
+
+                // Validate on change
+                scoreInput.addEventListener('change', function() {
+                    if (this.value < 0) this.value = 0;
+                    if (this.value > 10) this.value = 10;
+                });
+            }
+        });
+    </script>
 @endsection
 @section('custom-js')
 @endsection

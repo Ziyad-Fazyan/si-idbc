@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +13,25 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .glitch {
             position: relative;
         }
 
-        .glitch::before, .glitch::after {
+        .glitch::before,
+        .glitch::after {
             content: "403";
             position: absolute;
             width: 100%;
@@ -43,11 +53,25 @@
         }
 
         @keyframes glitch-effect {
-            0% { transform: translate(0); }
-            25% { transform: translate(-5px, 2px); }
-            50% { transform: translate(5px, -2px); }
-            75% { transform: translate(2px, 5px); }
-            100% { transform: translate(0); }
+            0% {
+                transform: translate(0);
+            }
+
+            25% {
+                transform: translate(-5px, 2px);
+            }
+
+            50% {
+                transform: translate(5px, -2px);
+            }
+
+            75% {
+                transform: translate(2px, 5px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
         }
 
         .particles {
@@ -109,13 +133,23 @@
         }
 
         @keyframes pulse {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-            100% { transform: translateX(-50%) scale(1); }
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.1);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen flex items-center justify-center relative overflow-hidden">
+
+<body
+    class="bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen flex items-center justify-center relative overflow-hidden">
     <div class="particles" id="particles"></div>
 
     <div class="container mx-auto px-4 py-10 text-center z-10">
@@ -131,13 +165,16 @@
         <h1 class="text-9xl font-bold mb-4 glitch">403</h1>
         <h2 class="text-3xl font-medium mb-8">Access Forbidden</h2>
         <p class="text-xl text-gray-300 mb-6">You don't have permission to access this resource.</p>
-        <p class="text-lg text-gray-400 mb-10">Please check your credentials or contact the administrator if you believe this is an error.</p>
+        <p class="text-lg text-gray-400 mb-10">Please check your credentials or contact the administrator if you believe
+            this is an error.</p>
 
         <div class="flex flex-col md:flex-row gap-4 justify-center">
-            <a href="/" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
+            <a href="/"
+                class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
                 Back to Home
             </a>
-            <a href="/login" class="px-8 py-3 bg-transparent border border-gray-400 hover:border-white text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-300">
+            <a href="/login"
+                class="px-8 py-3 bg-transparent border border-gray-400 hover:border-white text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-300">
                 Sign In
             </a>
         </div>
@@ -240,4 +277,5 @@
         });
     </script>
 </body>
+
 </html>

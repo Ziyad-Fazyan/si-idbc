@@ -41,7 +41,8 @@
             <div class="w-full">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Card Hadir -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}" class="group transform transition-all duration-300 hover:-translate-y-1">
+                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
+                        class="group transform transition-all duration-300 hover:-translate-y-1">
                         <div class="bg-gradient-to-br from-[#0C6E71] to-[#0a5c5f] rounded-xl shadow-lg overflow-hidden">
                             <div class="p-6 flex items-center space-x-4">
                                 <div class="p-3 bg-white bg-opacity-20 rounded-full">
@@ -53,13 +54,16 @@
                                 </div>
                             </div>
                             <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i> Lihat detail
+                                <i
+                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
+                                Lihat detail
                             </div>
                         </div>
                     </a>
 
                     <!-- Card Izin & Cuti -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}" class="group transform transition-all duration-300 hover:-translate-y-1">
+                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
+                        class="group transform transition-all duration-300 hover:-translate-y-1">
                         <div class="bg-gradient-to-br from-[#FF6B35] to-[#e05a2b] rounded-xl shadow-lg overflow-hidden">
                             <div class="p-6 flex items-center space-x-4">
                                 <div class="p-3 bg-white bg-opacity-20 rounded-full">
@@ -71,13 +75,16 @@
                                 </div>
                             </div>
                             <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i> Lihat detail
+                                <i
+                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
+                                Lihat detail
                             </div>
                         </div>
                     </a>
 
                     <!-- Card Terlambat -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}" class="group transform transition-all duration-300 hover:-translate-y-1">
+                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
+                        class="group transform transition-all duration-300 hover:-translate-y-1">
                         <div class="bg-gradient-to-br from-[#FFC107] to-[#e0a800] rounded-xl shadow-lg overflow-hidden">
                             <div class="p-6 flex items-center space-x-4">
                                 <div class="p-3 bg-white bg-opacity-20 rounded-full">
@@ -89,7 +96,9 @@
                                 </div>
                             </div>
                             <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i> Lihat detail
+                                <i
+                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
+                                Lihat detail
                             </div>
                         </div>
                     </a>

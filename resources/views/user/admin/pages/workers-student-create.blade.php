@@ -25,10 +25,12 @@
                     <div class="flex items-center justify-between p-4 border-b border-gray-200">
                         <h4 class="text-lg font-semibold text-gray-800">Ubah Foto Profile</h4>
                         <div class="flex space-x-2">
-                            <a href="@yield('urlmenu')" class="px-3 py-2 border border-yellow-500 text-yellow-500 rounded hover:bg-yellow-500 hover:text-white transition-colors">
+                            <a href="@yield('urlmenu')"
+                                class="px-3 py-2 border border-yellow-500 text-yellow-500 rounded hover:bg-yellow-500 hover:text-white transition-colors">
                                 <i class="fa-solid fa-backward"></i>
                             </a>
-                            <button type="submit" class="px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded hover:bg-[#0C6E71] hover:text-white transition-colors">
+                            <button type="submit"
+                                class="px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded hover:bg-[#0C6E71] hover:text-white transition-colors">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
@@ -38,12 +40,14 @@
                             class="w-full h-auto rounded-lg mb-4" alt="Profile Picture">
                         <hr class="my-4 border-gray-200">
                         <div class="mb-4">
-                            <label for="mhs_image" class="block text-sm font-medium text-gray-700 mb-2">Upload Foto Profile</label>
+                            <label for="mhs_image" class="block text-sm font-medium text-gray-700 mb-2">Upload Foto
+                                Profile</label>
                             <div class="flex items-center">
                                 <input type="file"
                                     class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#0C6E71] file:text-white hover:file:bg-[#0A5A5C] focus:outline-none"
                                     name="mhs_image" id="mhs_image">
-                                <button type="submit" class="ml-2 px-3 py-2 bg-[#0C6E71] text-white rounded hover:bg-[#0A5A5C] transition-colors">
+                                <button type="submit"
+                                    class="ml-2 px-3 py-2 bg-[#0C6E71] text-white rounded hover:bg-[#0A5A5C] transition-colors">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </div>
@@ -61,20 +65,17 @@
                         <div x-data="{ activeTab: 'personal' }">
                             <div class="border-b border-gray-200">
                                 <nav class="-mb-px flex space-x-6">
-                                    <button type="button"
-                                        @click="activeTab = 'personal'"
+                                    <button type="button" @click="activeTab = 'personal'"
                                         :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'personal', 'text-gray-500 hover:text-gray-700': activeTab !== 'personal' }"
                                         class="py-4 px-1 font-medium text-sm">
                                         Personal
                                     </button>
-                                    <button type="button"
-                                        @click="activeTab = 'contact'"
+                                    <button type="button" @click="activeTab = 'contact'"
                                         :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'contact', 'text-gray-500 hover:text-gray-700': activeTab !== 'contact' }"
                                         class="py-4 px-1 font-medium text-sm">
                                         Kontak
                                     </button>
-                                    <button type="button"
-                                        @click="activeTab = 'security'"
+                                    <button type="button" @click="activeTab = 'security'"
                                         :class="{ 'border-b-2 border-[#0C6E71] text-[#0C6E71]': activeTab === 'security', 'text-gray-500 hover:text-gray-700': activeTab !== 'security' }"
                                         class="py-4 px-1 font-medium text-sm">
                                         Keamanan
@@ -86,7 +87,8 @@
                             <div x-show="activeTab === 'personal'" class="py-4">
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div>
-                                        <label for="mhs_name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                                        <label for="mhs_name" class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                            Lengkap</label>
                                         <input type="text" name="mhs_name" id="mhs_name"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama lengkap...">
@@ -96,7 +98,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_nim" class="block text-sm font-medium text-gray-700 mb-1">Nomor NIM</label>
+                                        <label for="mhs_nim" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                            NIM</label>
                                         <input type="text" name="mhs_nim" id="mhs_nim"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nomor NIM...">
@@ -106,7 +109,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="class_id" class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
+                                        <label for="class_id"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
                                         <select name="class_id" id="class_id"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20">
                                             <option value="" selected>Pilih Kelas</option>
@@ -120,7 +124,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_gend" class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                                        <label for="mhs_gend" class="block text-sm font-medium text-gray-700 mb-1">Jenis
+                                            Kelamin</label>
                                         <select name="mhs_gend" id="mhs_gend"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20">
                                             <option value="" selected>Pilih Jenis Kelamin</option>
@@ -133,7 +138,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_birthplace" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
+                                        <label for="mhs_birthplace"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
                                         <input type="text" name="mhs_birthplace" id="mhs_birthplace"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Tempat Lahir...">
@@ -143,7 +149,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_birthdate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
+                                        <label for="mhs_birthdate"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
                                         <input type="date" name="mhs_birthdate" id="mhs_birthdate"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Tanggal Lahir...">
@@ -153,7 +160,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_reli" class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
+                                        <label for="mhs_reli"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
                                         <select name="mhs_reli" id="mhs_reli"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20">
                                             <option value="" selected>Pilih Agama</option>
@@ -175,7 +183,8 @@
                             <div x-show="activeTab === 'contact'" class="py-4" style="display: none;">
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div>
-                                        <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor HandPhone</label>
+                                        <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                            HandPhone</label>
                                         <input type="text" name="mhs_phone" id="mhs_phone"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nomor handphone...">
@@ -185,7 +194,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_mail" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
+                                        <label for="mhs_mail" class="block text-sm font-medium text-gray-700 mb-1">Alamat
+                                            Email</label>
                                         <input type="email" name="mhs_mail" id="mhs_mail"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Email...">
@@ -195,7 +205,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_parent_father" class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah</label>
+                                        <label for="mhs_parent_father"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah</label>
                                         <input type="text" name="mhs_parent_father" id="mhs_parent_father"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama ayah...">
@@ -205,7 +216,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_parent_father_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ayah</label>
+                                        <label for="mhs_parent_father_phone"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ayah</label>
                                         <input type="text" name="mhs_parent_father_phone" id="mhs_parent_father_phone"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nomor telepon ayah...">
@@ -215,7 +227,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_parent_mother" class="block text-sm font-medium text-gray-700 mb-1">Nama Ibu</label>
+                                        <label for="mhs_parent_mother"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nama Ibu</label>
                                         <input type="text" name="mhs_parent_mother" id="mhs_parent_mother"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama ibu...">
@@ -225,7 +238,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_parent_mother_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ibu</label>
+                                        <label for="mhs_parent_mother_phone"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ibu</label>
                                         <input type="text" name="mhs_parent_mother_phone" id="mhs_parent_mother_phone"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nomor telepon ibu...">
@@ -235,7 +249,9 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_wali_name" class="block text-sm font-medium text-gray-700 mb-1">Nama Wali Mahasiswa</label>
+                                        <label for="mhs_wali_name"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nama Wali
+                                            Mahasiswa</label>
                                         <input type="text" name="mhs_wali_name" id="mhs_wali_name"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama wali...">
@@ -245,7 +261,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_wali_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Wali</label>
+                                        <label for="mhs_wali_phone"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Wali</label>
                                         <input type="text" name="mhs_wali_phone" id="mhs_wali_phone"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nomor telepon wali...">
@@ -255,7 +272,9 @@
                                     </div>
 
                                     <div class="lg:col-span-2">
-                                        <label for="mhs_addr_domisili" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili / Tempat Tinggal</label>
+                                        <label for="mhs_addr_domisili"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili /
+                                            Tempat Tinggal</label>
                                         <textarea cols="15" rows="4" name="mhs_addr_domisili" id="mhs_addr_domisili"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Alamat lengkap domisili / tempat tinggal..."></textarea>
@@ -265,7 +284,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_addr_kelurahan" class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
+                                        <label for="mhs_addr_kelurahan"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
                                         <input type="text" name="mhs_addr_kelurahan" id="mhs_addr_kelurahan"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama kelurahan...">
@@ -275,7 +295,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_addr_kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
+                                        <label for="mhs_addr_kecamatan"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
                                         <input type="text" name="mhs_addr_kecamatan" id="mhs_addr_kecamatan"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama kecamatan...">
@@ -285,7 +306,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_addr_kota" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
+                                        <label for="mhs_addr_kota"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
                                         <input type="text" name="mhs_addr_kota" id="mhs_addr_kota"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama kota...">
@@ -295,7 +317,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_addr_provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+                                        <label for="mhs_addr_provinsi"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
                                         <input type="text" name="mhs_addr_provinsi" id="mhs_addr_provinsi"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Nama provinsi...">
@@ -310,7 +333,8 @@
                             <div x-show="activeTab === 'security'" class="py-4" style="display: none;">
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div>
-                                        <label for="mhs_user" class="block text-sm font-medium text-gray-700 mb-1">Username Mahasiswa</label>
+                                        <label for="mhs_user"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Username Mahasiswa</label>
                                         <input type="text" name="mhs_user" id="mhs_user"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20"
                                             placeholder="Username...">
@@ -320,7 +344,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="mhs_stat" class="block text-sm font-medium text-gray-700 mb-1">Pilih Status Mahasiswa</label>
+                                        <label for="mhs_stat" class="block text-sm font-medium text-gray-700 mb-1">Pilih
+                                            Status Mahasiswa</label>
                                         <select name="mhs_stat" id="mhs_stat"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20">
                                             <option value="" selected>Pilih Status Mahasiswa</option>
@@ -335,7 +360,8 @@
                                     </div>
 
                                     <div>
-                                        <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
+                                        <label for="newPassword"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
                                         <div class="relative">
                                             <input type="password" name="new_password" id="newPassword"
                                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20 pr-10"
@@ -352,7 +378,9 @@
                                     </div>
 
                                     <div>
-                                        <label for="newPasswordKonfirm" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password Baru</label>
+                                        <label for="newPasswordKonfirm"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password
+                                            Baru</label>
                                         <div class="relative">
                                             <input type="password" name="new_password_confirmed" id="newPasswordKonfirm"
                                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#0C6E71] focus:ring focus:ring-[#0C6E71] focus:ring-opacity-20 pr-10"
@@ -378,57 +406,57 @@
 @endsection
 
 @push('styles')
-<style>
-    /* Additional custom styles */
-    .focus-within\:ring-2:focus-within {
-        --tw-ring-opacity: 1;
-        --tw-ring-color: rgba(12, 110, 113, var(--tw-ring-opacity));
-    }
+    <style>
+        /* Additional custom styles */
+        .focus-within\:ring-2:focus-within {
+            --tw-ring-opacity: 1;
+            --tw-ring-color: rgba(12, 110, 113, var(--tw-ring-opacity));
+        }
 
-    /* Transition effects */
-    .transition-all {
-        transition-property: all;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 150ms;
-    }
-</style>
+        /* Transition effects */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
 @endpush
 
 @section('custom-js')
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
-<script>
-    // Profile image preview
-    document.addEventListener('DOMContentLoaded', function() {
-        const imageInput = document.getElementById('mhs_image');
-        if (imageInput) {
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        document.getElementById('profile-preview').src = event.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+    <script>
+        // Profile image preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('mhs_image');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            document.getElementById('profile-preview').src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
 
-        // Toggle password visibility
-        const toggleButtons = document.querySelectorAll('.toggle-password');
-        toggleButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                const input = document.getElementById(targetId);
+            // Toggle password visibility
+            const toggleButtons = document.querySelectorAll('.toggle-password');
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
 
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    this.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-                } else {
-                    input.type = 'password';
-                    this.innerHTML = '<i class="fa-solid fa-eye"></i>';
-                }
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        this.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+                    } else {
+                        input.type = 'password';
+                        this.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

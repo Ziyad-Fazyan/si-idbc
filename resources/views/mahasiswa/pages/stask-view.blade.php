@@ -26,81 +26,83 @@
                         Lihat @yield('submenu')
                     </h2>
                     <div>
-                        <a href="@yield('urlmenu')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                        <a href="@yield('urlmenu')"
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
                             <i class="fa-solid fa-backward"></i>
                             <span>Kembali</span>
                         </a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="p-6 space-y-4">
                 <!-- Task Information Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Mata Kuliah -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Mata Kuliah</label>
-                        <input type="text" readonly 
-                            value="{{ $stask->jadkul->matkul->name }} - {{ $stask->jadkul->pert_id }}" 
+                        <input type="text" readonly
+                            value="{{ $stask->jadkul->matkul->name }} - {{ $stask->jadkul->pert_id }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
-                    
+
                     <!-- Due Date -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Batas Akhir Tanggal</label>
-                        <input type="date" readonly value="{{ $stask->exp_date }}" 
+                        <input type="date" readonly value="{{ $stask->exp_date }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
-                    
+
                     <!-- Due Time -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Batas Akhir Waktu</label>
-                        <input type="time" readonly value="{{ $stask->exp_time }}" 
+                        <input type="time" readonly value="{{ $stask->exp_time }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
                 </div>
-                
+
                 <!-- Task Title -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
-                    <input type="text" readonly value="{{ $stask->title }}" 
+                    <input type="text" readonly value="{{ $stask->title }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
                         placeholder="Masukkan nama judul tugas...">
                 </div>
-                
+
                 <!-- Task Details -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Detail Tugas</label>
-                    <textarea readonly rows="5"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
+                    <textarea readonly rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
                         placeholder="Inputkan detail tugas...">{!! $stask->detail_task !!}</textarea>
                 </div>
             </div>
         </div>
-        
+
         <!-- Task Submission Form -->
-        <form action="{{ route('mahasiswa.akademik.tugas-store', $stask->code) }}" method="post" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
+        <form action="{{ route('mahasiswa.akademik.tugas-store', $stask->code) }}" method="post"
+            enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
             @csrf
-            
+
             <div class="bg-[#0C6E71] px-6 py-4">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                     <h2 class="text-xl font-semibold text-white">
                         Jawaban @yield('submenu')
                     </h2>
-                    <button type="submit" class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                    <button type="submit"
+                        class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
                         <i class="fa-solid fa-paper-plane"></i>
                         <span>Kirim Jawaban</span>
                     </button>
                 </div>
             </div>
-            
+
             <div class="p-6 space-y-4">
                 <!-- File Uploads -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- File 1 (Required) -->
                     <div>
                         <label for="file_1" class="block text-sm font-medium text-gray-700 mb-1">File Tugas 1</label>
-                        <input type="file" id="file_1" name="file_1" 
+                        <input type="file" id="file_1" name="file_1"
                             class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -111,11 +113,12 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <!-- File 2 (Optional) -->
                     <div>
-                        <label for="file_2" class="block text-sm font-medium text-gray-700 mb-1">File Tugas 2 (Opsional)</label>
-                        <input type="file" id="file_2" name="file_2" 
+                        <label for="file_2" class="block text-sm font-medium text-gray-700 mb-1">File Tugas 2
+                            (Opsional)</label>
+                        <input type="file" id="file_2" name="file_2"
                             class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -126,11 +129,12 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <!-- File 3 (Optional) -->
                     <div>
-                        <label for="file_3" class="block text-sm font-medium text-gray-700 mb-1">File Tugas 3 (Opsional)</label>
-                        <input type="file" id="file_3" name="file_3" 
+                        <label for="file_3" class="block text-sm font-medium text-gray-700 mb-1">File Tugas 3
+                            (Opsional)</label>
+                        <input type="file" id="file_3" name="file_3"
                             class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -142,7 +146,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <!-- Answer Details -->
                 <div>
                     <label for="desc" class="block text-sm font-medium text-gray-700 mb-1">Detail Jawaban</label>
@@ -153,19 +157,23 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <!-- Deadline Warning -->
                 <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </div>
                         <div class="ml-3">
                             <p class="text-sm text-yellow-700">
-                                Pastikan mengumpulkan sebelum: 
-                                <span class="font-bold">{{ \Carbon\Carbon::parse($stask->exp_date.' '.$stask->exp_time)->format('d M Y H:i') }}</span>
+                                Pastikan mengumpulkan sebelum:
+                                <span
+                                    class="font-bold">{{ \Carbon\Carbon::parse($stask->exp_date . ' ' . $stask->exp_time)->format('d M Y H:i') }}</span>
                             </p>
                         </div>
                     </div>
@@ -176,29 +184,31 @@
 @endsection
 
 @section('custom-js')
-<script>
-    // File upload preview functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add event listeners for file inputs if you want preview functionality
-        const fileInputs = document.querySelectorAll('input[type="file"]');
-        
-        fileInputs.forEach(input => {
-            input.addEventListener('change', function(event) {
-                const fileName = event.target.files[0]?.name || 'No file chosen';
-                const label = event.target.nextElementSibling;
-                
-                // You could add file preview functionality here if needed
-                console.log(File selected: ${fileName});
+    <script>
+        // File upload preview functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for file inputs if you want preview functionality
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function(event) {
+                    const fileName = event.target.files[0]?.name || 'No file chosen';
+                    const label = event.target.nextElementSibling;
+
+                    // You could add file preview functionality here if needed
+                    console.log(File selected: $ {
+                        fileName
+                    });
+                });
             });
+
+            // Initialize Summernote or other rich text editor
+            if (document.getElementById('summernote')) {
+                // Initialize your rich text editor here
+                console.log('Initialize editor');
+            }
         });
-        
-        // Initialize Summernote or other rich text editor
-        if (document.getElementById('summernote')) {
-            // Initialize your rich text editor here
-            console.log('Initialize editor');
-        }
-    });
-</script>
+    </script>
 @endsection
 @section('custom-js')
 @endsection

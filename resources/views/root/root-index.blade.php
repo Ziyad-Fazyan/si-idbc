@@ -98,7 +98,8 @@
                             </h6>
 
                             @forelse ($notify as $item)
-                                <span>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y' . ' - ' . 'H' . '.' . 'i') }} -
+                                <span>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y' . ' - ' . 'H' . '.' . 'i') }}
+                                    -
                                     <a href="#" data-bs-toggle="modal"
                                         data-bs-target="#updateFakultas{{ $item->code }}">{{ $item->name }}</a></span><br>
                             @empty

@@ -26,62 +26,49 @@
                     <h2 class="text-xl font-semibold text-white">
                         @yield('menu')
                     </h2>
-                    <a href="{{ route('mahasiswa.home-tagihan-index') }}" 
-                       class="text-[#FF6B35] hover:text-orange-400 transition-colors duration-200">
+                    <a href="{{ route('mahasiswa.home-tagihan-index') }}"
+                        class="text-[#FF6B35] hover:text-orange-400 transition-colors duration-200">
                         <i class="fa-solid fa-backward text-xl"></i>
                     </a>
                 </div>
             </div>
-            
+
             <div class="p-6 sm:p-8">
-                <form id="payment-form" 
-                      action="{{ route('mahasiswa.home-tagihan-payment', $tagihan->code) }}"
-                      method="POST" 
-                      enctype="multipart/form-data"
-                      class="space-y-6">
+                <form id="payment-form" action="{{ route('mahasiswa.home-tagihan-payment', $tagihan->code) }}"
+                    method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
 
                     <div class="space-y-1">
                         <label for="name" class="block text-sm font-medium text-[#2E2E2E]">Name</label>
-                        <input type="text" 
-                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
-                               id="name" 
-                               readonly
-                               value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" 
-                               name="name">
+                        <input type="text"
+                            class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                            id="name" readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" name="name">
                     </div>
 
                     <div class="space-y-1">
                         <label for="email" class="block text-sm font-medium text-[#2E2E2E]">Email</label>
-                        <input type="email" 
-                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
-                               id="email" 
-                               readonly
-                               value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}" 
-                               name="email">
+                        <input type="email"
+                            class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                            id="email" readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}" name="email">
                     </div>
 
                     <div class="space-y-1">
                         <label for="amount" class="block text-sm font-medium text-[#2E2E2E]">Amount</label>
-                        <input type="number" 
-                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
-                               id="amount" 
-                               readonly 
-                               value="{{ $tagihan->price }}"
-                               name="amount">
+                        <input type="number"
+                            class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                            id="amount" readonly value="{{ $tagihan->price }}" name="amount">
                     </div>
 
                     <div class="space-y-1">
                         <label for="note" class="block text-sm font-medium text-[#2E2E2E]">Note</label>
-                        <textarea class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent min-h-[100px]"
-                                  id="note" 
-                                  name="note">Pembayaran Tagihan Kuliah {{ $tagihan->code }}</textarea>
+                        <textarea
+                            class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent min-h-[100px]"
+                            id="note" name="note">Pembayaran Tagihan Kuliah {{ $tagihan->code }}</textarea>
                     </div>
 
                     <div class="pt-4">
-                        <button type="submit" 
-                                id="pay-button"
-                                class="w-full bg-[#FF6B35] hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:ring-offset-2">
+                        <button type="submit" id="pay-button"
+                            class="w-full bg-[#FF6B35] hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:ring-offset-2">
                             Pay Now
                         </button>
                     </div>
@@ -94,25 +81,25 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('payment-form');
-        
+
         form.addEventListener('submit', function(e) {
             const button = document.getElementById('pay-button');
             button.disabled = true;
             button.innerHTML = 'Processing...';
-            
+
             // You can add additional payment processing logic here
             // For example, integrating with Midtrans or other payment gateway
-            
+
             // form.submit(); // Uncomment this if you want to auto-submit after processing
         });
-        
+
         // Add focus styles for better accessibility
         const inputs = form.querySelectorAll('input, textarea, button');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
                 this.parentElement.classList.add('ring-2', 'ring-[#0C6E71]', 'rounded-md');
             });
-            
+
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('ring-2', 'ring-[#0C6E71]', 'rounded-md');
             });

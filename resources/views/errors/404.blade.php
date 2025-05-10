@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,8 @@
             box-shadow: 0 0 25px rgba(107, 70, 193, 0.5);
         }
 
-        .spell-circle::before, .spell-circle::after {
+        .spell-circle::before,
+        .spell-circle::after {
             content: '';
             position: absolute;
             width: 100%;
@@ -50,8 +52,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .magic-rune {
@@ -65,8 +72,8 @@
             position: relative;
             background: linear-gradient(145deg, #2d3748, #1a202c);
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5),
-                        inset 0 5px 15px rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 5px 15px rgba(255, 255, 255, 0.1);
             padding: 3rem;
             z-index: 10;
             border: 1px solid #4a5568;
@@ -109,7 +116,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: 0.5s;
         }
 
@@ -129,10 +136,11 @@
         .ancient-text {
             font-family: 'Times New Roman', serif;
             color: #d1d5db;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
+
 <body class="fantasy-bg text-gray-100 min-h-screen flex items-center justify-center overflow-hidden p-4">
     <div class="dragon-silhouette"></div>
 
@@ -159,7 +167,8 @@
             <a href="/" class="magic-button px-8 py-3 rounded-lg font-medium">
                 Back to Home
             </a>
-            <button id="requestAccess" class="px-8 py-3 bg-gray-800 border border-purple-500 text-purple-300 rounded-lg font-medium hover:bg-gray-700 transition">
+            <button id="requestAccess"
+                class="px-8 py-3 bg-gray-800 border border-purple-500 text-purple-300 rounded-lg font-medium hover:bg-gray-700 transition">
                 Report Issue
             </button>
         </div>
@@ -232,8 +241,8 @@
                 for (let i = 0; i < 20; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'sparkle';
-                    particle.style.left = this.getBoundingClientRect().left + this.offsetWidth/2 + 'px';
-                    particle.style.top = this.getBoundingClientRect().top + this.offsetHeight/2 + 'px';
+                    particle.style.left = this.getBoundingClientRect().left + this.offsetWidth / 2 + 'px';
+                    particle.style.top = this.getBoundingClientRect().top + this.offsetHeight / 2 + 'px';
                     document.body.appendChild(particle);
 
                     gsap.to(particle, {
@@ -278,4 +287,5 @@
         });
     </script>
 </body>
+
 </html>

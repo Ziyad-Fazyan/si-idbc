@@ -104,8 +104,8 @@
                         <div class="position-relative">
                             <a href="#" class="overlay-container">
                                 <img class="w-100 active" style="border-radius: 20px;"
-                                    src="{{ asset('storage/' . $album->{'file_' . $i}) }}" data-bs-target="#Gallerycarousel"
-                                    data-bs-slide-to="{{ $i - 1 }}">
+                                    src="{{ asset('storage/' . $album->{'file_' . $i}) }}"
+                                    data-bs-target="#Gallerycarousel" data-bs-slide-to="{{ $i - 1 }}">
                                 <span class="overlay-text">Gallery Foto {{ $i }}</span>
                             </a>
                         </div>
@@ -128,7 +128,8 @@
                 // Lakukan validasi minimal satu karakter sebelum melakukan pencarian
                 if (query.length > 0) {
                     // Kirim permintaan pencarian ke endpoint yang sesuai
-                    fetch(`{{ route($prefix . 'publish.album-index') }}?query=${encodeURIComponent(query)}`)
+                    fetch(
+                            `{{ route($prefix . 'publish.album-index') }}?query=${encodeURIComponent(query)}`)
                         .then(response => response.json())
                         .then(data => {
                             // Handle data yang diterima dari server

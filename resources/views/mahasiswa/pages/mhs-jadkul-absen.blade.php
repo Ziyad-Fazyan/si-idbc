@@ -82,9 +82,9 @@
 
             table td::before {
                 /*
-        * aria-label has no advantage, it won't be read inside a table
-        content: attr(aria-label);
-        */
+            * aria-label has no advantage, it won't be read inside a table
+            content: attr(aria-label);
+            */
                 content: attr(data-label);
                 float: left;
                 font-weight: bold;
@@ -99,8 +99,8 @@
 @endsection
 @section('content')
     <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
-        <form action="{{ route('mahasiswa.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data" 
-              class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <form action="{{ route('mahasiswa.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data"
+            class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
             @csrf
 
             <!-- Card Header -->
@@ -109,12 +109,12 @@
                     @yield('submenu')
                 </h2>
                 <div class="flex space-x-2">
-                    <a href="{{ route('mahasiswa.home-jadkul-index') }}" 
-                       class="p-2 bg-white text-[#0C6E71] rounded-md hover:bg-[#E4E2DE] transition-colors">
+                    <a href="{{ route('mahasiswa.home-jadkul-index') }}"
+                        class="p-2 bg-white text-[#0C6E71] rounded-md hover:bg-[#E4E2DE] transition-colors">
                         <i class="fa-solid fa-backward"></i>
                     </a>
-                    <button type="submit" 
-                            class="p-2 bg-[#FF6B35] text-white rounded-md hover:bg-[#E55C2B] transition-colors">
+                    <button type="submit"
+                        class="p-2 bg-[#FF6B35] text-white rounded-md hover:bg-[#E55C2B] transition-colors">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
@@ -128,10 +128,11 @@
                         Bukti Absensi
                     </label>
                     <div class="border-2 border-dashed border-[#E4E2DE] rounded-lg p-4 text-center">
-                        <img id="proof-preview" src="" alt="Preview bukti absensi" class="hidden w-full h-auto mb-2 rounded">
-                        <input type="file" name="absen_proof" id="absen_proof" 
-                               class="block w-full text-sm text-[#3B3B3B] file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#0C6E71] file:text-white hover:file:bg-[#0A5C5F]"
-                               onchange="previewImage(this)">
+                        <img id="proof-preview" src="" alt="Preview bukti absensi"
+                            class="hidden w-full h-auto mb-2 rounded">
+                        <input type="file" name="absen_proof" id="absen_proof"
+                            class="block w-full text-sm text-[#3B3B3B] file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#0C6E71] file:text-white hover:file:bg-[#0A5C5F]"
+                            onchange="previewImage(this)">
                         <p class="text-xs text-[#3B3B3B] mt-1">Format: JPG, PNG (Maks. 2MB)</p>
                     </div>
                     @error('absen_proof')
@@ -148,9 +149,9 @@
                     <label for="jadkul_name" class="block text-sm font-medium text-[#2E2E2E]">
                         Absen Mata Kuliah
                     </label>
-                    <input type="text" name="jadkul_name" id="jadkul_name" 
-                           value="{{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}" readonly
-                           class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
+                    <input type="text" name="jadkul_name" id="jadkul_name"
+                        value="{{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}" readonly
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('jadkul_name')
                         <p class="text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -161,9 +162,9 @@
                     <label for="author_name" class="block text-sm font-medium text-[#2E2E2E]">
                         Nama Mahasiswa
                     </label>
-                    <input type="text" name="author_name" id="author_name" 
-                           value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" readonly
-                           class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
+                    <input type="text" name="author_name" id="author_name"
+                        value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" readonly
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('author_name')
                         <p class="text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -174,9 +175,9 @@
                     <label for="author_class" class="block text-sm font-medium text-[#2E2E2E]">
                         Kelas Mahasiswa
                     </label>
-                    <input type="text" name="author_class" id="author_class" 
-                           value="{{ Auth::guard('mahasiswa')->user()->kelas->name }}" readonly
-                           class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
+                    <input type="text" name="author_class" id="author_class"
+                        value="{{ Auth::guard('mahasiswa')->user()->kelas->name }}" readonly
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('author_class')
                         <p class="text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -187,8 +188,8 @@
                     <label for="absen_type" class="block text-sm font-medium text-[#2E2E2E]">
                         Jenis Kehadiran
                     </label>
-                    <select name="absen_type" id="absen_type" 
-                            class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] text-[#2E2E2E]">
+                    <select name="absen_type" id="absen_type"
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] text-[#2E2E2E]">
                         <option value="">Pilih Jenis Kehadiran</option>
                         <option value="H">Hadir</option>
                         <option value="I">Izin</option>
@@ -204,9 +205,9 @@
                     <label for="absen_date" class="block text-sm font-medium text-[#2E2E2E]">
                         Tanggal Perkuliahan
                     </label>
-                    <input type="date" name="absen_date" id="absen_date" 
-                           value="{{ \Carbon\Carbon::now()->toDateString() }}" readonly
-                           class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
+                    <input type="date" name="absen_date" id="absen_date"
+                        value="{{ \Carbon\Carbon::now()->toDateString() }}" readonly
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('absen_date')
                         <p class="text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -217,8 +218,8 @@
                     <label for="absen_time" class="block text-sm font-medium text-[#2E2E2E]">
                         Waktu Absen
                     </label>
-                    <input type="time" name="absen_time" id="absen_time" 
-                           class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] text-[#2E2E2E]">
+                    <input type="time" name="absen_time" id="absen_time"
+                        class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] text-[#2E2E2E]">
                     @error('absen_time')
                         <p class="text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -232,15 +233,15 @@
         function previewImage(input) {
             const preview = document.getElementById('proof-preview');
             const file = input.files[0];
-            
+
             if (file) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                 }
-                
+
                 reader.readAsDataURL(file);
             }
         }

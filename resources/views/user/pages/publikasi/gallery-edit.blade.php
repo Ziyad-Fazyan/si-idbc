@@ -13,7 +13,8 @@
 @endsection
 @section('content')
     <section class="section">
-        <form action="{{ route($prefix . 'publish.album-update', $album->slug) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route($prefix . 'publish.album-update', $album->slug) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 

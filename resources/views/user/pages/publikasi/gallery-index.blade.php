@@ -17,36 +17,35 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="w-full md:w-auto">
                     <form action="{{ route($prefix . 'publish.album-search') }}" method="GET" class="flex">
-                        <input type="search" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-1 focus:ring-[#0C6E71] focus:border-[#0C6E71]" 
-                               placeholder="Search here..." 
-                               name="search" 
-                               id="search">
-                        <button type="submit" 
-                                class="flex items-center justify-center px-4 py-2 bg-[#0C6E71] text-white rounded-r hover:bg-[#095456] transition-colors duration-200">
+                        <input type="search"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-1 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
+                            placeholder="Search here..." name="search" id="search">
+                        <button type="submit"
+                            class="flex items-center justify-center px-4 py-2 bg-[#0C6E71] text-white rounded-r hover:bg-[#095456] transition-colors duration-200">
                             <i class="fa-solid fa-search"></i>
                         </button>
                     </form>
                 </div>
                 <div>
-                    <a href="{{ route($prefix . 'publish.album-create') }}" 
-                       class="inline-flex items-center px-4 py-2 bg-[#0C6E71] text-white rounded hover:bg-[#095456] transition-colors duration-200">
+                    <a href="{{ route($prefix . 'publish.album-create') }}"
+                        class="inline-flex items-center px-4 py-2 bg-[#0C6E71] text-white rounded hover:bg-[#095456] transition-colors duration-200">
                         <i class="fa-solid fa-plus mr-2"></i> Create
                     </a>
                 </div>
             </div>
         </div>
-        
+
         <div class="w-full">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach ($album as $item)
                     <div class="relative group">
-                        <a href="{{ route($prefix . 'publish.album-show', $item->slug) }}" 
-                           class="block overflow-hidden rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]">
-                            <img class="w-full h-48 object-cover" 
-                                 src="{{ asset('storage/' . $item->cover) }}" 
-                                 alt="{{ $item->name }}">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 rounded-xl"></div>
+                        <a href="{{ route($prefix . 'publish.album-show', $item->slug) }}"
+                            class="block overflow-hidden rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]">
+                            <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $item->cover) }}"
+                                alt="{{ $item->name }}">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 rounded-xl">
+                            </div>
                             <span class="absolute bottom-0 left-0 right-0 p-4 text-white font-medium text-center">
                                 {{ $item->name }}
                             </span>
@@ -54,7 +53,7 @@
                     </div>
                 @endforeach
             </div>
-            
+
             <div class="mt-8">
                 {{ $album->links('root.vendor.paginator') }}
             </div>
@@ -69,10 +68,10 @@
             if (searchForm) {
                 searchForm.addEventListener('submit', function(event) {
                     event.preventDefault();
-                    
+
                     const searchInput = document.getElementById('search');
                     const query = searchInput.value.trim();
-                    
+
                     if (query.length > 0) {
                         // Show loading indicator
                         const resultsContainer = document.querySelector('.grid');
@@ -86,7 +85,7 @@
                                 </div>
                             `;
                         }
-                        
+
                         // Send search request
                         fetch(`${this.action}?search=${encodeURIComponent(query)}`)
                             .then(response => {
@@ -101,11 +100,11 @@
                                 const doc = parser.parseFromString(html, 'text/html');
                                 const newContent = doc.querySelector('.grid');
                                 const pagination = doc.querySelector('.mt-8');
-                                
+
                                 if (newContent && resultsContainer) {
                                     resultsContainer.innerHTML = newContent.innerHTML;
                                 }
-                                
+
                                 const paginationContainer = document.querySelector('.mt-8');
                                 if (pagination && paginationContainer) {
                                     paginationContainer.innerHTML = pagination.innerHTML;
@@ -137,24 +136,24 @@
         .group:hover img {
             filter: brightness(1.05);
         }
-        
+
         /* Improve pagination styling (if needed) */
         .pagination {
             @apply flex justify-center space-x-1 mt-6;
         }
-        
+
         .pagination .page-item {
             @apply inline-block;
         }
-        
+
         .pagination .page-link {
             @apply px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded;
         }
-        
+
         .pagination .active .page-link {
             @apply bg-[#0C6E71] text-white border-[#0C6E71];
         }
-        
+
         .pagination .disabled .page-link {
             @apply bg-gray-100 text-gray-400 cursor-not-allowed;
         }

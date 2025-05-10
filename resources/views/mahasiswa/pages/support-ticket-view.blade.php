@@ -19,22 +19,24 @@
 @section('content')
     <section class="min-h-screen bg-gray-50 p-4 md:p-8">
         <!-- Reply Form -->
-        <form action="{{ route('mahasiswa.support.ticket-store-reply', $ticket->code) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+        <form action="{{ route('mahasiswa.support.ticket-store-reply', $ticket->code) }}" method="POST"
+            enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
             @csrf
-            
+
             <!-- Card Header -->
             <div class="bg-[#0C6E71] px-6 py-4">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                     <h2 class="text-xl font-semibold text-white">
                         Lihat @yield('menu')
                     </h2>
-                    <a href="@yield('urlmenu')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors mt-2 md:mt-0">
+                    <a href="@yield('urlmenu')"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors mt-2 md:mt-0">
                         <i class="fa-solid fa-backward"></i>
                         <span>Kembali</span>
                     </a>
                 </div>
             </div>
-            
+
             <!-- Card Body -->
             <div class="p-6 space-y-4">
                 <!-- Ticket Info Grid -->
@@ -42,39 +44,39 @@
                     <!-- Student Name -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Mahasiswa</label>
-                        <input type="text" readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" 
+                        <input type="text" readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
-                    
+
                     <!-- Department -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Departement</label>
-                        <input type="text" readonly value="{{ $ticket->dept_id }}" 
+                        <input type="text" readonly value="{{ $ticket->dept_id }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
-                    
+
                     <!-- Priority Level -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Level Prioritas</label>
-                        <input type="text" readonly value="{{ $ticket->prio_id }}" 
+                        <input type="text" readonly value="{{ $ticket->prio_id }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
                 </div>
-                
+
                 <!-- Subject and Status -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="md:col-span-3">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                        <input type="text" readonly value="{{ $ticket->subject }}" 
+                        <input type="text" readonly value="{{ $ticket->subject }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <input type="text" readonly value="{{ $ticket->stat_id }}" 
+                        <input type="text" readonly value="{{ $ticket->stat_id }}"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
                 </div>
-                
+
                 <!-- Message Editor -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Balasan Anda</label>
@@ -85,17 +87,18 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <!-- Submit Button -->
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-6 py-2 rounded-md flex items-center space-x-2 transition-colors">
+                    <button type="submit"
+                        class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-6 py-2 rounded-md flex items-center space-x-2 transition-colors">
                         <i class="fa-solid fa-paper-plane"></i>
                         <span>Kirim Balasan</span>
                     </button>
                 </div>
             </div>
         </form>
-        
+
         <!-- Conversation Thread -->
         <div class="space-y-4" id="support-container">
             <!-- Existing Replies -->
@@ -107,7 +110,7 @@
                             <div class="md:w-1/4">
                                 <div class="flex items-start space-x-3">
                                     @if ($item->users_id !== null)
-                                        <img src="{{ asset('storage/images/' . $item->users->mhs_image) }}" 
+                                        <img src="{{ asset('storage/images/' . $item->users->mhs_image) }}"
                                             class="w-12 h-12 rounded-full object-cover border-2 border-[#0C6E71]">
                                         <div>
                                             <p class="font-semibold">{{ $item->users->mhs_name }}</p>
@@ -115,7 +118,7 @@
                                             <p class="text-xs text-gray-400">Kelas {{ $item->users->kelas->name }}</p>
                                         </div>
                                     @elseif ($item->admin_id !== null)
-                                        <img src="{{ asset('storage/images/' . $item->admin->image) }}" 
+                                        <img src="{{ asset('storage/images/' . $item->admin->image) }}"
                                             class="w-12 h-12 rounded-full object-cover border-2 border-[#0C6E71]">
                                         <div>
                                             <p class="font-semibold">{{ $item->admin->name }}</p>
@@ -130,7 +133,7 @@
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <!-- Message Content -->
                             <div class="md:w-3/4">
                                 <div class="prose max-w-none">
@@ -141,7 +144,7 @@
                     </div>
                 </div>
             @endforeach
-            
+
             <!-- Original Ticket -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-6">
@@ -149,7 +152,7 @@
                         <!-- User Info -->
                         <div class="md:w-1/4">
                             <div class="flex items-start space-x-3">
-                                <img src="{{ asset('storage/images/' . $ticket->users->mhs_image) }}" 
+                                <img src="{{ asset('storage/images/' . $ticket->users->mhs_image) }}"
                                     class="w-12 h-12 rounded-full object-cover border-2 border-[#0C6E71]">
                                 <div>
                                     <p class="font-semibold">{{ $ticket->users->mhs_name }}</p>
@@ -158,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Message Content -->
                         <div class="md:w-3/4">
                             <div class="prose max-w-none">
