@@ -1,7 +1,7 @@
 <div class="sidebar-menu">
     <!-- Financial Menu Section -->
-    <li class="list-none text-xs font-semibold uppercas text-gray-500 mt-5 mb-2 ml-3">Menu Finansial</li>
-    <li class="list-none sidebar-item has-sub {{ Route::is($prefix . 'finance.*') ? 'active' : '' }}">
+    <li class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">Menu Finansial</li>
+    <li class="sidebar-item has-sub {{ Route::is($prefix . 'finance.*') ? 'active' : '' }}">
         <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ Route::is($prefix . 'finance.*') ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
             data-target="dropdown-finance">
             <div class="flex items-center sidebar-link">
@@ -24,8 +24,8 @@
     </li>
 
     <!-- Administration Menu Section -->
-    <li class="list-none text-xs font-semibold uppercas text-gray-500 mt-5 mb-2 ml-3">Menu Administrasi</li>
-    <li class="list-none sidebar-item has-sub {{ Route::is('web-admin.approval.*') ? 'active' : '' }}">
+    <li class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">Menu Administrasi</li>
+    <li class="sidebar-item has-sub {{ Route::is('web-admin.approval.*') ? 'active' : '' }}">
         <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ Route::is('web-admin.approval.*') ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
             data-target="dropdown-approval">
             <div class="flex items-center sidebar-link">
