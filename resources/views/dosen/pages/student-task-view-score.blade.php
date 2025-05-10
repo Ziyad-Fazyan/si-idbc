@@ -18,71 +18,102 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4-dark.css" rel="stylesheet">
 @endsection
 @section('content')
-    <section class="section">
-        <form action="{{ route('dosen.akademik.stask-update-score', $score->code) }}" method="post"
-            enctype="multipart/form-data">
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-8">
+        <form action="{{ route('dosen.akademik.stask-update-score', $score->code) }}" method="post" enctype="multipart/form-data" class="max-w-6xl mx-auto">
             @method('PATCH')
             @csrf
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title d-flex justify-content-between align-items-center">
-                        Jawaban @yield('submenu')
-                        <div class="">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
-                            <a href="@yield('urlmenu')" class="btn mt-1 btn-warning"><i
-                                    class="fa-solid fa-backward"></i></a>
-
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-[#0C6E71] px-6 py-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 class="text-xl font-semibold text-white">
+                            Jawaban @yield('submenu')
+                        </h2>
+                        <div class="flex space-x-2 mt-2 md:mt-0">
+                            <button type="submit" class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Simpan</span>
+                            </button>
+                            <a href="@yield('urlmenu')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                                <i class="fa-solid fa-backward"></i>
+                                <span>Kembali</span>
+                            </a>
                         </div>
-                    </h5>
+                    </div>
                 </div>
-                <div class="card-body row">
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="mhs_name">Nama Mahasiswa</label>
-                        <input type="text" readonly id="mhs_name" name="mhs_name" class="form-control"
-                            value="{{ $score->student->mhs_name }}">
-                        @error('mhs_name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                
+                <!-- Card Body -->
+                <div class="p-6 space-y-6">
+                    <!-- Student Info Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Nama Mahasiswa -->
+                        <div>
+                            <label for="mhs_name" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Mahasiswa</label>
+                            <input type="text" readonly id="mhs_name" name="mhs_name" 
+                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
+                                value="{{ $score->student->mhs_name }}">
+                            @error('mhs_name')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
+                        <!-- Nama Kelas -->
+                        <div>
+                            <label for="mhs_class" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Kelas</label>
+                            <input type="text" readonly id="mhs_class" name="mhs_class" 
+                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
+                                value="{{ $score->student->kelas->name }}">
+                            @error('mhs_class')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
+                        <!-- Hidden Student ID -->
+                        <div class="hidden">
+                            <label for="student_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">ID Student</label>
+                            <input type="text" readonly id="student_id" name="student_id" 
+                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
+                                value="{{ $score->student->id }}">
+                            @error('student_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="mhs_class">Nama Kelas</label>
-                        <input type="text" readonly id="mhs_class" name="mhs_class" class="form-control"
-                            value="{{ $score->student->kelas->name }}">
-                        @error('mhs_class')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    
+                    <!-- Score Input -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="score" class="block text-sm font-medium text-[#2E2E2E] mb-1">Score Tugas</label>
+                            <input type="number" {{ $score->score == null ? '' : 'readonly' }} id="score" name="score"
+                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md text-[#2E2E2E] focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                                min="0" max="10" value="{{ $score->score == null ? null : $score->score }}"
+                                placeholder="Masukkan Nilai (0-10)">
+                            @error('score')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="form-group col-lg-4 col-12" style="display: none;">
-                        <label for="student_id">ID Student</label>
-                        <input type="text" readonly id="student_id" name="student_id" class="form-control"
-                            value="{{ $score->student->id }}">
-                        @error('student_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-4 col-12">
-                        <label for="score">Score Tugas</label>
-                        <input type="number" {{ $score->score == null ? '' : 'readonly' }} id="score" name="score"
-                            class="form-control" min="0" max="10"
-                            value="{{ $score->score == null ? null : $score->score }}"
-                            placeholder="Masukkan Nilai untuk mahasiswa">
-                        @error('score')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group col-lg-12 col-12">
-                        <label for="desc">Detail Jawaban</label>
-                        <textarea readonly name="desc" id="summernote" cols="30" rows="10" class="form-control"
+                    
+                    <!-- Answer Detail -->
+                    <div>
+                        <label for="summernote" class="block text-sm font-medium text-[#2E2E2E] mb-1">Detail Jawaban</label>
+                        <textarea readonly name="desc" id="summernote" 
+                            class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md text-[#2E2E2E] bg-gray-50 min-h-[200px]"
                             placeholder="Inputkan keterangan singkat mengenai jawaban tugas kamu...">{!! $score->desc !!}</textarea>
                         @error('desc')
-                            <small class="text-danger">{{ $message }}</small>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="form-group col-lg-12 col-12">
+                    
+                    <!-- Attachments -->
+                    <div class="flex flex-wrap gap-2">
                         @for ($i = 1; $i <= 8; $i++)
                             @if (!empty($score->{'file_' . $i}))
-                                <a href="{{ asset('storage/uploads/' . $score->{'file_' . $i}) }}" download>Lampiran
-                                    {{ $i }} ,</a>
+                                <a href="{{ asset('storage/uploads/' . $score->{'file_' . $i}) }}" download
+                                    class="inline-flex items-center px-3 py-1 bg-[#0C6E71] text-white rounded-md hover:bg-[#0A5D60] transition-colors">
+                                    <i class="fa-solid fa-download mr-1"></i>
+                                    Lampiran {{ $i }}
+                                </a>
                             @endif
                         @endfor
                     </div>
@@ -90,6 +121,32 @@
             </div>
         </form>
     </section>
+@endsection
+
+@section('custom-js')
+<script>
+    // Add any necessary JavaScript here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Make the score input more interactive
+        const scoreInput = document.getElementById('score');
+        
+        if (scoreInput) {
+            scoreInput.addEventListener('focus', function() {
+                this.classList.add('ring-2', 'ring-[#FF6B35]', 'border-transparent');
+            });
+            
+            scoreInput.addEventListener('blur', function() {
+                this.classList.remove('ring-2', 'ring-[#FF6B35]', 'border-transparent');
+            });
+            
+            // Validate on change
+            scoreInput.addEventListener('change', function() {
+                if (this.value < 0) this.value = 0;
+                if (this.value > 10) this.value = 10;
+            });
+        }
+    });
+</script>
 @endsection
 @section('custom-js')
 @endsection

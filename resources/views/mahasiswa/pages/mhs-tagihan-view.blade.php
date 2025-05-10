@@ -19,57 +19,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 @endsection
 @section('content')
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                    @yield('menu')
-                    <div class="">
-                        <a href="{{ route('mahasiswa.home-tagihan-index') }}" class="btn btn-outline-warning"><i
-                                class="fa-solid fa-backward"></i></a>
-                    </div>
-                </h5>
+    <section class="min-h-screen bg-[#F3EFEA] py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-[#0C6E71] px-6 py-4 border-b border-[#E4E2DE]">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-white">
+                        @yield('menu')
+                    </h2>
+                    <a href="{{ route('mahasiswa.home-tagihan-index') }}" 
+                       class="text-[#FF6B35] hover:text-orange-400 transition-colors duration-200">
+                        <i class="fa-solid fa-backward text-xl"></i>
+                    </a>
+                </div>
             </div>
-            <div class="card-body ">
-                <form id="payment-form" action="{{ route('mahasiswa.home-tagihan-payment', $tagihan->code) }}"
-                    method="POST" enctype="multipart/form-data">
+            
+            <div class="p-6 sm:p-8">
+                <form id="payment-form" 
+                      action="{{ route('mahasiswa.home-tagihan-payment', $tagihan->code) }}"
+                      method="POST" 
+                      enctype="multipart/form-data"
+                      class="space-y-6">
                     @csrf
 
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" readonly
-                            value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" name="name">
+                    <div class="space-y-1">
+                        <label for="name" class="block text-sm font-medium text-[#2E2E2E]">Name</label>
+                        <input type="text" 
+                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                               id="name" 
+                               readonly
+                               value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" 
+                               name="name">
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" readonly
-                            value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}" name="email">
+                    <div class="space-y-1">
+                        <label for="email" class="block text-sm font-medium text-[#2E2E2E]">Email</label>
+                        <input type="email" 
+                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                               id="email" 
+                               readonly
+                               value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}" 
+                               name="email">
                     </div>
 
-                    <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="number" class="form-control" id="amount" readonly value="{{ $tagihan->price }}"
-                            name="amount">
+                    <div class="space-y-1">
+                        <label for="amount" class="block text-sm font-medium text-[#2E2E2E]">Amount</label>
+                        <input type="number" 
+                               class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                               id="amount" 
+                               readonly 
+                               value="{{ $tagihan->price }}"
+                               name="amount">
                     </div>
 
-                    <div class="form-group">
-                        <label for="note">Note</label>
-                        <textarea class="form-control" id="note" name="note">Pembayaran Tagihan Kuliah {{ $tagihan->code }}</textarea>
+                    <div class="space-y-1">
+                        <label for="note" class="block text-sm font-medium text-[#2E2E2E]">Note</label>
+                        <textarea class="w-full px-4 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent min-h-[100px]"
+                                  id="note" 
+                                  name="note">Pembayaran Tagihan Kuliah {{ $tagihan->code }}</textarea>
                     </div>
-                    {{-- <div class="form-group">
-                    <label for="SnapToken">SnapToken</label>
-                    <input class="form-control" id="snap-token" name="snapToken">
-                </div> --}}
 
-                    <button type="submit" id="pay-button" class="btn btn-primary">Pay Now</button>
+                    <div class="pt-4">
+                        <button type="submit" 
+                                id="pay-button"
+                                class="w-full bg-[#FF6B35] hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:ring-offset-2">
+                            Pay Now
+                        </button>
+                    </div>
                 </form>
-
             </div>
         </div>
-
     </section>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('payment-form');
+        
+        form.addEventListener('submit', function(e) {
+            const button = document.getElementById('pay-button');
+            button.disabled = true;
+            button.innerHTML = 'Processing...';
+            
+            // You can add additional payment processing logic here
+            // For example, integrating with Midtrans or other payment gateway
+            
+            // form.submit(); // Uncomment this if you want to auto-submit after processing
+        });
+        
+        // Add focus styles for better accessibility
+        const inputs = form.querySelectorAll('input, textarea, button');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('ring-2', 'ring-[#0C6E71]', 'rounded-md');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('ring-2', 'ring-[#0C6E71]', 'rounded-md');
+            });
+        });
+    });
+</script>
 @section('custom-js')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientKey') }}"></script>

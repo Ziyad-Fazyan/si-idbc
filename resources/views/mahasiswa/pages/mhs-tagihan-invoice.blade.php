@@ -2,235 +2,155 @@
 <html lang='en' class=''>
 
 <head>
-
     <meta charset='UTF-8'>
-    <title>CodePen Demo</title>
-
+    <title>Invoice - ESEC Academy</title>
     <meta name="robots" content="noindex">
-
-    <link rel="shortcut icon" type="image/x-icon"
-        href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
-    <link rel="mask-icon"
-        href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg"
-        color="#111">
-    <link rel="canonical" href="https://codepen.io/zarbyasir/pen/ZEYGNVw">
-
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
-
-    <style id="INLINE_PEN_STYLESHEET_ID">
-        /*
-    Colors
-    rgb(249, 99, 50); orange flame
-    rgb(255, 77, 77); red
-    rgb(198, 89, 99); red'ish
-    */
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
         @page {
-            bleed: 1cm;
             size: A4 portrait;
-            size: auto;
-            /* auto is the initial value */
-            margin-left: 0mm;
-            /* this affects the margin in the printer settings */
-            margin-bottom: 0mm;
-            margin-top: 0mm;
-
-            html {
-                background-color: #FFFFFF;
-                margin: 0px;
-                /* this affects the margin on the html before sending to printer */
-            }
-
-            body {
-                border: solid 1px blue;
-                margin: 10mm 15mm 10mm 15mm;
-                /* margin you want for the content */
-            }
+            margin: 0;
         }
-
+        
         @media print {
-            .page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: white;
+            }
+            
+            .page-break {
                 page-break-after: always;
             }
+            
+            .no-print {
+                display: none;
+            }
         }
-
+        
         body {
-            background: #eee;
-            font-familly: roboto;
-            -webkit-print-color-adjust: exact !important;
-        }
-
-        div.container {
-            border-radius: 15px;
-            background: white;
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        div.invoice-letter {
-            min-height: 150px;
-            background-color: #04617B;
-            box-shadow: 0 4px 3px rgba(0, 0, 0, 0.4);
-        }
-
-
-
-        table.invoice thead th {
-            background-color: rgba(4, 97, 123, 0.2);
-            border-top: none;
-        }
-
-        table.invoice thead tr:first-child th:first-child {
-            border-top-left-radius: 10px;
-        }
-
-        table.invoice thead tr:first-child th:last-child {
-            border-top-right-radius: 10px;
-        }
-
-        tr.last-row {
-            background-color: rgba(4, 97, 123, 0.2);
-            font-size: 16px;
-
-        }
-
-        tr.last-row th {
-            border-bottom-left-radius: 10px;
-            width: 30px;
-            font-size: 16px;
-
-        }
-
-        tr.last-row td {
-            border-bottom-right-radius: 10px;
-            font-size: 16px;
-        }
-
-        div.row div.to {
-            height: 260px;
-            /* padding-right: 25px; */
-            border-right: 2px solid rgba(4, 97, 123, 0.2);
+            font-family: 'Roboto', sans-serif;
+            background-color: #F3EFEA;
         }
     </style>
-
-
 </head>
 
-<body>
-    <div class="container my-5 px-5 py-5">
-        <table style="width: 100%;">
-            <tr>
-                <td style="width: 33%;">
-                    <h5>Esec Academy</h5>
-                    <h6><em>Jakarta, Indonesia</em></h6>
-                    <p>Jl. Ciremai Raya No 240 Kota Jakarta Selatan</p>
-                </td>
-                <td style="width: 32%; text-align: center;">
-                    <img width="125px" height="125px" src="{{ asset('storage/images/web/site-logo.png') }}"
-                        alt="Logo">
-                </td>
-                <td style="width: 35%; text-align: left;">
-                    <h6>Invoice #<span style="text-transform: uppercase">{{ $history->tagihan_code }}</span></h6>
-                    <h6>Issued at: {{ \Carbon\Carbon::parse($history->created_at)->format('d M Y') }}</h6>
-                    <h3 style="color: #15ff00;">PAID</h3>
-                </td>
-            </tr>
-        </table>
+<body class="p-4 md:p-8 print:p-0">
+    <!-- Print Button (hidden when printing) -->
+    <button onclick="window.print()" class="no-print fixed top-4 right-4 bg-[#FF6B35] hover:bg-orange-600 text-white px-4 py-2 rounded-md shadow-md transition-colors">
+        Print Invoice
+    </button>
 
+    <!-- Invoice Container -->
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden print:shadow-none print:rounded-none">
+        <!-- Header Section -->
+        <div class="p-6 md:p-8 print:p-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-2xl font-bold text-[#0C6E71]">ESEC Academy</h2>
+                    <p class="text-[#3B3B3B] italic">Jakarta, Indonesia</p>
+                    <p class="text-[#3B3B3B]">Jl. Ciremai Raya No 240 Kota Jakarta Selatan</p>
+                </div>
+                
+                <div class="flex justify-center mb-6 md:mb-0">
+                    <img class="w-24 h-24 md:w-32 md:h-32 object-contain" src="{{ asset('storage/images/web/site-logo.png') }}" alt="ESEC Academy Logo">
+                </div>
+                
+                <div class="text-right">
+                    <p class="text-[#3B3B3B]">Invoice #<span class="uppercase font-medium">{{ $history->tagihan_code }}</span></p>
+                    <p class="text-[#3B3B3B]">Issued: {{ \Carbon\Carbon::parse($history->created_at)->format('d M Y') }}</p>
+                    <span class="inline-block mt-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">PAID</span>
+                </div>
+            </div>
 
-        <div class="container-fluid invoice-letter mt-3" style="padding: 0px; border-radius: 10px;">
-            <table style="width: 100%;" class="invoice-letter mt-3">
-                <tr>
-                    <td style="width: 30%; background-color: #04617B; color: white; border-radius: 10px; padding: 5px;">
-                        <p>Summary and Notes</p>
-                    </td>
-                    <td style="width: 70%; background-color: #04617B; color: white; border-radius: 10px; padding: 5px;">
-                        <p>{{ $history->tagihan->name }} <br> {{ $history->tagihan->desc }}</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-
-
-        <div class=" table mt-5">
-            <table class="invoice table table-hover">
-                <thead class="thead">
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Item</th>
-                        <th scope="col">Qty.</th>
-                        <th scope="col">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td class="item">Pembayaran {{ $history->tagihan->name }}</td>
-                        <td>1</td>
-                        <td>Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <table style="width: 100%;">
-            <tr>
-                <!-- invoiced to details -->
-                <td style="width: 50%;">
-                    <div class="to text-left">
-                        <span style="font-weight: 500; font-size: 16px">
-                            Invoiced to: <br>
-                            <b style="font-size: 18px">{{ $history->users->mhs_name }}</b> <br>
-
-                        </span>
-                        <span style="font-weight: 500; font-size: 16px">
-                            {{ $history->users->mhs_addr_kota == null ? 'Nama Kota' : $history->users->mhs_addr_kota }},
-                            {{ $history->users->mhs_addr_provinsi == null ? 'Nama Provinsi' : $history->users->mhs_addr_provinsi }}
-                            <br>
-                        </span>
-                        <span style="font-weight: 500; font-size: 14px;">Lorem ipsum, dolor sit amet consectetur
-                            adipisicing elit. Distinctio, fuga.</span>
+            <!-- Summary Section -->
+            <div class="bg-[#0C6E71] text-white rounded-lg overflow-hidden mb-8">
+                <div class="p-4 md:p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-1">
+                            <h3 class="font-semibold">Summary and Notes</h3>
+                        </div>
+                        <div class="md:col-span-2">
+                            <p class="font-medium">{{ $history->tagihan->name }}</p>
+                            <p>{{ $history->tagihan->desc }}</p>
+                        </div>
                     </div>
-                </td>
-                <!-- Invoice assets and total -->
-                <td style="width: 50%;">
-                    <table class="table table-borderless text-left">
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="mb-8 overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-[#E4E2DE]">
+                        <tr>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">No.</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Item</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Qty.</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">1</td>
+                            <td class="px-4 py-4 text-sm text-[#2E2E2E]">Pembayaran {{ $history->tagihan->name }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">1</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Billing Info -->
+                <div class="border-r border-[#E4E2DE] pr-4">
+                    <h3 class="text-lg font-semibold text-[#0C6E71] mb-3">Invoiced to:</h3>
+                    <p class="text-lg font-bold text-[#2E2E2E] mb-1">{{ $history->users->mhs_name }}</p>
+                    <p class="text-sm text-[#3B3B3B]">
+                        {{ $history->users->mhs_addr_kota == null ? 'Nama Kota' : $history->users->mhs_addr_kota }},
+                        {{ $history->users->mhs_addr_provinsi == null ? 'Nama Provinsi' : $history->users->mhs_addr_provinsi }}
+                    </p>
+                    <p class="text-sm text-[#3B3B3B] mt-3">Thank you for your business. Please contact us if you have any questions.</p>
+                </div>
+
+                <!-- Totals -->
+                <div>
+                    <table class="w-full">
                         <tbody>
-                            <tr>
-                                <th scope="row">Subtotal</th>
-                                <td>Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}</td>
+                            <tr class="border-b border-[#E4E2DE]">
+                                <td class="py-2 text-sm font-medium text-[#3B3B3B]">Subtotal</td>
+                                <td class="py-2 text-right text-sm text-[#2E2E2E]">Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}</td>
                             </tr>
-                            <tr class="last-row">
-                                <th scope="row">
-                                    Total
-                                </th>
-                                <td>
-                                    Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}
-                                </td>
+                            <tr class="bg-[#E4E2DE]">
+                                <td class="py-3 font-medium text-[#0C6E71]">Total</td>
+                                <td class="py-3 text-right font-bold text-[#0C6E71]">Rp. {{ number_format($history->tagihan->price, 0, ',', '.') }}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <span style="color: red;font-size: 14px;">Due date:
-                        {{ \Carbon\Carbon::parse($history->created_at)->addDays(3)->format('d M Y H:i:s') }}</span>
+                    <p class="text-sm text-red-500 mt-3">
+                        Due date: {{ \Carbon\Carbon::parse($history->created_at)->addDays(3)->format('d M Y H:i:s') }}
+                    </p>
+                </div>
+            </div>
+        </div>
 
-                </td>
-            </tr>
-        </table>
-
-        <p class="text-center mt-3">ESEC Academy - SiakadPT By Internal Developer</p>
+        <!-- Footer Note -->
+        <div class="bg-[#F3EFEA] p-4 text-center text-sm text-[#3B3B3B]">
+            ESEC Academy - SiakadPT By Internal Developer
+        </div>
     </div>
 
-
+    <script>
+        // Print functionality
+        function printInvoice() {
+            window.print();
+        }
+        
+        // Add any additional JavaScript interactions here
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add more interactive elements if needed
+        });
+    </script>
 </body>
 
 </html>

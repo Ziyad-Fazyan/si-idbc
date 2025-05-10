@@ -36,14 +36,6 @@
                     @include('base.panel.base-panel-sidebar')
                 </div>
             </div>
-            
-            <!-- Sidebar Footer Info -->
-            <div class="p-4 border-t border-gray-200 bg-green-50">
-                <div class="flex items-center px-3 py-2 rounded-lg text-green-700 text-sm">
-                    <i class="fas fa-info-circle mr-2"></i>
-                    <span class="truncate">{{ $web->school_name }}</span>
-                </div>
-            </div>
         </div>
         
         <!-- Main Content -->

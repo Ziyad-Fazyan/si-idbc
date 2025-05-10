@@ -15,392 +15,606 @@
     Halaman untuk mengubah profile pengguna
 @endsection
 @section('content')
-    <section class="section row">
-        <div class="col-lg-4 col-12">
-
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Ubah Foto Profile</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('mahasiswa.home-profile-save-image') }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-
-                        <img src="{{ asset('storage/images/' . Auth::guard('mahasiswa')->user()->mhs_image) }}"
-                            class="card-img-top" alt="">
-                        <hr>
-                        <div class="form-group">
-                            <label for="mhs_image">Upload Foto Profile</label>
-                            <div class="d-flex justify-content-between align-items-center">
-
-                                <input type="file" class="form-control" name="mhs_image" id="mhs_image">
-                                @error('mhs_image')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                                <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px"><i
-                                        class="fa-solid fa-paper-plane"></i></button>
+<section class="min-h-screen bg-[#F3EFEA] py-8 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold text-[#2E2E2E] mb-6">Profile Mahasiswa</h1>
+        
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Photo Upload Section -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-[#0C6E71] p-4">
+                        <h2 class="text-lg font-semibold text-white">Ubah Foto Profile</h2>
+                    </div>
+                    <div class="p-4">
+                        <form action="{{ route('mahasiswa.home-profile-save-image') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                            
+                            <div class="flex flex-col items-center mb-4">
+                                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-[#E4E2DE] mb-4">
+                                    <img src="{{ asset('storage/images/' . Auth::guard('mahasiswa')->user()->mhs_image) }}" 
+                                         alt="Profile Photo" 
+                                         class="w-full h-full object-cover"
+                                         onerror="this.src='https://via.placeholder.com/150'">
+                                </div>
+                                
+                                <div class="w-full">
+                                    <label for="mhs_image" class="block text-sm font-medium text-[#2E2E2E] mb-2">Upload Foto Profile</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="file" 
+                                               name="mhs_image" 
+                                               id="mhs_image"
+                                               class="block w-full text-sm text-gray-500
+                                                      file:mr-4 file:py-2 file:px-4
+                                                      file:rounded-md file:border-0
+                                                      file:text-sm file:font-semibold
+                                                      file:bg-[#0C6E71] file:text-white
+                                                      hover:file:bg-[#0C5A5D]">
+                                        <button type="submit" 
+                                                class="p-2 rounded-md bg-[#FF6B35] text-white hover:bg-[#E05A2B] transition">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                    @error('mhs_image')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-8 col-12">
-
-            <div class="card">
-                <div class="card-body">
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
-                                aria-controls="home" aria-selected="true"> Personal</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab"
-                                aria-controls="contact" aria-selected="false"> Kontak</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="false"> Security</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                            <hr>
-                            <form action="{{ route('mahasiswa.home-profile-save-data') }}" method="POST"
-                                enctype="multipart/form-data">
+            
+            <!-- Main Content Section -->
+            <div class="w-full lg:w-2/3">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-[#E4E2DE]">
+                        <ul class="flex flex-wrap -mb-px" id="profileTabs" role="tablist">
+                            <li class="mr-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg active" 
+                                        id="personal-tab" 
+                                        data-tabs-target="#personal" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="personal" 
+                                        aria-selected="true">
+                                    Personal
+                                </button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-[#2E2E2E] hover:border-[#E4E2DE]" 
+                                        id="contact-tab" 
+                                        data-tabs-target="#contact" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="contact" 
+                                        aria-selected="false">
+                                    Kontak
+                                </button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-[#2E2E2E] hover:border-[#E4E2DE]" 
+                                        id="security-tab" 
+                                        data-tabs-target="#security" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="security" 
+                                        aria-selected="false">
+                                    Security
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tab Content -->
+                    <div class="p-4">
+                        <!-- Personal Tab -->
+                        <div class="hidden p-4 rounded-lg" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                            <form action="{{ route('mahasiswa.home-profile-save-data') }}" method="POST">
                                 @method('PATCH')
                                 @csrf
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_name">Nama Lengkap</label>
-                                        <input type="text" name="mhs_name" id="mhs_name" class="form-control"
-                                            placeholder="Nama lengkap..." readonly
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}">
-                                        @error('mhs_name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_nim">Nomor NIM</label>
-                                        <input type="text" name="mhs_nim" id="mhs_nim" class="form-control"
-                                            placeholder="Nomor NIM..." readonly
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_nim }}">
-                                        @error('mhs_nim')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="years_id">Tahun Masuk</label>
-                                        <input type="text" name="years_id" id="years_id" class="form-control"
-                                            placeholder="Nama Program Studi..." readonly
-                                            value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas->taka->year_start }}">
-                                        @error('years_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="faku_id">Fakultas</label>
-                                        <input type="text" name="faku_id" id="faku_id" class="form-control"
-                                            placeholder="Nama Program Studi..." readonly
-                                            value="{{ Auth::guard('mahasiswa')->user()->kelas->pstudi->fakultas->name }}">
-                                        @error('faku_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="class_id">Program Studi</label>
-                                        <input type="text" name="class_id" id="class_id" class="form-control"
-                                            placeholder="Nama Program Studi..." readonly
-                                            value="{{ Auth::guard('mahasiswa')->user()->kelas->pstudi->name . ' - ' . Auth::guard('mahasiswa')->user()->kelas->taka->semester }}">
-                                        @error('class_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="class_id">Kelas</label>
-                                        <input type="text" name="class_id" id="class_id" class="form-control"
-                                            placeholder="Nama Kelas..." readonly
-                                            value="{{ Auth::guard('mahasiswa')->user()->kelas->code }}">
-                                        @error('class_id')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_gend">Jenis Kelamin</label>
-                                        <select name="mhs_gend" id="mhs_gend" class="form-select">
-                                            <option value="" selected>Pilih Jenis Kelamin</option>
-                                            <option value="L"
-                                                {{ Auth::guard('mahasiswa')->user()->mhs_gend === 'L' ? 'selected' : '' }}>
-                                                Laki Laki</option>
-                                            <option value="P"
-                                                {{ Auth::guard('mahasiswa')->user()->mhs_gend === 'P' ? 'selected' : '' }}>
-                                                Perempuan</option>
-                                        </select>
-                                        @error('mhs_gend')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_birthplace">Tempat Lahir</label>
-                                        <input type="text" name="mhs_birthplace" id="mhs_birthplace"
-                                            class="form-control" placeholder="Tempat Lahir..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_birthplace }}">
-                                        @error('mhs_birthplace')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_birthdate">Tanggal Lahir</label>
-                                        <input type="date" name="mhs_birthdate" id="mhs_birthdate"
-                                            class="form-control" placeholder="Tanggal Lahir..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_birthdate }}">
-                                        @error('mhs_birthdate')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_reli">Agama</label>
-                                        <select name="mhs_reli" id="mhs_reli" class="form-select">
-                                            <option value="" selected>Pilih Agama</option>
-                                            <option value="1"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '1' ? 'selected' : '' }}>
-                                                Agama Islam</option>
-                                            <option value="2"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '2' ? 'selected' : '' }}>
-                                                Agama Kristen Protestan</option>
-                                            <option value="3"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '3' ? 'selected' : '' }}>
-                                                Agama Kriten Katholik</option>
-                                            <option value="4"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '4' ? 'selected' : '' }}>
-                                                Agama Hindu</option>
-                                            <option value="5"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '5' ? 'selected' : '' }}>
-                                                Agama Buddha</option>
-                                            <option value="6"
-                                                {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '6' ? 'selected' : '' }}>
-                                                Agama Konghuchu</option>
-                                        </select>
-                                        @error('mhs_reli')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="d-flex justify-content-end align-items-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
-                                                class="fa-solid fa-save"></i> Save</button>
-                                    </div>
-                                </div>
-                            </form>
-
-
-                        </div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            <hr>
-                            <form action="{{ route('mahasiswa.home-profile-save-kontak') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @method('PATCH')
-                                @csrf
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_phone">Nomor HandPhone</label>
-                                        <input type="text" class="form-control" name="mhs_phone" id="mhs_phone"
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_phone }}">
-                                        @error('mhs_phone')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_mail">Alamat Email</label>
-                                        <input type="text" class="form-control" name="mhs_mail" id="mhs_mail"
-                                            readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}">
-                                        @error('mhs_mail')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_parent_father">Nama Ayah</label>
-                                        <input type="text" class="form-control" name="mhs_parent_father"
-                                            id="mhs_parent_father" placeholder="nama ayah..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father }}">
-                                        @error('mhs_parent_father')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_parent_father_phone">Nomor Telepon Ayah</label>
-                                        <input type="text" class="form-control" name="mhs_parent_father_phone"
-                                            id="mhs_parent_father_phone" placeholder="nomor telepon ayah..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father_phone }}">
-                                        @error('mhs_parent_father_phone')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_parent_mother">Nama Ibu</label>
-                                        <input type="text" class="form-control" name="mhs_parent_mother"
-                                            id="mhs_parent_mother" placeholder="nama ibu..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother }}">
-                                        @error('mhs_parent_mother')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_parent_mother_phone">Nomor Telepon Ibu</label>
-                                        <input type="text" class="form-control" name="mhs_parent_mother_phone"
-                                            id="mhs_parent_mother_phone" placeholder="nomor telepon ibu..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother_phone }}">
-                                        @error('mhs_parent_mother_phone')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_wali_name">Nama Wali Mahasiswa</label>
-                                        <input type="text" class="form-control" name="mhs_wali_name"
-                                            id="mhs_wali_name" placeholder="nama wali..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_name }}">
-                                        @error('mhs_wali_name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_wali_phone">Nomor Telepon Wali</label>
-                                        <input type="text" class="form-control" name="mhs_wali_phone"
-                                            id="mhs_wali_phone" placeholder="nomor telepon wali..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_phone }}">
-                                        @error('mhs_wali_phone')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-12 col-12">
-                                        <label for="mhs_addr_domisili">Alamat Lengkap Domisili / Tempat Tinggal</label>
-                                        <textarea cols="15" rows="4" class="form-control" name="mhs_addr_domisili" id="mhs_addr_domisili"
-                                            placeholder="alamat lengkap domisili / tempat tinggal..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_domisili }}">{{ Auth::guard('mahasiswa')->user()->mhs_addr_domisili == null ? 'inputkan alamat lengkap / domisili' : Auth::guard('mahasiswa')->user()->mhs_addr_domisili }}</textarea>
-                                        @error('mhs_addr_domisili')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_addr_kelurahan">Kelurahan</label>
-                                        <input type="text" class="form-control" name="mhs_addr_kelurahan"
-                                            id="mhs_addr_kelurahan" placeholder="nama kelurahan..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kelurahan }}">
-                                        @error('mhs_addr_kelurahan')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_addr_kecamatan">Kecamatan</label>
-                                        <input type="text" class="form-control" name="mhs_addr_kecamatan"
-                                            id="mhs_addr_kecamatan" placeholder="nama kecamatan..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kecamatan }}">
-                                        @error('mhs_addr_kecamatan')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_addr_kota">Kota</label>
-                                        <input type="text" class="form-control" name="mhs_addr_kota"
-                                            id="mhs_addr_kota" placeholder="nama kota..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kota }}">
-                                        @error('mhs_addr_kota')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="mhs_addr_provinsi">Provinsi</label>
-                                        <input type="text" class="form-control" name="mhs_addr_provinsi"
-                                            id="mhs_addr_provinsi" placeholder="nama provinsi..."
-                                            value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_provinsi }}">
-                                        @error('mhs_addr_provinsi')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-
-                                    <div class="d-flex justify-content-end align-items-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
-                                                class="fa-solid fa-save"></i> Save</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <hr>
-                            <form action="{{ route('mahasiswa.home-profile-save-password') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @method('PATCH')
-                                @csrf
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="SecurityKey">Security Key</label>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <input type="password" class="form-control" name="mhs_code" id="SecurityKey"
-                                                value="{{ Auth::guard('mahasiswa')->user()->mhs_code }}" disabled>
-                                            <span class="btn btn-sm btn-outline-danger" style="margin-left: 5px"
-                                                id="showPasswordButton"><i class="fa-solid fa-eye"></i></span>
-                                            @error('mhs_code')
-                                                <small class="text-danger">{{ $message }}</small>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <!-- Personal Information Fields -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_name" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Lengkap</label>
+                                            <input type="text" 
+                                                   name="mhs_name" 
+                                                   id="mhs_name" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}">
+                                            @error('mhs_name')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
-
+                                        
+                                        <div>
+                                            <label for="mhs_nim" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor NIM</label>
+                                            <input type="text" 
+                                                   name="mhs_nim" 
+                                                   id="mhs_nim" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_nim }}">
+                                            @error('mhs_nim')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="years_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">Tahun Masuk</label>
+                                            <input type="text" 
+                                                   name="years_id" 
+                                                   id="years_id" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas->taka->year_start }}">
+                                            @error('years_id')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="faku_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">Fakultas</label>
+                                            <input type="text" 
+                                                   name="faku_id" 
+                                                   id="faku_id" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->kelas->pstudi->fakultas->name }}">
+                                            @error('faku_id')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="oldPassword">Password Lama</label>
-                                        <div class="d-flex justify-content-between align-items-center">
-
-                                            <input type="password" class="form-control" name="old_password"
-                                                id="oldPassword">
-                                            <span class="btn btn-sm btn-outline-danger" style="margin-left: 5px"
-                                                id="showPasswordButton"><i class="fa-solid fa-eye"></i></span>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="class_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">Program Studi</label>
+                                            <input type="text" 
+                                                   name="class_id" 
+                                                   id="class_id" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->kelas->pstudi->name . ' - ' . Auth::guard('mahasiswa')->user()->kelas->taka->semester }}">
+                                            @error('class_id')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="class_id" class="block text-sm font-medium text-[#2E2E2E] mb-1">Kelas</label>
+                                            <input type="text" 
+                                                   name="class_id" 
+                                                   id="class_id" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->kelas->code }}">
+                                            @error('class_id')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_gend" class="block text-sm font-medium text-[#2E2E2E] mb-1">Jenis Kelamin</label>
+                                            <select name="mhs_gend" 
+                                                    id="mhs_gend" 
+                                                    class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
+                                                <option value="">Pilih Jenis Kelamin</option>
+                                                <option value="L" {{ Auth::guard('mahasiswa')->user()->mhs_gend === 'L' ? 'selected' : '' }}>Laki Laki</option>
+                                                <option value="P" {{ Auth::guard('mahasiswa')->user()->mhs_gend === 'P' ? 'selected' : '' }}>Perempuan</option>
+                                            </select>
+                                            @error('mhs_gend')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Additional Personal Information -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_birthplace" class="block text-sm font-medium text-[#2E2E2E] mb-1">Tempat Lahir</label>
+                                            <input type="text" 
+                                                   name="mhs_birthplace" 
+                                                   id="mhs_birthplace" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_birthplace }}">
+                                            @error('mhs_birthplace')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_birthdate" class="block text-sm font-medium text-[#2E2E2E] mb-1">Tanggal Lahir</label>
+                                            <input type="date" 
+                                                   name="mhs_birthdate" 
+                                                   id="mhs_birthdate" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_birthdate }}">
+                                            @error('mhs_birthdate')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_reli" class="block text-sm font-medium text-[#2E2E2E] mb-1">Agama</label>
+                                            <select name="mhs_reli" 
+                                                    id="mhs_reli" 
+                                                    class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
+                                                <option value="">Pilih Agama</option>
+                                                <option value="1" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '1' ? 'selected' : '' }}>Agama Islam</option>
+                                                <option value="2" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '2' ? 'selected' : '' }}>Agama Kristen Protestan</option>
+                                                <option value="3" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '3' ? 'selected' : '' }}>Agama Kriten Katholik</option>
+                                                <option value="4" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '4' ? 'selected' : '' }}>Agama Hindu</option>
+                                                <option value="5" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '5' ? 'selected' : '' }}>Agama Buddha</option>
+                                                <option value="6" {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '6' ? 'selected' : '' }}>Agama Konghuchu</option>
+                                            </select>
+                                            @error('mhs_reli')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end">
+                                    <button type="submit" 
+                                            class="px-4 py-2 bg-[#FF6B35] text-white rounded-md hover:bg-[#E05A2B] transition">
+                                        <i class="fa-solid fa-save mr-2"></i>Simpan Perubahan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Contact Tab -->
+                        <div class="hidden p-4 rounded-lg" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <form action="{{ route('mahasiswa.home-profile-save-kontak') }}" method="POST">
+                                @method('PATCH')
+                                @csrf
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <!-- Contact Information -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_phone" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor HandPhone</label>
+                                            <input type="text" 
+                                                   name="mhs_phone" 
+                                                   id="mhs_phone" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_phone }}">
+                                            @error('mhs_phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_mail" class="block text-sm font-medium text-[#2E2E2E] mb-1">Alamat Email</label>
+                                            <input type="text" 
+                                                   name="mhs_mail" 
+                                                   id="mhs_mail" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   readonly 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_mail }}">
+                                            @error('mhs_mail')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Parent Information -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_parent_father" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Ayah</label>
+                                            <input type="text" 
+                                                   name="mhs_parent_father" 
+                                                   id="mhs_parent_father" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father }}">
+                                            @error('mhs_parent_father')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_parent_father_phone" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor Telepon Ayah</label>
+                                            <input type="text" 
+                                                   name="mhs_parent_father_phone" 
+                                                   id="mhs_parent_father_phone" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father_phone }}">
+                                            @error('mhs_parent_father_phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_parent_mother" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Ibu</label>
+                                            <input type="text" 
+                                                   name="mhs_parent_mother" 
+                                                   id="mhs_parent_mother" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother }}">
+                                            @error('mhs_parent_mother')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_parent_mother_phone" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor Telepon Ibu</label>
+                                            <input type="text" 
+                                                   name="mhs_parent_mother_phone" 
+                                                   id="mhs_parent_mother_phone" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother_phone }}">
+                                            @error('mhs_parent_mother_phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Guardian Information -->
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="mhs_wali_name" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Wali Mahasiswa</label>
+                                            <input type="text" 
+                                                   name="mhs_wali_name" 
+                                                   id="mhs_wali_name" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_name }}">
+                                            @error('mhs_wali_name')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="mhs_wali_phone" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor Telepon Wali</label>
+                                            <input type="text" 
+                                                   name="mhs_wali_phone" 
+                                                   id="mhs_wali_phone" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_phone }}">
+                                            @error('mhs_wali_phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Address Information -->
+                                    <div class="md:col-span-2 space-y-4">
+                                        <div>
+                                            <label for="mhs_addr_domisili" class="block text-sm font-medium text-[#2E2E2E] mb-1">Alamat Lengkap Domisili</label>
+                                            <textarea name="mhs_addr_domisili" 
+                                                      id="mhs_addr_domisili" 
+                                                      rows="3" 
+                                                      class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">{{ Auth::guard('mahasiswa')->user()->mhs_addr_domisili == null ? 'inputkan alamat lengkap / domisili' : Auth::guard('mahasiswa')->user()->mhs_addr_domisili }}</textarea>
+                                            @error('mhs_addr_domisili')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label for="mhs_addr_kelurahan" class="block text-sm font-medium text-[#2E2E2E] mb-1">Kelurahan</label>
+                                                <input type="text" 
+                                                       name="mhs_addr_kelurahan" 
+                                                       id="mhs_addr_kelurahan" 
+                                                       class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                       value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kelurahan }}">
+                                                @error('mhs_addr_kelurahan')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="mhs_addr_kecamatan" class="block text-sm font-medium text-[#2E2E2E] mb-1">Kecamatan</label>
+                                                <input type="text" 
+                                                       name="mhs_addr_kecamatan" 
+                                                       id="mhs_addr_kecamatan" 
+                                                       class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                       value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kecamatan }}">
+                                                @error('mhs_addr_kecamatan')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="mhs_addr_kota" class="block text-sm font-medium text-[#2E2E2E] mb-1">Kota</label>
+                                                <input type="text" 
+                                                       name="mhs_addr_kota" 
+                                                       id="mhs_addr_kota" 
+                                                       class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                       value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kota }}">
+                                                @error('mhs_addr_kota')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="mhs_addr_provinsi" class="block text-sm font-medium text-[#2E2E2E] mb-1">Provinsi</label>
+                                                <input type="text" 
+                                                       name="mhs_addr_provinsi" 
+                                                       id="mhs_addr_provinsi" 
+                                                       class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md" 
+                                                       value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_provinsi }}">
+                                                @error('mhs_addr_provinsi')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end">
+                                    <button type="submit" 
+                                            class="px-4 py-2 bg-[#FF6B35] text-white rounded-md hover:bg-[#E05A2B] transition">
+                                        <i class="fa-solid fa-save mr-2"></i>Simpan Perubahan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Security Tab -->
+                        <div class="hidden p-4 rounded-lg" id="security" role="tabpanel" aria-labelledby="security-tab">
+                            <form action="{{ route('mahasiswa.home-profile-save-password') }}" method="POST">
+                                @method('PATCH')
+                                @csrf
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <div>
+                                        <label for="SecurityKey" class="block text-sm font-medium text-[#2E2E2E] mb-1">Security Key</label>
+                                        <div class="flex items-center">
+                                            <input type="password" 
+                                                   name="mhs_code" 
+                                                   id="SecurityKey" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100" 
+                                                   disabled 
+                                                   value="{{ Auth::guard('mahasiswa')->user()->mhs_code }}">
+                                            <button type="button" 
+                                                    class="ml-2 p-2 text-[#0C6E71] hover:text-[#0C5A5D] toggle-password"
+                                                    data-target="SecurityKey">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        @error('mhs_code')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="oldPassword" class="block text-sm font-medium text-[#2E2E2E] mb-1">Password Lama</label>
+                                        <div class="flex items-center">
+                                            <input type="password" 
+                                                   name="old_password" 
+                                                   id="oldPassword" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
+                                            <button type="button" 
+                                                    class="ml-2 p-2 text-[#0C6E71] hover:text-[#0C5A5D] toggle-password"
+                                                    data-target="oldPassword">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
                                         </div>
                                         @error('old_password')
-                                            <small class="text-danger">{{ $message }}</small>
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="newPassword">Password Baru</label>
-                                        <div class="d-flex justify-content-between align-items-center">
-
-                                            <input type="password" class="form-control" name="new_password"
-                                                id="newPassword">
-                                            <span class="btn btn-sm btn-outline-danger" style="margin-left: 5px"
-                                                id="showPasswordButton"><i class="fa-solid fa-eye"></i></span>
+                                    
+                                    <div>
+                                        <label for="newPassword" class="block text-sm font-medium text-[#2E2E2E] mb-1">Password Baru</label>
+                                        <div class="flex items-center">
+                                            <input type="password" 
+                                                   name="new_password" 
+                                                   id="newPassword" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
+                                            <button type="button" 
+                                                    class="ml-2 p-2 text-[#0C6E71] hover:text-[#0C5A5D] toggle-password"
+                                                    data-target="newPassword">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
                                         </div>
                                         @error('new_password')
-                                            <small class="text-danger">{{ $message }}</small>
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="newPasswordKonfirm">Konfirmasi Password Baru</label>
-                                        <div class="d-flex justify-content-between align-items-center">
-
-                                            <input type="password" class="form-control" name="new_password_confirmed"
-                                                id="newPasswordKonfirm">
-                                            <span class="btn btn-sm btn-outline-danger" style="margin-left: 5px"
-                                                id="showPasswordButton"><i class="fa-solid fa-eye"></i></span>
+                                    
+                                    <div>
+                                        <label for="newPasswordKonfirm" class="block text-sm font-medium text-[#2E2E2E] mb-1">Konfirmasi Password Baru</label>
+                                        <div class="flex items-center">
+                                            <input type="password" 
+                                                   name="new_password_confirmed" 
+                                                   id="newPasswordKonfirm" 
+                                                   class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
+                                            <button type="button" 
+                                                    class="ml-2 p-2 text-[#0C6E71] hover:text-[#0C5A5D] toggle-password"
+                                                    data-target="newPasswordKonfirm">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
                                         </div>
                                         @error('new_password_confirmed')
-                                            <small class="text-danger">{{ $message }}</small>
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="d-flex justify-content-end align-items-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
-                                                class="fa-solid fa-save"></i> Save</button>
-                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end">
+                                    <button type="submit" 
+                                            class="px-4 py-2 bg-[#FF6B35] text-white rounded-md hover:bg-[#E05A2B] transition">
+                                        <i class="fa-solid fa-save mr-2"></i>Simpan Perubahan
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for Tab Functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab functionality
+        const tabs = document.querySelectorAll('[data-tabs-target]');
+        const tabContents = document.querySelectorAll('[role="tabpanel"]');
+        
+        // Show first tab by default
+        if (tabs.length > 0 && tabContents.length > 0) {
+            document.querySelector(tabs[0].getAttribute('data-tabs-target')).classList.remove('hidden');
+            tabs[0].classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+            tabs[0].classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = document.querySelector(tab.getAttribute('data-tabs-target'));
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Remove active styles from all tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('border-[#FF6B35]', 'text-[#FF6B35]');
+                        t.classList.add('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
+                    });
+                    
+                    // Show selected tab content
+                    target.classList.remove('hidden');
+                    
+                    // Add active styles to selected tab
+                    tab.classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+                    tab.classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
+                });
+            });
+        }
+        
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+    });
+</script>
 @endsection
 @section('custom-js')
     <script>

@@ -37,108 +37,152 @@
     </style>
 @endsection
 @section('content')
-    <section class="section">
-        <div class="row">
+    <section class="min-h-screen p-4 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- Cards Section -->
+                <div class="w-full lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Tagihan Card -->
+                    <a href="{{ route('mahasiswa.home-tagihan-index') }}" class="group">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-green-100 group-hover:border-teal-700 transition-all duration-300">
+                            <div class="p-4 flex items-center">
+                                <div class="bg-teal-100 p-3 rounded-full text-teal-700 mr-4">
+                                    <i class="fa-solid fa-file-invoice-dollar text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-800 font-medium text-lg">{{ number_format($sisatagihan, 0, ',', '.') }}</p>
+                                    <p class="text-gray-600 text-sm">Tagihan (IDR)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
 
-            <div class="col-lg-9 col-12 row">
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('mahasiswa.home-tagihan-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-file-invoice-dollar"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-putih"
-                                    style="margin-left: 25px; font-size: 16px;">{{ number_format($sisatagihan, 0, ',', '.') }}<br>Tagihan
-                                    <br> ( IDR )</span>
+                    <!-- Pembayaran Card -->
+                    <a href="{{ route('mahasiswa.home-tagihan-index') }}" class="group">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-green-100 group-hover:border-teal-700 transition-all duration-300">
+                            <div class="p-4 flex items-center">
+                                <div class="bg-orange-100 p-3 rounded-full text-orange-600 mr-4">
+                                    <i class="fa-solid fa-money-bill-transfer text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-800 font-medium text-lg">{{ number_format($history, 0, ',', '.') }}</p>
+                                    <p class="text-gray-600 text-sm">Pembayaran (IDR)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Absen Card -->
+                    <a href="{{ route('mahasiswa.home-jadkul-index') }}" class="group">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-green-100 group-hover:border-teal-700 transition-all duration-300">
+                            <div class="p-4 flex items-center">
+                                <div class="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
+                                    <i class="fa-solid fa-user-check text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-800 font-medium text-lg">{{ $habsen }}</p>
+                                    <p class="text-gray-600 text-sm">Absen Kehadiran</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Jadwal Card -->
+                    <a href="{{ route('mahasiswa.home-jadkul-index') }}" class="group">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-green-100 group-hover:border-teal-700 transition-all duration-300">
+                            <div class="p-4 flex items-center">
+                                <div class="bg-purple-100 p-3 rounded-full text-purple-600 mr-4">
+                                    <i class="fa-solid fa-book-open-reader text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-800 font-medium text-lg">{{ $jadkul }}</p>
+                                    <p class="text-gray-600 text-sm">Jadwal Perkuliahan</p>
+                                </div>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('mahasiswa.home-tagihan-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-money-bill-transfer"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-putih"
-                                    style="margin-left: 25px; font-size: 16px;">{{ number_format($history, 0, ',', '.') }}<br>Pembayaran
-                                    <br> ( IDR )</span>
-                            </div>
+
+                <!-- Pengumuman Section -->
+                <div class="w-full lg:w-1/4">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-teal-700 px-4 py-3">
+                            <h3 class="text-white font-semibold">Pengumuman - {{ \Carbon\Carbon::now()->format('d M Y') }}</h3>
                         </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('mahasiswa.home-jadkul-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-user-check"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-putih" style="margin-left: 25px; font-size: 16px;">{{ $habsen }}
-                                    <br>Absen <br> Kehadiran</span>
-                            </div>
+                        <div class="p-4">
+                            @forelse ($notify as $item)
+                                <div class="mb-3 pb-3 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
+                                    <p class="text-sm text-gray-600">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y - H.i') }}
+                                    </p>
+                                    <button onclick="openModal('{{ $item->code }}')" 
+                                            class="text-teal-700 hover:text-orange-600 font-medium mt-1 transition-colors duration-200">
+                                        {{ $item->name }}
+                                    </button>
+                                </div>
+                            @empty
+                                <p class="text-gray-500 text-center py-4">Tidak ada pengumuman hari ini</p>
+                            @endforelse
                         </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('mahasiswa.home-jadkul-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-book-open-reader"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-putih" style="margin-left: 25px; font-size: 16px;">{{ $jadkul }}
-                                    <br>Jadwal <br> Perkuliahan</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Pengumuman - {{ \Carbon\Carbon::now()->format('d M Y') }}</h4>
-                    </div>
-                    <div class="card-body">
-                        @forelse ($notify as $item)
-                            <span>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y' . ' - ' . 'H' . '.' . 'i') }} - <a
-                                    href="#" data-bs-toggle="modal"
-                                    data-bs-target="#updateFakultas{{ $item->code }}">{{ $item->name }}</a></span><br>
-                        @empty
-                            <span class="">Tidak Ada Pengumuman Hari Ini</span>
-                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        <!--Extra Large Modal -->
-        @foreach ($notify as $item)
-            <div class="modal fade text-left w-100" id="updateFakultas{{ $item->code }}" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel16">Notifikasi - {{ $item->name }}</h4>
-                            <div class="">
-
-                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group">
-                                    <p class="text-center"><b>{{ $item->name }}</b></p>
-                                    <p>{!! $item->desc !!}</p>
-                                </div>
-                            </div>
+    <!-- Modal Template -->
+    @foreach ($notify as $item)
+        <div id="modal-{{ $item->code }}" 
+             class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center border-b border-gray-200 px-6 py-4">
+                    <h3 class="text-lg font-semibold text-gray-800">Notifikasi - {{ $item->name }}</h3>
+                    <button onclick="closeModal('{{ $item->code }}')" 
+                            class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4 text-center">
+                        <h4 class="font-bold text-gray-800 mb-2">{{ $item->name }}</h4>
+                        <div class="text-gray-700 text-left prose max-w-none">
+                            {!! $item->desc !!}
                         </div>
                     </div>
                 </div>
+                <div class="flex justify-end px-6 py-4 border-t border-gray-200">
+                    <button onclick="closeModal('{{ $item->code }}')" 
+                            class="px-4 py-2 bg-teal-700 text-white rounded hover:bg-teal-800 transition-colors duration-200">
+                        Tutup
+                    </button>
+                </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
+
+    <script>
+        function openModal(code) {
+            const modal = document.getElementById(modal-${code});
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal(code) {
+            const modal = document.getElementById(modal-${code});
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[id^="modal-"]').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        const code = modal.id.split('-')[1];
+                        closeModal(code);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

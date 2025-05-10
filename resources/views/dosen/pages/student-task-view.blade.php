@@ -15,72 +15,72 @@
     Lihat Daftar Kumpulan Tugas Mahasiswa
 @endsection
 @section('content')
-    <section class="content">
-        <div class="row">
-            <div class="col-lg-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title d-flex justify-content-between align-items-center">
-                            @yield('menu')
-                            <div class="">
-                                <a href="{{ route('dosen.akademik.stask-create') }}" class="btn mt-1 btn-primary"><i
-                                        class="fa-solid fa-plus"></i></a>
-                                <a href="@yield('urlmenu')" class="btn mt-1 btn-warning"><i
-                                        class="fa-solid fa-backward"></i></a>
-                            </div>
-                        </h5>
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-[#0C6E71] px-6 py-4 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-white">
+                        @yield('menu')
+                    </h2>
+                    <div class="flex space-x-2">
+                        <a href="{{ route('dosen.akademik.stask-create') }}" 
+                           class="bg-[#FF6B35] hover:bg-orange-600 text-white px-3 py-2 rounded-md flex items-center transition-colors">
+                            <i class="fa-solid fa-plus mr-2"></i>
+                            <span class="hidden sm:inline">Tambah</span>
+                        </a>
+                        <a href="@yield('urlmenu')" 
+                           class="bg-white hover:bg-gray-100 text-[#2E2E2E] px-3 py-2 rounded-md flex items-center transition-colors">
+                            <i class="fa-solid fa-backward mr-2"></i>
+                            <span class="hidden sm:inline">Kembali</span>
+                        </a>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped" id="table1">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Nama Mata Kuliah</th>
-                                    <th class="text-center">Judul Tugas</th>
-                                    <th class="text-center">Nama Mahasiswa</th>
-                                    <th class="text-center">Score Tugas</th>
-                                    <th class="text-center">Waktu Kirim</th>
-                                    <th class="text-center">Button</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($score as $key => $item)
-                                    <tr>
-                                        <td data-label="Number">{{ ++$key }}</td>
-                                        <td data-label="Nama Mata Kuliah">{{ $item->task->jadkul->matkul->name }} <br>
-                                            {{ $item->task->jadkul->pert_id }}</td>
-                                        <td data-label="Judul Tugas">{{ $item->task->title }}</td>
-                                        <td data-label="Nama Mahasiswa">{{ $item->student->mhs_name }}</td>
-                                        <td data-label="Score Tugas">{{ $item->score != null ? $item->score : '-' }}</td>
-                                        <td data-label="Waktu Kirim">
-                                            {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, D MMMM Y') }} <br>
-                                            {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</td>
-                                        <td class="d-flex justify-content-center align-items-center">
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-4 overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-[#E4E2DE]">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">#</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Nama Mata Kuliah</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Judul Tugas</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Nama Mahasiswa</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Score Tugas</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Waktu Kirim</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($score as $key => $item)
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ $item->task->jadkul->matkul->name }} <br>
+                                        <span class="text-gray-500">{{ $item->task->jadkul->pert_id }}</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->task->title }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->student->mhs_name }}</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-[#2E2E2E]">
+                                        {{ $item->score != null ? $item->score : '-' }}
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, D MMMM Y') }} <br>
+                                        <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex space-x-2">
                                             <a href="{{ route('dosen.akademik.stask-view-detail', $item->code) }}"
-                                                style="margin-right: 10px" class="btn btn-info"><i
-                                                    class="fas fa-eye"></i></a>
-                                            {{-- <a href="{{ route('dosen.akademik.stask-edit', $item->code) }}" style="margin-right: 10px" class="btn btn-primary"><i class="fas fa-edit"></i></a> --}}
-                                            {{-- <form id="delete-form-{{ $item->code }}"
-                                                action="{{ route('dosen.akademik.stask-destroy', $item->code) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a type="button" class="bs-tooltip btn btn-rounded btn-danger"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                                    data-original-title="Delete"
-                                                    data-url="{{ route('dosen.akademik.stask-destroy', $item->code) }}"
-                                                    data-name="{{ $item->name }}"
-                                                    onclick="deleteData('{{ $item->code }}')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </form> --}}
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
+                                               class="text-white bg-[#0C6E71] hover:bg-teal-800 p-2 rounded-md transition-colors"
+                                               title="Detail">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

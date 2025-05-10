@@ -98,122 +98,165 @@
     </style>
 @endsection
 @section('content')
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                    @yield('submenu')
-                    <div class="">
-                        <a href="{{ route('web-admin.master.jadkul-create') }}" class="btn btn-outline-primary"><i
-                                class="fa-solid fa-plus"></i></a>
-                    </div>
-                </h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            {{-- <th class="text-center">Program Studi</th> --}}
-                            <th class="text-center">Nama Kelas</th>
-                            <th class="text-center">Nama Mata Kuliah</th>
-                            <th class="text-center">Dosen Pengajar</th>
-                            <th class="text-center">Metode Perkuliahan</th>
-                            <th class="text-center">Lokasi Perkuliahan</th>
-                            <th class="text-center">Tanggal Perkuliahan</th>
-                            <th class="text-center">Waktu Perkuliahan</th>
-                            <th class="text-center">Button</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jadkul as $key => $item)
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Main Card -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-[#0C6E71] px-6 py-4 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-white">
+                        @yield('submenu')
+                    </h2>
+                    <a href="{{ route('web-admin.master.jadkul-create') }}" 
+                       class="bg-white hover:bg-gray-100 text-[#0C6E71] px-3 py-2 rounded-md flex items-center transition-colors border border-[#0C6E71]">
+                        <i class="fa-solid fa-plus mr-2"></i>
+                        <span class="hidden sm:inline">Tambah</span>
+                    </a>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-4 overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-[#E4E2DE]">
                             <tr>
-                                <td data-label="Number">{{ ++$key }}</td>
-                                {{-- <td data-label="Program Studi">{{ $item->kelas->pstudi->fakultas->name }} <br> {{ $item->kelas->pstudi->name }}</td> --}}
-                                <td data-label="Nama Kelas">{{ $item->kelas->code }}</td>
-                                <td data-label="Mata Kuliah">{{ $item->matkul->name }} <br>
-                                    {{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}</td>
-                                <td data-label="Nama Dosen">{{ $item->dosen->dsn_name }}</td>
-                                <td data-label="Metode">{{ $item->meth_id }}</td>
-                                <td data-label="Lokasi">
-                                    {{ $item->ruang->gedung->name }}<br>{{ $item->ruang->name . ' - Lantai ' . $item->ruang->floor }}
-                                </td>
-                                <td data-label="Tanggal Kuliah">{{ \Carbon\Carbon::parse($item->date)->isoFormat('dddd') }}
-                                    <br> {{ \Carbon\Carbon::parse($item->date)->isoFormat('d MMMM Y') }}</td>
-                                <td data-label="Waktu Perkuliahan">{{ $item->start }} <br> - <br> {{ $item->ended }}
-                                </td>
-                                <td class="d-flex justify-content-between align-items-center">
-                                    <a href="{{ route('mahasiswa.home-jadkul-absen', $item->code) }}"
-                                        style="margin-right: 10px" class="btn btn-info"><i
-                                            class="fas fa-calendar-check"></i> Absensi</a>
-                                    <a href="#" style="margin-right: 10px" data-bs-toggle="modal"
-                                        data-bs-target="#giveFeedBack{{ $item->code }}" class="btn btn-warning"><i
-                                            class="fas fa-star"></i> FeedBack</a>
-
-                                </td>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">#</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Nama Kelas</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Mata Kuliah</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Dosen</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Metode</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Lokasi</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Tanggal</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Waktu</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">Aksi</th>
                             </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($jadkul as $key => $item)
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->kelas->code }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ $item->matkul->name }} <br>
+                                        <span class="text-gray-500">{{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->dosen->dsn_name }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->meth_id }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ $item->ruang->gedung->name }}<br>
+                                        <span class="text-gray-500">{{ $item->ruang->name . ' - Lantai ' . $item->ruang->floor }}</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ \Carbon\Carbon::parse($item->date)->isoFormat('dddd') }}<br>
+                                        <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->date)->isoFormat('D MMMM Y') }}</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">
+                                        {{ $item->start }} <br> 
+                                        <span class="text-gray-500">-</span> <br>
+                                        {{ $item->ended }}
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <div class="flex flex-col space-y-2">
+                                            <a href="{{ route('mahasiswa.home-jadkul-absen', $item->code) }}"
+                                               class="bg-[#0C6E71] hover:bg-teal-800 text-white px-3 py-2 rounded-md text-sm flex items-center justify-center transition-colors">
+                                                <i class="fas fa-calendar-check mr-2"></i>
+                                                Absensi
+                                            </a>
+                                            <button onclick="openModal('feedbackModal{{ $item->code }}')"
+                                               class="bg-[#FF6B35] hover:bg-orange-600 text-white px-3 py-2 rounded-md text-sm flex items-center justify-center transition-colors">
+                                                <i class="fas fa-star mr-2"></i>
+                                                FeedBack
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        <!--Extra Large Modal -->
-        @foreach ($jadkul as $item)
-            <form action="{{ route('mahasiswa.jadkul.feedback-store', $item->code) }}" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="modal fade text-left w-100" id="giveFeedBack{{ $item->code }}" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel16" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel16">FeedBack -
-                                    {{ $item->matkul->name . ' P-' . $item->raw_pert_id }} </h4>
-                                <div class="d-flex justify-content-between align-items-center">
+    <!-- Feedback Modals -->
+    @foreach ($jadkul as $item)
+        <div id="feedbackModal{{ $item->code }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!-- Background overlay -->
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
 
-                                    <button type="submit" class="btn btn-outline-primary" style="margin-right: 4px">
-                                        <i class="fas fa-paper-plane"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label for="fb_score">Skor FeedBack</label>
-                                        <select name="fb_score" id="fb_score" class="form-control">
-                                            <option value="" selected>Pilih Salah Satu</option>
-                                            <option value="Tidak Puas">Tidak Puas</option>
-                                            <option value="Cukup Puas">Cukup Puas</option>
-                                            <option value="Sangat Puas">Sangat Puas</option>
-                                        </select>
-                                        @error('fb_score')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                        <small>Ayo berikan FeedBack sebagai anonim</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fb_reason">Berikan Alasan</label>
-                                        <textarea name="fb_reason" id="fb_reason" class="form-control" cols="30" rows="10"
-                                            placeholder="Berikan Alasanmu..."></textarea>
-                                        @error('fb_reason')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                <!-- Modal content -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <form action="{{ route('mahasiswa.jadkul.feedback-store', $item->code) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                    <h3 class="text-lg leading-6 font-medium text-[#2E2E2E] mb-4">
+                                        FeedBack - {{ $item->matkul->name . ' P-' . $item->raw_pert_id }}
+                                    </h3>
+                                    
+                                    <div class="mt-2 space-y-4">
+                                        <div>
+                                            <label for="fb_score" class="block text-sm font-medium text-[#3B3B3B]">Skor FeedBack</label>
+                                            <select name="fb_score" id="fb_score" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-[#0C6E71] focus:border-[#0C6E71] sm:text-sm rounded-md">
+                                                <option value="" selected>Pilih Salah Satu</option>
+                                                <option value="Tidak Puas">Tidak Puas</option>
+                                                <option value="Cukup Puas">Cukup Puas</option>
+                                                <option value="Sangat Puas">Sangat Puas</option>
+                                            </select>
+                                            @error('fb_score')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                            <p class="mt-1 text-sm text-gray-500">Ayo berikan FeedBack sebagai anonim</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="fb_reason" class="block text-sm font-medium text-[#3B3B3B]">Berikan Alasan</label>
+                                            <textarea name="fb_reason" id="fb_reason" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-[#0C6E71] focus:border-[#0C6E71] sm:text-sm" placeholder="Berikan Alasanmu..."></textarea>
+                                            @error('fb_reason')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#0C6E71] text-base font-medium text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0C6E71] sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                <i class="fas fa-paper-plane mr-2"></i> Kirim
+                            </button>
+                            <button type="button" onclick="closeModal('feedbackModal{{ $item->code }}')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0C6E71] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                <i class="fas fa-times mr-2"></i> Batal
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        @endforeach
-    </div>
+            </div>
+        </div>
+    @endforeach
+
+    <script>
+        // Modal handling with pure JavaScript
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            document.querySelectorAll('[id^="feedbackModal"]').forEach(modal => {
+                if (event.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        }
+    </script>
 @endsection

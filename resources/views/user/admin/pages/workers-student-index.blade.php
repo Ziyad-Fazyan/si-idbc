@@ -15,162 +15,167 @@
     Halaman untuk melihat data pengguna Mahasiswa
 @endsection
 @section('content')
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
+    <section class="p-4">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-4 border-b border-gray-200">
+                <h5 class="text-lg font-semibold flex justify-between items-center">
                     @yield('menu')
-                    <div class="">
-                        <a href="{{ route($prefix . 'workers.student-create') }}" class="btn btn-outline-primary"><i
-                                class="fa-solid fa-plus"></i></a>
-                        <a href="{{ route($prefix . 'services.convert.export-student') }}" class="btn btn-outline-success"><i
-                                class="fa-solid fa-file-export"></i></a>
-                        <a href="#" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            data-bs-target="#importStudent"><i class="fa-solid fa-file-import"></i></a>
+                    <div class="flex space-x-2">
+                        <a href="{{ route($prefix . 'workers.student-create') }}" class="bg-[#0C6E71] text-white px-4 py-2 rounded hover:bg-[#0a5c5f] transition">
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                        <a href="{{ route($prefix . 'services.convert.export-student') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                            <i class="fa-solid fa-file-export"></i>
+                        </a>
+                        <button onclick="toggleModal('importStudent')" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+                            <i class="fa-solid fa-file-import"></i>
+                        </button>
                     </div>
                 </h5>
             </div>
-            <div class="card-body">
-                <table class="table table-striped" id="table1">
-                    <thead>
+            <div class="p-4 overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">NIM</th>
-                            <th class="text-center">Nama Mahasiswa</th>
-                            <th class="text-center">Kelas</th>
-                            <th class="text-center">Gender</th>
-                            <th class="text-center">Join Date</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Button</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">NIM</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Mahasiswa</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Button</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($student as $key => $item)
-                            <tr>
-                                <td data-label="Number">{{ ++$key }}</td>
-                                <td data-label="NIM Mahasiswa">{{ $item->mhs_nim }}</td>
-                                <td data-label="Nama Mahasiswa">{{ $item->mhs_name }}</td>
-                                <td data-label="Kelas">{{ $item->kelas->name }}</td>
-                                <td data-label="Gender">{{ $item->mhs_gend }}</td>
-                                <td data-label="Join Date">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ ++$key }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->mhs_nim }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->mhs_name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->kelas->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->mhs_gend }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
                                     {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y') }}</td>
-                                <td data-label="Status Mahasiswa">{{ $item->mhs_stat }}</td>
-                                <td class="d-flex justify-content-center align-items-center">
-                                    <a href="#" style="margin-right: 10px" data-bs-toggle="modal"
-                                        data-bs-target="#viewContact{{ $item->mhs_code }}" class="btn btn-outline-info"><i
-                                            class="fas fa-phone"></i></a>
-                                    <a href="{{ route($prefix . 'workers.student-edit', $item->mhs_code) }}"
-                                        style="margin-right: 10px" class="btn btn-outline-primary"><i
-                                            class="fas fa-edit"></i></a>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->mhs_stat }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap flex justify-center space-x-2">
+                                    <button onclick="toggleModal('viewContact{{ $item->mhs_code }}')" class="bg-blue-100 text-blue-600 p-2 rounded hover:bg-blue-200 transition">
+                                        <i class="fas fa-phone"></i>
+                                    </button>
+                                    <a href="{{ route($prefix . 'workers.student-edit', $item->mhs_code) }}" class="bg-blue-100 text-blue-600 p-2 rounded hover:bg-blue-200 transition">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     <form id="delete-form-{{ $item->mhs_code }}"
                                         action="{{ route($prefix . 'workers.student-destroy', $item->mhs_code) }}"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a type="button" class="bs-tooltip btn btn-rounded btn-outline-danger"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                            data-original-title="Delete"
-                                            data-url="{{ route($prefix . 'workers.student-destroy', $item->mhs_code) }}"
-                                            data-name="{{ $item->name }}" onclick="deleteData('{{ $item->mhs_code }}')">
+                                        <button type="button" class="bg-red-100 text-red-600 p-2 rounded hover:bg-red-200 transition"
+                                            title="Delete"
+                                            onclick="deleteData('{{ $item->mhs_code }}')">
                                             <i class="fas fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
-
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        <!--Extra Large Modal -->
-        <form action="{{ route($prefix . 'services.convert.import-student') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal fade text-left w-100" id="importStudent" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel16">Import Mahasiswa</h4>
-                            <div class="">
-
-                                <button type="submit" class="btn btn-outline-primary">
+    <!-- Import Student Modal -->
+    <div id="importStudent" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <form action="{{ route($prefix . 'services.convert.import-student') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="flex justify-between items-center border-b pb-2 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Import Mahasiswa</h3>
+                            <div class="flex space-x-2">
+                                <button type="submit" class="bg-[#0C6E71] text-white px-3 py-1 rounded hover:bg-[#0a5c5f] transition">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                                    aria-label="Close">
+                                <button type="button" onclick="toggleModal('importStudent')" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="import">Import Files ( xlsx, csv )</label>
-                                    <input type="file" name="import" id="import" class="form-control"
-                                        accept=".xls, .xlsx, .csv">
-                                    @error('import')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label for="import" class="block text-sm font-medium text-gray-700">Import Files (xlsx, csv)</label>
+                                <input type="file" name="import" id="import" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#0C6E71] focus:border-[#0C6E71]" accept=".xls, .xlsx, .csv">
+                                @error('import')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modals -->
+    @foreach ($student as $item)
+        <div id="viewContact{{ $item->mhs_code }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="flex justify-between items-center border-b pb-2 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Lihat Data Kontak - {{ $item->mhs_name }}</h3>
+                            <button type="button" onclick="toggleModal('viewContact{{ $item->mhs_code }}')" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <input type="text" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-[#0C6E71] focus:border-[#0C6E71]" value="{{ $item->mhs_phone }}" readonly>
+                                    <a href="https://wa.me/{{ $item->mhs_phone }}" target="_blank" class="inline-flex items-center px-3 rounded-r-md bg-green-600 text-white hover:bg-green-700 transition">
+                                        <i class="fa-solid fa-square-phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Alamat Email</label>
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <input type="text" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-[#0C6E71] focus:border-[#0C6E71]" value="{{ $item->mhs_mail }}" readonly>
+                                    <a href="mailto:{{ $item->mhs_mail }}" class="inline-flex items-center px-3 rounded-r-md bg-red-600 text-white hover:bg-red-700 transition">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="me-1 mb-1 d-inline-block">
-
-        @foreach ($student as $item)
-            <div class="modal fade text-left w-100" id="viewContact{{ $item->mhs_code }}" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel16">Lihat Data Kontak - {{ $item->mhs_name }} </h4>
-                            <div class="">
-
-                                <button type="button" class="btn btn-outline-danger mt-1" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Nomor Telepon</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->mhs_phone }}">
-                                        <a href="https://wa.me/{{ $item->mhs_phone }}" target="_blank"
-                                            class="btn btn-outline-success" style="margin-left: 10px"><i
-                                                class="fa-solid fa-square-phone"></i></a>
-                                    </div>
-
-                                </div>
-                                <div class="form-group col-lg-12 col-12">
-                                    <label for="kode_kelas">Alamat Email</label>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <input type="text" class="form-control" value="{{ $item->mhs_mail }}">
-                                        <a href="mailto:{{ $item->mhs_mail }}" class="btn btn-outline-danger"
-                                            style="margin-left: 10px"><i class="fa-solid fa-envelope"></i></a>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-
-    </div>
+        </div>
+    @endforeach
 @endsection
+
 @section('custom-js')
+<script>
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.toggle('hidden');
+    }
+
+    function deleteData(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+</script>
 @endsection

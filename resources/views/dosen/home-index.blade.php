@@ -37,99 +37,162 @@
     </style>
 @endsection
 @section('content')
-    <section class="section">
-        <div class="row">
+    <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- Left Column - Cards -->
+                <div class="w-full lg:w-3/4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Jadwal Mengajar Card -->
+                        <a href="{{ route('dosen.akademik.jadwal-index') }}" class="group">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform group-hover:scale-[1.02] border border-[#0C6E71] hover:border-[#FF6B35]">
+                                <div class="p-4 flex items-center justify-between">
+                                    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0C6E71] text-white group-hover:bg-[#FF6B35] transition-colors duration-300">
+                                        <i class="fa-solid fa-calendar text-2xl"></i>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[#2E2E2E] font-medium">Jadwal Mengajar</p>
+                                        <p class="text-[#0C6E71] font-bold text-xl">
+                                            {{ \App\Models\JadwalKuliah::where('dosen_id', Auth::guard('dosen')->user()->id)->count() }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
 
-            <div class="col-lg-9 col-12 row">
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('dosen.akademik.jadwal-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-calendar"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-white" style="margin-left: 25px; font-size: 16px;">Jadwal Mengajar
-                                    <br>{{ \App\Models\JadwalKuliah::where('dosen_id', Auth::guard('dosen')->user()->id)->count() }}</span>
+                        <!-- Feedback Card -->
+                        <a href="{{ route('dosen.akademik.jadwal-index') }}" class="group">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform group-hover:scale-[1.02] border border-[#0C6E71] hover:border-[#FF6B35]">
+                                <div class="p-4 flex items-center justify-between">
+                                    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#0C6E71] text-white group-hover:bg-[#FF6B35] transition-colors duration-300">
+                                        <i class="fa-solid fa-star text-2xl"></i>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[#2E2E2E] font-medium">FeedBack</p>
+                                        <p class="text-[#0C6E71] font-bold text-xl">{{ $feedback->count() }}</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-6 mb-2">
-                    <a href="{{ route('dosen.akademik.jadwal-index') }}">
-                        <div class="card btn btn-outline-success">
-                            <div class="card-body d-flex justify-content-around align-items-center">
-                                <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-star"
-                                        style="font-size: 42px"></i></span>
-                                <span class="text-white" style="margin-left: 25px; font-size: 16px;">FeedBack
-                                    <br>{{ $feedback->count() }}</span>
-                            </div>
+
+                <!-- Right Column - Announcements -->
+                <div class="w-full lg:w-1/4">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-[#0C6E71] px-4 py-3">
+                            <h3 class="text-white font-semibold">Pengumuman - {{ \Carbon\Carbon::now()->format('d M Y') }}</h3>
                         </div>
-                    </a>
+                        <div class="p-4">
+                            @forelse ($notify as $item)
+                                <div class="mb-3 pb-3 border-b border-[#E4E2DE] last:border-0 last:mb-0 last:pb-0">
+                                    <p class="text-sm text-[#3B3B3B]">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y - H.i') }}
+                                    </p>
+                                    <a href="#" 
+                                       class="text-[#0C6E71] hover:text-[#FF6B35] font-medium transition-colors duration-200"
+                                       onclick="openModal('modal-{{ $item->code }}')">
+                                        {{ $item->name }}
+                                    </a>
+                                </div>
+                            @empty
+                                <p class="text-[#3B3B3B] italic">Tidak Ada Pengumuman Hari Ini</p>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Pengumuman - {{ \Carbon\Carbon::now()->format('d M Y') }}</h4>
+
+            <!-- Satisfaction Chart -->
+            <div class="mt-6 w-full lg:w-2/5">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-[#0C6E71] px-4 py-3">
+                        <h3 class="text-white font-semibold text-center">Presentasi Kepuasan Mengajar</h3>
                     </div>
-                    <div class="card-body">
-                        @forelse ($notify as $item)
-                            <span>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y' . ' - ' . 'H' . '.' . 'i') }} - <a
-                                    href="#" data-bs-toggle="modal"
-                                    data-bs-target="#updateFakultas{{ $item->code }}">{{ $item->name }}</a></span><br>
-                        @empty
-                            <span class="">Tidak Ada Pengumuman Hari Ini</span>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title text-center">Presentasi Kepuasan Mengajar</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div id="grafikChart"></div>
-                        </div>
-                        <div class="text-center">
-                            <small>Grafik Presentasi Presentasi Kepuasan Mengajar</small>
-                        </div>
+                    <div class="p-4">
+                        <div id="grafikChart" class="h-64"></div>
+                        <p class="text-center text-sm text-[#3B3B3B] mt-2">
+                            Grafik Presentasi Kepuasan Mengajar
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="me-1 mb-1 d-inline-block">
 
-            <!--Extra Large Modal -->
-            @foreach ($notify as $item)
-                <div class="modal fade text-left w-100" id="updateFakultas{{ $item->code }}" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel16" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-l" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel16">Notifikasi - {{ $item->name }}</h4>
-                                <div class="">
+        <!-- Modals -->
+        @foreach ($notify as $item)
+            <div id="modal-{{ $item->code }}" 
+                 class="fixed inset-0 z-50 hidden overflow-y-auto" 
+                 aria-labelledby="modal-title-{{ $item->code }}" 
+                 aria-modal="true" 
+                 role="dialog">
+                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <!-- Background overlay -->
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
+                         aria-hidden="true"
+                         onclick="closeModal('modal-{{ $item->code }}')"></div>
 
-                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <p class="text-center"><b>{{ $item->name }}</b></p>
-                                        <p>{!! $item->desc !!}</p>
+                    <!-- Modal panel -->
+                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div class="bg-[#0C6E71] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="button" 
+                                    class="text-white hover:text-[#FF6B35] focus:outline-none"
+                                    onclick="closeModal('modal-{{ $item->code }}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h3 class="text-lg leading-6 font-medium text-white mr-4" 
+                                id="modal-title-{{ $item->code }}">
+                                Notifikasi - {{ $item->name }}
+                            </h3>
+                        </div>
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                    <h4 class="text-lg font-medium text-[#2E2E2E] text-center mb-4">{{ $item->name }}</h4>
+                                    <div class="mt-2 text-[#3B3B3B] prose max-w-none">
+                                        {!! $item->desc !!}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="bg-[#E4E2DE] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="button" 
+                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-[#0C6E71] shadow-sm px-4 py-2 bg-white text-[#0C6E71] font-medium hover:bg-[#0C6E71] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B35] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-200"
+                                    onclick="closeModal('modal-{{ $item->code }}')">
+                                Tutup
+                            </button>
+                        </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </section>
+
+    <script>
+        // Modal handling with pure JavaScript
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('DOMContentLoaded', function() {
+            const modals = document.querySelectorAll('[aria-modal="true"]');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 @section('custom-js')
     <script>
