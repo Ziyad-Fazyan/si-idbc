@@ -109,59 +109,66 @@ class HomeController extends Controller
     }
 
     public function jadkulAbsenStore(Request $request)
-    {
-        $request->validate([
-            'absen_proof' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
-            'absen_type' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'absen_type' => 'required|string',
+        'jadkul_code' => 'required|string',
+        'absen_date' => 'required|date',
+        'absen_time' => 'required|string',
+        'author_id' => 'required|integer',
+    ]);
 
-        $timeStart = \Carbon\Carbon::now()->format('H:i:s');
-        $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
+    $timeStart = now()->format('H:i:s');
+    $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
 
-
-        $absen = new AbsensiMahasiswa;
-
-        if ($request->hasFile('absen_proof')) {
-            $image = $request->file('absen_proof');
-            $name = 'profile-'. $request->jadkul_code. '-' . $request->absen_date . '-' . $request->author_id .'-' .uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = storage_path('app/public/images/profile/absen/');
-            $destinationPaths = storage_path('app/public/images');
-
-            // Compress image
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($image->getRealPath());
-            // $image->resize(width: 250);
-            $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
-
-            if ($absen->absen_proof != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$absen->absen_proof); // hapus gambar lama
-            }
-            $absen->absen_proof = "profile/absen/".$name;
-            $absen->author_id = $request->author_id;
-            $absen->jadkul_code = $request->jadkul_code;
-            $absen->absen_date = $request->absen_date;
-            $absen->absen_time = $request->absen_time;
-            $absen->absen_type = $request->absen_type;
-            $absen->code = uniqid();
-            if ($timeStart >= $checkStart->ended) {
-                // Jika waktu saat ini sudah melewati waktu selesai perkuliahan
-                Alert::error('Error', 'Waktu perkuliahan telah selesai. Anda sudah tidak bisa absen hari ini.');
-                return back();
-            } elseif ($timeStart >= $checkStart->start) {
-                // Jika waktu saat ini sudah sama atau setelah waktu mulai perkuliahan
-                $absen->save();
-            } else {
-                // Jika waktu saat ini masih sebelum waktu mulai perkuliahan
-                Alert::error('Error', 'Waktu absen belum dimulai. Silahkan coba kembali nanti.');
-                return back();
-            }
-
-            Alert::success('Success', 'Kamu telah berhasil absen pada matakuliah ini');
-            return redirect()->route('mahasiswa.home-jadkul-index');
-        }
-
+    if (!$checkStart) {
+        Alert::error('Error', 'Jadwal kuliah tidak ditemukan.');
+        return back();
     }
+
+    // Cek sudah absen belum
+    $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
+        ->where('author_id', $request->author_id)
+        ->where('absen_date', $request->absen_date)
+        ->exists();
+
+    if ($sudahAbsen) {
+        Alert::error('Error', 'Mahasiswa sudah absen untuk matakuliah ini.');
+        return back();
+    }
+
+    if ($timeStart >= $checkStart->ended) {
+        Alert::error('Error', 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.');
+        return back();
+    }
+
+    if ($timeStart < $checkStart->start) {
+        Alert::error('Error', 'Waktu absen belum dimulai. Silakan coba nanti.');
+        return back();
+    }
+
+    // Simpan data absen
+    $absen = new AbsensiMahasiswa;
+    $absen->author_id = $request->author_id;
+    $absen->jadkul_code = $request->jadkul_code;
+    $absen->absen_date = $request->absen_date;
+    $absen->absen_time = $request->absen_time;
+    $absen->absen_type = $request->absen_type;
+    $absen->code = uniqid();
+    $absen->save();
+
+    // Tentukan pesan berdasarkan sumber request (dari mahasiswa atau dari pengenalan wajah)
+    $referer = request()->headers->get('referer');
+    $isFromFaceRecognition = str_contains($referer, 'face-results');
+    
+    if ($isFromFaceRecognition) {
+        Alert::success('Success', 'Absensi berhasil dicatat melalui pengenalan wajah.');
+        return redirect()->route('officer.face-results');
+    } else {
+        Alert::success('Success', 'Kamu telah berhasil absen pada matakuliah ini.');
+        return redirect()->back();
+    }
+}
 
     public function saveImageProfile(Request $request)
     {

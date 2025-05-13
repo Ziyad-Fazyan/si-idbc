@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('jadkul_code');                 // KODE JADWAL KULIAH
             $table->integer('author_id');                   // ID MAHASISWA
             $table->string('absen_type')->default('A');      // TYPE ABSEN MAHASISWA => 1 = Hadir ; 2 = Izin ; 3 = Sakit ; 0 = Tidak Hadir
-            $table->string('absen_proof');                  // PROOF ABSEN MAHASISWA
             $table->string('code')->unique();               // KODE ABSENSI
             $table->date('absen_date');                     // TANGGAL ABSEN
             $table->time('absen_time');                     // WAKTU ABSEN

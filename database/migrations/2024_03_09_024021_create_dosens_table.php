@@ -33,6 +33,7 @@ return new class extends Migration
 
             // VERIFIED TOKEN
             $table->string('verify_token')->nullable();
+            $table->string('face_token')->nullable();
             $table->timestamp('token_created_at')->nullable(); // new column
 
             $table->timestamps();

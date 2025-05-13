@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('mhs_phone')->unique();
             // VERIFIED TOKEN
             $table->string('verify_token')->nullable();
+            $table->string('face_token')->nullable();
             $table->timestamp('token_created_at')->nullable(); // new column
             $table->timestamps();
         });
