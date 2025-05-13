@@ -14,323 +14,313 @@
 @section('subdesc')
     Halaman untuk melihat data tagihan
 @endsection
-@section('custom-css')
-    <style>
-        @media (max-width: 768px) {
-            .card-body {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .icon {
-                margin: 10px 0;
-            }
-
-            .text-putih {
-                margin-left: 0px !important;
-                /* Mengatur margin-left menjadi 0 */
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
-@endsection
 @section('content')
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12 col-12">
-                <div class="row">
-                    <div class="col-lg-3 col-6 mb-2">
-                        <a href="{{ route($prefix . 'finance.tagihan-index') }}">
-                            <div class="card btn btn-outline-success">
-                                <div class="card-body d-flex justify-content-around align-items-center">
-                                    <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-file-invoice"
-                                            style="font-size: 42px"></i></span>
-                                    <span class="text-putih"
-                                        style="margin-left: 25px; font-size: 16px;">{{ \App\Models\TagihanKuliah::all()->count() }}<br>
-                                        Tagihan</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-6 mb-2">
-                        <a href="{{ route($prefix . 'finance.pembayaran-index') }}">
-                            <div class="card btn btn-outline-success">
-                                <div class="card-body d-flex justify-content-around align-items-center">
-                                    <span class="icon" style="margin-right: 25px;"><i
-                                            class="fa-solid fa-file-invoice-dollar" style="font-size: 42px"></i></span>
-                                    <span class="text-putih"
-                                        style="margin-left: 25px; font-size: 16px;">{{ \App\Models\HistoryTagihan::where('stat', 1)->count() }}<br>
-                                        Pembayaran</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-6 mb-2">
-                        <a href="{{ route($prefix . 'finance.keuangan-index') }}">
-                            <div class="card btn btn-outline-success">
-                                <div class="card-body d-flex justify-content-around align-items-center">
-                                    <span class="icon" style="margin-right: 25px;"><i class="fa-solid fa-dollar"
-                                            style="font-size: 42px"></i></span>
-                                    <span class="text-putih"
-                                        style="margin-left: 25px; font-size: 16px;">{{ number_format($income, 0, ',', '.') }}<br>
-                                        Income ( IDR )</span>
-                                </div>
-                            </div>
-                        </a>
+    <section class="p-4 space-y-4">
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Tagihan Card -->
+            <a href="{{ route($prefix . 'finance.tagihan-index') }}" class="group">
+                <div class="bg-white rounded-lg shadow-md p-4 transition-all duration-300 group-hover:shadow-lg">
+                    <div class="flex items-center">
+                        <div class="text-emerald-600 mr-4">
+                            <i class="fa-solid fa-file-invoice text-4xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">{{ \App\Models\TagihanKuliah::all()->count() }}</p>
+                            <p class="text-gray-600">Tagihan</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-12 col-12 mb-2">
-                <form action="{{ route($prefix . 'finance.tagihan-store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+            </a>
 
-                    <div class="card">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="card-title">@yield('submenu')@yield('menu')</h5>
-                            <div class="">
-                                <a href="{{ route($prefix . 'finance.tagihan-index') }}" class="btn btn-outline-warning"><i
-                                        class="fa-solid fa-backward"></i></a>
-                                <button type="submit" class="btn btn-outline-primary"><i
-                                        class="fa-solid fa-paper-plane"></i></button>
-                            </div>
-
+            <!-- Pembayaran Card -->
+            <a href="{{ route($prefix . 'finance.pembayaran-index') }}" class="group">
+                <div class="bg-white rounded-lg shadow-md p-4 transition-all duration-300 group-hover:shadow-lg">
+                    <div class="flex items-center">
+                        <div class="text-emerald-600 mr-4">
+                            <i class="fa-solid fa-file-invoice-dollar text-4xl"></i>
                         </div>
-                        <div class="card-body row">
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="name">Nama Tagihan</label>
-                                <input type="text" name="name" id="name" class="form-control"
-                                    placeholder="Nama tagihan...">
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-6 col-12">
-                                <label for="price">Nominal Tagihan</label>
-                                <input type="text" name="price" id="price" class="form-control"
-                                    placeholder="Nominal tagihan...">
-                                @error('price')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="users_id">Tagihan Mahasiswa</label>
-                                <select name="users_id" id="users_id" class="choices form-select">
-                                    <option value="0" selected>Pilih Mahasiswa</option>
-                                    @foreach ($mahasiswa as $item)
-                                        <option value="{{ $item->id }}">{{ $item->mhs_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('users_id')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="prodi_id">Tagihan Program Studi</label>
-                                <select name="prodi_id" id="prodi_id" class="choices form-select">
-                                    <option value="0" selected>Pilih Program Studi</option>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('prodi_id')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                <label for="proku_id">Tagihan Program Kuliah</label>
-                                <select name="proku_id" id="proku_id" class="choices form-select">
-                                    <option value="0" selected>Pilih Program Kuliah</option>
-                                    @foreach ($proku as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('proku_id')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-
+                        <div>
+                            <p class="text-2xl font-bold">{{ \App\Models\HistoryTagihan::where('stat', 1)->count() }}</p>
+                            <p class="text-gray-600">Pembayaran</p>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-12 col-12 mb-2">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="card-title">Data Tagihan Terbaru</h5>
-                        <div class="">
-                            <a href="{{ route($prefix . 'finance.tagihan-index') }}" class="btn btn-outline-warning"><i
-                                    class="fa-solid fa-backward"></i></a>
-                            {{-- <a href="#" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a> --}}
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped" id="table1">
-                            <thead>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Kode Tagihan</th>
-                                <th class="text-center">Nama Tagihan</th>
-                                <th class="text-center">Type Tagihan</th>
-                                <th class="text-center">Tagihan</th>
-                                <th class="text-center">Nominal</th>
-                                <th class="text-center">Button</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($tagihan as $key => $item)
-                                    <tr class="">
-                                        <td data-label="Number">{{ ++$key }}</td>
-                                        <td data-label="Kode Tagihan"><span
-                                                style="text-transform: uppercase">{{ $item->code }}</span></td>
-                                        <td data-label="Nama Tagihan">{{ $item->name }}</td>
-                                        <td data-label="Type Tagihan">
-                                            @if ($item->proku_id > 0)
-                                                Type Global
-                                            @elseif($item->prodi_id > 0)
-                                                Type Pribadi
-                                            @elseif($item->users_id > 0)
-                                                Type Pribadi
-                                            @endif
-                                        </td>
-                                        <td data-label="Tagihan Kepada">
-                                            @if ($item->proku_id !== 0 && $item->prokuu)
-                                                Program Kuliah
-                                                <br>
-                                                {{ $item->prokuu->name }}
-                                            @elseif($item->prodi_id !== 0 && $item->prodi)
-                                                Program Studi
-                                                <br>
-                                                {{ $item->prodi->name }}
-                                            @elseif($item->users_id !== 0 && $item->mahasiswa)
-                                                Mahasiswa
-                                                <br>
-                                                {{ $item->mahasiswa->mhs_name }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        <td data-label="Nominal">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
-                                        {{-- <td data-label="Tagihan Kepada">{{ $item->users_id === 0 ? $item->proku->name : $item->users->mhs_name }}</td> --}}
-                                        <td class="d-flex justify-content-center align-items-center">
-                                            <a href="#" style="margin-right: 10px" data-bs-toggle="modal"
-                                                data-bs-target="#updateTagihan{{ $item->code }}"
-                                                class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                                            <form id="delete-form-{{ $item->code }}"
-                                                action="{{ route($prefix . 'finance.tagihan-destroy', $item->code) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a type="button" class="bs-tooltip btn btn-rounded btn-outline-danger"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                                                    data-original-title="Delete"
-                                                    data-url="{{ route($prefix . 'finance.tagihan-destroy', $item->code) }}"
-                                                    data-name="{{ $item->name }}"
-                                                    onclick="deleteData('{{ $item->code }}')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
                 </div>
+            </a>
+
+            <!-- Income Card -->
+            <a href="{{ route($prefix . 'finance.keuangan-index') }}" class="group">
+                <div class="bg-white rounded-lg shadow-md p-4 transition-all duration-300 group-hover:shadow-lg">
+                    <div class="flex items-center">
+                        <div class="text-emerald-600 mr-4">
+                            <i class="fa-solid fa-dollar text-4xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold">{{ number_format($income, 0, ',', '.') }}</p>
+                            <p class="text-gray-600">Income (IDR)</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Create Form -->
+        <form action="{{ route($prefix . 'finance.tagihan-store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
+            @csrf
+            <div class="border-b p-4 flex justify-between items-center bg-gray-50">
+                <h2 class="text-lg font-semibold text-gray-800">@yield('submenu') @yield('menu')</h2>
+                <div class="flex space-x-2">
+                    <a href="{{ route($prefix . 'finance.tagihan-index') }}" class="px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </a>
+                    <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                        <i class="fa-solid fa-paper-plane mr-1"></i> Simpan
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Name Field -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Nama Tagihan</label>
+                    <input type="text" name="name" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Nama tagihan...">
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Price Field -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Nominal Tagihan</label>
+                    <input type="text" name="price" id="price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Nominal tagihan...">
+                    @error('price')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Student Select -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Tagihan Mahasiswa</label>
+                    <select name="users_id" id="users_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="0" selected>Pilih Mahasiswa</option>
+                        @foreach ($mahasiswa as $item)
+                            <option value="{{ $item->id }}">{{ $item->mhs_name }}</option>
+                        @endforeach
+                    </select>
+                    @error('users_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Study Program Select -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Tagihan Program Studi</label>
+                    <select name="prodi_id" id="prodi_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="0" selected>Pilih Program Studi</option>
+                        @foreach ($prodi as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('prodi_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Course Program Select -->
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Tagihan Program Kuliah</label>
+                    <select name="proku_id" id="proku_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="0" selected>Pilih Program Kuliah</option>
+                        @foreach ($proku as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('proku_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </form>
+
+        <!-- Recent Invoices Table -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="border-b p-4 flex justify-between items-center bg-gray-50">
+                <h2 class="text-lg font-semibold text-gray-800">Data Tagihan Terbaru</h2>
+                <div class="flex space-x-2">
+                    <a href="{{ route($prefix . 'finance.tagihan-index') }}" class="px-3 py-1 bg-amber-500 text-white rounded-md hover:bg-amber-600">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </a>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Kode Tagihan</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Tagihan</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Type Tagihan</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Tagihan</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($tagihan as $key => $item)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-4 whitespace-nowrap text-center">{{ ++$key }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center uppercase">{{ $item->code }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center">{{ $item->name }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center">
+                                @if ($item->proku_id > 0)
+                                    Type Global
+                                @elseif($item->prodi_id > 0)
+                                    Type Pribadi
+                                @elseif($item->users_id > 0)
+                                    Type Pribadi
+                                @endif
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center">
+                                @if ($item->proku_id !== 0 && $item->prokuu)
+                                    Program Kuliah<br>
+                                    {{ $item->prokuu->name }}
+                                @elseif($item->prodi_id !== 0 && $item->prodi)
+                                    Program Studi<br>
+                                    {{ $item->prodi->name }}
+                                @elseif($item->users_id !== 0 && $item->mahasiswa)
+                                    Mahasiswa<br>
+                                    {{ $item->mahasiswa->mhs_name }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-center">
+                                <div class="flex justify-center space-x-2">
+                                    <!-- Edit Button -->
+                                    <button onclick="openEditModal('{{ $item->code }}')" class="p-2 text-blue-600 hover:text-blue-800">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    
+                                    <!-- Delete Button -->
+                                    <form id="delete-form-{{ $item->code }}" action="{{ route($prefix . 'finance.tagihan-destroy', $item->code) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete('{{ $item->code }}', '{{ $item->name }}')" class="p-2 text-red-600 hover:text-red-800">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
-    <div class="me-1 mb-1 d-inline-block">
 
-        <!--Extra Large Modal -->
-        @foreach ($tagihan as $item)
-            <form action="{{ route($prefix . 'finance.tagihan-update', $item->code) }}" method="POST"
-                enctype="multipart/form-data">
-                @method('patch')
-                @csrf
-                <div class="modal fade text-left w-100" id="updateTagihan{{ $item->code }}" tabindex="-1"
-                    role="dialog" aria-labelledby="myModalLabel16" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel16">Edit Tagihan - {{ $item->name }}</h4>
-                                <div class="">
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <form id="editForm" method="POST" enctype="multipart/form-data">
+                    @method('patch')
+                    @csrf
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Edit Tagihan</h3>
+                                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Name Field -->
+                                    <div class="space-y-1">
+                                        <label class="block text-sm font-medium text-gray-700">Nama Tagihan</label>
+                                        <input type="text" name="name" id="edit_name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Nama tagihan...">
+                                    </div>
 
-                                    <button type="submit" class="mt-1 btn btn-outline-primary">
-                                        <i class="fas fa-paper-plane"></i>
-                                    </button>
-                                    <button type="button" class="mt-1 btn btn-outline-danger" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="modal-body row">
-                                <div class="form-group col-lg-6 col-12">
-                                    <label for="name">Nama Tagihan</label>
-                                    <input type="text" name="name" id="name" class="form-control"
-                                        value="{{ $item->name }}" placeholder="Nama tagihan...">
-                                    @error('name')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-lg-6 col-12">
-                                    <label for="price">Nominal Tagihan</label>
-                                    <input type="text" name="price" id="price" class="form-control"
-                                        value="{{ $item->price }}" placeholder="Nominal tagihan...">
-                                    @error('price')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    <label for="users_id">Tagihan Mahasiswa</label>
-                                    <select name="users_id" id="users_id" class="choices form-select">
-                                        <option value="0" selected>Pilih Mahasiswa</option>
-                                        @foreach ($mahasiswa as $mhs)
-                                            <option value="{{ $mhs->id }}"
-                                                {{ $item->users_id == $mhs->id ? 'selected' : '' }}>{{ $mhs->mhs_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('users_id')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    <label for="prodi_id">Tagihan Program Studi</label>
-                                    <select name="prodi_id" id="prodi_id" class="choices form-select">
-                                        <option value="0" selected>Pilih Program Studi</option>
-                                        @foreach ($prodi as $prd)
-                                            <option value="{{ $prd->id }}"
-                                                {{ $item->prodi_id == $prd->id ? 'selected' : '' }}>{{ $prd->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('prodi_id')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    <label for="proku_id">Tagihan Program Kuliah</label>
-                                    <select name="proku_id" id="proku_id" class="choices form-select">
-                                        <option value="0" selected>Pilih Program Kuliah</option>
-                                        @foreach ($proku as $prk)
-                                            <option value="{{ $prk->id }}"
-                                                {{ $item->proku_id == $prk->id ? 'selected' : '' }}>{{ $prk->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('proku_id')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
+                                    <!-- Price Field -->
+                                    <div class="space-y-1">
+                                        <label class="block text-sm font-medium text-gray-700">Nominal Tagihan</label>
+                                        <input type="text" name="price" id="edit_price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Nominal tagihan...">
+                                    </div>
+
+                                    <!-- Student Select -->
+                                    <div class="space-y-1">
+                                        <label class="block text-sm font-medium text-gray-700">Tagihan Mahasiswa</label>
+                                        <select name="users_id" id="edit_users_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="0" selected>Pilih Mahasiswa</option>
+                                            @foreach ($mahasiswa as $item)
+                                                <option value="{{ $item->id }}">{{ $item->mhs_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Study Program Select -->
+                                    <div class="space-y-1">
+                                        <label class="block text-sm font-medium text-gray-700">Tagihan Program Studi</label>
+                                        <select name="prodi_id" id="edit_prodi_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="0" selected>Pilih Program Studi</option>
+                                            @foreach ($prodi as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Course Program Select -->
+                                    <div class="space-y-1">
+                                        <label class="block text-sm font-medium text-gray-700">Tagihan Program Kuliah</label>
+                                        <select name="proku_id" id="edit_proku_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="0" selected>Pilih Program Kuliah</option>
+                                            @foreach ($proku as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        @endforeach
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Simpan Perubahan
+                        </button>
+                        <button type="button" onclick="closeEditModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
+
 @section('custom-js')
+<script>
+    // Edit Modal Functions
+    function openEditModal(code) {
+        // Fetch data via AJAX or use data attributes
+        // For simplicity, I'm assuming you'll implement the AJAX call
+        document.getElementById('editForm').action = `{{ route($prefix . 'finance.tagihan-update', '') }}/${code}`;
+        document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').classList.add('hidden');
+    }
+
+    // Delete Confirmation
+    function confirmDelete(code, name) {
+        if (confirm(`Apakah Anda yakin ingin menghapus tagihan ${name}?`)) {
+            document.getElementById(`delete-form-${code}`).submit();
+        }
+    }
+
+    // Initialize modals when needed
+    document.addEventListener('DOMContentLoaded', function() {
+        // You can add any initialization code here
+    });
+</script>
 @endsection
