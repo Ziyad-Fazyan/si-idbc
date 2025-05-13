@@ -70,10 +70,10 @@ class JadwalKuliahController extends Controller
         $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
         $data['ruang'] = Ruang::all();
         $data['kelas'] = kelas::all();
-        
+
         return view('user.admin.master.admin-jadkul-view-absen', $data);
     }
-    public function updateAbsen(Request $request,$code)
+    public function updateAbsen(Request $request, $code)
     {
         $absen = AbsensiMahasiswa::where('code', $code)->first();
 
@@ -83,7 +83,7 @@ class JadwalKuliahController extends Controller
         Alert::success('success', 'Data telah berhasil diupdate');
         return back();
     }
-    
+
     public function cetakAbsen(Request $request, $code)
     {
 
@@ -96,16 +96,15 @@ class JadwalKuliahController extends Controller
                 $q->where('code', $request->kode_kelas);
             });
         })->where('jadkul_code', $code)->get();
-    
-        $data['student'] = Mahasiswa::whereHas('kelas', function ($q) use ($request){
+
+        $data['student'] = Mahasiswa::whereHas('kelas', function ($q) use ($request) {
             $q->where('code', $request->kode_kelas);
         })->get();
 
         // return view('base.cetak.cetak-data-absensi', $data);
         $pdf = PDF::loadView('base.cetak.cetak-data-absensi', $data);
-       
-        return $pdf->download('Daftar-Absen-'.$data['jadkul']->matkul->name.'-'.$data['jadkul']->pert_id.'-'.$request->kode_kelas.'.pdf');
 
+        return $pdf->download('Daftar-Absen-' . $data['jadkul']->matkul->name . '-' . $data['jadkul']->pert_id . '-' . $request->kode_kelas . '.pdf');
     }
 
     public function store(Request $request)

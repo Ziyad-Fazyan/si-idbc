@@ -43,9 +43,9 @@ class SupportController extends Controller
         $initialSupport = TicketSupport::where('codr', $code)->latest()->get();
         $data['support'] = $initialSupport;
         $data['web'] = webSettings::where('id', 1)->first();
-        
+
         $checkStatus = TicketSupport::where('code', $code)->first();
-        if($checkStatus->raw_stat_id === 2){
+        if ($checkStatus->raw_stat_id === 2) {
             Alert::error('Error', 'Ticket Sudah diClose');
             return back();
         } else {
@@ -119,6 +119,4 @@ class SupportController extends Controller
         Alert::success('Berhasil', 'Ticket telah berhasil dibuat!');
         return back();
     }
-
-
 }

@@ -10,5 +10,4 @@ class MessageSupport extends Model
     use HasFactory;
 
     protected $guarded = [];
-
 }

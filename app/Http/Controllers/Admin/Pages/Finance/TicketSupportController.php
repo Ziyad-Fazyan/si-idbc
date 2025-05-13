@@ -14,16 +14,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class TicketSupportController extends Controller
 {
     use roleTrait;
-    
+
     public function index()
     {
         $userId = Auth::user()->raw_type;
 
         // dd($userId);
-        if($userId === 0){
+        if ($userId === 0) {
 
             $data['ticket'] = TicketSupport::whereNotNull('code')->latest()->get();
-        }else{
+        } else {
 
             $data['ticket'] = TicketSupport::whereNotNull('code')->where('dept_id', $userId)->latest()->get();
         }
@@ -39,17 +39,16 @@ class TicketSupportController extends Controller
         $data['support'] = TicketSupport::where('codr', $code)->latest()->get();
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        
+
         // dd($checkStatus);
         $checkStatus = TicketSupport::where('code', $code)->first();
-        if($checkStatus->raw_stat_id === 2){
+        if ($checkStatus->raw_stat_id === 2) {
             Alert::error('error', 'Ticket Sudah diClose');
             return back();
         } else {
 
             return view('user.finance.pages.support-ticket-view', $data);
         }
-
     }
 
     public function storeReply(Request $request, $code)

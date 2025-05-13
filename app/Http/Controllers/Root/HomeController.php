@@ -21,7 +21,7 @@ class HomeController extends Controller
 {
     private function setPrefix()
     {
-        if(Auth::user()){
+        if (Auth::user()) {
 
             $rawType = Auth::user()->raw_type;
             switch ($rawType) {
@@ -49,7 +49,7 @@ class HomeController extends Controller
         $data['album'] = GalleryAlbum::where('isPublish', 1)->latest()->paginate(3);
         $data['web'] = webSettings::where('id', 1)->first();
         $data['posts'] = newsPost::latest()->paginate(7);
-        $data['notify'] = Notification::whereIn('send_to', [0,3])->get();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
         $data['title'] = " - ESEC Academy";
         $data['menu'] = "Halaman Utama";
@@ -60,7 +60,7 @@ class HomeController extends Controller
     {
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
-        $data['notify'] = Notification::whereIn('send_to', [0,3])->get();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['web'] = webSettings::where('id', 1)->first();
         // $data['album'] = GalleryAlbum::where('slug', $slug)->first();
         $data['albums'] = GalleryAlbum::latest()->paginate(24);
@@ -73,7 +73,7 @@ class HomeController extends Controller
     {
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
-        $data['notify'] = Notification::whereIn('send_to', [0,3])->get();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['web'] = webSettings::where('id', 1)->first();
         // $data['album'] = GalleryAlbum::where('slug', $slug)->first();
         $search = $request->input('search');
@@ -87,7 +87,7 @@ class HomeController extends Controller
     {
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
-        $data['notify'] = Notification::whereIn('send_to', [0,3])->get();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['album'] = GalleryAlbum::where('slug', $slug)->first();
         $data['albums'] = GalleryAlbum::latest()->paginate(7);
@@ -101,7 +101,7 @@ class HomeController extends Controller
     {
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
-        $data['notify'] = Notification::whereIn('send_to', [0,3])->get();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['post'] = newsPost::where('slug', $slug)->first();
         $data['posts'] = newsPost::latest()->paginate(7);
@@ -141,7 +141,7 @@ class HomeController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['pstudi'] = ProgramStudi::where('slug', $slug)->first();
         $data['title'] = " - ESEC Academy";
-        $data['menu'] = "Program Studi ". $data['pstudi']->name;
+        $data['menu'] = "Program Studi " . $data['pstudi']->name;
         $data['prefix'] = $this->setPrefix();
         return view('root.pages.prodi-index', $data);
     }
@@ -152,7 +152,7 @@ class HomeController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['pstudi'] = ProgramKuliah::where('code', $code)->first();
         $data['title'] = " - ESEC Academy";
-        $data['menu'] = "Program Kuliah ". $data['pstudi']->name;
+        $data['menu'] = "Program Kuliah " . $data['pstudi']->name;
         $data['prefix'] = $this->setPrefix();
 
         return view('root.pages.prodi-index', $data);
@@ -171,8 +171,8 @@ class HomeController extends Controller
         $saran->email = $request->email;
         $saran->subject = $request->subject;
         $saran->desc = $request->desc;
-        if($saran->save()){
-            Mail::send('base.resource.mail-kotak-saran-admin', ['saran' => $saran], function($message) use ($saran) {
+        if ($saran->save()) {
+            Mail::send('base.resource.mail-kotak-saran-admin', ['saran' => $saran], function ($message) use ($saran) {
                 $message->to([
                     'jaya.kusuma@internal-dev.id',
                     'mjaya69703@gmail.com'
@@ -187,6 +187,5 @@ class HomeController extends Controller
             Alert::error('Error', 'Email tidak berhasil dikirim.');
             return back();
         }
-
     }
 }

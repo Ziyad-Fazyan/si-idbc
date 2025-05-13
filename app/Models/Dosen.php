@@ -9,8 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Dosen extends Authenticatable
 {
     use HasFactory;
-    
-    protected $guarded=[];
+
+    protected $guarded = [];
 
     public function getDsnStatAttribute($value)
     {

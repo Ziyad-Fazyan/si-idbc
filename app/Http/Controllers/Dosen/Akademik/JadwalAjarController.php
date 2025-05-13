@@ -40,9 +40,9 @@ class JadwalAjarController extends Controller
 
         return view('dosen.pages.jadwal-feedback', $data);
     }
-    public function updateAbsen(Request $request,$code)
+    public function updateAbsen(Request $request, $code)
     {
-        
+
         $absen = AbsensiMahasiswa::where('code', $code)->first();
 
         $absen->absen_desc = $request->absen_desc;

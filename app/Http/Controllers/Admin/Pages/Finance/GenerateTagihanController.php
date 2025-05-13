@@ -18,10 +18,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 class GenerateTagihanController extends Controller
 {
     use roleTrait;
-    
+
     public function index(Request $request)
     {
-        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request){
+        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request) {
             $query->select('price');
         })->with('tagihan')->get()->sum(function ($history) {
             return $history->tagihan->price;
@@ -40,7 +40,7 @@ class GenerateTagihanController extends Controller
     }
     public function create(Request $request)
     {
-        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request){
+        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request) {
             $query->select('price');
         })->with('tagihan')->get()->sum(function ($history) {
             return $history->tagihan->price;
@@ -84,7 +84,7 @@ class GenerateTagihanController extends Controller
         $tagihan->proku_id = $request->proku_id;
         $tagihan->users_id = $request->users_id;
         $tagihan->author_id = Auth::user()->id;
-        $tagihan->code = 'UKT-'.Str::random(8);
+        $tagihan->code = 'UKT-' . Str::random(8);
 
         $tagihan->save();
 

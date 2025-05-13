@@ -67,21 +67,22 @@ class StudentTaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'jadkul_id' => 'required',
-            'exp_date'  => 'required',
-            'exp_time'  => 'required',
-            'title' => 'required|string',
-            'detail_task' => 'required'
-        ],
-        [
-            'jadkul_id.required' => 'Jadwal kuliah wajib dipilih.',
-            'exp_date' => 'Batas Akhir Tanggal wajib diisi.',
-            'exp_time' => 'Batas Akhir Waktu wajib diisi.',
-            'title' => 'Judul tugas kuliah wajib diisi.',
-            'detail_task' => 'Detail tugas kuliah wajib diisi.',
-        ]
-    );
+        $request->validate(
+            [
+                'jadkul_id' => 'required',
+                'exp_date'  => 'required',
+                'exp_time'  => 'required',
+                'title' => 'required|string',
+                'detail_task' => 'required'
+            ],
+            [
+                'jadkul_id.required' => 'Jadwal kuliah wajib dipilih.',
+                'exp_date' => 'Batas Akhir Tanggal wajib diisi.',
+                'exp_time' => 'Batas Akhir Waktu wajib diisi.',
+                'title' => 'Judul tugas kuliah wajib diisi.',
+                'detail_task' => 'Detail tugas kuliah wajib diisi.',
+            ]
+        );
         $stask = new studentTask;
         $stask->dosen_id = Auth::guard('dosen')->user()->id;
         $stask->code = Str::random(6);
@@ -98,21 +99,22 @@ class StudentTaskController extends Controller
 
     public function update(Request $request, $code)
     {
-        $request->validate([
-            'jadkul_id' => 'required',
-            'exp_date'  => 'required',
-            'exp_time'  => 'required',
-            'title' => 'required|string',
-            'detail_task' => 'required'
-        ],
-        [
-            'jadkul_id.required' => 'Jadwal kuliah wajib dipilih.',
-            'exp_date' => 'Batas Akhir Tanggal wajib diisi.',
-            'exp_time' => 'Batas Akhir Waktu wajib diisi.',
-            'title' => 'Judul tugas kuliah wajib diisi.',
-            'detail_task' => 'Detail tugas kuliah wajib diisi.',
-        ]
-    );
+        $request->validate(
+            [
+                'jadkul_id' => 'required',
+                'exp_date'  => 'required',
+                'exp_time'  => 'required',
+                'title' => 'required|string',
+                'detail_task' => 'required'
+            ],
+            [
+                'jadkul_id.required' => 'Jadwal kuliah wajib dipilih.',
+                'exp_date' => 'Batas Akhir Tanggal wajib diisi.',
+                'exp_time' => 'Batas Akhir Waktu wajib diisi.',
+                'title' => 'Judul tugas kuliah wajib diisi.',
+                'detail_task' => 'Detail tugas kuliah wajib diisi.',
+            ]
+        );
         $stask = studentTask::where('code', $code)->first();
         $stask->dosen_id = Auth::guard('dosen')->user()->id;
         $stask->jadkul_id = $request->jadkul_id;

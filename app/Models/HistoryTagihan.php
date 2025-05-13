@@ -25,7 +25,6 @@ class HistoryTagihan extends Model
     {
         // Hapus aksesor ini jika Anda ingin mengakses nilai asli tanpa format tambahan
         $this->attributes['price'] = str_replace(['Rp.', ' ', '.'], '', $value);
-
     }
     public function getRawPriceAttribute()
     {

@@ -9,11 +9,10 @@ class Fakultas extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function head()
     {
         return $this->belongsTo(Dosen::class, 'head_id');
     }
-
 }

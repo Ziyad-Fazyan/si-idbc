@@ -87,10 +87,10 @@ class DocumentController extends Controller
 
         // Hapus dokumen (path)
         if ($docs->cover) {
-            File::delete('/app/public/'.$docs->cover); // hapus gambar lama
+            File::delete('/app/public/' . $docs->cover); // hapus gambar lama
         }
         if ($docs->path) {
-            File::delete('/app/public/'.$docs->path); // hapus gambar lama
+            File::delete('/app/public/' . $docs->path); // hapus gambar lama
         }
         // Hapus entri dari database
         $docs->delete();

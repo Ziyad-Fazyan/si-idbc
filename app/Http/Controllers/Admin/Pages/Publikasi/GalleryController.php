@@ -17,8 +17,6 @@ class GalleryController extends Controller
 {
     use roleTrait;
 
-
-
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
@@ -35,7 +33,7 @@ class GalleryController extends Controller
         $search = $request->input('search');
         $album = GalleryAlbum::where('name', 'like', "%$search%")->paginate(24);
 
-        return view('user.pages.publikasi.gallery-index',['album' => $album], $data);
+        return view('user.pages.publikasi.gallery-index', ['album' => $album], $data);
     }
 
     public function create()
@@ -100,15 +98,15 @@ class GalleryController extends Controller
         $album->desc = $request->desc;
         $album->cover = $coverPath;
         for ($i = 1; $i <= 20; $i++) {
-            $image_name = 'file_'.$i;
+            $image_name = 'file_' . $i;
             if ($request->hasFile($image_name)) {
 
                 $image = $request->file($image_name);
-                $name = 'images/gallery/'.uniqid().('file_'.$i).'.'.$image->getClientOriginalExtension();
+                $name = 'images/gallery/' . uniqid() . ('file_' . $i) . '.' . $image->getClientOriginalExtension();
                 $destinationPath = storage_path('app/public/images/gallery/');
                 $image->move($destinationPath, $name);
                 if ($album->$image_name != 'gallery_image.png') {
-                    File::delete($destinationPath.'/'.$album->$image_name); // hapus gambar lama
+                    File::delete($destinationPath . '/' . $album->$image_name); // hapus gambar lama
                 }
 
                 $album->$image_name = $name;
@@ -156,7 +154,7 @@ class GalleryController extends Controller
 
         // Handle file uploads (file_1 to file_20)
         for ($i = 1; $i <= 20; $i++) {
-            $image_name = 'file_'.$i;
+            $image_name = 'file_' . $i;
 
             if ($request->hasFile($image_name)) {
                 $request->validate([
@@ -164,7 +162,7 @@ class GalleryController extends Controller
                 ]);
 
                 $image = $request->file($image_name);
-                $name = 'images/gallery/' . uniqid().'_' . $image_name . '.' . $image->getClientOriginalExtension();
+                $name = 'images/gallery/' . uniqid() . '_' . $image_name . '.' . $image->getClientOriginalExtension();
                 $destinationPath = storage_path('app/public/images/gallery/');
                 $image->move($destinationPath, $name);
 
@@ -180,8 +178,6 @@ class GalleryController extends Controller
         $album->save();
 
         Alert::success('Success', 'Data berhasil diupdate');
-        return redirect()->route($prefix.'publish.album-edit', $album->slug);
+        return redirect()->route($prefix . 'publish.album-edit', $album->slug);
     }
-
-
 }

@@ -11,7 +11,7 @@ class Mahasiswa extends Authenticatable
     use HasFactory;
 
     protected $guard = "admin";
-    protected $guarded=[];
+    protected $guarded = [];
 
 
     protected $hidden = [

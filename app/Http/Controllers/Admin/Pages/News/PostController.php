@@ -38,7 +38,7 @@ class PostController extends Controller
 
         return view('user.pages.news-posts-view', $data);
     }
-    
+
     public function create()
     {
         $data['web'] = webSettings::where('id', 1)->first();
@@ -52,27 +52,29 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'image' => 'required|mimes:webp,jpg,jpeg,png|max:2048',
-            'content' => 'required',
-            'keywords' => 'required',
-            'metadesc' => 'required',
-            'category_id' => 'required',
-        ],
-        [
-            'name.required' => 'Judul postingan tidak boleh kosong.',
-            'image.required' => 'Gambar tidak boleh kosong.',
-            'image.mimes' => 'Format file wajib WEBP, JPG, JPEG atau PNG.',
-            'image.max' => 'Format file tidak boleh lebih dari 2MB.',
-            'content.required' => 'Isi Konten tidak boleh kosong.',
-            'keywords.required' => 'Keywords tidak boleh kosong.',
-            'metadesc.required' => 'Deksripsi Meta tidak boleh kosong.',
-            'category_id.required' => 'Kategori tidak boleh kosong.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'image' => 'required|mimes:webp,jpg,jpeg,png|max:2048',
+                'content' => 'required',
+                'keywords' => 'required',
+                'metadesc' => 'required',
+                'category_id' => 'required',
+            ],
+            [
+                'name.required' => 'Judul postingan tidak boleh kosong.',
+                'image.required' => 'Gambar tidak boleh kosong.',
+                'image.mimes' => 'Format file wajib WEBP, JPG, JPEG atau PNG.',
+                'image.max' => 'Format file tidak boleh lebih dari 2MB.',
+                'content.required' => 'Isi Konten tidak boleh kosong.',
+                'keywords.required' => 'Keywords tidak boleh kosong.',
+                'metadesc.required' => 'Deksripsi Meta tidak boleh kosong.',
+                'category_id.required' => 'Kategori tidak boleh kosong.',
+            ]
+        );
 
         $post = new newsPost;
-        
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'post-' . $post->slug . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -102,31 +104,32 @@ class PostController extends Controller
 
         Alert::success('Success', 'Post berhasil ditambahkan.');
         return back();
-
     }
     public function update(Request $request, $code)
     {
-        $request->validate([
-            'name' => 'required',
-            'image' => 'mimes:webp,jpg,jpeg,png|max:2048',
-            'content' => 'required',
-            'keywords' => 'required',
-            'metadesc' => 'required',
-            'category_id' => 'required',
-        ],
-        [
-            'name.required' => 'Judul postingan tidak boleh kosong.',
-            'image.required' => 'Gambar tidak boleh kosong.',
-            'image.mimes' => 'Format file wajib WEBP, JPG, JPEG atau PNG.',
-            'image.max' => 'Format file tidak boleh lebih dari 2MB.',
-            'content.required' => 'Isi Konten tidak boleh kosong.',
-            'keywords.required' => 'Keywords tidak boleh kosong.',
-            'metadesc.required' => 'Deksripsi Meta tidak boleh kosong.',
-            'category_id.required' => 'Kategori tidak boleh kosong.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'image' => 'mimes:webp,jpg,jpeg,png|max:2048',
+                'content' => 'required',
+                'keywords' => 'required',
+                'metadesc' => 'required',
+                'category_id' => 'required',
+            ],
+            [
+                'name.required' => 'Judul postingan tidak boleh kosong.',
+                'image.required' => 'Gambar tidak boleh kosong.',
+                'image.mimes' => 'Format file wajib WEBP, JPG, JPEG atau PNG.',
+                'image.max' => 'Format file tidak boleh lebih dari 2MB.',
+                'content.required' => 'Isi Konten tidak boleh kosong.',
+                'keywords.required' => 'Keywords tidak boleh kosong.',
+                'metadesc.required' => 'Deksripsi Meta tidak boleh kosong.',
+                'category_id.required' => 'Kategori tidak boleh kosong.',
+            ]
+        );
 
         $post = newsPost::where('code', $code)->first();
-        
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'post-' . $post->slug . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -155,7 +158,6 @@ class PostController extends Controller
 
         Alert::success('Success', 'Post berhasil diupdate.');
         return back();
-
     }
 
     public function destroy(Request $request, $slug)

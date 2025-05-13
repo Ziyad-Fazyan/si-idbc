@@ -28,7 +28,8 @@ class ErrorController extends Controller
         }
     }
 
-    public function ErrorVerify(){
+    public function ErrorVerify()
+    {
         $data['web'] = webSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['title'] = "ESEC - ESchool Ecosystem";
@@ -36,11 +37,12 @@ class ErrorController extends Controller
         $data['submenu'] = "Please verify your account";
         $data['subdesc'] = "Errors, Please check inbox mail to verify your account";
 
-        return view('base.base-errors-index',$data);
+        return view('base.base-errors-index', $data);
     }
 
-    public function ErrorAccess(){
-        
+    public function ErrorAccess()
+    {
+
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['title'] = "ESEC - ESchool Ecosystem";
@@ -48,10 +50,11 @@ class ErrorController extends Controller
         $data['submenu'] = "You are not authorized to access this page";
         $data['subdesc'] = "Error, you are not allowed to enter this page";
 
-        return view('base.base-errors-index',$data);
+        return view('base.base-errors-index', $data);
     }
 
-    public function ErrorNotFound(){
+    public function ErrorNotFound()
+    {
 
         Alert::error('Error 404', 'Halaman tidak ditemukan');
         return back();

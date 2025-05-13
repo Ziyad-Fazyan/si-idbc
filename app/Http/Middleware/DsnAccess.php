@@ -18,7 +18,7 @@ class DsnAccess
         // Cek apakah pengguna sudah login
         if (auth()->guard('dosen')->check()) {
             // Jika sudah login, cek tipe pengguna
-            if(auth()->guard('dosen')->user()->dsn_stat == $DosenDsnStat){
+            if (auth()->guard('dosen')->user()->dsn_stat == $DosenDsnStat) {
                 return $next($request);
             }
 

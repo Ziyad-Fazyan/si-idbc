@@ -25,6 +25,4 @@ class studentScore extends Model
     {
         return $this->belongsTo(Dosen::class, 'author_id',);
     }
-
-
 }

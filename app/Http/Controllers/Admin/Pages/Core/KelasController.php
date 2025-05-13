@@ -56,8 +56,8 @@ class KelasController extends Controller
 
         return view('base.cetak.cetak-data-kehadiran', $data);
         // $pdf = PDF::loadView('base.cetak.cetak-data-kehadiran', $data);
-       
-        return $pdf->download('Daftar-Absen-'.$jadwal->matkul->name.'-'.$jadwal->pert_id.'-'.$request->kode_kelas.'.pdf');
+
+        return $pdf->download('Daftar-Absen-' . $jadwal->matkul->name . '-' . $jadwal->pert_id . '-' . $request->kode_kelas . '.pdf');
     }
 
     public function store(Request $request)

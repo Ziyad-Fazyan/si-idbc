@@ -3,14 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Str;
-Use Hash;
 use Carbon\Carbon;
-// DEFAULT AUTHENTIKASI
 use App\Models\User;
+// DEFAULT AUTHENTIKASI
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -211,14 +210,14 @@ class DatabaseSeeder extends Seeder
         \App\Models\TagihanKuliah::create([
             'users_id'    => '1',
             'name'    => 'UKT Semester 1',
-            'code'    => 'UKT-'.Str::random(8),
+            'code'    => 'UKT-' . Str::random(8),
             'price'    => '2400000',
         ]);
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
             'proku_id'    => '1',
             'name'    => 'UKT Semester 2',
-            'code'    => 'UKT-'.Str::random(8),
+            'code'    => 'UKT-' . Str::random(8),
             'price'    => '2200000',
         ]);
         // DEFAULT TUGAS SEEDER
@@ -334,6 +333,5 @@ class DatabaseSeeder extends Seeder
             GalleryAlbumSeeder::class,
             UserSeeder::class,
         ]);
-
     }
 }

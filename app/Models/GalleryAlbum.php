@@ -9,7 +9,7 @@ class GalleryAlbum extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     // Relationship with author (assuming 'author_id' points to a User model)
     public function author()

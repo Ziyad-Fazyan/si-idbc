@@ -62,7 +62,6 @@ class NotifyController extends Controller
 
         Alert::success('Succcess', 'Data berhasil ditambahkan!');
         return back();
-
     }
 
     public function update(Request $request, $code)
@@ -84,7 +83,6 @@ class NotifyController extends Controller
 
         Alert::success('Succcess', 'Data berhasil diupdate!');
         return back();
-
     }
 
     public function destroy($code)
@@ -95,5 +93,4 @@ class NotifyController extends Controller
         Alert::success('Succcess', 'Data berhasil dihapus!');
         return back();
     }
-
 }

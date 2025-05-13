@@ -12,10 +12,10 @@ use App\Models\Settings\webSettings;
 class PembayaranController extends Controller
 {
     use roleTrait;
-    
+
     public function index(Request $request)
     {
-        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request){
+        $data['income'] = HistoryTagihan::where('stat', 1)->whereHas('tagihan', function ($query) use ($request) {
             $query->select('price');
         })->with('tagihan')->get()->sum(function ($history) {
             return $history->tagihan->price;

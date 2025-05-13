@@ -18,7 +18,7 @@ class UserAccess
         // Cek apakah pengguna sudah login
         if (auth()->check()) {
             // Jika sudah login, cek tipe pengguna
-            if(auth()->user()->type == $userType){
+            if (auth()->user()->type == $userType) {
                 return $next($request);
             }
 

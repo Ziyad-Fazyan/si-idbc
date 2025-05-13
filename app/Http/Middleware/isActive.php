@@ -18,7 +18,7 @@ class isActive
         // Cek apakah pengguna sudah login
         if (auth()->check()) {
             // Jika sudah login, cek tipe pengguna
-            if(auth()->user()->status == 1){
+            if (auth()->user()->status == 1) {
                 return $next($request);
             }
 

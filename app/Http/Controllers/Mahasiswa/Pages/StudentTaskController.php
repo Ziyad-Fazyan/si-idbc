@@ -17,7 +17,7 @@ class StudentTaskController extends Controller
     {
         $user = Auth::guard('mahasiswa')->user();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['stask'] = StudentTask::whereHas('jadkul', function($query) use ($user) {
+        $data['stask'] = StudentTask::whereHas('jadkul', function ($query) use ($user) {
             $query->where('kelas_id', $user->class_id);
         })->get();
 
@@ -30,13 +30,12 @@ class StudentTaskController extends Controller
         $data['stask'] = StudentTask::where('code', $code)->first();
         $data['web'] = webSettings::where('id', 1)->first();
         $score = studentScore::where('stask_id', $data['stask']->id)->where('student_id', Auth::guard('mahasiswa')->user()->id)->get();
-        if($score->count() == 1){
+        if ($score->count() == 1) {
             Alert::error('Error', 'Kamu sudah mengumpulkan tugas ini.');
             return back();
         } else {
             return view('mahasiswa.pages.stask-view', $data);
         }
-
     }
 
     public function store(Request $request, $code)
@@ -105,6 +104,4 @@ class StudentTaskController extends Controller
         Alert::success('Sukses', 'Tugas berhasil disimpan');
         return redirect()->route('mahasiswa.akademik.tugas-index');
     }
-
-
 }

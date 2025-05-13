@@ -12,7 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class RuangController extends Controller
 {
-    use roleTrait; 
+    use roleTrait;
 
     public function index()
     {

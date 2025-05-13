@@ -2,15 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Str;
-Use Hash;
 use Carbon\Carbon;
-// DEFAULT AUTHENTIKASI
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -180,6 +179,5 @@ class UserSeeder extends Seeder
             'mhs_phone' => '080012345673',
             'password' => Hash::make('Mahasiswa123'),
         ]);
-
     }
 }

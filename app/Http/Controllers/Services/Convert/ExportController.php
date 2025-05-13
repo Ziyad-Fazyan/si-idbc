@@ -14,7 +14,7 @@ class ExportController extends Controller
     {
         $users = User::all();
 
-        (new FastExcel($users))->export('export-users-'.uniqid().'.csv', function ($user) {
+        (new FastExcel($users))->export('export-users-' . uniqid() . '.csv', function ($user) {
             return [
                 'Username' => $user->user,
                 'Email' => $user->email,
@@ -29,15 +29,14 @@ class ExportController extends Controller
             ];
         });
 
-        return (new FastExcel($users))->download('export-users-'.uniqid().'.csv');
-
+        return (new FastExcel($users))->download('export-users-' . uniqid() . '.csv');
     }
 
     public function exportStudent()
     {
         $users = Mahasiswa::all();
 
-        (new FastExcel($users))->export('export-student-'.uniqid().'.csv', function ($user) {
+        (new FastExcel($users))->export('export-student-' . uniqid() . '.csv', function ($user) {
             return [
                 'NIM' => $user->mhs_nim,
                 'Email' => $user->mhs_mail,
@@ -53,7 +52,6 @@ class ExportController extends Controller
             ];
         });
 
-        return (new FastExcel($users))->download('export-student-'.uniqid().'.csv');
-
+        return (new FastExcel($users))->download('export-student-' . uniqid() . '.csv');
     }
 }

@@ -18,7 +18,7 @@ class MhsAccess
         // Cek apakah pengguna sudah login
         if (auth()->guard('mahasiswa')->check()) {
             // Jika sudah login, cek tipe pengguna
-            if(auth()->guard('mahasiswa')->user()->mhs_stat == $MahasiswaMhsStat){
+            if (auth()->guard('mahasiswa')->user()->mhs_stat == $MahasiswaMhsStat) {
                 return $next($request);
             }
 

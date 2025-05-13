@@ -11,5 +11,4 @@ class KotakSaran extends Model
     use HasFactory, Notifiable;
 
     protected $guarded = [];
-
 }

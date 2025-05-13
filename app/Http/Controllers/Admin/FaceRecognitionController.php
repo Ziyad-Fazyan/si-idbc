@@ -140,14 +140,14 @@ class FaceRecognitionController extends Controller
                         'program_studi' => $mahasiswaData->kelas && $mahasiswaData->kelas->pstudi ? $mahasiswaData->kelas->pstudi->name : 'Tidak ada prodi',
                         'status' => $mahasiswaData->mhs_stat
                     ];
-                    
+
                     // Cari jadwal kuliah hari ini untuk kelas mahasiswa
                     $jadwalHariIni = JadwalKuliah::where('kelas_id', $mahasiswaData->class_id)
                         ->where('date', $today)
                         ->first();
                 }
             }
-            
+
             Session::put('face_results', [$bestMatch]);
 
             Session::put('jadwal_hari_ini', $jadwalHariIni);

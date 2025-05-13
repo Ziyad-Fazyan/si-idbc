@@ -17,7 +17,6 @@ class WebSettingController extends Controller
 {
     use roleTrait;
 
-
     public function index()
     {
         $data['prefix'] = $this->setPrefix();

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('social_ig');      // INSTAGRAM KAMPUS
             $table->string('social_in');      // LINKEDIN KAMPUS
             $table->string('social_tw');      // TWITTER / X KAMPUS
-            
+
             $table->timestamps();
         });
     }

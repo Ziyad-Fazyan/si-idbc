@@ -20,7 +20,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 class WorkersController extends Controller
 {
     use roleTrait;
-    
+
     // KHUSUS KELOLA DATA ROLE ADMIN
     public function indexAdmin()
     {
@@ -29,7 +29,6 @@ class WorkersController extends Controller
         $data['admin'] = User::where('type', 0)->get();
 
         return view('user.admin.pages.workers-admin-index', $data);
-
     }
     public function createAdmin()
     {
@@ -38,7 +37,6 @@ class WorkersController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
 
         return view('user.admin.pages.workers-admin-create', $data);
-
     }
     public function editAdmin(Request $request, $code)
     {
@@ -47,7 +45,6 @@ class WorkersController extends Controller
         $data['admin'] = User::where('type', 0)->where('code', $code)->first();
 
         return view('user.admin.pages.workers-admin-edit', $data);
-
     }
     public function storeAdmin(Request $request)
     {
@@ -90,7 +87,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = 'profile-'. $user->code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -98,12 +95,12 @@ class WorkersController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($image->getRealPath());
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->image); // hapus gambar lama
             }
-            $user->image = "profile/".$name;
+            $user->image = "profile/" . $name;
             $user->save();
 
             Alert::success('Success', 'Data berhasil ditambahkan');
@@ -151,7 +148,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = 'profile-'. $user->code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -159,12 +156,12 @@ class WorkersController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($image->getRealPath());
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->image); // hapus gambar lama
             }
-            $user->image = "profile/".$name;
+            $user->image = "profile/" . $name;
             $user->save();
 
             Alert::success('Success', 'Data berhasil diupdate');
@@ -179,7 +176,7 @@ class WorkersController extends Controller
 
         $admin = User::where('code', $code)->first();
         if ($admin->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths.'/'.$admin->image); // hapus gambar lama
+            File::delete($destinationPaths . '/' . $admin->image); // hapus gambar lama
         }
 
         $admin->delete();
@@ -191,29 +188,26 @@ class WorkersController extends Controller
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1,2,3,4,5])->get();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->get();
         // dd($data['admin']->count());
 
         return view('user.admin.pages.workers-staff-index', $data);
-
     }
     public function createWorkers()
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1,2,3,4,5])->get();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->get();
 
         return view('user.admin.pages.workers-staff-create', $data);
-
     }
     public function editWorkers(Request $request, $code)
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1,2,3,4,5])->where('code', $code)->first();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->where('code', $code)->first();
 
         return view('user.admin.pages.workers-staff-edit', $data);
-
     }
     public function storeWorkers(Request $request)
     {
@@ -256,7 +250,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = 'profile-'. $user->code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -264,12 +258,12 @@ class WorkersController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($image->getRealPath());
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->image); // hapus gambar lama
             }
-            $user->image = "profile/".$name;
+            $user->image = "profile/" . $name;
             $user->save();
 
             Alert::success('Success', 'Data berhasil ditambahkan');
@@ -280,7 +274,7 @@ class WorkersController extends Controller
     }
     public function updateWorkers(Request $request, $code)
     {
-        $user = User::whereIn('type', [1,2,3,4,5])->where('code', $code)->first();
+        $user = User::whereIn('type', [1, 2, 3, 4, 5])->where('code', $code)->first();
 
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',
@@ -317,7 +311,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = 'profile-'. $user->code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -325,12 +319,12 @@ class WorkersController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($image->getRealPath());
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->image); // hapus gambar lama
             }
-            $user->image = "profile/".$name;
+            $user->image = "profile/" . $name;
             $user->save();
 
             Alert::success('Success', 'Data berhasil diupdate');
@@ -345,7 +339,7 @@ class WorkersController extends Controller
 
         $admin = User::where('code', $code)->first();
         if ($admin->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths.'/'.$admin->image); // hapus gambar lama
+            File::delete($destinationPaths . '/' . $admin->image); // hapus gambar lama
         }
 
         $admin->delete();
@@ -360,7 +354,6 @@ class WorkersController extends Controller
         $data['dosen'] = Dosen::all();
 
         return view('user.admin.pages.workers-lecture-index', $data);
-
     }
     public function createLecture()
     {
@@ -369,7 +362,6 @@ class WorkersController extends Controller
         $data['dosen'] = Dosen::all();
 
         return view('user.admin.pages.workers-lecture-create', $data);
-
     }
     public function editLecture(Request $request, $code)
     {
@@ -378,7 +370,6 @@ class WorkersController extends Controller
         $data['dosen'] = Dosen::where('dsn_code', $code)->first();
 
         return view('user.admin.pages.workers-lecture-edit', $data);
-
     }
     public function storeLecture(Request $request)
     {
@@ -415,7 +406,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('dsn_image')) {
             $image = $request->file('dsn_image');
-            $name = 'profile-'. $user->dsn_code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->dsn_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile/dosen');
             $destinationPaths = storage_path('app/public/images');
 
@@ -424,12 +415,12 @@ class WorkersController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->dsn_image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->dsn_image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->dsn_image); // hapus gambar lama
             }
-            $user->dsn_image = "profile/dosen/".$name;
+            $user->dsn_image = "profile/dosen/" . $name;
             $user->save();
 
             // dd($user->image);
@@ -474,7 +465,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('dsn_image')) {
             $image = $request->file('dsn_image');
-            $name = 'profile-'. $user->dsn_code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->dsn_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile/dosen');
             $destinationPaths = storage_path('app/public/images');
 
@@ -483,12 +474,12 @@ class WorkersController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->dsn_image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->dsn_image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->dsn_image); // hapus gambar lama
             }
-            $user->dsn_image = "profile/dosen/".$name;
+            $user->dsn_image = "profile/dosen/" . $name;
             $user->save();
 
             // dd($user->image);
@@ -505,7 +496,7 @@ class WorkersController extends Controller
 
         $dosen = Dosen::where('dsn_code', $code)->first();
         if ($dosen->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths.'/'.$dosen->image); // hapus gambar lama
+            File::delete($destinationPaths . '/' . $dosen->image); // hapus gambar lama
         }
 
         $dosen->delete();
@@ -520,7 +511,6 @@ class WorkersController extends Controller
         $data['student'] = Mahasiswa::all();
 
         return view('user.admin.pages.workers-student-index', $data);
-
     }
     public function createStudent()
     {
@@ -530,7 +520,6 @@ class WorkersController extends Controller
         $data['student'] = Mahasiswa::all();
 
         return view('user.admin.pages.workers-student-create', $data);
-
     }
     public function editStudent(Request $request, $code)
     {
@@ -540,7 +529,6 @@ class WorkersController extends Controller
         $data['student'] = Mahasiswa::where('mhs_code', $code)->first();
 
         return view('user.admin.pages.workers-student-edit', $data);
-
     }
     public function storeStudent(Request $request)
     {
@@ -592,7 +580,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
-            $name = 'profile-'. $user->mhs_code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile/dosen');
             $destinationPaths = storage_path('app/public/images');
 
@@ -601,12 +589,12 @@ class WorkersController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->mhs_image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->mhs_image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->mhs_image); // hapus gambar lama
             }
-            $user->mhs_image = "profile/mahasiswa/".$name;
+            $user->mhs_image = "profile/mahasiswa/" . $name;
             $user->save();
 
 
@@ -664,7 +652,7 @@ class WorkersController extends Controller
         $user->save();
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
-            $name = 'profile-'. $user->mhs_code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile/dosen');
             $destinationPaths = storage_path('app/public/images');
 
@@ -673,12 +661,12 @@ class WorkersController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->mhs_image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->mhs_image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->mhs_image); // hapus gambar lama
             }
-            $user->mhs_image = "profile/dosen/".$name;
+            $user->mhs_image = "profile/dosen/" . $name;
             $user->save();
 
 
@@ -694,12 +682,11 @@ class WorkersController extends Controller
 
         $student = Mahasiswa::where('mhs_code', $code)->first();
         if ($student->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths.'/'.$student->image); // hapus gambar lama
+            File::delete($destinationPaths . '/' . $student->image); // hapus gambar lama
         }
 
         $student->delete();
         Alert::success('Success', 'Pengguna berhasil dihapus.');
         return back();
     }
-
 }

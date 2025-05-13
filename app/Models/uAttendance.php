@@ -10,7 +10,7 @@ class uAttendance extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function getAbsenTypeAttribute($value)
     {
@@ -38,7 +38,7 @@ class uAttendance extends Model
 
         return isset($statuses[$value]) ? $statuses[$value] : null;
     }
-    
+
     public function getDurasiKerja()
     {
         // Parse waktu absen dari atribut model

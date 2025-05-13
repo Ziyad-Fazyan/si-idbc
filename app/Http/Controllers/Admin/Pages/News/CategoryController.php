@@ -26,14 +26,16 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'desc' => 'required',
-        ],
-        [
-            'name.required' => 'Nama Kategori wajib diisi.',
-            'desc.required' => 'Deskripsi Kategori wajib diisi.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'desc' => 'required',
+            ],
+            [
+                'name.required' => 'Nama Kategori wajib diisi.',
+                'desc.required' => 'Deskripsi Kategori wajib diisi.',
+            ]
+        );
 
         $category = new newsCategory;
         $category->name = $request->name;
@@ -48,14 +50,16 @@ class CategoryController extends Controller
 
     public function update(Request $request, $code)
     {
-        $request->validate([
-            'name' => 'required',
-            'desc' => 'required',
-        ],
-        [
-            'name.required' => 'Nama Kategori wajib diisi.',
-            'desc.required' => 'Deskripsi Kategori wajib diisi.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'desc' => 'required',
+            ],
+            [
+                'name.required' => 'Nama Kategori wajib diisi.',
+                'desc.required' => 'Deskripsi Kategori wajib diisi.',
+            ]
+        );
 
         $category = newsCategory::where('code', $code)->first();
         $category->name = $request->name;

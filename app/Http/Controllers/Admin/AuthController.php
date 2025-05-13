@@ -16,11 +16,11 @@ class AuthController extends Controller
 {
     public function AuthSignInPage()
     {
-        if(Auth::guard('dosen')->check()){
+        if (Auth::guard('dosen')->check()) {
             Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('dosen')->user()->dsn_name);
             return redirect()->route('dosen.home-index');
         }
-        if(Auth::guard('mahasiswa')->check()){
+        if (Auth::guard('mahasiswa')->check()) {
             Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('mahasiswa')->user()->dsn_name);
             return redirect()->route('mahasiswa.home-index');
         }
@@ -32,7 +32,6 @@ class AuthController extends Controller
         $data['subdesc'] = "Gunakan id unique anda untuk login...";
 
         return view('base.auth.auth-admin-signin', $data);
-
     }
     public function AuthForgotPage()
     {
@@ -43,10 +42,10 @@ class AuthController extends Controller
         $data['subdesc'] = "Gunakan id unique anda untuk login...";
 
         return view('base.auth.auth-admin-forgot', $data);
-
     }
 
-    public function AuthForgotVerify(Request $request){
+    public function AuthForgotVerify(Request $request)
+    {
         $request->validate([
             'email' => 'required|email|exists:users,email', // validasi email dan cek apakah email ada di tabel users
         ]);
@@ -56,7 +55,7 @@ class AuthController extends Controller
         $user->token_created_at = now();
 
         if ($user->save()) {
-            Mail::send('base.resource.mail-user-forgot-temp', ['user' => $user], function($message) use ($user) {
+            Mail::send('base.resource.mail-user-forgot-temp', ['user' => $user], function ($message) use ($user) {
                 $message->to($user->email);
                 $message->subject('Reset Password for ' . $user->name);
                 $message->from('admin@internal-dev.id', 'SIAKAD PT by Internal-Dev');
@@ -72,7 +71,8 @@ class AuthController extends Controller
         }
     }
 
-    public function AuthResetPage($token){
+    public function AuthResetPage($token)
+    {
         $data['web'] = webSettings::where('id', 1)->first();
         $data['title'] = "Reset Password Admin - " . $data['web']->school_name;
         $data['menu'] = 'Beranda';
@@ -83,10 +83,10 @@ class AuthController extends Controller
         $data['token'] = $token;
 
         return view('base.auth.auth-admin-reset', $data);
-
     }
 
-    public function AuthResetPassword(Request $request, $token) {
+    public function AuthResetPassword(Request $request, $token)
+    {
 
         $request->validate([
             'password' => 'required|same:password_confirm|min:6',
@@ -109,7 +109,8 @@ class AuthController extends Controller
         }
     }
 
-    public function AuthSignInPost(Request $request){
+    public function AuthSignInPost(Request $request)
+    {
 
         $request->validate([
             'login' => 'required',
@@ -123,14 +124,14 @@ class AuthController extends Controller
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'user';
 
         // Jika input 'login' adalah nomor dengan 10 digit, maka kita asumsikan itu adalah nomor telepon
-        if(preg_match('/^[0-9]{10,13}$/', $login)) {
+        if (preg_match('/^[0-9]{10,13}$/', $login)) {
             $fieldType = 'phone';
         }
 
         $user = User::where($fieldType, $request->login)->first();
 
 
-        if(!$user){
+        if (!$user) {
             Alert::error('Error', 'Mohon maaf akun anda belum terdaftar');
             return back();
         }
@@ -139,42 +140,43 @@ class AuthController extends Controller
 
 
         // Coba untuk melakukan autentikasi menggunakan metode 'attempt' dari facade 'Auth'
-        if (Auth::attempt(array($fieldType => $login, 'password' => $request->input('password')), $remember_me) ) {
+        if (Auth::attempt(array($fieldType => $login, 'password' => $request->input('password')), $remember_me)) {
             // Jika autentikasi berhasil, pengguna akan dialihkan ke dashboard
-            if($user->rawtype == 0){
-                Alert::success('Success', 'Anda berhasil login Sebagai '. $user->type);
+            if ($user->rawtype == 0) {
+                Alert::success('Success', 'Anda berhasil login Sebagai ' . $user->type);
                 // return redirect()->route('web-admin.dashboard-page');
                 return redirect()->route('web-admin.home-index');
                 // echo "Anda login sebagai admin.";
-            }elseif($user->rawtype == 1){
-                Alert::success('Success', 'Anda berhasil login sebagai '. $user->type);
+            } elseif ($user->rawtype == 1) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('finance.home-index');
                 // return back();
 
-            }elseif($user->rawtype == 2){
-                Alert::success('Success', 'Anda berhasil login sebagai '. $user->type);
+            } elseif ($user->rawtype == 2) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('officer.home-index');
                 // return back();
-            }elseif($user->rawtype == 3){
-                Alert::success('Success', 'Anda berhasil login sebagai '. $user->type);
+            } elseif ($user->rawtype == 3) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('academic.home-index');
                 // return back();
-            }elseif($user->rawtype == 4){
-                Alert::success('Success', 'Anda berhasil login sebagai '. $user->type);
+            } elseif ($user->rawtype == 4) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('admin.home-index');
                 // return back();
-            }elseif($user->rawtype == 5){
-                Alert::success('Success', 'Anda berhasil login sebagai '. $user->type);
+            } elseif ($user->rawtype == 5) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('support.home-index');
                 // return back();
             }
-        }else{
+        } else {
             Alert::error('Error', 'Mohon Maaf, Username / Email atau password salah');
             return back();
         }
     }
 
-    public function AuthSignOutPost(Request $request){
+    public function AuthSignOutPost(Request $request)
+    {
         Auth::logout();
         Alert::success('Success', 'Anda berhasil logout');
         return redirect()->route('admin.auth-signin-page');

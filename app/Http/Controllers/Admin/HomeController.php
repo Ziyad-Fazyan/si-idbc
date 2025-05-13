@@ -38,7 +38,8 @@ class HomeController extends Controller
     }
 
     // KHUSUS PROFILE AREA
-    public function profile(){
+    public function profile()
+    {
 
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
@@ -47,7 +48,8 @@ class HomeController extends Controller
         return view('user.home-profile', $data);
     }
 
-    public function getMhsGender(){
+    public function getMhsGender()
+    {
 
         $maleCount = Mahasiswa::where('mhs_gend', 'L')->count();
         $femaleCount = Mahasiswa::where('mhs_gend', 'P')->count();
@@ -67,7 +69,8 @@ class HomeController extends Controller
     }
 
 
-    public function saveImageProfile(Request $request){
+    public function saveImageProfile(Request $request)
+    {
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',
         ]);
@@ -76,7 +79,7 @@ class HomeController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = 'profile-'. $user->code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -85,12 +88,12 @@ class HomeController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->image); // hapus gambar lama
             }
-            $user->image = "profile/".$name;
+            $user->image = "profile/" . $name;
             $user->save();
 
             // dd($user->image);
@@ -98,10 +101,10 @@ class HomeController extends Controller
             Alert::success('Success', 'Data berhasil diupdate');
             return back();
         }
-
     }
 
-    public function saveDataProfile(Request $request){
+    public function saveDataProfile(Request $request)
+    {
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -126,7 +129,8 @@ class HomeController extends Controller
         Alert::success('Success', 'Data berhasil diupdate');
         return back();
     }
-    public function saveDataKontak(Request $request){
+    public function saveDataKontak(Request $request)
+    {
 
         $request->validate([
             'phone' => 'required|numeric|unique:users,phone,' . Auth::user()->id,
@@ -169,53 +173,56 @@ class HomeController extends Controller
     }
 
     // KHUSUS PRESENSI AREA
-    public function presensi(Request $request){
+    public function presensi(Request $request)
+    {
 
         $user = Auth::user();
         $data['prefix'] = $this->setPrefix();
 
-        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0,1,4,5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2,3,6,7])->get();
+        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
         $data['sakit'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
         $data['terlambat'] = uAttendance::where('absen_user_id', $user->id)
-        ->whereIn('absen_type', [0,1,5])
-        ->whereTime('absen_time_in', '>', '08:00:00')
-        ->get();
+            ->whereIn('absen_type', [0, 1, 5])
+            ->whereTime('absen_time_in', '>', '08:00:00')
+            ->get();
         $data['web'] = webSettings::where('id', 1)->first();
 
         // dd($data['prefix']);
         return view('user.home-presensi', $data);
     }
-    public function presensiGet(Request $request){
+    public function presensiGet(Request $request)
+    {
         $user = Auth::user();
         $selectedDate = $request->input('absen_date'); // Ambil tanggal yang dipilih dari permintaan
         // Gunakan tanggal yang dipilih untuk mengambil data presensi
         $data = uAttendance::where('absen_user_id', $user->id)
-                           ->whereDate('absen_date', $selectedDate)
-                           ->first(); // Menggunakan first() karena Anda mengharapkan satu hasil
+            ->whereDate('absen_date', $selectedDate)
+            ->first(); // Menggunakan first() karena Anda mengharapkan satu hasil
 
-        if($data){
+        if ($data) {
             return response()->json(['data' => $data]); // Kirimkan data jika tersedia
         } else {
             return response()->json(['error' => 'Data not available'], 404); // Kirimkan respons error jika tidak ada data
         }
     }
 
-    public function presensiHadir(Request $request){
+    public function presensiHadir(Request $request)
+    {
 
         $user = Auth::user();
         $data['prefix'] = $this->setPrefix();
 
-        $data['absen'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0,1,4,5])->get();
-        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0,1,4,5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2,3,6,7])->get();
+        $data['absen'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
         $data['sakit'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
         $data['terlambat'] = uAttendance::where('absen_user_id', $user->id)
-                                        ->whereIn('absen_type', [0,1,5])
-                                        ->whereTime('absen_time_in', '>', '08:00:00')
-                                        ->get();
+            ->whereIn('absen_type', [0, 1, 5])
+            ->whereTime('absen_time_in', '>', '08:00:00')
+            ->get();
 
         // dd($data['prefix']);
 
@@ -338,5 +345,4 @@ class HomeController extends Controller
         Alert::success('Success', 'Data berhasil disimpan');
         return back();
     }
-
 }

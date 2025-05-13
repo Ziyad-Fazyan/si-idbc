@@ -35,7 +35,7 @@ class HomeController extends Controller
         $user = Auth::guard('mahasiswa')->user();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere('proku_id', $user->kelas->proku->id)->orwhere('prodi_id', $user->kelas->pstudi->id)->sum('price');
-        $data['history'] = HistoryTagihan::where('users_id', $user->id)->where('stat', 1)->whereHas('tagihan', function ($query) use ($request){
+        $data['history'] = HistoryTagihan::where('users_id', $user->id)->where('stat', 1)->whereHas('tagihan', function ($query) use ($request) {
             $query->select('price');
         })->with('tagihan')->get()->sum(function ($history) {
             return $history->tagihan->price;
@@ -50,14 +50,13 @@ class HomeController extends Controller
 
 
         return view('mahasiswa.home-index', $data);
-
     }
-    public function profile(){
+    public function profile()
+    {
 
         $data['web'] = webSettings::where('id', 1)->first();
 
         return view('mahasiswa.home-profile', $data);
-
     }
 
     public function jadkulIndex()
@@ -82,8 +81,8 @@ class HomeController extends Controller
         $checkDate = JadwalKuliah::where('code', $code)->where('date', $date)->count();
 
         // dd($timeStart);
-        if($checkAbsen === 0){
-            if($checkDate !== 0){
+        if ($checkAbsen === 0) {
+            if ($checkDate !== 0) {
                 $data['web'] = webSettings::where('id', 1)->first();
                 $data['kuri'] = Kurikulum::all();
                 $data['taka'] = TahunAkademik::all();
@@ -109,66 +108,66 @@ class HomeController extends Controller
     }
 
     public function jadkulAbsenStore(Request $request)
-{
-    $request->validate([
-        'absen_type' => 'required|string',
-        'jadkul_code' => 'required|string',
-        'absen_date' => 'required|date',
-        'absen_time' => 'required|string',
-        'author_id' => 'required|integer',
-    ]);
+    {
+        $request->validate([
+            'absen_type' => 'required|string',
+            'jadkul_code' => 'required|string',
+            'absen_date' => 'required|date',
+            'absen_time' => 'required|string',
+            'author_id' => 'required|integer',
+        ]);
 
-    $timeStart = now()->format('H:i:s');
-    $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
+        $timeStart = now()->format('H:i:s');
+        $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
 
-    if (!$checkStart) {
-        Alert::error('Error', 'Jadwal kuliah tidak ditemukan.');
-        return back();
+        if (!$checkStart) {
+            Alert::error('Error', 'Jadwal kuliah tidak ditemukan.');
+            return back();
+        }
+
+        // Cek sudah absen belum
+        $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
+            ->where('author_id', $request->author_id)
+            ->where('absen_date', $request->absen_date)
+            ->exists();
+
+        if ($sudahAbsen) {
+            Alert::error('Error', 'Mahasiswa sudah absen untuk matakuliah ini.');
+            return back();
+        }
+
+        if ($timeStart >= $checkStart->ended) {
+            Alert::error('Error', 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.');
+            return back();
+        }
+
+        if ($timeStart < $checkStart->start) {
+            Alert::error('Error', 'Waktu absen belum dimulai. Silakan coba nanti.');
+            return back();
+        }
+
+        // Simpan data absen
+        $absen = new AbsensiMahasiswa;
+        $absen->author_id = $request->author_id;
+        $absen->jadkul_code = $request->jadkul_code;
+        $absen->absen_date = $request->absen_date;
+        $absen->absen_time = $request->absen_time;
+        $absen->absen_type = $request->absen_type;
+        $absen->code = uniqid();
+        $absen->save();
+
+        // Tentukan pesan berdasarkan sumber request (dari mahasiswa atau dari pengenalan wajah)
+        $referer = request()->headers->get('referer');
+        $isFromFaceRecognition = str_contains($referer, 'face-results');
+
+        if ($isFromFaceRecognition) {
+            Alert::success('Success', 'Absensi berhasil dicatat melalui pengenalan wajah.');
+            return redirect()->route('officer.face-results');
+        } else {
+            Alert::success('Success', 'Kamu telah berhasil absen pada matakuliah ini.');
+            return redirect()->back();
+        }
     }
-
-    // Cek sudah absen belum
-    $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
-        ->where('author_id', $request->author_id)
-        ->where('absen_date', $request->absen_date)
-        ->exists();
-
-    if ($sudahAbsen) {
-        Alert::error('Error', 'Mahasiswa sudah absen untuk matakuliah ini.');
-        return back();
-    }
-
-    if ($timeStart >= $checkStart->ended) {
-        Alert::error('Error', 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.');
-        return back();
-    }
-
-    if ($timeStart < $checkStart->start) {
-        Alert::error('Error', 'Waktu absen belum dimulai. Silakan coba nanti.');
-        return back();
-    }
-
-    // Simpan data absen
-    $absen = new AbsensiMahasiswa;
-    $absen->author_id = $request->author_id;
-    $absen->jadkul_code = $request->jadkul_code;
-    $absen->absen_date = $request->absen_date;
-    $absen->absen_time = $request->absen_time;
-    $absen->absen_type = $request->absen_type;
-    $absen->code = uniqid();
-    $absen->save();
-
-    // Tentukan pesan berdasarkan sumber request (dari mahasiswa atau dari pengenalan wajah)
-    $referer = request()->headers->get('referer');
-    $isFromFaceRecognition = str_contains($referer, 'face-results');
-    
-    if ($isFromFaceRecognition) {
-        Alert::success('Success', 'Absensi berhasil dicatat melalui pengenalan wajah.');
-        return redirect()->route('officer.face-results');
-    } else {
-        Alert::success('Success', 'Kamu telah berhasil absen pada matakuliah ini.');
-        return redirect()->back();
-    }
-}
 
     public function saveImageProfile(Request $request)
     {
@@ -180,7 +179,7 @@ class HomeController extends Controller
 
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
-            $name = 'profile-'. $user->mhs_code.'-' .uniqid().'.'.$image->getClientOriginalExtension();
+            $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile');
             $destinationPaths = storage_path('app/public/images');
 
@@ -189,12 +188,12 @@ class HomeController extends Controller
             $image = $manager->read($image->getRealPath());
             // $image->resize(width: 250);
             $image->scaleDown(height: 300);
-            $image->toPng()->save($destinationPath.'/'.$name);
+            $image->toPng()->save($destinationPath . '/' . $name);
 
             if ($user->mhs_image != 'default/default-profile.jpg') {
-                File::delete($destinationPaths.'/'.$user->mhs_image); // hapus gambar lama
+                File::delete($destinationPaths . '/' . $user->mhs_image); // hapus gambar lama
             }
-            $user->mhs_image = "profile/".$name;
+            $user->mhs_image = "profile/" . $name;
             $user->save();
 
             Alert::success('Success', 'Data berhasil diupdate');
@@ -202,7 +201,8 @@ class HomeController extends Controller
         }
     }
 
-    public function saveDataProfile(Request $request){
+    public function saveDataProfile(Request $request)
+    {
 
         $request->validate([
             'mhs_name' => 'required|string|max:255',
@@ -226,7 +226,8 @@ class HomeController extends Controller
         return back();
     }
 
-    public function saveDataKontak(Request $request){
+    public function saveDataKontak(Request $request)
+    {
 
         $request->validate([
             'mhs_phone' => 'required|numeric|unique:users,phone,' . Auth::guard('mahasiswa')->user()->id,
@@ -298,7 +299,6 @@ class HomeController extends Controller
         $data['history'] = HistoryTagihan::where('users_id', Auth::guard('mahasiswa')->user()->id)->where('stat', 1)->latest()->get();
 
         return response()->json($data);
-
     }
 
     public function tagihanIndex()
@@ -311,7 +311,6 @@ class HomeController extends Controller
 
 
         return view('mahasiswa.pages.mhs-tagihan-index', $data);
-
     }
     public function tagihanView($code)
     {
@@ -319,7 +318,7 @@ class HomeController extends Controller
         $user = Auth::guard('mahasiswa')->user();
         $data['web'] = webSettings::where('id', 1)->first();
         $checkData = HistoryTagihan::where('tagihan_code', $code)->where('users_id', $user->id)->where('stat', 1)->first();
-        if($checkData !== null){
+        if ($checkData !== null) {
 
             Alert::error('error', 'Kamu sudah membayar tagihan ini');
             return back();
@@ -327,11 +326,11 @@ class HomeController extends Controller
             $data['tagihan'] = TagihanKuliah::where('code', $code)->first();
 
             return view('mahasiswa.pages.mhs-tagihan-view', $data);
-
         }
     }
 
-    public function tagihanPayment(Request $request, $code){
+    public function tagihanPayment(Request $request, $code)
+    {
         $tagihan = TagihanKuliah::where('code', $code)->first();
 
         \Midtrans\Config::$serverKey    = config('services.midtrans.serverKey');
@@ -339,7 +338,7 @@ class HomeController extends Controller
         \Midtrans\Config::$isSanitized  = config('services.midtrans.isSanitized');
         \Midtrans\Config::$is3ds        = config('services.midtrans.is3ds');
 
-        DB::transaction(function() use($request) {
+        DB::transaction(function () use ($request) {
             $donation = \App\Models\HistoryTagihan::create([
                 'users_id'      => Auth::guard('mahasiswa')->user()->id,
                 'tagihan_code'  => $request->code,
@@ -385,7 +384,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function tagihanSuccess(Request $request, $code){
+    public function tagihanSuccess(Request $request, $code)
+    {
         $tagihan = HistoryTagihan::where('code', $code)->first();
         $tagihan->stat = 1;
         $tagihan->save();
@@ -401,11 +401,10 @@ class HomeController extends Controller
 
         Alert::success('Success', 'Tagihan telah dibayar');
         return redirect()->route('mahasiswa.home-tagihan-index');
-
-
     }
 
-    public function tagihanInvoice(Request $request, $code){
+    public function tagihanInvoice(Request $request, $code)
+    {
         $data['history'] = HistoryTagihan::where('code', $code)->first();
 
         // Load view into a variable
@@ -420,10 +419,10 @@ class HomeController extends Controller
         $pdf = PDF::loadHtml($html)->setPaper('a4');
 
         // Save the PDF file to storage
-        $pdf->save(storage_path('app/public/invoices/Invoice-Pembayaran-'.$data['history']->tagihan->name.'-'.$data['history']->tagihan_code.'.pdf'));
+        $pdf->save(storage_path('app/public/invoices/Invoice-Pembayaran-' . $data['history']->tagihan->name . '-' . $data['history']->tagihan_code . '.pdf'));
 
         // Or you can return the PDF to be downloaded
-        return $pdf->download('Invoice-Pembayaran-'.$data['history']->tagihan->name.'-'.$data['history']->tagihan_code.'.pdf');
+        return $pdf->download('Invoice-Pembayaran-' . $data['history']->tagihan->name . '-' . $data['history']->tagihan_code . '.pdf');
     }
 
     public function storeFBPerkuliahan(Request $request, $code)
@@ -435,13 +434,13 @@ class HomeController extends Controller
         $request->validate([
             'fb_score' => 'required|in:Tidak Puas,Cukup Puas,Sangat Puas',
             'fb_reason' => 'required'
-        ],[
+        ], [
             'fb_score.required' => 'Skor feedback harus diisi.',
             'fb_score.in' => 'Skor feedback harus salah satu dari: Tidak Puas, Cukup Puas, Sangat Puas.',
             'fb_reason.required' => 'Alasan feedback harus diisi.',
         ]);
 
-        if($checkData !== null) {
+        if ($checkData !== null) {
             Alert::error('Error', 'Kamu sudah memberikan FeedBack pada perkuliahan ini.');
             return back();
         } else {
@@ -457,9 +456,6 @@ class HomeController extends Controller
 
             Alert::success('Sukses', 'Terima kasih telah memberi FeedBack ^_^');
             return back();
-
-
         }
-
     }
 }

@@ -9,7 +9,7 @@ class TahunAkademik extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function getSemesterAttribute($value)
     {
