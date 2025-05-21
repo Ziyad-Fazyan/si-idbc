@@ -50,6 +50,7 @@ class TahunAkademikController extends Controller
             'code' => 'required|string|max:999999',
             'semester' => 'required|string',
             'year_start' => 'required|integer',
+            'is_active' => 'required|integer',
         ]);
 
         $taka = TahunAkademik::where('code', $code)->first();
@@ -57,6 +58,7 @@ class TahunAkademikController extends Controller
         $taka->code = $request->code;
         $taka->semester = $request->semester;
         $taka->year_start = $request->year_start;
+        $taka->is_active = $request->is_active;
         $taka->save();
 
         Alert::success('success', 'Data telah berhasil diupdate');

@@ -69,7 +69,7 @@
                     @endif
                 </div>
             </div>
-            {{ $posts->links('root.vendor.paginator') }}
+            {{ $posts->links() }}
 
         </div>
         <div class="col-lg-4 col-12">

@@ -413,7 +413,7 @@
     // Countdown and capture
     function startCountdown() {
         return new Promise((resolve) => {
-            let count = 3;
+            let count = null;
             captureBtn.classList.add('disabled');
             captureBtn.innerHTML = '<i class="fas fa-spinner"></i> Bersiap...';
             

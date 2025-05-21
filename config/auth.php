@@ -70,15 +70,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL_USER', App\Models\User::class),
+            'model' => App\Models\User::class,
         ],
         'mahasiswas' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL_MAHASISWA', App\Models\Mahasiswa::class),
+            'model' => App\Models\Mahasiswa::class,
         ],
         'dosens' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL_DOSEN', App\Models\Dosen::class),
+            'model' => App\Models\Dosen::class,
         ]
 
         // 'users' => [
