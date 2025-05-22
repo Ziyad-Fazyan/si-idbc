@@ -107,7 +107,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return back();
+        return redirect()->route('web-admin.workers.admin-index');
     }
     public function updateAdmin(Request $request, $code)
     {
@@ -429,7 +429,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return back();
+        return redirect()->route('web-admin.workers.lecture-index');
     }
     public function updateLecture(Request $request, $code)
     {
@@ -537,7 +537,7 @@ class WorkersController extends Controller
         $request->validate([
             'mhs_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',
             'mhs_name' => 'required|string|max:255',
-            'mhs_user' => 'required|string|max:255|unique:users,user,' . $user->id,
+            'mhs_user' => 'required|string|max:255|unique:mahasiswas,mhs_user' . $user->id,
             'mhs_birthplace' => 'nullable|string|max:255', // New field
             'mhs_birthdate' => 'nullable|date', // New field
             'mhs_gend' => 'nullable|string',
@@ -602,7 +602,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return back();
+        return redirect()->route('web-admin.workers.student-index');
     }
     public function updateStudent(Request $request, $code)
     {
