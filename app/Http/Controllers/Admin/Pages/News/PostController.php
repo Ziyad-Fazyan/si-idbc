@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin\Pages\News;
 
 use App\Models\newsPost;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\newsCategory;
 use Illuminate\Http\Request;
@@ -93,7 +94,7 @@ class PostController extends Controller
             $post->image = "news/" . $name;
         }
         $post->name = $request->name;
-        $post->slug = Str::slug($request->name);
+        $post->slug = SlugHelper::generate($request->name);
         $post->code = Str::random(6);
         $post->content = $request->content;
         $post->keywords = $request->keywords;
@@ -148,7 +149,7 @@ class PostController extends Controller
             $post->image = "news/" . $name;
         }
         $post->name = $request->name;
-        $post->slug = Str::slug($request->name);
+        $post->slug = SlugHelper::generate($request->name);
         $post->content = $request->content;
         $post->keywords = $request->keywords;
         $post->metadesc = $request->metadesc;

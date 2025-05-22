@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin\Pages\Core;
 
 use App\Models\Dosen;
 use App\Models\Fakultas;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class ProgramStudiController extends Controller
         $pstudi->name = $request->name;
         $pstudi->code = $request->code;
         $pstudi->cnim = $request->cnim;
-        $pstudi->slug = Str::slug($request->name);
+        $pstudi->slug = SlugHelper::generate($request->name);
         $pstudi->level = $request->level;
         $pstudi->title = $request->title;
         $pstudi->head_id = $request->head_id;

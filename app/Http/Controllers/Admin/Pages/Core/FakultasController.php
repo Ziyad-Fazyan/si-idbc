@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Pages\Core;
 
 use App\Models\Dosen;
 use App\Models\Fakultas;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;

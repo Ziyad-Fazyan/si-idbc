@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Core;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\ProgramKuliah;

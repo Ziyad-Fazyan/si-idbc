@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Pages\Core;
 
 use App\Models\Dosen;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\Kurikulum;
 use App\Models\MataKuliah;
 use App\Models\ProgramStudi;

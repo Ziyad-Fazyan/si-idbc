@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Pages\News;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\newsCategory;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class CategoryController extends Controller
         $category = new newsCategory;
         $category->name = $request->name;
         $category->code = Str::random(6);
-        $category->slug = Str::slug($request->name);
+        $category->slug = SlugHelper::generate($request->name);
         $category->desc = $request->desc;
         $category->save();
 
@@ -64,7 +65,7 @@ class CategoryController extends Controller
         $category = newsCategory::where('code', $code)->first();
         $category->name = $request->name;
         // $category->code = Str::random(6);
-        $category->slug = Str::slug($request->name);
+        $category->slug = SlugHelper::generate($request->name);
         $category->desc = $request->desc;
         $category->save();
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Pages;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

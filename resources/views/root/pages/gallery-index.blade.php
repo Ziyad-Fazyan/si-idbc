@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 @endforeach
-                {{ $albums->links('root.vendor.paginator') }}
+                {{ $albums->links() }}
             </div>
         </div>
 

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Balance;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\Mahasiswa;
 use App\Models\uAttendance;
 use Illuminate\Support\Str;

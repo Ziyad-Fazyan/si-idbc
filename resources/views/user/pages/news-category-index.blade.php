@@ -239,12 +239,16 @@
         }
 
         // Delete Modal Functions
+        let deleteUrlTemplate = "{{ route($prefix . 'news.category-destroy', ['code' => 'DUMMYCODE']) }}";
+
         function openDeleteModal(code, name) {
             const modal = document.getElementById('deleteModal');
             const deleteForm = document.getElementById('deleteForm');
             const deleteItemName = document.getElementById('deleteItemName');
 
-            deleteForm.action = "{{ route($prefix . 'news.category-destroy', '') }}/" + code;
+            // Ganti 'DUMMYCODE' dengan actual code dari argumen
+            deleteForm.action = deleteUrlTemplate.replace('DUMMYCODE', code);
+
             deleteItemName.textContent = name;
             modal.classList.remove('hidden');
         }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Core;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class NotifyController extends Controller
         $notify->lecture_id = $request->lecture_id;
         $notify->name = $request->name;
         $notify->type = $request->type;
-        $notify->slug = Str::slug($request->name);
+        $notify->slug = SlugHelper::generate($request->name);
         $notify->code = Str::random(7);
         $notify->desc = $request->desc;
         $notify->save();

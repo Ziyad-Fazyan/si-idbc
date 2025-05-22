@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Pages\Finance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\TagihanKuliah;
 use App\Models\HistoryTagihan;
 use App\Models\Settings\webSettings;

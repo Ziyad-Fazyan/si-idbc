@@ -55,7 +55,7 @@
             </div>
 
             <div class="mt-8">
-                {{ $album->links('root.vendor.paginator') }}
+                {{ $album->links() }}
             </div>
         </div>
     </section>

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Pages\Publikasi;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\GalleryAlbum;
 use Illuminate\Http\Request;
@@ -94,7 +95,7 @@ class GalleryController extends Controller
         $album = new GalleryAlbum;
         $album->author_id = Auth::user()->id;
         $album->name = $request->name;
-        $album->slug = Str::slug($request->name);
+        $album->slug = SlugHelper::generate($request->name);
         $album->desc = $request->desc;
         $album->cover = $coverPath;
         for ($i = 1; $i <= 20; $i++) {
@@ -149,7 +150,7 @@ class GalleryController extends Controller
         // Update other album details
         $album->author_id = Auth::user()->id;
         $album->name = $request->name;
-        $album->slug = Str::slug($request->name);
+        $album->slug = SlugHelper::generate($request->name);
         $album->desc = $request->desc;
 
         // Handle file uploads (file_1 to file_20)

@@ -54,7 +54,7 @@
                     </div>
                 @endif
             @endfor
-            {{-- {{ $album->links('root.vendor.paginator') }} --}}
+            {{-- {{ $album->links() }} --}}
         </div>
     </section>
 @endsection

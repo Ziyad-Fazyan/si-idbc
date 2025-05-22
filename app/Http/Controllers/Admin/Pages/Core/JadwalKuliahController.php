@@ -6,7 +6,7 @@ use PDF;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Ruang;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\Kurikulum;
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;

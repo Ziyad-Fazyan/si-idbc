@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Core;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
 use App\Http\Controllers\Controller;

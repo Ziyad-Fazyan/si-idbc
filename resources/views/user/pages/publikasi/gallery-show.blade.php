@@ -61,30 +61,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>{{ $album->desc }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod quidem
-                        reprehenderit laborum mollitia tenetur atque expedita quaerat dolores ullam nulla assumenda
-                        provident tempore beatae, illo praesentium corporis voluptate nesciunt asperiores qui. Sapiente,
-                        vero ut, repellat hic iure cupiditate modi autem, ducimus sequi assumenda animi ratione perferendis
-                        aut quos doloribus ea fugit? At recusandae voluptas delectus iusto, eaque obcaecati numquam
-                        cupiditate id explicabo optio ratione praesentium laudantium facilis cumque quisquam fugit. Ipsum
-                        quisquam, at inventore sunt nesciunt, quibusdam deleniti voluptatum repellat repudiandae
-                        perspiciatis ea itaque ullam cum ad fugit, voluptas est repellendus quis? Id consectetur iste ut
-                        deserunt voluptates obcaecati ratione illo cumque nisi autem earum unde hic, est pariatur, delectus
-                        perspiciatis atque, modi dignissimos debitis aliquam nemo culpa qui minus beatae. Impedit incidunt
-                        quibusdam nemo repudiandae dignissimos, facilis saepe adipisci molestias? Ea quaerat deleniti, et
-                        nostrum saepe quidem incidunt hic blanditiis quam numquam cum quo, animi vero assumenda excepturi?
-                        Quae, blanditiis. Quam dolores placeat tenetur similique, debitis ipsa quisquam illum nulla quaerat
-                        eos repudiandae maxime esse blanditiis sapiente facilis! Molestiae totam, sit cupiditate quo, quae
-                        reprehenderit doloremque optio illum culpa earum atque vitae quaerat accusamus distinctio delectus
-                        ratione porro quos esse eligendi maiores nihil! Esse voluptas sunt ipsam doloribus accusamus. Lorem
-                        ipsum dolor sit amet, consectetur adipisicing elit. Iusto, cupiditate labore ducimus nam corporis
-                        saepe. At voluptate distinctio, nulla praesentium illo ipsum, accusamus nobis enim eius, assumenda
-                        veniam fuga in exercitationem et eos? Tenetur adipisci natus doloribus pariatur rerum cum
-                        perspiciatis debitis, tempore nulla magni numquam minus quo vero sit rem sequi culpa fugiat dolores
-                        exercitationem animi. Assumenda veniam odit eaque hic nam fugiat soluta doloribus qui est unde error
-                        vel nisi, inventore consequatur, explicabo officiis placeat. Cum, nesciunt dolores, necessitatibus
-                        blanditiis numquam accusantium molestias repellat voluptatibus dolor, recusandae delectus cupiditate
-                        inventore laudantium? Cumque omnis minima tempore blanditiis provident eius!</p>
+                    <p>{{ $album->desc }}</p>
                 </div>
             </div>
         </div>
@@ -112,7 +89,7 @@
                     </div>
                 @endif
             @endfor
-            {{-- {{ $album->links('root.vendor.paginator') }} --}}
+            {{-- {{ $album->links() }} --}}
         </div>
     </section>
 @endsection

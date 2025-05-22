@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Finance;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\uAttendance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

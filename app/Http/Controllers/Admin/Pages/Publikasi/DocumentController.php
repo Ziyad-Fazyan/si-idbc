@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Publikasi;
 
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use App\Models\docsResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

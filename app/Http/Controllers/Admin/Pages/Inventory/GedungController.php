@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Pages\Inventory;
 
 use App\Models\Gedung;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;

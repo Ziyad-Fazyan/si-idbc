@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Pages\Finance;
 
 use App\Models\Balance;
-use App\Helper\roleTrait;
+use App\Helpers\roleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
