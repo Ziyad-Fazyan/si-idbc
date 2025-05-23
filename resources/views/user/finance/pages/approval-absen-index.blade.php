@@ -168,18 +168,28 @@
         @endforeach
     </section>
 
-    @push('scripts')
-        <script>
-            function closeModal(id) {
-                document.getElementById("checkApprove" + id).style.display = 'none';
-            }
+   @push('scripts')
+    <script>
+        function closeModal(id) {
+            document.getElementById("checkApprove" + id).style.display = 'none';
+        }
 
-            document.querySelectorAll('[data-modal-toggle]').forEach(button => {
-                button.addEventListener('click', function () {
-                    const modalId = this.getAttribute('data-modal-toggle');
-                    document.getElementById(modalId).style.display = 'flex';
-                });
+        document.querySelectorAll('[data-modal-toggle]').forEach(button => {
+            button.addEventListener('click', function () {
+                const modalId = this.getAttribute('data-modal-toggle');
+                document.getElementById(modalId).style.display = 'flex';
             });
-        </script>
-    @endpush
+        });
+
+        function acceptData(code) {
+            const form = document.getElementById('accept-form-' + code);
+            if (form) form.submit();
+        }
+
+        function rejectData(code) {
+            const form = document.getElementById('reject-form-' + code);
+            if (form) form.submit();
+        }
+    </script>
+@endpush
 @endsection

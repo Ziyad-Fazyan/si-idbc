@@ -57,7 +57,7 @@
                             <div class="space-y-2">
                                 <label for="semester" class="block text-sm font-medium text-gray-700">Semester
                                     Perkuliahan</label>
-                                <input type="text"
+                                <input type="number"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
                                     name="semester" id="semester" placeholder="Inputkan kode tahun akademik...">
                                 @error('semester')
