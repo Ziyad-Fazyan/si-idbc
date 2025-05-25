@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-lg-6 col-6 text-center mb-4">
                     <a href="{{ route('mahasiswa.support.ticket-create', 2) }}" class="btn btn-success">Departement
-                        Officer</a>
+                        Absen</a>
                     <p>Pilih ini apabila berhubungan dengan pendaftaran dan informasi PMB</p>
                 </div>
                 <div class="col-lg-6 col-6 text-center mb-4">

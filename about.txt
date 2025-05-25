@@ -75,12 +75,12 @@ Pass : Admin123
 User : academic
 Pass : Admin123
 
-5. Departement Officer ( Officer Staff )
-User : officer
+5. Departement Absen ( Absen Staff )
+User : absen
 Pass : Admin123
 
 6. Departement Support ( Support Staff )
-User : officer
+User : absen
 Pass : Admin123
 
 Demo with Dosen Account:

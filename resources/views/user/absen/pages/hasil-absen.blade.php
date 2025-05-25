@@ -91,7 +91,8 @@
                         </div>
                     </div>
                 </div>
-                
+                                    @include('sweetalert::alert')
+
                 <div class="p-6">
                     @if(session('face_results'))
                         @php 
@@ -289,7 +290,7 @@
                                         </div>
                                         
                                         <!-- Attendance Form -->
-                                        @if(isset($result['mahasiswa_data']) && $result['similarity'] >= 80)
+                                        @if(isset($result['mahasiswa_data']) && $result['similarity'] >= 0.5)
                                             <div class="mb-6">
                                                 <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
                                                     <div class="flex items-center mb-4">
@@ -299,7 +300,7 @@
                                                         <h3 class="text-xl font-semibold text-gray-800">Form Absensi</h3>
                                                     </div>
                                                     
-                                                    <form action="{{ route('mahasiswa.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('absen.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="author_id" value="{{ $result['mahasiswa_data']['id'] }}">
                                                         <input type="hidden" name="jadkul_code" value="{{ $jadwal->code }}">

@@ -145,7 +145,8 @@
                 <form id="deleteForm" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                    <button onclick="confirmDelete('{{ $item->dsn_code }}', '{{ $item->name }}')" type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">
                         Hapus
                     </button>
                 </form>
@@ -177,9 +178,12 @@
 
         // Delete Confirmation Functions
         function confirmDelete(dsnCode, name) {
+            const form = document.getElementById('deleteForm');
+            const routeTemplate = @json(route($prefix . 'workers.staff-destroy', ['code' => '__CODE__']));
+            const finalRoute = routeTemplate.replace('__CODE__', dsnCode);
+
             document.getElementById('deleteItemName').textContent = name;
-            document.getElementById('deleteForm').action =
-                `{{ route('web-admin.workers.lecture-destroy', '') }}/${dsnCode}`;
+            form.action = finalRoute;
             document.getElementById('deleteModal').classList.remove('hidden');
         }
 

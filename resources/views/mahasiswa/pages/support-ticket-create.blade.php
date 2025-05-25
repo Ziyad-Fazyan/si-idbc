@@ -61,7 +61,7 @@
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]">
                                 <option value="">Pilih Departement Tujuan</option>
                                 <option value="1" {{ $dept == 1 ? 'selected' : '' }}>Departement Finance</option>
-                                <option value="2" {{ $dept == 2 ? 'selected' : '' }}>Departement Officer</option>
+                                <option value="2" {{ $dept == 2 ? 'selected' : '' }}>Departement Absen</option>
                                 <option value="3" {{ $dept == 3 ? 'selected' : '' }}>Departement Akademik</option>
                                 <option value="4" {{ $dept == 4 ? 'selected' : '' }}>Departement Admin</option>
                                 <option value="5" {{ $dept == 5 ? 'selected' : '' }}>Departement Support</option>

@@ -17,6 +17,57 @@ class AbsensiController extends Controller
     /**
      * Melakukan absensi dengan kamera wajah
      */
+    public function jadkulAbsenStore(Request $request)
+    {
+        $request->validate([
+            'absen_type' => 'required|string',
+            'jadkul_code' => 'required|string',
+            'absen_date' => 'required|date',
+            'absen_time' => 'required|string',
+            'author_id' => 'required|integer',
+        ]);
+
+        $timeNow = now()->format('H:i:s');
+        $jadwal = JadwalKuliah::where('code', $request->jadkul_code)->first();
+
+        if (!$jadwal) {
+            return response()->json(['error' => 'Jadwal kuliah tidak ditemukan.'], 404);
+        }
+
+        // Cek sudah absen belum
+        $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
+            ->where('author_id', $request->author_id)
+            ->where('absen_date', $request->absen_date)
+            ->exists();
+
+        if ($sudahAbsen) {
+            return response()->json(['error' => 'Mahasiswa sudah absen untuk matakuliah ini.'], 409);
+        }
+
+        if ($timeNow >= $jadwal->ended) {
+            return response()->json(['error' => 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.'], 403);
+        }
+
+        if ($timeNow < $jadwal->start) {
+            return response()->json(['error' => 'Waktu absen belum dimulai. Silakan coba nanti.'], 403);
+        }
+
+        // Simpan data absen
+        $absen = new AbsensiMahasiswa;
+        $absen->author_id = $request->author_id;
+        $absen->jadkul_code = $request->jadkul_code;
+        $absen->absen_date = $request->absen_date;
+        $absen->absen_time = $request->absen_time;
+        $absen->absen_type = $request->absen_type;
+        $absen->code = uniqid();
+        $absen->save();
+
+        return response()->json([
+            'message' => 'Absensi berhasil dicatat.',
+            'data' => $absen,
+        ], 201);
+    }
+
     public function absensiWajah(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -105,7 +156,7 @@ class AbsensiController extends Controller
     {
         $mahasiswaId = $request->mahasiswa_id;
         $mahasiswa = Mahasiswa::find($mahasiswaId);
-        
+
         if (!$mahasiswa) {
             return response()->json([
                 'success' => false,
@@ -120,12 +171,12 @@ class AbsensiController extends Controller
             ->get();
 
         // Cek status absensi untuk setiap jadwal
-        $jadwal->each(function($item) use ($mahasiswaId) {
+        $jadwal->each(function ($item) use ($mahasiswaId) {
             $absensi = AbsensiMahasiswa::where('author_id', $mahasiswaId)
                 ->where('jadkul_code', $item->code)
                 ->whereDate('created_at', Carbon::today())
                 ->first();
-            
+
             $item->status_absensi = $absensi ? $absensi->absen_type : null;
         });
 

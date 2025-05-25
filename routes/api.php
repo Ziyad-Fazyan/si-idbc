@@ -35,5 +35,7 @@ Route::prefix('mahasiswa')->group(function () {
         // Absensi wajah
         Route::post('/upload-foto', [FaceRecognitionController::class, 'uploadFoto']);
         Route::post('/cek-wajah', [FaceRecognitionController::class, 'cekWajah']);
+        Route::get('/hasil-absen', [FaceRecognitionController::class, 'hasilAbsen']);
+        Route::post('/jadkul-absen', [AbsensiController::class, 'jadkulAbsenStore']);
     });
 });

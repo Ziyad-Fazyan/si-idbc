@@ -40,12 +40,12 @@ class UserSeeder extends Seeder
             'status' => 1,
         ]);
         User::create([
-            'name' => 'Staff Officer',
+            'name' => 'Staff Absen',
             'code' => Str::random(6),
-            'user' => 'officer',
+            'user' => 'absen',
             'gend' => 'L',
             'type' => 2,
-            'email' => 'officer@example.com',
+            'email' => 'absen@example.com',
             'phone' => '080012345662',
             'password' => Hash::make('Admin123'),
             'status' => 1,
