@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mutabaah extends Model
 {
-    protected $fillable = ['user_id', 'tanggal', 'data'];
+    protected $fillable = ['author_id', 'tanggal', 'data'];
 
     protected $casts = [
         'data' => 'array',
     ];
 
-    public function user()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Mahasiswa::class, 'author_id');
     }
 }

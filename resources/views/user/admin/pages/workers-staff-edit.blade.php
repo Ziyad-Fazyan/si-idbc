@@ -281,13 +281,15 @@
                                         <option value="" selected>Pilih Role Users</option>
                                         <option value="0" {{ $admin->raw_type === 0 ? 'selected' : '' }}>Web
                                             Administrator</option>
-                                        <option value="1" {{ $admin->raw_type === 1 ? 'selected' : '' }}>Koordinator
-                                            Program</option>
+                                        <option value="1" {{ $admin->raw_type === 1 ? 'selected' : '' }}>Staff
+                                            Finance</option>
                                         <option value="2" {{ $admin->raw_type === 2 ? 'selected' : '' }}>Staff
-                                            Administrasi</option>
+                                            Absen</option>
                                         <option value="3" {{ $admin->raw_type === 3 ? 'selected' : '' }}>Staff
                                             Akademik</option>
-                                        <option value="4" {{ $admin->raw_type === 4 ? 'selected' : '' }}>Staff Sarana
+                                        <option value="4" {{ $admin->raw_type === 4 ? 'selected' : '' }}>Staff 
+                                            Mutabaah</option>
+                                        <option value="5" {{ $admin->raw_type === 4 ? 'selected' : '' }}>Staff Sarana
                                             dan Prasarana</option>
                                     </select>
                                     @error('type')

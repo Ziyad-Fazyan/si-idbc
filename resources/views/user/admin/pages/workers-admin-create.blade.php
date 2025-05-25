@@ -259,10 +259,11 @@
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]">
                                             <option value="" selected>Pilih Role Users</option>
                                             <option value="0">Web Administrator</option>
-                                            <option value="1">Koordinator Program</option>
-                                            <option value="2">Staff Administrasi</option>
+                                            <option value="1">Staff Finance</option>
+                                            <option value="2">Absen</option>
                                             <option value="3">Staff Akademik</option>
-                                            <option value="4">Staff Sarana dan Prasarana</option>
+                                            <option value="4">Staff Mutabaah</option>
+                                            <option value="5">Staff Sarana dan Prasarana</option>
                                         </select>
                                         @error('type')
                                             <small class="text-red-500 text-xs">{{ $message }}</small>

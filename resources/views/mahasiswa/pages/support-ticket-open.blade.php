@@ -40,7 +40,7 @@
                     <p>Pilih ini apabila berhubungan dengan perkuliahan dan administrasi akademik</p>
                 </div>
                 <div class="col-lg-6 col-6 text-center mb-4">
-                    <a href="{{ route('mahasiswa.support.ticket-create', 4) }}" class="btn btn-danger">Departement Admin</a>
+                    <a href="{{ route('mahasiswa.support.ticket-create', 4) }}" class="btn btn-danger">Departement Mutabaah</a>
                     <p>Pilih ini apabila berhubungan terdapat kendala saat perkuliahan berlangsung</p>
                 </div>
                 <div class="col-lg-12 col-12 text-center mb-4">

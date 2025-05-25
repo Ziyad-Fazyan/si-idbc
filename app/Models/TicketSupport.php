@@ -19,7 +19,7 @@ class TicketSupport extends Model
             1 => 'Departement Finance',     // => Prefix finance    => For Pelayanan Administrasi Umum dan Keuangan ( BAU )
             2 => 'Departement Absen',       // => Prefix absen    => For Penerimaan Mahasiswa, Etc. ( Absen Staff )
             3 => 'Departement Academic',    // => Prefix academic   => For Pelayanan Akademik ( BAAK Staff )
-            4 => 'Departement Admin',       // => Prefix admin      => For Penghubung antar departement dan dosen
+            4 => 'Departement Mutabaah',    // => Prefix mutabaah      => For Penghubung antar departement dan dosen
             5 => 'Departement Support',     // => Prefix support    => For IT Technical, Lab Technician, Helper
         ];
 

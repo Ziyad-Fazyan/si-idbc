@@ -63,7 +63,7 @@
                                 <option value="1" {{ $dept == 1 ? 'selected' : '' }}>Departement Finance</option>
                                 <option value="2" {{ $dept == 2 ? 'selected' : '' }}>Departement Absen</option>
                                 <option value="3" {{ $dept == 3 ? 'selected' : '' }}>Departement Akademik</option>
-                                <option value="4" {{ $dept == 4 ? 'selected' : '' }}>Departement Admin</option>
+                                <option value="4" {{ $dept == 4 ? 'selected' : '' }}>Departement Mutabaah</option>
                                 <option value="5" {{ $dept == 5 ? 'selected' : '' }}>Departement Support</option>
                             </select>
                             @error('dept_id')
