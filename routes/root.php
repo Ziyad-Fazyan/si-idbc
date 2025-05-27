@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Root\PpdbController;
 
 // HALAMAN UTAMA / FRONTEND
 Route::get('/', [App\Http\Controllers\Root\HomeController::class, 'index'])->name('root.home-index');
@@ -13,3 +14,8 @@ Route::get('/album-foto/show/{slug}', [App\Http\Controllers\Root\HomeController:
 Route::get('/admission/{slug}', [App\Http\Controllers\Root\HomeController::class, 'prodiIndex'])->name('root.home-prodi');
 Route::get('/program-kuliah/{code}', [App\Http\Controllers\Root\HomeController::class, 'prokuIndex'])->name('root.home-proku');
 Route::post('/advice/store', [App\Http\Controllers\Root\HomeController::class, 'adviceStore'])->name('root.home-advice-store');
+
+Route::prefix('ppdb')->name('ppdb.')->group(function () {
+    Route::get('form', [PpdbController::class, 'index'])->name('form');
+    Route::post('store-student', [PpdbController::class, 'store'])->name('store');
+});

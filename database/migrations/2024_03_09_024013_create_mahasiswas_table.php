@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('mhs_mail')->unique();
             $table->string('mhs_phone')->unique();
+
             // VERIFIED TOKEN
             $table->string('verify_token')->nullable();
             $table->string('face_token')->nullable();
