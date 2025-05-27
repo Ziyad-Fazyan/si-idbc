@@ -31,8 +31,8 @@
             </div>
         @elseif(Auth::user()->raw_type === 4)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">MUTABAAH</div>
-                @include('user.mutabaah.home-sidebar')
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">MUSYRIF</div>
+                @include('user.musyrif.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 5)
             <div class="py-1">

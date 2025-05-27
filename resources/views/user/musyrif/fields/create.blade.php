@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.mutabaah-fields.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('musyrif.mutabaah-fields.store') }}" method="POST" class="space-y-4">
         @csrf
 
         <div>
@@ -39,7 +39,7 @@
 
         <div>
             <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Simpan</button>
-            <a href="{{ route('admin.mutabaah-fields.index') }}" class="text-blue-600 underline ml-3">Kembali</a>
+            <a href="{{ route('musyrif.mutabaah-fields.index') }}" class="text-blue-600 underline ml-3">Kembali</a>
         </div>
     </form>
 </div>

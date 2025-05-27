@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.mutabaah.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('musyrif.mutabaah.store') }}" method="POST" class="space-y-4">
         @csrf
 
         <div>
@@ -32,22 +32,23 @@
         </div>
 
         @foreach ($fields as $field)
-            <div>
-                <label class="block font-semibold">{{ $field->label }}</label>
+    <div>
+        <label class="block font-semibold">{{ $field->label }}</label>
 
-                @if ($field->field_type === 'boolean')
-                    <input type="checkbox" name="{{ $field->field_name }}" class="mr-2"> Ya
-                @elseif ($field->field_type === 'text')
-                    <input type="text" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}" class="w-full border px-3 py-2 rounded">
-                @elseif ($field->field_type === 'integer')
-                    <input type="number" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}" class="w-full border px-3 py-2 rounded">
-                @endif
-            </div>
-        @endforeach
+        @if ($field->field_type === 'boolean')
+            <input type="checkbox" name="data[{{ $field->field_name }}]" class="mr-2" value="1"> Ya
+        @elseif ($field->field_type === 'text')
+            <input type="text" name="data[{{ $field->field_name }}]" value="{{ old('data.' . $field->field_name) }}" class="w-full border px-3 py-2 rounded">
+        @elseif ($field->field_type === 'integer')
+            <input type="number" name="data[{{ $field->field_name }}]" value="{{ old('data.' . $field->field_name) }}" class="w-full border px-3 py-2 rounded">
+        @endif
+    </div>
+@endforeach
+
 
         <div>
             <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Simpan</button>
-            <a href="{{ route('admin.mutabaah.index') }}" class="text-blue-600 underline ml-3">Kembali</a>
+            <a href="{{ route('musyrif.mutabaah.index') }}" class="text-blue-600 underline ml-3">Kembali</a>
         </div>
     </form>
 </div>

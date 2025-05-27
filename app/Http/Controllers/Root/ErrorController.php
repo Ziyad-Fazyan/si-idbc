@@ -20,7 +20,7 @@ class ErrorController extends Controller
             case 3:
                 return 'academic.';
             case 4:
-                return 'mutabaah.';
+                return 'musyrif.';
             case 5:
                 return 'support.';
             default:

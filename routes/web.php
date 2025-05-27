@@ -57,7 +57,7 @@ Route::middleware(['guest'])->group(function () {
 // HAK AKSES DEPARTEMENT WEB ADMINISTRATOR
 require __DIR__.'/route-web-admin.php';
 // HAK AKSES DEPARTEMENT ADMIN
-require __DIR__.'/route-mutabaah.php';
+require __DIR__.'/route-musyrif.php';
 // HAK AKSES DEPARTEMENT AKADEMIK
 require __DIR__.'/route-akademik.php';
 // HAK AKSES DEPARTEMENT FINANSIAL

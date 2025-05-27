@@ -13,7 +13,7 @@ use App\Models\Settings\webSettings;
 class MutabaahController extends Controller
 {
     use roleTrait;
-    
+
     public function index()
     {
         $data['mutabaahs'] = Mutabaah::with('mahasiswa')->orderBy('tanggal', 'desc')->get();
@@ -21,7 +21,7 @@ class MutabaahController extends Controller
         $data['prefix'] = $this->setPrefix();
         $data['mahasiswa'] = Mahasiswa::orderBy('mhs_name')->get();
 
-        return view('user.mutabaah.index', $data);
+        return view('user.musyrif.index', $data);
     }
 
     public function create()
@@ -30,24 +30,26 @@ class MutabaahController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['mahasiswas'] = Mahasiswa::where('mhs_stat', 1)->orderBy('mhs_name')->get();
-        return view('user.mutabaah.create', $data);
+        return view('user.musyrif.create', $data);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'author_id' => 'required|exists:mahasiswas,id',
-            'tanggal' => 'required|date'
+            'tanggal' => 'required|date',
         ]);
-        
+
         $fields = MutabaahField::all();
+
+        $inputData = $request->input('data', []);
 
         $data = [];
         foreach ($fields as $field) {
             if ($field->field_type === 'boolean') {
-                $data[$field->field_name] = $request->has($field->field_name);
+                $data[$field->field_name] = isset($inputData[$field->field_name]) && $inputData[$field->field_name];
             } else {
-                $data[$field->field_name] = $request->input($field->field_name);
+                $data[$field->field_name] = $inputData[$field->field_name] ?? null;
             }
         }
 
@@ -57,12 +59,12 @@ class MutabaahController extends Controller
             'data' => $data,
         ]);
 
-        return redirect()->route('mutabaah.mutabaah.index')->with('success', 'Data mutabaah berhasil disimpan');
+        return redirect()->route('musyrif.mutabaah.index')->with('success', 'Data mutabaah berhasil disimpan');
     }
 
     public function delete(Mutabaah $mutabaah)
     {
         $mutabaah->delete();
-        return redirect()->route('mutabaah.mutabaah.index')->with('success', 'Data mutabaah berhasil dihapus');
+        return redirect()->route('musyrif.mutabaah.index')->with('success', 'Data mutabaah berhasil dihapus');
     }
 }

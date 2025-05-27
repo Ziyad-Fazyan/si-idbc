@@ -17,7 +17,7 @@ return new class extends Migration
 
             // DATA PRIBADI
             $table->integer('dsn_stat')->default(0);
-            $table->string('dsn_nidn')->unique();
+            $table->string('dsn_nidn')->unique()->nullable();
             $table->string('dsn_name');
             $table->string('dsn_code');
             $table->string('dsn_image')->default('default/default-profile.jpg');

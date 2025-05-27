@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('class_id')->default(0);
             // DATA PRIBADI
             $table->integer('mhs_stat')->default(0);
-            $table->string('mhs_nim')->unique();
+            $table->string('mhs_nim')->unique()->nullable();
             $table->string('mhs_name');
             $table->string('mhs_code')->unique();
             $table->string('mhs_image')->default('default/default-profile.jpg');

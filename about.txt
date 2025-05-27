@@ -63,8 +63,8 @@ Link : https://siakad-pt.internal-dev.id/admin/auth-signin
 User : admin
 Pass : Admin123
 
-2. Departement Mutabaah ( Mutabaah Staff )
-User : mutabaah
+2. Departement Musyrif ( Musyrif Staff )
+User : musyrif
 Pass : Admin123
 
 3. Departement Finance ( Finance Staff )

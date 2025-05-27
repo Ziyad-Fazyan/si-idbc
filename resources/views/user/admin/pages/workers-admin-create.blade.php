@@ -262,7 +262,7 @@
                                             <option value="1">Staff Finance</option>
                                             <option value="2">Absen</option>
                                             <option value="3">Staff Akademik</option>
-                                            <option value="4">Staff Mutabaah</option>
+                                            <option value="4">Staff Musyrif</option>
                                             <option value="5">Staff Sarana dan Prasarana</option>
                                         </select>
                                         @error('type')

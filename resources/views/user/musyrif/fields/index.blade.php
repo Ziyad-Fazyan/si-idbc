@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <a href="{{ route('admin.mutabaah-fields.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Tambah Field</a>
+    <a href="{{ route('musyrif.mutabaah-fields.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Tambah Field</a>
 
     <table class="w-full table-auto border border-gray-300">
         <thead>
@@ -28,7 +28,7 @@
                     <td class="border px-4 py-2">{{ $field->label }}</td>
                     <td class="border px-4 py-2">{{ $field->field_type }}</td>
                     <td class="border px-4 py-2">
-                        <form action="{{ route('admin.mutabaah-fields.destroy', $field->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
+                        <form action="{{ route('musyrif.mutabaah-fields.destroy', $field->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded">Hapus</button>

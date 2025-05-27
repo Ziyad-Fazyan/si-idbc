@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // HAK AKSES DEPARTEMENT ACADEMIC
-Route::group(['prefix' => 'mutabaah', 'middleware' => ['user-access:Departement Mutabaah'], 'as' => 'mutabaah.'],function(){
+Route::group(['prefix' => 'musyrif', 'middleware' => ['user-access:Departement Musyrif'], 'as' => 'musyrif.'],function(){
 
     // GLOBAL ROUTE
     require __DIR__.'/route-global.php';

@@ -276,7 +276,7 @@
                                                     <option value="3" {{ $admin->raw_type === 3 ? 'selected' : '' }}>
                                                         Staff Akademik</option>
                                                     <option value="4" {{ $admin->raw_type === 4 ? 'selected' : '' }}>
-                                                        Staff Mutabaah</option>
+                                                        Staff Musyrif</option>
                                                     <option value="5" {{ $admin->raw_type === 5 ? 'selected' : '' }}>
                                                         Staff Sarana dan Prasarana</option>
                                                 </select>

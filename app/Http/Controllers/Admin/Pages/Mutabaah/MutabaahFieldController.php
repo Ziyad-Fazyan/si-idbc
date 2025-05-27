@@ -17,7 +17,7 @@ class MutabaahFieldController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['fields'] = MutabaahField::all();
         $data['prefix'] = $this->setPrefix();
-        return view('user.mutabaah.fields.index', $data);
+        return view('user.musyrif.fields.index', $data);
     }
 
     public function create()
@@ -25,7 +25,7 @@ class MutabaahFieldController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
 
-        return view('user.mutabaah.fields.create', $data);
+        return view('user.musyrif.fields.create', $data);
     }
 
     public function store(Request $request)
@@ -38,12 +38,12 @@ class MutabaahFieldController extends Controller
 
         MutabaahField::create($request->all());
 
-        return redirect()->route('mutabaah.mutabaah-fields.index')->with('success', 'Field berhasil ditambahkan');
+        return redirect()->route('musyrif.mutabaah-fields.index')->with('success', 'Field berhasil ditambahkan');
     }
 
     public function destroy(MutabaahField $mutabaahField)
     {
         $mutabaahField->delete();
-        return redirect()->route('mutabaah.mutabaah-fields.index')->with('success', 'Field berhasil dihapus');
+        return redirect()->route('musyrif.mutabaah-fields.index')->with('success', 'Field berhasil dihapus');
     }
 }
