@@ -47,6 +47,10 @@
                     <a href="{{ route('mahasiswa.support.ticket-create', 5) }}" class="btn btn-info">Departement Support</a>
                     <p>Pilih ini apabila berhubungan terdapat kendala teknis pada device kalian</p>
                 </div>
+                <div class="col-lg-12 col-12 text-center mb-4">
+                    <a href="{{ route('mahasiswa.support.ticket-create', 6) }}" class="btn btn-info">Departement Site Manager</a>
+                    <p>Pilih ini apabila berhubungan terdapat kendala teknis pada device kalian</p>
+                </div>
             </div>
         </div>
     </section>

@@ -66,6 +66,8 @@ require __DIR__.'/route-finance.php';
 require __DIR__.'/route-absen.php';
 // HAK AKSES DEPARTEMENT SUPPORT
 require __DIR__.'/route-support.php';
+// HAK AKSES DEPARTEMENT SITE MANAGER
+require __DIR__.'/route-sitemanager.php';
 // HAK AKSES DOSEN
 require __DIR__.'/route-dosen.php';
 // HAK AKSES MAHASISWA

@@ -21,6 +21,7 @@ class TicketSupport extends Model
             3 => 'Departement Academic',    // => Prefix academic   => For Pelayanan Akademik ( BAAK Staff )
             4 => 'Departement Musyrif',    // => Prefix musyrif      => For Penghubung antar departement dan dosen
             5 => 'Departement Support',     // => Prefix support    => For IT Technical, Lab Technician, Helper
+            6 => 'Departement Site Manager',     // => Prefix Site Manager    => For 
         ];
 
         return isset($deptIds[$value]) ? $deptIds[$value] : 'Unknown';

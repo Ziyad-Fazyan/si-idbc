@@ -168,6 +168,10 @@ class AuthController extends Controller
                 Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('support.home-index');
                 // return back();
+            } elseif ($user->rawtype == 6) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
+                return redirect()->route('sitemanager.home-index');
+                // return back();
             }
         } else {
             Alert::error('Error', 'Mohon Maaf, Username / Email atau password salah');

@@ -264,6 +264,7 @@
                                             <option value="3">Staff Akademik</option>
                                             <option value="4">Staff Musyrif</option>
                                             <option value="5">Staff Sarana dan Prasarana</option>
+                                            <option value="6">Staff Site Manager</option>
                                         </select>
                                         @error('type')
                                             <small class="text-red-500 text-xs">{{ $message }}</small>

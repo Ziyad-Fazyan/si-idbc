@@ -279,6 +279,8 @@
                                                         Staff Musyrif</option>
                                                     <option value="5" {{ $admin->raw_type === 5 ? 'selected' : '' }}>
                                                         Staff Sarana dan Prasarana</option>
+                                                    <option value="6" {{ $admin->raw_type === 6 ? 'selected' : '' }}>
+                                                        Staff Site Manager</option>
                                                 </select>
                                                 @error('type')
                                                     <small class="text-red-500">{{ $message }}</small>

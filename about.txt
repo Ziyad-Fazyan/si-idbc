@@ -83,6 +83,10 @@ Pass : Admin123
 User : absen
 Pass : Admin123
 
+7. Departement Site Manager ( Site Manager Staff )
+User : sitemanager
+Pass : Admin123
+
 Demo with Dosen Account:
 Link : https://siakad-pt.internal-dev.id/dosen/auth-signin
 User : dosen.a@example.com // You can replace "a" with another alphabet to "d"

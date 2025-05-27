@@ -18,6 +18,8 @@ trait roleTrait
                 return 'musyrif.';
             case 5:
                 return 'support.';
+            case 6:
+                return 'sitemanager.';
             default:
                 return 'web-admin.';
         }

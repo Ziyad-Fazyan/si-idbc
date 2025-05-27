@@ -39,6 +39,11 @@
                 <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">SUPPORT</div>
                 @include('user.support.home-sidebar')
             </div>
+        @elseif(Auth::user()->raw_type === 6)
+            <div class="py-1">
+                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">SITE MANAGER</div>
+                @include('user.sitemanager.home-sidebar')
+            </div>
         @endif
     @endguest
 
