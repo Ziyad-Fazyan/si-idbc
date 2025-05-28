@@ -1,6 +1,6 @@
 @extends('base.base-dash-index')
 @section('title')
-    Data Pengguna Dosen - Siakad By Internal Developer
+    Edit Dosen - {{ $dosen->dsn_name }}
 @endsection
 @section('menu')
     Data Pengguna Dosen
@@ -12,270 +12,352 @@
     {{ route('web-admin.workers.lecture-index') }}
 @endsection
 @section('subdesc')
-    Halaman untuk mengubah data pengguna Dosen
+    Halaman untuk mengedit data pengguna {{ $dosen->dsn_name }}
 @endsection
 @section('content')
-    <form action="{{ route('web-admin.workers.lecture-update', $dosen->dsn_code) }}" method="POST"
-        enctype="multipart/form-data" class="w-full">
-        @method('PATCH')
-        @csrf
+    <div class="max-w-7xl mx-auto">
+        <form action="{{ route('web-admin.workers.lecture-update', $dosen->dsn_code) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @method('PATCH')
+            @csrf
 
-        <div class="flex flex-col lg:flex-row gap-4 w-full">
-            <div class="w-full lg:w-1/3">
+            <!-- Header Actions -->
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-semibold text-gray-900">Edit Dosen</h1>
+                    <p class="text-sm text-gray-600 mt-1">Update informasi dosen {{ $dosen->dsn_name }}</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="@yield('urlmenu')"
+                       class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Kembali
+                    </a>
+                    <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 transition-colors">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </div>
 
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-[#0C6E71] text-white px-4 py-3 flex items-center justify-between">
-                        <h4 class="text-lg font-semibold">Ubah Foto Profile</h4>
-                        <div class="flex gap-2">
-                            <a href="@yield('urlmenu')"
-                                class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded flex items-center gap-1">
-                                <i class="fa-solid fa-backward"></i>
-                            </a>
-                            <button type="submit"
-                                class="bg-[#0C6E71] hover:bg-[#0a5a5d] text-white px-3 py-1 rounded flex items-center gap-1">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <img src="{{ asset('storage/images/' . $dosen->dsn_image) }}" class="w-full h-auto rounded mb-4"
-                            alt="">
-                        <hr class="my-4">
-                        <div class="mb-4">
-                            <label for="dsn_image" class="block text-sm font-medium text-gray-700 mb-1">Upload Foto
-                                Profile</label>
-                            <div class="flex items-center gap-2">
-                                <input type="file"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                    name="dsn_image" id="dsn_image">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Profile Image Section -->
+                <div class="lg:col-span-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Foto Profil</h3>
+
+                            <!-- Image Preview -->
+                            <div class="relative mb-6">
+                                <img src="{{ asset('storage/images/' . $dosen->dsn_image) }}"
+                                     class="w-full aspect-square object-cover rounded-xl border-2 border-gray-100"
+                                     alt="{{ $dosen->dsn_name }}'s profile"
+                                     id="imagePreview">
+                                <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 transition-all duration-200 rounded-xl"></div>
+                            </div>
+
+                            <!-- File Upload -->
+                            <div class="space-y-2">
+                                <label for="dsn_image" class="block text-sm font-medium text-gray-700">
+                                    Upload Foto Baru
+                                </label>
+                                <div class="relative">
+                                    <input type="file"
+                                           name="dsn_image"
+                                           id="dsn_image"
+                                           accept="image/*"
+                                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors">
+                                </div>
                                 @error('dsn_image')
-                                    <small class="text-red-500 text-sm">{{ $message }}</small>
+                                    <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="w-full lg:w-2/3">
 
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-4">
-
-                        <div class="border-b border-gray-200">
-                            <ul class="flex flex-wrap -mb-px" id="myTab" role="tablist">
-                                <li class="mr-2" role="presentation">
-                                    <button
-                                        class="inline-block p-4 border-b-2 border-[#0C6E71] text-[#0C6E71] font-medium active"
-                                        id="home-tab" data-tab-target="#home" type="button"
-                                        role="tab">Personal</button>
-                                </li>
-                                <li class="mr-2" role="presentation">
-                                    <button
-                                        class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 font-medium"
-                                        id="contact-tab" data-tab-target="#contact" type="button"
-                                        role="tab">Kontak</button>
-                                </li>
-                                <li class="mr-2" role="presentation">
-                                    <button
-                                        class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 font-medium"
-                                        id="profile-tab" data-tab-target="#profile" type="button"
-                                        role="tab">Keamanan</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content mt-4">
-                            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                                <hr class="my-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="mb-4">
-                                        <label for="dsn_name" class="block text-sm font-medium text-gray-700 mb-1">Nama
-                                            Lengkap</label>
-                                        <input type="text" name="dsn_name" id="dsn_name"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            placeholder="Nama lengkap..." value="{{ $dosen->dsn_name }}">
-                                        @error('dsn_name')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_nidn"
-                                            class="block text-sm font-medium text-gray-700 mb-1">NIDN</label>
-                                        <input type="text" name="dsn_nidn" id="dsn_nidn"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-                                            placeholder="Username..." readonly value="{{ $dosen->dsn_nidn }}">
-                                        @error('dsn_nidn')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_user"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                                        <input type="text" name="dsn_user" id="dsn_user"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            placeholder="Username..." value="{{ $dosen->dsn_user }}">
-                                        @error('dsn_user')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_gend" class="block text-sm font-medium text-gray-700 mb-1">Jenis
-                                            Kelamin</label>
-                                        <select name="dsn_gend" id="dsn_gend"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]">
-                                            <option value="" selected>Pilih Jenis Kelamin</option>
-                                            <option value="L" {{ $dosen->dsn_gend === 'L' ? 'selected' : '' }}>Laki
-                                                Laki</option>
-                                            <option value="P" {{ $dosen->dsn_gend === 'P' ? 'selected' : '' }}>
-                                                Perempuan</option>
-                                        </select>
-                                        @error('dsn_gend')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_birthplace"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                                        <input type="text" name="dsn_birthplace" id="dsn_birthplace"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            placeholder="Tempat Lahir..." value="{{ $dosen->dsn_birthplace }}">
-                                        @error('dsn_birthplace')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_birthdate"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                                        <input type="date" name="dsn_birthdate" id="dsn_birthdate"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            placeholder="Tanggal Lahir..." value="{{ $dosen->dsn_birthdate }}">
-                                        @error('dsn_birthdate')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
+                <!-- Form Content -->
+                <div class="lg:col-span-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div x-data="{ activeTab: 'personal' }" class="min-h-full">
+                            <!-- Tab Navigation -->
+                            <div class="border-b border-gray-200 px-6">
+                                <nav class="flex space-x-8">
+                                    <button type="button"
+                                            @click="activeTab = 'personal'"
+                                            :class="activeTab === 'personal' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        Personal
+                                    </button>
+                                    <button type="button"
+                                            @click="activeTab = 'contact'"
+                                            :class="activeTab === 'contact' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                        </svg>
+                                        Kontak
+                                    </button>
+                                    <button type="button"
+                                            @click="activeTab = 'security'"
+                                            :class="activeTab === 'security' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                        </svg>
+                                        Keamanan
+                                    </button>
+                                </nav>
                             </div>
-                            <div class="tab-pane hidden" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <hr class="my-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="mb-4">
-                                        <label for="dsn_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor
-                                            HandPhone</label>
-                                        <input type="text"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            name="dsn_phone" id="dsn_phone" placeholder="Inputkan nomor telepon..."
-                                            value="{{ $dosen->dsn_phone }}">
-                                        @error('dsn_phone')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_mail" class="block text-sm font-medium text-gray-700 mb-1">Alamat
-                                            Email</label>
-                                        <input type="text"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                            name="dsn_mail" id="dsn_mail" placeholder="Inputkan alamat email..."
-                                            value="{{ $dosen->dsn_mail }}">
-                                        @error('dsn_mail')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane hidden" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <hr class="my-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="mb-4">
-                                        <label for="SecurityKey"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Security Key</label>
-                                        <div class="flex items-center gap-2">
-                                            <input type="password"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-                                                name="dsn_code" id="SecurityKey" value="{{ $dosen->dsn_code }}"
-                                                disabled>
-                                            <button type="button"
-                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm flex items-center gap-1 show-password">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
-                                            @error('dsn_code')
-                                                <small class="text-red-500 text-sm">{{ $message }}</small>
+
+                            <!-- Tab Content -->
+                            <div class="p-6">
+                                <!-- Personal Tab -->
+                                <div x-show="activeTab === 'personal'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label for="dsn_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Nama Lengkap
+                                            </label>
+                                            <input type="text"
+                                                   name="dsn_name"
+                                                   id="dsn_name"
+                                                   value="{{ $dosen->dsn_name }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                   placeholder="Masukkan nama lengkap">
+                                            @error('dsn_name')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_nidn" class="block text-sm font-medium text-gray-700 mb-2">
+                                                NIDN
+                                            </label>
+                                            <input type="text"
+                                                   name="dsn_nidn"
+                                                   id="dsn_nidn"
+                                                   value="{{ $dosen->dsn_nidn }}"
+                                                   disabled
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 text-gray-500 sm:text-sm"
+                                                   placeholder="NIDN">
+                                            @error('dsn_nidn')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_user" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Username
+                                            </label>
+                                            <input type="text"
+                                                   name="dsn_user"
+                                                   id="dsn_user"
+                                                   value="{{ $dosen->dsn_user }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                   placeholder="Masukkan username">
+                                            @error('dsn_user')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_gend" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Jenis Kelamin
+                                            </label>
+                                            <select name="dsn_gend"
+                                                    id="dsn_gend"
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                                <option value="">Pilih Jenis Kelamin</option>
+                                                <option value="L" {{ $dosen->dsn_gend === 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                                <option value="P" {{ $dosen->dsn_gend === 'P' ? 'selected' : '' }}>Perempuan</option>
+                                            </select>
+                                            @error('dsn_gend')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_birthplace" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Tempat Lahir
+                                            </label>
+                                            <input type="text"
+                                                   name="dsn_birthplace"
+                                                   id="dsn_birthplace"
+                                                   value="{{ $dosen->dsn_birthplace }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                   placeholder="Masukkan tempat lahir">
+                                            @error('dsn_birthplace')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_birthdate" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Tanggal Lahir
+                                            </label>
+                                            <input type="date"
+                                                   name="dsn_birthdate"
+                                                   id="dsn_birthdate"
+                                                   value="{{ $dosen->dsn_birthdate }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            @error('dsn_birthdate')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="mb-4">
-                                        <label for="dsn_stat" class="block text-sm font-medium text-gray-700 mb-1">Status
-                                            Member</label>
-                                        <select name="dsn_stat" id="dsn_stat"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]">
-                                            <optgroup label="Pilih Status Users">
-                                                <option value="0"
-                                                    {{ $dosen->raw_dsn_stat == '0' ? 'selected' : '' }}>Non-Active</option>
-                                                <option value="1"
-                                                    {{ $dosen->raw_dsn_stat == '1' ? 'selected' : '' }}>Active</option>
-                                            </optgroup>
-                                        </select>
-                                        @error('dsn_stat')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="hidden mb-4">
-                                        <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type
-                                            Users</label>
-                                        <select name="type" id="type"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]">
-                                            <option value="" selected>Pilih Role Users</option>
-                                            <option value="0" {{ $dosen->dsn_raw_type === 0 ? 'selected' : '' }}>Web
-                                                Administrator</option>
-                                            <option value="1" {{ $dosen->dsn_raw_type === 1 ? 'selected' : '' }}>
-                                                Staff Finance</option>
-                                            <option value="2" {{ $dosen->dsn_raw_type === 2 ? 'selected' : '' }}>
-                                                Absen</option>
-                                            <option value="3" {{ $dosen->dsn_raw_type === 3 ? 'selected' : '' }}>
-                                                Staff Akademik</option>
-                                            <option value="4" {{ $dosen->dsn_raw_type === 4 ? 'selected' : '' }}>
-                                                Staff Mutabaah</option>
-                                            <option value="5" {{ $dosen->dsn_raw_type === 5 ? 'selected' : '' }}>
-                                                Staff Sarana dan Prasarana</option>
-                                            <option value="6" {{ $dosen->dsn_raw_type === 6 ? 'selected' : '' }}>
-                                                Staff Site Manager</option>
-                                        </select>
-                                        @error('type')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="newPassword"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
-                                        <div class="flex items-center gap-2">
-                                            <input type="password"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                                name="password" id="newPassword" placeholder="Inputkan password...">
-                                            <button type="button"
-                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm flex items-center gap-1 show-password">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
+                                </div>
+
+                                <!-- Contact Tab -->
+                                <div x-show="activeTab === 'contact'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label for="dsn_phone" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Nomor HandPhone
+                                            </label>
+                                            <input type="tel"
+                                                   name="dsn_phone"
+                                                   id="dsn_phone"
+                                                   value="{{ $dosen->dsn_phone }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                   placeholder="Masukkan nomor telepon">
+                                            @error('dsn_phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
-                                        @error('password')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="newPasswordKonfirm"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password
-                                            Baru</label>
-                                        <div class="flex items-center gap-2">
-                                            <input type="password"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
-                                                name="password_confirm" id="newPasswordKonfirm"
-                                                placeholder="Inputkan konfirmasi password...">
-                                            <button type="button"
-                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm flex items-center gap-1 show-password">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
+
+                                        <div class="form-group">
+                                            <label for="dsn_mail" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Alamat Email
+                                            </label>
+                                            <input type="email"
+                                                   name="dsn_mail"
+                                                   id="dsn_mail"
+                                                   value="{{ $dosen->dsn_mail }}"
+                                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                   placeholder="Masukkan alamat email">
+                                            @error('dsn_mail')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
-                                        @error('password_confirm')
-                                            <small class="text-red-500 text-sm">{{ $message }}</small>
-                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Security Tab -->
+                                <div x-show="activeTab === 'security'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label for="SecurityKey" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Security Key
+                                            </label>
+                                            <div class="relative">
+                                                <input type="password"
+                                                       name="dsn_code"
+                                                       id="SecurityKey"
+                                                       value="{{ $dosen->dsn_code }}"
+                                                       disabled
+                                                       class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-50 text-gray-500 sm:text-sm">
+                                                <button type="button"
+                                                        class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password"
+                                                        data-target="SecurityKey">
+                                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dsn_stat" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Status Akun
+                                            </label>
+                                            <select name="dsn_stat"
+                                                    id="dsn_stat"
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                                <option value="0" {{ $dosen->raw_dsn_stat == '0' ? 'selected' : '' }}>Non-Aktif</option>
+                                                <option value="1" {{ $dosen->raw_dsn_stat == '1' ? 'selected' : '' }}>Aktif</option>
+                                            </select>
+                                            @error('dsn_stat')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group hidden">
+                                            <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Role Pengguna
+                                            </label>
+                                            <select name="type"
+                                                    id="type"
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                                <option value="">Pilih Role</option>
+                                                <option value="0" {{ $dosen->dsn_raw_type === 0 ? 'selected' : '' }}>Web Administrator</option>
+                                                <option value="1" {{ $dosen->dsn_raw_type === 1 ? 'selected' : '' }}>Staff Finance</option>
+                                                <option value="2" {{ $dosen->dsn_raw_type === 2 ? 'selected' : '' }}>Absen</option>
+                                                <option value="3" {{ $dosen->dsn_raw_type === 3 ? 'selected' : '' }}>Staff Akademik</option>
+                                                <option value="4" {{ $dosen->dsn_raw_type === 4 ? 'selected' : '' }}>Staff Mutabaah</option>
+                                                <option value="5" {{ $dosen->dsn_raw_type === 5 ? 'selected' : '' }}>Staff Sarana dan Prasarana</option>
+                                                <option value="6" {{ $dosen->dsn_raw_type === 6 ? 'selected' : '' }}>Staff Site Manager</option>
+                                            </select>
+                                            @error('type')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Password Baru
+                                            </label>
+                                            <div class="relative">
+                                                <input type="password"
+                                                       name="password"
+                                                       id="newPassword"
+                                                       class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                       placeholder="Kosongkan jika tidak ingin mengubah">
+                                                <button type="button"
+                                                        class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password"
+                                                        data-target="newPassword">
+                                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            @error('password')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="newPasswordKonfirm" class="block text-sm font-medium text-gray-700 mb-2">
+                                                Konfirmasi Password
+                                            </label>
+                                            <div class="relative">
+                                                <input type="password"
+                                                       name="password_confirm"
+                                                       id="newPasswordKonfirm"
+                                                       class="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                       placeholder="Konfirmasi password baru">
+                                                <button type="button"
+                                                        class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password"
+                                                        data-target="newPasswordKonfirm">
+                                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            @error('password_confirm')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -283,51 +365,53 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection
 
-@section('custom-js')
-    <script>
-        // Image preview
-        document.getElementById("dsn_image").onchange = function(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.querySelector('.card-img-top');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        };
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Image preview functionality
+    const imageInput = document.getElementById('dsn_image');
+    const imagePreview = document.getElementById('imagePreview');
 
-        // Tab functionality
-        document.querySelectorAll('[data-tab-target]').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = document.querySelector(tab.dataset.tabTarget);
-                document.querySelectorAll('.tab-pane').forEach(pane => {
-                    pane.classList.add('hidden');
-                });
-                document.querySelectorAll('[data-tab-target]').forEach(t => {
-                    t.classList.remove('border-[#0C6E71]', 'text-[#0C6E71]');
-                    t.classList.add('border-transparent');
-                });
-                target.classList.remove('hidden');
-                tab.classList.add('border-[#0C6E71]', 'text-[#0C6E71]');
-                tab.classList.remove('border-transparent');
-            });
+    if (imageInput) {
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         });
+    }
 
-        // Show password functionality
-        document.querySelectorAll('.show-password').forEach(button => {
-            button.addEventListener('click', () => {
-                const input = button.previousElementSibling;
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    button.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-                } else {
-                    input.type = 'password';
-                    button.innerHTML = '<i class="fa-solid fa-eye"></i>';
-                }
-            });
+    // Password visibility toggle
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = this.querySelector('svg');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                `;
+            } else {
+                passwordInput.type = 'password';
+                icon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                `;
+            }
         });
-    </script>
-@endsection
+    });
+});
+</script>
+@endpush
