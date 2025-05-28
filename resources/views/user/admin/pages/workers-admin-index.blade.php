@@ -1,95 +1,123 @@
 @extends('base.base-dash-index')
+
 @section('title')
     Data Pengguna Admin - Siakad By Internal Developer
 @endsection
+
 @section('menu')
     Data Pengguna Admin
 @endsection
+
 @section('submenu')
     Data Pengguna Admin
 @endsection
+
 @section('urlmenu')
     #
 @endsection
+
 @section('subdesc')
     Halaman untuk melihat data pengguna Admin
 @endsection
+
 @section('content')
-    <section class="p-4">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="p-4 border-b border-gray-200">
-                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
-                    <h2 class="text-xl md:text-2xl font-semibold text-gray-800">@yield('submenu')</h2>
-                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+    <section class="p-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <!-- Header Section -->
+            <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">@yield('submenu')</h2>
+                        <p class="text-gray-600 text-sm mt-1">Kelola data pengguna admin sistem</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
                         <a href="{{ route('web-admin.workers.admin-create') }}"
-                            class="bg-[#0C6E71] hover:bg-teal-200 text-white hover:text-black px-4 py-2.5 rounded-lg transition-all duration-200 ease-in-out flex items-center justify-center shadow-sm text-sm md:text-base w-full">
-                            <i class="fa-solid fa-plus mr-2"></i>
-                            <span>Tambah</span>
+                            class="inline-flex items-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Tambah Admin
                         </a>
                         <a href="{{ route('web-admin.services.convert.export-users') }}"
-                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-lg transition-all duration-200 ease-in-out flex items-center justify-center shadow-sm text-sm md:text-base w-full">
-                            <i class="fa-solid fa-file-export mr-2"></i>
-                            <span>Export</span>
+                            class="inline-flex items-center px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Export Data
                         </a>
                         <button onclick="openImportModal()"
-                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-lg transition-all duration-200 ease-in-out flex items-center justify-center shadow-sm text-sm md:text-base w-full">
-                            <i class="fa-solid fa-file-import mr-2"></i>
-                            <span>Import</span>
+                            class="inline-flex items-center px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                            </svg>
+                            Import Data
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="p-4 overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50">
+
+            <!-- Table Section -->
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">#</th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Nama
-                                Karyawan</th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Role
-                                Karyawan</th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Gender</th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Join Date
-                            </th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">#</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama Karyawan</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Role</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Gender</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Bergabung</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($admin as $key => $item)
-                            <tr class="hover:bg-gray-50 transition-colors duration-150">
-                                <td class="px-4 py-3 whitespace-nowrap text-center">{{ ++$key }}</td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">{{ $item->name }}</td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">{{ $item->type }}</td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">{{ $item->gend }}</td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse ($admin as $key => $item)
+                            <tr class="hover:bg-gray-50/50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{{ ++$key }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $item->name }}</div>
+                                    <div class="text-sm text-gray-500">{{ $item->code }}</div>
                                 </td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">
-                                    <span
-                                        class="px-2 py-1 rounded-full text-xs font-medium
-                                        {{ $item->status === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                        {{ $item->status === 1 ? 'Active' : 'Non-Active' }}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ $item->type }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 whitespace-nowrap text-center">
-                                    <div class="flex justify-center gap-2">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $item->gend }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                    {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-medium
+                                        {{ $item->status === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ $item->status === 1 ? 'Aktif' : 'Non-Aktif' }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center space-x-2">
                                         <button
                                             onclick="openContactModal('{{ $item->code }}', '{{ $item->name }}', '{{ $item->phone }}', '{{ $item->email }}')"
-                                            class="bg-blue-100 text-blue-600 p-2 rounded hover:bg-blue-200 transition-colors duration-200"
+                                            class="inline-flex items-center p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                                             title="Kontak">
-                                            <i class="fas fa-phone fa-sm"></i>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                            </svg>
                                         </button>
                                         <a href="{{ route('web-admin.workers.admin-edit', $item->code) }}"
-                                            class="bg-blue-100 text-blue-600 p-2 rounded hover:bg-blue-200 transition-colors duration-200"
+                                            class="inline-flex items-center p-2 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition-colors duration-200"
                                             title="Edit">
-                                            <i class="fas fa-edit fa-sm"></i>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                            </svg>
                                         </a>
                                         <form action="{{ route('web-admin.workers.admin-destroy', $item->code) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this package?')">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <button type="submit"
+                                                class="inline-flex items-center p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus admin ini?')"
+                                                title="Hapus">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
                                             </button>
@@ -97,7 +125,19 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center text-gray-500">
+                                        <svg class="w-12 h-12 mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                                        </svg>
+                                        <p class="text-lg font-medium">Tidak ada data admin</p>
+                                        <p class="text-sm">Mulai dengan menambahkan admin pertama</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -105,195 +145,191 @@
     </section>
 
     <!-- Import Modal -->
-    <div id="importModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
-        <div class="bg-white rounded-lg w-full max-w-lg mx-4 transform transition-all duration-300 scale-95">
-            <form action="{{ route('web-admin.services.convert.import-users') }}" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                    <h4 class="text-lg font-semibold">Import Pengguna</h4>
-                    <div class="flex gap-2">
-                        <button type="submit"
-                            class="bg-primary-600 text-white px-3 py-1 rounded hover:bg-primary-700 transition-colors duration-200">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+    <div id="importModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
+                <form action="{{ route('web-admin.services.convert.import-users') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Import Data Admin</h3>
                         <button type="button" onclick="closeImportModal()"
-                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors duration-200">
-                            <i class="fas fa-times"></i>
+                            class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
                         </button>
                     </div>
-                </div>
-                <div class="p-4">
-                    <div class="mb-4">
-                        <label for="import" class="block text-sm font-medium text-gray-700 mb-2">Import Files (xlsx,
-                            csv)</label>
-                        <input type="file" name="import" id="import"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                            accept=".xls, .xlsx, .csv" required>
-                        @error('import')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="text-xs text-gray-500">
-                        <p>Pastikan file sesuai dengan format yang ditentukan. Unduh template <a href="#"
-                                class="text-primary-600 hover:underline">di sini</a>.</p>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- Contact Modal (Single Dynamic Modal) -->
-    <div id="contactModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
-        <div class="bg-white rounded-lg w-full max-w-lg mx-4 transform transition-all duration-300 scale-95">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                <h4 class="text-lg font-semibold" id="contactModalTitle">Kontak Admin</h4>
-                <button onclick="closeContactModal()"
-                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors duration-200">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-4">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
-                    <div class="flex">
-                        <input type="text" id="contactPhone"
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                            readonly>
-                        <a id="whatsappLink" target="_blank"
-                            class="bg-green-500 text-white px-3 py-2 rounded-r-md hover:bg-green-600 transition-colors duration-200 flex items-center">
-                            <i class="fa-solid fa-square-phone mr-1"></i>
-                            <span class="hidden sm:inline">WhatsApp</span>
-                        </a>
+                    <!-- Modal Body -->
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label for="import" class="block text-sm font-medium text-gray-700 mb-2">
+                                Pilih File Excel/CSV
+                            </label>
+                            <div class="relative">
+                                <input type="file" name="import" id="import"
+                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors"
+                                    accept=".xls,.xlsx,.csv" required>
+                            </div>
+                            @error('import')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div class="text-sm text-blue-700">
+                                    <p class="font-medium mb-1">Format file yang didukung:</p>
+                                    <ul class="text-xs space-y-1">
+                                        <li>• File Excel (.xlsx, .xls)</li>
+                                        <li>• File CSV (.csv)</li>
+                                        <li>• <a href="#" class="underline hover:no-underline">Download template</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Email</label>
-                    <div class="flex">
-                        <input type="text" id="contactEmail"
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                            readonly>
-                        <a id="emailLink"
-                            class="bg-red-500 text-white px-3 py-2 rounded-r-md hover:bg-red-600 transition-colors duration-200 flex items-center">
-                            <i class="fa-solid fa-envelope mr-1"></i>
-                            <span class="hidden sm:inline">Email</span>
-                        </a>
+
+                    <!-- Modal Footer -->
+                    <div class="flex items-center justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+                        <button type="button" onclick="closeImportModal()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                            Import Data
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Loading Indicator -->
-    <div id="loadingIndicator" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden">
-        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4">
-            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600"></div>
-            <span class="text-gray-700">Memproses...</span>
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                    <h3 id="contactModalTitle" class="text-lg font-semibold text-gray-900">Kontak Admin</h3>
+                    <button type="button" onclick="closeContactModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
+                        <div class="flex rounded-lg border border-gray-300 overflow-hidden">
+                            <input type="text" id="contactPhone" readonly
+                                class="flex-1 px-3 py-2.5 bg-gray-50 text-sm focus:outline-none">
+                            <a id="whatsappLink" target="_blank"
+                                class="inline-flex items-center px-4 py-2.5 bg-green-500 text-white text-sm font-medium hover:bg-green-600 transition-colors">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Email</label>
+                        <div class="flex rounded-lg border border-gray-300 overflow-hidden">
+                            <input type="text" id="contactEmail" readonly
+                                class="flex-1 px-3 py-2.5 bg-gray-50 text-sm focus:outline-none">
+                            <a id="emailLink"
+                                class="inline-flex items-center px-4 py-2.5 bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingIndicator" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-xl shadow-xl flex items-center gap-4">
+            <div class="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+            <span class="text-gray-700 font-medium">Memproses data...</span>
         </div>
     </div>
 
     <script>
-        // Import Modal Functions
+        // Modal utilities
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Import Modal
         function openImportModal() {
-            const modal = document.getElementById('importModal');
-            modal.classList.remove('pointer-events-none');
-            modal.classList.add('opacity-100');
-            modal.querySelector('div').classList.remove('scale-95');
-            modal.querySelector('div').classList.add('scale-100');
+            showModal('importModal');
         }
 
         function closeImportModal() {
-            const modal = document.getElementById('importModal');
-            modal.classList.add('pointer-events-none');
-            modal.classList.remove('opacity-100');
-            modal.querySelector('div').classList.remove('scale-100');
-            modal.querySelector('div').classList.add('scale-95');
+            hideModal('importModal');
+            // Reset form
+            document.getElementById('import').value = '';
         }
 
-        // Contact Modal Functions (Single Dynamic Modal)
+        // Contact Modal
         function openContactModal(code, name, phone, email) {
             document.getElementById('contactModalTitle').textContent = `Kontak - ${name}`;
-            document.getElementById('contactPhone').value = phone;
-            document.getElementById('contactEmail').value = email;
-            document.getElementById('whatsappLink').href = `https://wa.me/${phone}`;
-            document.getElementById('emailLink').href = `mailto:${email}`;
+            document.getElementById('contactPhone').value = phone || 'Tidak tersedia';
+            document.getElementById('contactEmail').value = email || 'Tidak tersedia';
 
-            const modal = document.getElementById('contactModal');
-            modal.classList.remove('pointer-events-none');
-            modal.classList.add('opacity-100');
-            modal.querySelector('div').classList.remove('scale-95');
-            modal.querySelector('div').classList.add('scale-100');
+            // Set links
+            const whatsappLink = document.getElementById('whatsappLink');
+            const emailLink = document.getElementById('emailLink');
+
+            if (phone) {
+                whatsappLink.href = `https://wa.me/${phone.replace(/\D/g, '')}`;
+                whatsappLink.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                whatsappLink.href = '#';
+                whatsappLink.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            if (email) {
+                emailLink.href = `mailto:${email}`;
+                emailLink.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                emailLink.href = '#';
+                emailLink.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            showModal('contactModal');
         }
 
         function closeContactModal() {
-            const modal = document.getElementById('contactModal');
-            modal.classList.add('pointer-events-none');
-            modal.classList.remove('opacity-100');
-            modal.querySelector('div').classList.remove('scale-100');
-            modal.querySelector('div').classList.add('scale-95');
+            hideModal('contactModal');
         }
 
-        // Delete Confirmation Functions
-        function confirmDelete(code, name) {
-            document.getElementById('deleteMessage').textContent = `Apakah Anda yakin ingin menghapus admin "${name}"?`;
-
-            // Menggunakan route name yang Anda berikan
-            document.getElementById('deleteForm').action = `/workers/data-admin/${code}/destroy`;
-
-            // Alternatif jika ingin menggunakan route() helper Laravel:
-            // document.getElementById('deleteForm').action = `{{ route('web-admin.workers.admin-destroy', '') }}/${code}`;
-
-            const modal = document.getElementById('deleteModal');
-            modal.classList.remove('pointer-events-none');
-            modal.classList.add('opacity-100');
-            modal.querySelector('div').classList.remove('scale-95');
-            modal.querySelector('div').classList.add('scale-100');
-        }
-
-        function closeDeleteModal() {
-            const modal = document.getElementById('deleteModal');
-            modal.classList.add('pointer-events-none');
-            modal.classList.remove('opacity-100');
-            modal.querySelector('div').classList.remove('scale-100');
-            modal.querySelector('div').classList.add('scale-95');
-        }
-
-        // Handle form submission
-        document.getElementById('deleteForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showLoading();
-
-            fetch(this.action, {
-                    method: 'POST', // Tetap POST karena menggunakan method spoofing
-                    body: new FormData(this),
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    hideLoading();
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    } else {
-                        return response.json().then(data => {
-                            if (data.success) {
-                                window.location.reload();
-                            } else {
-                                alert(data.message || 'Gagal menghapus data');
-                            }
-                        });
-                    }
-                })
-                .catch(error => {
-                    hideLoading();
-                    alert('Terjadi kesalahan: ' + error.message);
-                });
-        });
-
-        // Loading Indicator
+        // Loading indicator
         function showLoading() {
             document.getElementById('loadingIndicator').classList.remove('hidden');
         }
@@ -302,23 +338,33 @@
             document.getElementById('loadingIndicator').classList.add('hidden');
         }
 
-        // Close modals when clicking outside
-        document.addEventListener('click', function(event) {
-            if (event.target.id === 'importModal') {
-                closeImportModal();
-            }
-            if (event.target.id === 'deleteModal') {
-                closeDeleteModal();
-            }
-            if (event.target.id === 'contactModal') {
-                closeContactModal();
-            }
-        });
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modals on backdrop click
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('fixed') && event.target.classList.contains('inset-0')) {
+                    if (event.target.closest('#importModal')) {
+                        closeImportModal();
+                    }
+                    if (event.target.closest('#contactModal')) {
+                        closeContactModal();
+                    }
+                }
+            });
 
-        // Add loading indicator to form submissions
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', () => {
-                showLoading();
+            // Close modals on Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeImportModal();
+                    closeContactModal();
+                }
+            });
+
+            // Add loading to form submissions
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function() {
+                    showLoading();
+                });
             });
         });
     </script>

@@ -1,209 +1,272 @@
-@extends('base.base-dash-index')
-@section('title')
-    Data Pengguna Dosen - Siakad By Internal Developer
-@endsection
-@section('menu')
-    Data Pengguna Dosen
-@endsection
-@section('submenu')
-    Daftar
-@endsection
-@section('urlmenu')
-    #
-@endsection
-@section('subdesc')
-    Halaman untuk melihat data pengguna Dosen
-@endsection
-@section('content')
-    <section class="p-4">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="p-4 border-b border-gray-200">
-                <h5 class="text-lg font-semibold flex justify-between items-center">
-                    @yield('menu')
-                    <div>
-                        <a href="{{ route('web-admin.workers.lecture-create') }}"
-                            class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md flex items-center gap-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Tambah</span>
-                        </a>
-                    </div>
-                </h5>
-            </div>
-            <div class="p-4 overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">#
-                            </th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                NIDN</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Nama Dosen</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Gender</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Join Date</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Button</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($dosen as $key => $item)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-center">{{ ++$key }}</td>
-                                <td class="px-6 py-4 text-center">{{ $item->dsn_nidn }}</td>
-                                <td class="px-6 py-4 text-center">{{ $item->dsn_name }}</td>
-                                <td class="px-6 py-4 text-center">{{ $item->dsn_gend }}</td>
-                                <td class="px-6 py-4 text-center">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->format('l, d M Y') }}</td>
-                                @if ($item->raw_dsn_stat === 1)
-                                    <td class="px-6 py-4 text-center"><span class="text-green-600">Active</span></td>
-                                @elseif($item->raw_dsn_stat === 0)
-                                    <td class="px-6 py-4 text-center"><span class="text-red-600">Non-Active</span></td>
-                                @endif
-                                <td class="px-6 py-4 flex justify-center items-center space-x-2">
-                                    <button onclick="openContactModal('{{ $item->dsn_code }}')"
-                                        class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
-                                        <i class="fas fa-phone"></i>
-                                    </button>
-                                    <a href="{{ route('web-admin.workers.lecture-edit', $item->dsn_code) }}"
-                                        class="bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-full">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('web-admin.workers.lecture-destroy', $item->dsn_code) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Are you sure you want to delete this package?')">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Contact Modal Template -->
-    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg w-full max-w-md mx-4">
-            <div class="flex justify-between items-center p-4 border-b">
-                <h4 class="text-lg font-semibold">Lihat Data Kontak - <span id="modalDosenName"></span></h4>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-4">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
-                        <div class="flex">
-                            <input type="text" id="modalPhone"
-                                class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
-                            <a id="modalWhatsapp" target="_blank"
-                                class="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
-                                <i class="fa-solid fa-square-phone"></i>
-                            </a>
-                        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('menu') - {{ $web->school_name }}</title>
+
+    <!-- Stylesheets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    @stack('styles')
+
+    <style>
+        :root {
+            --primary-color: #0C6E71;
+            --accent-color: #FF6B35;
+            --sidebar-width: 16rem;
+            /* 64 * 0.25rem */
+        }
+
+        /* Jika dropdown classes belum ada */
+        .dropdown-container {
+            @apply relative;
+        }
+
+        .dropdown-menu {
+            @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50;
+        }
+
+        /* Loading state untuk gambar */
+        .school-logo {
+            @apply h-12 w-auto border border-green-200 shadow object-contain rounded-md p-1 bg-white transition-opacity duration-300;
+        }
+
+        .school-logo[src=""] {
+            @apply opacity-50;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-[Poppins]">
+    <div class="min-h-screen flex flex-col">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay"
+            class="fixed inset-0 bg-black bg-opacity-60 z-20 hidden lg:hidden transition-opacity duration-300"
+            onclick="toggleSidebar()">
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-lg z-30 transform transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full overflow-hidden flex flex-col">
+
+            <!-- Sidebar Header -->
+            <div class="flex items-center justify-between p-4 bg-white text-gray-800 border-b shadow-sm">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <img src="{{ asset('storage/images/' . $web->school_logo) }}" alt="{{ $web->school_name }} Logo"
+                            class="h-12 w-auto border border-green-200 shadow object-contain rounded-md p-1 bg-white">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
-                        <div class="flex">
-                            <input type="text" id="modalEmail"
-                                class="flex-1 border border-gray-300 rounded-l-md px-3 py-2" readonly>
-                            <a id="modalMailto"
-                                class="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
-                                <i class="fa-solid fa-envelope"></i>
-                            </a>
-                        </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-lg tracking-tight text-gray-800">{{ $web->school_name }}</span>
+                        <span class="text-sm text-[#0C6E71] font-medium">Islamic School</span>
                     </div>
                 </div>
             </div>
-            <div class="p-4 border-t flex justify-end">
-                <button onclick="closeModal()" class="bg-[#0C6E71] hover:bg-[#0a5c5f] text-white px-4 py-2 rounded-md">
-                    Tutup
-                </button>
-            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="py-4 overflow-y-auto flex-1 px-3">
+                <div class="space-y-1">
+                    @include('base.panel.base-panel-sidebar')
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 lg:ml-64 transition-all duration-300">
+            <!-- Header/Navbar -->
+            <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <!-- Mobile Menu Button -->
+                        <div class="flex items-center">
+                            <button onclick="toggleSidebar()"
+                                class="p-2 rounded-lg text-gray-500 hover:text-[#0C6E71] hover:bg-green-50 transition-colors duration-200 lg:hidden focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:ring-offset-2"
+                                aria-label="Toggle sidebar">
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+                        </div>
+
+                        <!-- Header Right Side -->
+                        <div class="flex items-center">
+                            @include('base.panel.base-panel-header')
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-4 md:p-6">
+                <!-- Page Title and Breadcrumbs -->
+                <div class="mb-6 bg-white rounded-lg shadow-sm p-4 border-l-4 border-[#0C6E71]">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <h1 class="text-2xl font-bold text-gray-800">@yield('submenu')</h1>
+                            <p class="text-sm text-gray-500 mt-1">@yield('subdesc')</p>
+                        </div>
+
+                        <!-- Breadcrumbs -->
+                        <nav class="text-sm bg-gray-50 px-3 py-2 rounded-lg" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2">
+                                <li>
+                                    <a href="@yield('urlmenu')"
+                                        class="text-[#FF6B35] hover:text-[#0C6E71] font-medium transition-colors">
+                                        @yield('menu')
+                                    </a>
+                                </li>
+                                <li class="text-gray-500 flex items-center">
+                                    <svg class="w-3 h-3 mx-1" fill="currentColor" viewBox="0 0 20 20"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>@yield('submenu')</span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Page Content -->
+                <div class="mb-6 bg-white rounded-lg shadow-sm p-4 border-l-4 border-[#0C6E71]">
+                    @include('sweetalert::alert')
+                    @yield('content')
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer>
+                @include('base.panel.base-panel-footer')
+            </footer>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg w-full max-w-md mx-4">
-            <div class="p-4 border-b">
-                <h4 class="text-lg font-semibold">Konfirmasi Hapus</h4>
-            </div>
-            <div class="p-4">
-                <p>Anda yakin ingin menghapus data <span id="deleteItemName" class="font-semibold"></span>?</p>
-            </div>
-            <div class="p-4 border-t flex justify-end space-x-2">
-                <button onclick="closeDeleteModal()"
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">
-                    Batal
-                </button>
-                <form id="deleteForm" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button onclick="confirmDelete('{{ $item->dsn_code }}', '{{ $item->name }}')" type="submit"
-                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">
-                        Hapus
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@push('scripts')
+    <!-- Scripts -->
     <script>
-        // Contact Modal Functions
-        function openContactModal(dsnCode) {
-            // In a real implementation, you would fetch the data via AJAX or have it in a data attribute
-            // For this example, we'll simulate getting the data
-            const item = {!! json_encode($dosen->keyBy('dsn_code')->toArray()) !!}[dsnCode];
+        // Sidebar Management
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
 
-            document.getElementById('modalDosenName').textContent = item.dsn_name;
-            document.getElementById('modalPhone').value = item.dsn_phone;
-            document.getElementById('modalEmail').value = item.dsn_mail;
-            document.getElementById('modalWhatsapp').href = `https://wa.me/${item.dsn_phone}`;
-            document.getElementById('modalMailto').href = `mailto:${item.dsn_mail}`;
+            if (!sidebar || !overlay) return;
 
-            document.getElementById('contactModal').classList.remove('hidden');
-        }
+            sidebar.classList.toggle('-translate-x-full');
 
-        function closeModal() {
-            document.getElementById('contactModal').classList.add('hidden');
-        }
-
-        // Delete Confirmation Functions
-        function confirmDelete(dsnCode, name) {
-            const form = document.getElementById('deleteForm');
-            const routeTemplate = @json(route($prefix . 'workers.staff-destroy', ['code' => '__CODE__']));
-            const finalRoute = routeTemplate.replace('__CODE__', dsnCode);
-
-            document.getElementById('deleteItemName').textContent = name;
-            form.action = finalRoute;
-            document.getElementById('deleteModal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
-
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === document.getElementById('contactModal')) {
-                closeModal();
+            if (sidebar.classList.contains('-translate-x-full')) {
+                overlay.classList.add('hidden');
+            } else {
+                overlay.classList.remove('hidden');
             }
-            if (event.target === document.getElementById('deleteModal')) {
-                closeDeleteModal();
+        }
+
+        // Modal Management
+        function handleModal(modalId, action) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            const body = document.body;
+
+            if (action === 'open') {
+                modal.classList.remove('hidden');
+                body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                body.style.overflow = 'auto';
             }
+        }
+
+        function openModal(modalId) {
+            handleModal(modalId, 'open');
+        }
+
+        function closeModal(modalId) {
+            handleModal(modalId, 'close');
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            const isHidden = modal.classList.contains('hidden');
+            handleModal(modalId, isHidden ? 'open' : 'close');
+        }
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown Management
+            document.querySelectorAll('.dropdown-container').forEach(dropdown => {
+                const button = dropdown.querySelector('.dropdown-toggle');
+                const menu = dropdown.querySelector('.dropdown-menu');
+
+                if (button && menu) {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+
+                        // Close other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(otherMenu => {
+                            if (otherMenu !== menu && !otherMenu.classList.contains(
+                                    'hidden')) {
+                                otherMenu.classList.add('hidden');
+                            }
+                        });
+
+                        // Toggle current dropdown
+                        menu.classList.toggle('hidden');
+                    });
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            });
+
+            // Modal event listeners
+            const modalSelectors = [
+                '[id^="modal"]',
+                '[id^="contactModal"]',
+                '[id^="viewContact"]',
+                '[id^="importModal"]',
+                '[id^="deleteModal"]'
+            ];
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll(modalSelectors.join(', '));
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        handleModal(modal.id, 'close');
+                    }
+                });
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const visibleModalSelectors = modalSelectors.map(selector =>
+                        `${selector}:not(.hidden)`
+                    ).join(', ');
+
+                    const visibleModal = document.querySelector(visibleModalSelectors);
+                    if (visibleModal) {
+                        handleModal(visibleModal.id, 'close');
+                    }
+                }
+            });
         });
     </script>
-@endpush
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    @stack('scripts')
+</body>
+
+</html>
