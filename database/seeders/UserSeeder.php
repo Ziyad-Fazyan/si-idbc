@@ -40,12 +40,12 @@ class UserSeeder extends Seeder
             'status' => 1,
         ]);
         User::create([
-            'name' => 'Staff Officer',
+            'name' => 'Staff Absen',
             'code' => Str::random(6),
-            'user' => 'officer',
+            'user' => 'absen',
             'gend' => 'L',
             'type' => 2,
-            'email' => 'officer@example.com',
+            'email' => 'absen@example.com',
             'phone' => '080012345662',
             'password' => Hash::make('Admin123'),
             'status' => 1,
@@ -62,12 +62,12 @@ class UserSeeder extends Seeder
             'status' => 1,
         ]);
         User::create([
-            'name' => 'Staff Admin',
+            'name' => 'Staff Musyrif',
             'code' => Str::random(6),
-            'user' => 'admin2',
+            'user' => 'musyrif',
             'gend' => 'L',
             'type' => 4,
-            'email' => 'admin@example.com',
+            'email' => 'musyrif@example.com',
             'phone' => '080012345664',
             'password' => Hash::make('Admin123'),
             'status' => 1,
@@ -80,6 +80,17 @@ class UserSeeder extends Seeder
             'type' => 5,
             'email' => 'support@example.com',
             'phone' => '080012345665',
+            'password' => Hash::make('Admin123'),
+            'status' => 1,
+        ]);
+        User::create([
+            'name' => 'Staff Site Manager',
+            'code' => Str::random(6),
+            'user' => 'sitemanager',
+            'gend' => 'L',
+            'type' => 6,
+            'email' => 'sitemanager@example.com',
+            'phone' => '080012345666',
             'password' => Hash::make('Admin123'),
             'status' => 1,
         ]);

@@ -227,13 +227,17 @@
                                             <option value="0" {{ $dosen->dsn_raw_type === 0 ? 'selected' : '' }}>Web
                                                 Administrator</option>
                                             <option value="1" {{ $dosen->dsn_raw_type === 1 ? 'selected' : '' }}>
-                                                Koordinator Program</option>
+                                                Staff Finance</option>
                                             <option value="2" {{ $dosen->dsn_raw_type === 2 ? 'selected' : '' }}>
-                                                Staff Administrasi</option>
+                                                Absen</option>
                                             <option value="3" {{ $dosen->dsn_raw_type === 3 ? 'selected' : '' }}>
                                                 Staff Akademik</option>
                                             <option value="4" {{ $dosen->dsn_raw_type === 4 ? 'selected' : '' }}>
+                                                Staff Mutabaah</option>
+                                            <option value="5" {{ $dosen->dsn_raw_type === 5 ? 'selected' : '' }}>
                                                 Staff Sarana dan Prasarana</option>
+                                            <option value="6" {{ $dosen->dsn_raw_type === 6 ? 'selected' : '' }}>
+                                                Staff Site Manager</option>
                                         </select>
                                         @error('type')
                                             <small class="text-red-500 text-sm">{{ $message }}</small>

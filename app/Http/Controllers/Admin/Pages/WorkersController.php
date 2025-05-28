@@ -188,7 +188,7 @@ class WorkersController extends Controller
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->get();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->get();
         // dd($data['admin']->count());
 
         return view('user.admin.pages.workers-staff-index', $data);
@@ -197,7 +197,7 @@ class WorkersController extends Controller
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->get();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->get();
 
         return view('user.admin.pages.workers-staff-create', $data);
     }
@@ -205,7 +205,7 @@ class WorkersController extends Controller
     {
         $data['prefix'] = $this->setPrefix();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5])->where('code', $code)->first();
+        $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->where('code', $code)->first();
 
         return view('user.admin.pages.workers-staff-edit', $data);
     }
@@ -274,7 +274,7 @@ class WorkersController extends Controller
     }
     public function updateWorkers(Request $request, $code)
     {
-        $user = User::whereIn('type', [1, 2, 3, 4, 5])->where('code', $code)->first();
+        $user = User::whereIn('type', [1, 2, 3, 4, 5, 6])->where('code', $code)->first();
 
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',

@@ -279,7 +279,7 @@
         </div>
     </div>
 
-    <form id="formWajah" action="{{route('officer.absen-wajah')}}" method="POST" enctype="multipart/form-data">
+    <form id="formWajah" action="{{route('absen.absen-wajah')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">

@@ -63,8 +63,8 @@ Link : https://siakad-pt.internal-dev.id/admin/auth-signin
 User : admin
 Pass : Admin123
 
-2. Departement Admin ( Admin Staff )
-User : admin2
+2. Departement Musyrif ( Musyrif Staff )
+User : musyrif
 Pass : Admin123
 
 3. Departement Finance ( Finance Staff )
@@ -75,12 +75,16 @@ Pass : Admin123
 User : academic
 Pass : Admin123
 
-5. Departement Officer ( Officer Staff )
-User : officer
+5. Departement Absen ( Absen Staff )
+User : absen
 Pass : Admin123
 
 6. Departement Support ( Support Staff )
-User : officer
+User : absen
+Pass : Admin123
+
+7. Departement Site Manager ( Site Manager Staff )
+User : sitemanager
 Pass : Admin123
 
 Demo with Dosen Account:

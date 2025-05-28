@@ -247,9 +247,9 @@
                                             <option value="" selected disabled>Pilih Role Users</option>
                                             <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>Web Administrator</option>
                                             <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>Departement Finance</option>
-                                            <option value="2" {{ old('type') == '2' ? 'selected' : '' }}>Departement Officer</option>
+                                            <option value="2" {{ old('type') == '2' ? 'selected' : '' }}>Departement Absen</option>
                                             <option value="3" {{ old('type') == '3' ? 'selected' : '' }}>Departement Academic</option>
-                                            <option value="4" {{ old('type') == '4' ? 'selected' : '' }}>Departement Admin</option>
+                                            <option value="4" {{ old('type') == '4' ? 'selected' : '' }}>Departement Mutabaah</option>
                                             <option value="5" {{ old('type') == '5' ? 'selected' : '' }}>Departement Support</option>
                                         </select>
                                         @error('type')

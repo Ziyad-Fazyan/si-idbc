@@ -162,10 +162,10 @@ class HomeController extends Controller
 
         if ($isFromFaceRecognition) {
             Alert::success('Success', 'Absensi berhasil dicatat melalui pengenalan wajah.');
-            return redirect()->route('officer.face-results');
+            return redirect()->route('absen.absen-wajah-index');
         } else {
             Alert::success('Success', 'Kamu telah berhasil absen pada matakuliah ini.');
-            return redirect()->back();
+            return redirect()->route('absen.absen-wajah-index');
         }
     }
 

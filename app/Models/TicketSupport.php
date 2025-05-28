@@ -17,10 +17,11 @@ class TicketSupport extends Model
         $deptIds = [
             0 => 'Web Administrator',       // => Prefix web-admin  => For Website Development
             1 => 'Departement Finance',     // => Prefix finance    => For Pelayanan Administrasi Umum dan Keuangan ( BAU )
-            2 => 'Departement Officer',     // => Prefix officer    => For Penerimaan Mahasiswa, Etc. ( Officer Staff )
+            2 => 'Departement Absen',       // => Prefix absen    => For Penerimaan Mahasiswa, Etc. ( Absen Staff )
             3 => 'Departement Academic',    // => Prefix academic   => For Pelayanan Akademik ( BAAK Staff )
-            4 => 'Departement Admin',       // => Prefix admin      => For Penghubung antar departement dan dosen
+            4 => 'Departement Musyrif',    // => Prefix musyrif      => For Penghubung antar departement dan dosen
             5 => 'Departement Support',     // => Prefix support    => For IT Technical, Lab Technician, Helper
+            6 => 'Departement Site Manager',     // => Prefix Site Manager    => For 
         ];
 
         return isset($deptIds[$value]) ? $deptIds[$value] : 'Unknown';

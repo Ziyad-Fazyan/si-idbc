@@ -23,9 +23,10 @@ class AuthController extends Controller
             return redirect()->route('dosen.home-index');
         }
         if (Auth::guard('mahasiswa')->check()) {
-            Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('mahasiswa')->user()->dsn_name);
+            Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('mahasiswa')->user()->mhs_name);
             return redirect()->route('mahasiswa.home-index');
         }
+        
         $data['web'] = webSettings::where('id', 1)->first();
         $data['title'] = "Login Dosen - " . $data['web']->school_name;
         $data['menu'] = "Halaman Login Dosen";

@@ -288,19 +288,8 @@
 <div class="container">
     <h2>Sistem Absensi Wajah</h2>
 
-    @if(session('success'))
-        <div class="alert success">
-            <i class="fas fa-check-circle"></i>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
-    @if(session('error'))
-        <div class="alert error">
-            <i class="fas fa-exclamation-circle"></i>
-            <span>{{ session('error') }}</span>
-        </div>
-    @endif
-    
+    @include('sweetalert::alert')
+
     <div class="time-display">
         <div id="current-date"></div>
         <div id="current-time"></div>
@@ -341,7 +330,7 @@
 
     <canvas id="canvas" style="display:none;"></canvas>
 
-    <form id="absenForm" method="POST" action="{{ route('officer.absen-wajah-cek') }}" enctype="multipart/form-data">
+    <form id="absenForm" method="POST" action="{{ route('absen.absen-wajah-cek') }}" enctype="multipart/form-data">
         @csrf
         <input type="file" name="foto" id="fotoInput" accept="image/*" style="display: none;">
     </form>

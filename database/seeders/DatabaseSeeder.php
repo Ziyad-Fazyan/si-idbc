@@ -21,45 +21,60 @@ class DatabaseSeeder extends Seeder
 
         // SEEDER KHUSUS DATA MASTER AKADEMIK
         \App\Models\Fakultas::create([
-            'name'       => 'Fakultas Ilmu Komputer',
-            'code'       => 'FIK',
+            'name'       => 'Nasional',
+            'code'       => 'NSL',
+            'head_id'    => '1',
+        ]);
+        \App\Models\Fakultas::create([
+            'name'       => 'Internasional',
+            'code'       => 'INT',
             'head_id'    => '1',
         ]);
         \App\Models\ProgramStudi::create([
-            'name'       => 'Teknik Informatika',
-            'code'       => 'TI',
-            'cnim'       => '4210',
-            'title'      => ', S.Kom',
-            'level'      => 'S1',
-            'slug'       => Str::slug('Teknik Informatika'),
+            'name'       => 'Programming',
+            'code'       => 'RPL',
+            // 'cnim'       => '',
+            'title'      => '',
+            'level'      => '',
+            'slug'       => Str::slug('Programming'),
             'head_id'    => '1',
             'faku_id'    => '1',
         ]);
         \App\Models\ProgramStudi::create([
-            'name'       => 'Sistem Informasi',
-            'code'       => 'SI',
-            'cnim'       => '4211',
-            'title'      => ', S.Kom',
-            'level'      => 'S1',
-            'slug'       => Str::slug('Sistem Informasi'),
+            'name'       => 'Desain',
+            'code'       => 'DKV',
+            // 'cnim'       => '',
+            'title'      => '',
+            'level'      => '',
+            'slug'       => Str::slug('Desain'),
             'head_id'    => '1',
             'faku_id'    => '1',
+        ]);
+        \App\Models\ProgramStudi::create([
+            'name'       => 'Jerman',
+            'code'       => 'JER',
+            // 'cnim'       => '',
+            'title'      => '',
+            'level'      => '',
+            'slug'       => Str::slug('Jerman'),
+            'head_id'    => '1',
+            'faku_id'    => '2',
         ]);
         \App\Models\TahunAkademik::create([
-            'name'       => 'TA. 2023/2024',
+            'name'       => 'TA. 2025/2026',
             'code'       => '012023',
             'semester'   => '1',
-            'year_start' => '2023',
+            'year_start' => '2025',
         ]);
         \App\Models\TahunAkademik::create([
-            'name'       => 'TA. 2023/2024',
+            'name'       => 'TA. 2025/2026',
             'code'       => '022023',
             'semester'   => '2',
-            'year_start' => '2023',
+            'year_start' => '2025',
         ]);
         \App\Models\ProgramKuliah::create([
-            'name'       => 'Regular Pagi',
-            'code'       => 'G1RP-2023',
+            'name'       => 'Gelombang 1',
+            'code'       => 'G1RP-2025',
             'wave'       => 'Gelombang I',
             'taka_id'    => '1',
             'pstudi_id'  => '1',
@@ -72,10 +87,10 @@ class DatabaseSeeder extends Seeder
             'year_ended' => '2024',
         ]);
         \App\Models\MataKuliah::create([
-            'name'       => 'Jaringan Komputer Dasar',
-            'code'       => 'JKD',
-            'desc'       => 'Matakuliah yang membahas mengenai jaringan komputer dasar',
-            'bsks'       => '20',
+            'name'       => 'Adab',
+            'code'       => 'ADB',
+            'desc'       => 'Matakuliah yang membahas mengenai adab',
+            'bsks'       => '',
             'kuri_id'    => '1',
             'taka_id'    => '1',
             'dosen_1'    => '1',
@@ -83,18 +98,39 @@ class DatabaseSeeder extends Seeder
             'pstudi_id'  => '1',
         ]);
         \App\Models\MataKuliah::create([
-            'name'       => 'Jaringan Komputer Expert',
-            'code'       => 'JKE',
-            'desc'       => 'Matakuliah yang membahas mengenai jaringan komputer dasar',
-            'bsks'       => '20',
+            'name'       => 'Laravel',
+            'code'       => 'LVL',
+            'desc'       => 'Matakuliah yang membahas mengenai Laravel',
+            'bsks'       => '',
+            'kuri_id'    => '1',
+            'taka_id'    => '1',
+            'dosen_1'    => '1',
+            'dosen_2'    => '2',
+            'pstudi_id'  => '1',
+        ]);
+        \App\Models\MataKuliah::create([
+            'name'       => 'UI / UX',
+            'code'       => 'UIX',
+            'desc'       => 'Matakuliah yang membahas mengenai UI / UX',
+            'bsks'       => '',
             'kuri_id'    => '1',
             'taka_id'    => '2',
             'dosen_1'    => '2',
             'pstudi_id'  => '1',
         ]);
+        \App\Models\MataKuliah::create([
+            'name'       => 'Photoshop',
+            'code'       => 'PSD',
+            'desc'       => 'Matakuliah yang membahas mengenai Photoshop',
+            'bsks'       => '',
+            'kuri_id'    => '1',
+            'taka_id'    => '2',
+            'dosen_1'    => '2',
+            'pstudi_id'  => '2',
+        ]);
         \App\Models\Kelas::create([
-            'name'       => 'TI-2023-RP-1A',
-            'code'       => 'TI-2023-RP-1A',
+            'name'       => 'TI-2025-RP-1A',
+            'code'       => 'TI-2025-RP-1A',
             'capacity'   => '32',
             'dosen_id'   => '1',
             'proku_id'   => '1',
@@ -102,8 +138,8 @@ class DatabaseSeeder extends Seeder
             'pstudi_id'  => '1',
         ]);
         \App\Models\Kelas::create([
-            'name'       => 'TI-2023-RP-1B',
-            'code'       => 'TI-2023-RP-1B',
+            'name'       => 'TI-2025-RP-1B',
+            'code'       => 'TI-2025-RP-1B',
             'capacity'   => '32',
             'dosen_id'   => '2',
             'proku_id'   => '1',
@@ -173,26 +209,30 @@ class DatabaseSeeder extends Seeder
 
         // SEEDER KHUSUS DATA MASTER INVENTARIS
         \App\Models\Gedung::create([
-            'name'       => 'Area Luar Kampus',
-            'code'       => 'ALK',
+            'name'       => 'Palestina Land',
+            'code'       => 'PLN',
         ]);
         \App\Models\Gedung::create([
-            'name'       => 'Area Sekitar Gedung',
-            'code'       => 'ASG',
+            'name'       => 'Turki Land',
+            'code'       => 'TLN',
         ]);
         \App\Models\Gedung::create([
-            'name'       => 'Gedung A',
-            'code'       => 'GDA',
+            'name'       => 'Gedung Pink',
+            'code'       => 'GPK',
+        ]);
+        \App\Models\Gedung::create([
+            'name'       => 'Gedung Madinah',
+            'code'       => 'GMA',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '3',
+            'gedu_id'    => '1',
             'floor'      => '1',
             'type'       => '1',
-            'name'       => 'Kelas 101',
+            'name'       => 'Kamar PA',
             'code'       => 'C-101',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '3',
+            'gedu_id'    => '2',
             'floor'      => '1',
             'type'       => '1',
             'name'       => 'Kelas 102',
@@ -202,23 +242,30 @@ class DatabaseSeeder extends Seeder
             'gedu_id'    => '3',
             'floor'      => '1',
             'type'       => '1',
-            'name'       => 'Kelas 103',
+            'name'       => 'Dapur',
             'code'       => 'C-103',
+        ]);
+        \App\Models\Ruang::create([
+            'gedu_id'    => '3',
+            'floor'      => '2',
+            'type'       => '1',
+            'name'       => 'Kelas',
+            'code'       => 'C-104',
         ]);
 
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
             'users_id'    => '1',
-            'name'    => 'UKT Semester 1',
-            'code'    => 'UKT-' . Str::random(8),
-            'price'    => '2400000',
+            'name'    => 'Syahriah Bulan 1',
+            'code'    => 'SPP-' . Str::random(8),
+            'price'    => '1700000',
         ]);
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
             'proku_id'    => '1',
-            'name'    => 'UKT Semester 2',
-            'code'    => 'UKT-' . Str::random(8),
-            'price'    => '2200000',
+            'name'    => 'Syahriah Bulan 1',
+            'code'    => 'SPP-' . Str::random(8),
+            'price'    => '1700000',
         ]);
         // DEFAULT TUGAS SEEDER
         \App\Models\studentTask::create([

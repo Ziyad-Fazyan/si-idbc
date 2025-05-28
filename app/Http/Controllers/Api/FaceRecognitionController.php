@@ -7,6 +7,7 @@ use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Client;
 
 class FaceRecognitionController extends Controller
@@ -105,6 +106,10 @@ class FaceRecognitionController extends Controller
                     ->first();
             }
 
+            // Store results in session
+            Session::put('face_results', [$bestMatch]);
+            Session::put('jadwal_hari_ini', $jadwalHariIni);
+
             return response()->json([
                 'result' => $bestMatch,
                 'jadwal_hari_ini' => $jadwalHariIni
@@ -112,6 +117,17 @@ class FaceRecognitionController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Gagal proses wajah: ' . $e->getMessage()], 500);
         }
+    }
+
+    public function hasilAbsen()
+    {
+        $results = Session::get('face_results', []);
+
+        if (empty($results)) {
+            return response()->json(['error' => 'Tidak ada hasil yang ditemukan.'], 404);
+        }
+
+        return response()->json(['results' => $results]);
     }
 
     private function compareFaces($user, $inputToken)

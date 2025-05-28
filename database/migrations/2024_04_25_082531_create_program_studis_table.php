@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('faku_id');  // ID Fakultas
             $table->string('name');      // Nama Program Studi
-            $table->string('cnim')->unique();      // Kode Nomor Induk Mahasiswa
+            $table->string('cnim')->unique()->nullable();      // Kode Nomor Induk Mahasiswa
             $table->string('code')->unique();      // Kode Program Studi
             $table->string('slug')->unique();      // Slug Program Studi
             $table->integer('head_id');  // Kepala Program Studi
-            $table->string('title');     // Gelar Program Studi
-            $table->string('level');     // Jenjang Program Studi
+            $table->string('title')->nullable();     // Gelar Program Studi
+            $table->string('level')->nullable();     // Jenjang Program Studi
             $table->timestamps();
         });
     }

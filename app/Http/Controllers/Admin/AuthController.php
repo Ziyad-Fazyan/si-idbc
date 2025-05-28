@@ -21,7 +21,7 @@ class AuthController extends Controller
             return redirect()->route('dosen.home-index');
         }
         if (Auth::guard('mahasiswa')->check()) {
-            Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('mahasiswa')->user()->dsn_name);
+            Alert::info('Informasi', 'Saat ini kamu telah login sebagai ' . Auth::guard('mahasiswa')->user()->mhs_name);
             return redirect()->route('mahasiswa.home-index');
         }
 
@@ -154,7 +154,7 @@ class AuthController extends Controller
 
             } elseif ($user->rawtype == 2) {
                 Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
-                return redirect()->route('officer.home-index');
+                return redirect()->route('absen.home-index');
                 // return back();
             } elseif ($user->rawtype == 3) {
                 Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
@@ -162,11 +162,15 @@ class AuthController extends Controller
                 // return back();
             } elseif ($user->rawtype == 4) {
                 Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
-                return redirect()->route('admin.home-index');
+                return redirect()->route('musyrif.home-index');
                 // return back();
             } elseif ($user->rawtype == 5) {
                 Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
                 return redirect()->route('support.home-index');
+                // return back();
+            } elseif ($user->rawtype == 6) {
+                Alert::success('Success', 'Anda berhasil login sebagai ' . $user->type);
+                return redirect()->route('sitemanager.home-index');
                 // return back();
             }
         } else {
