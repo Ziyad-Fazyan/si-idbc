@@ -107,7 +107,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return redirect()->route('web-admin.workers.admin-index');
+        return back();
     }
     public function updateAdmin(Request $request, $code)
     {
@@ -429,7 +429,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return redirect()->route('web-admin.workers.lecture-index');
+        return back();
     }
     public function updateLecture(Request $request, $code)
     {
@@ -602,7 +602,7 @@ class WorkersController extends Controller
             return back();
         }
         Alert::success('Success', 'Data berhasil ditambahkan');
-        return redirect()->route('web-admin.workers.student-index');
+        return back();
     }
     public function updateStudent(Request $request, $code)
     {
