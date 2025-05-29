@@ -15,113 +15,105 @@
     Halaman untuk menambah data Mahasiswa baru
 @endsection
 @section('content')
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Profile Image Section -->
-        <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
-                <div class="bg-[#0C6E71] px-4 py-3">
-                    <h4 class="text-white font-medium">Foto Profil</h4>
-                </div>
-                <div class="p-4">
-                    <div class="mb-4 flex justify-center">
-                        <img src="{{ asset('storage/images/default/default-profile.jpg') }}"
-                             class="w-48 h-48 rounded-full object-cover border-4 border-gray-100"
-                             alt="Profile Image"
-                             id="profileImage">
+    <form action="{{ route($prefix . 'workers.student-store') }}" method="POST" enctype="multipart/form-data"
+        id="multiStepForm">
+        @csrf
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Profile Image Section -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                    <div class="bg-[#0C6E71] px-4 py-3 flex justify-between items-center">
+                        <h4 class="text-white font-medium">Foto Profil</h4>
+                        <a href="{{ route($prefix . 'workers.student-index') }}" class="text-white hover:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
                     </div>
-                    <div>
-                        <label for="mhs_image" class="block text-sm font-medium text-gray-700 mb-2">Upload Foto Profil</label>
-                        <input type="file"
-                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-[#0C6E71] file:text-white hover:file:bg-[#0a5c5e]"
-                               name="mhs_image"
-                               id="mhs_image"
-                               accept="image/*">
-                        @error('mhs_image')
-                            <small class="text-red-500 text-xs">{{ $message }}</small>
-                        @enderror
+                    <div class="p-4">
+                        <div class="mb-4 flex justify-center">
+                            <img src="{{ asset('storage/images/default/default-profile.jpg') }}"
+                                class="w-48 h-48 rounded-full object-cover border-4 border-gray-100" alt="Profile Image"
+                                id="profileImage">
+                        </div>
+                        <div>
+                            <label for="mhs_image" class="block text-sm font-medium text-gray-700 mb-2">Upload Foto
+                                Profil</label>
+                            <input type="file"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-[#0C6E71] file:text-white hover:file:bg-[#0a5c5e]"
+                                name="mhs_image" id="mhs_image" accept="image/*">
+                            @error('mhs_image')
+                                <small class="text-red-500 text-xs">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Form Section -->
-        <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
-                <div class="border-b border-gray-200">
-                    <ul class="flex" id="myTab" role="tablist">
-                        <li class="flex-1" role="presentation">
-                            <button class="w-full py-3 border-b-2 border-[#0C6E71] text-[#0C6E71] font-medium active"
-                                    id="personal-tab"
-                                    data-tab-target="#personal"
-                                    type="button"
-                                    role="tab">
-                                Data Personal
-                            </button>
-                        </li>
-                        <li class="flex-1" role="presentation">
-                            <button class="w-full py-3 border-b-2 border-transparent text-gray-500 font-medium disabled-tab"
-                                    id="contact-tab"
-                                    data-tab-target="#contact"
-                                    type="button"
-                                    role="tab"
-                                    disabled>
-                                Data Kontak
-                            </button>
-                        </li>
-                        <li class="flex-1" role="presentation">
-                            <button class="w-full py-3 border-b-2 border-transparent text-gray-500 font-medium disabled-tab"
-                                    id="security-tab"
-                                    data-tab-target="#security"
-                                    type="button"
-                                    role="tab"
-                                    disabled>
-                                Pengaturan Akun
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+            <!-- Form Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                    <div class="border-b border-gray-200">
+                        <ul class="flex" id="myTab" role="tablist">
+                            <li class="flex-1" role="presentation">
+                                <button class="w-full py-3 border-b-2 border-[#0C6E71] text-[#0C6E71] font-medium active"
+                                    id="personal-tab" data-tab-target="#personal" type="button" role="tab">
+                                    Data Personal
+                                </button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button
+                                    class="w-full py-3 border-b-2 border-transparent text-gray-500 font-medium disabled-tab"
+                                    id="contact-tab" data-tab-target="#contact" type="button" role="tab" disabled>
+                                    Data Kontak
+                                </button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button
+                                    class="w-full py-3 border-b-2 border-transparent text-gray-500 font-medium disabled-tab"
+                                    id="security-tab" data-tab-target="#security" type="button" role="tab" disabled>
+                                    Pengaturan Akun
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
 
-                <form action="{{ route($prefix . 'workers.student-store') }}" method="POST" enctype="multipart/form-data" id="multiStepForm">
-                    @csrf
+
                     <div class="p-4">
                         <!-- Tab Data Personal -->
                         <div class="tab-pane active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
-                                    <label for="mhs_name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                                    <input type="text"
-                                           name="mhs_name"
-                                           id="mhs_name"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           placeholder="Nama lengkap..."
-                                           value="{{ old('mhs_name') }}"
-                                           required>
+                                    <label for="mhs_name" class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                        Lengkap</label>
+                                    <input type="text" name="mhs_name" id="mhs_name"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        placeholder="Nama lengkap..." value="{{ old('mhs_name') }}" required>
                                     @error('mhs_name')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_nim" class="block text-sm font-medium text-gray-700 mb-1">Nomor NIM</label>
-                                    <input type="text"
-                                           name="mhs_nim"
-                                           id="mhs_nim"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           placeholder="Nomor NIM..."
-                                           value="{{ old('mhs_nim') }}"
-                                           required>
+                                    <label for="mhs_nim" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                        NIM</label>
+                                    <input type="text" name="mhs_nim" id="mhs_nim"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        placeholder="Nomor NIM..." value="{{ old('mhs_nim') }}" required>
                                     @error('mhs_nim')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
                                     <label for="class_id" class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
-                                    <select name="class_id"
-                                            id="class_id"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                            required>
+                                    <select name="class_id" id="class_id"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        required>
                                         <option value="" selected disabled>Pilih Kelas</option>
                                         @foreach ($kelas as $item)
-                                            <option value="{{ $item->id }}" {{ old('class_id') == $item->id ? 'selected' : '' }}>
+                                            <option value="{{ $item->id }}"
+                                                {{ old('class_id') == $item->id ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
@@ -131,57 +123,61 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_gend" class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                                    <select name="mhs_gend"
-                                            id="mhs_gend"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                            required>
+                                    <label for="mhs_gend" class="block text-sm font-medium text-gray-700 mb-1">Jenis
+                                        Kelamin</label>
+                                    <select name="mhs_gend" id="mhs_gend"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        required>
                                         <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                        <option value="L" {{ old('mhs_gend') == 'L' ? 'selected' : '' }}>Laki Laki</option>
-                                        <option value="P" {{ old('mhs_gend') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                                        <option value="L" {{ old('mhs_gend') == 'L' ? 'selected' : '' }}>Laki Laki
+                                        </option>
+                                        <option value="P" {{ old('mhs_gend') == 'P' ? 'selected' : '' }}>Perempuan
+                                        </option>
                                     </select>
                                     @error('mhs_gend')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_birthplace" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                                    <input type="text"
-                                           name="mhs_birthplace"
-                                           id="mhs_birthplace"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           placeholder="Tempat Lahir..."
-                                           value="{{ old('mhs_birthplace') }}"
-                                           required>
+                                    <label for="mhs_birthplace"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Tempat
+                                        Lahir</label>
+                                    <input type="text" name="mhs_birthplace" id="mhs_birthplace"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        placeholder="Tempat Lahir..." value="{{ old('mhs_birthplace') }}" required>
                                     @error('mhs_birthplace')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_birthdate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                                    <input type="date"
-                                           name="mhs_birthdate"
-                                           id="mhs_birthdate"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           value="{{ old('mhs_birthdate') }}"
-                                           required>
+                                    <label for="mhs_birthdate"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
+                                    <input type="date" name="mhs_birthdate" id="mhs_birthdate"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        value="{{ old('mhs_birthdate') }}" required>
                                     @error('mhs_birthdate')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_reli" class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
-                                    <select name="mhs_reli"
-                                            id="mhs_reli"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                            required>
+                                    <label for="mhs_reli"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
+                                    <select name="mhs_reli" id="mhs_reli"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        required>
                                         <option value="" selected disabled>Pilih Agama</option>
-                                        <option value="1" {{ old('mhs_reli') == '1' ? 'selected' : '' }}>Agama Islam</option>
-                                        <option value="2" {{ old('mhs_reli') == '2' ? 'selected' : '' }}>Agama Kristen Protestan</option>
-                                        <option value="3" {{ old('mhs_reli') == '3' ? 'selected' : '' }}>Agama Kriten Katholik</option>
-                                        <option value="4" {{ old('mhs_reli') == '4' ? 'selected' : '' }}>Agama Hindu</option>
-                                        <option value="5" {{ old('mhs_reli') == '5' ? 'selected' : '' }}>Agama Buddha</option>
-                                        <option value="6" {{ old('mhs_reli') == '6' ? 'selected' : '' }}>Agama Konghuchu</option>
+                                        <option value="1" {{ old('mhs_reli') == '1' ? 'selected' : '' }}>Agama Islam
+                                        </option>
+                                        <option value="2" {{ old('mhs_reli') == '2' ? 'selected' : '' }}>Agama
+                                            Kristen Protestan</option>
+                                        <option value="3" {{ old('mhs_reli') == '3' ? 'selected' : '' }}>Agama Kriten
+                                            Katholik</option>
+                                        <option value="4" {{ old('mhs_reli') == '4' ? 'selected' : '' }}>Agama Hindu
+                                        </option>
+                                        <option value="5" {{ old('mhs_reli') == '5' ? 'selected' : '' }}>Agama Buddha
+                                        </option>
+                                        <option value="6" {{ old('mhs_reli') == '6' ? 'selected' : '' }}>Agama
+                                            Konghuchu</option>
                                     </select>
                                     @error('mhs_reli')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -190,8 +186,8 @@
                             </div>
                             <div class="flex justify-end mt-6">
                                 <button type="button"
-                                        class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors next-tab"
-                                        data-next-tab="contact-tab">
+                                    class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors next-tab"
+                                    data-next-tab="contact-tab">
                                     Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i>
                                 </button>
                             </div>
@@ -201,167 +197,146 @@
                         <div class="tab-pane hidden" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
-                                    <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor HandPhone</label>
+                                    <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                        HandPhone</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_phone"
-                                           id="mhs_phone"
-                                           placeholder="Nomor telepon..."
-                                           value="{{ old('mhs_phone') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_phone" id="mhs_phone" placeholder="Nomor telepon..."
+                                        value="{{ old('mhs_phone') }}" required>
                                     @error('mhs_phone')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_mail" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
+                                    <label for="mhs_mail" class="block text-sm font-medium text-gray-700 mb-1">Alamat
+                                        Email</label>
                                     <input type="email"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_mail"
-                                           id="mhs_mail"
-                                           placeholder="Alamat email..."
-                                           value="{{ old('mhs_mail') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_mail" id="mhs_mail" placeholder="Alamat email..."
+                                        value="{{ old('mhs_mail') }}" required>
                                     @error('mhs_mail')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_parent_father" class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah</label>
+                                    <label for="mhs_parent_father"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_parent_father"
-                                           id="mhs_parent_father"
-                                           placeholder="Nama ayah..."
-                                           value="{{ old('mhs_parent_father') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_parent_father" id="mhs_parent_father" placeholder="Nama ayah..."
+                                        value="{{ old('mhs_parent_father') }}" required>
                                     @error('mhs_parent_father')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_parent_father_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ayah</label>
+                                    <label for="mhs_parent_father_phone"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ayah</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_parent_father_phone"
-                                           id="mhs_parent_father_phone"
-                                           placeholder="Nomor telepon ayah..."
-                                           value="{{ old('mhs_parent_father_phone') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_parent_father_phone" id="mhs_parent_father_phone"
+                                        placeholder="Nomor telepon ayah..." value="{{ old('mhs_parent_father_phone') }}"
+                                        required>
                                     @error('mhs_parent_father_phone')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_parent_mother" class="block text-sm font-medium text-gray-700 mb-1">Nama Ibu</label>
+                                    <label for="mhs_parent_mother"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Nama Ibu</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_parent_mother"
-                                           id="mhs_parent_mother"
-                                           placeholder="Nama ibu..."
-                                           value="{{ old('mhs_parent_mother') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_parent_mother" id="mhs_parent_mother" placeholder="Nama ibu..."
+                                        value="{{ old('mhs_parent_mother') }}" required>
                                     @error('mhs_parent_mother')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_parent_mother_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ibu</label>
+                                    <label for="mhs_parent_mother_phone"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Ibu</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_parent_mother_phone"
-                                           id="mhs_parent_mother_phone"
-                                           placeholder="Nomor telepon ibu..."
-                                           value="{{ old('mhs_parent_mother_phone') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_parent_mother_phone" id="mhs_parent_mother_phone"
+                                        placeholder="Nomor telepon ibu..." value="{{ old('mhs_parent_mother_phone') }}"
+                                        required>
                                     @error('mhs_parent_mother_phone')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_wali_name" class="block text-sm font-medium text-gray-700 mb-1">Nama Wali Mahasiswa</label>
+                                    <label for="mhs_wali_name" class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                        Wali Mahasiswa</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_wali_name"
-                                           id="mhs_wali_name"
-                                           placeholder="Nama wali..."
-                                           value="{{ old('mhs_wali_name') }}">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_wali_name" id="mhs_wali_name" placeholder="Nama wali..."
+                                        value="{{ old('mhs_wali_name') }}">
                                     @error('mhs_wali_name')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_wali_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon Wali</label>
+                                    <label for="mhs_wali_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                        Telepon Wali</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_wali_phone"
-                                           id="mhs_wali_phone"
-                                           placeholder="Nomor telepon wali..."
-                                           value="{{ old('mhs_wali_phone') }}">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_wali_phone" id="mhs_wali_phone" placeholder="Nomor telepon wali..."
+                                        value="{{ old('mhs_wali_phone') }}">
                                     @error('mhs_wali_phone')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4 md:col-span-2">
-                                    <label for="mhs_addr_domisili" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili / Tempat Tinggal</label>
-                                    <textarea name="mhs_addr_domisili"
-                                              id="mhs_addr_domisili"
-                                              rows="4"
-                                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                              placeholder="Alamat lengkap domisili / tempat tinggal..."
-                                              required>{{ old('mhs_addr_domisili') }}</textarea>
+                                    <label for="mhs_addr_domisili"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili /
+                                        Tempat Tinggal</label>
+                                    <textarea name="mhs_addr_domisili" id="mhs_addr_domisili" rows="4"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        placeholder="Alamat lengkap domisili / tempat tinggal..." required>{{ old('mhs_addr_domisili') }}</textarea>
                                     @error('mhs_addr_domisili')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_addr_kelurahan" class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
+                                    <label for="mhs_addr_kelurahan"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_addr_kelurahan"
-                                           id="mhs_addr_kelurahan"
-                                           placeholder="Nama kelurahan..."
-                                           value="{{ old('mhs_addr_kelurahan') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_addr_kelurahan" id="mhs_addr_kelurahan" placeholder="Nama kelurahan..."
+                                        value="{{ old('mhs_addr_kelurahan') }}" required>
                                     @error('mhs_addr_kelurahan')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_addr_kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
+                                    <label for="mhs_addr_kecamatan"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_addr_kecamatan"
-                                           id="mhs_addr_kecamatan"
-                                           placeholder="Nama kecamatan..."
-                                           value="{{ old('mhs_addr_kecamatan') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_addr_kecamatan" id="mhs_addr_kecamatan" placeholder="Nama kecamatan..."
+                                        value="{{ old('mhs_addr_kecamatan') }}" required>
                                     @error('mhs_addr_kecamatan')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_addr_kota" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
+                                    <label for="mhs_addr_kota"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_addr_kota"
-                                           id="mhs_addr_kota"
-                                           placeholder="Nama kota..."
-                                           value="{{ old('mhs_addr_kota') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_addr_kota" id="mhs_addr_kota" placeholder="Nama kota..."
+                                        value="{{ old('mhs_addr_kota') }}" required>
                                     @error('mhs_addr_kota')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_addr_provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+                                    <label for="mhs_addr_provinsi"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
                                     <input type="text"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           name="mhs_addr_provinsi"
-                                           id="mhs_addr_provinsi"
-                                           placeholder="Nama provinsi..."
-                                           value="{{ old('mhs_addr_provinsi') }}"
-                                           required>
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        name="mhs_addr_provinsi" id="mhs_addr_provinsi" placeholder="Nama provinsi..."
+                                        value="{{ old('mhs_addr_provinsi') }}" required>
                                     @error('mhs_addr_provinsi')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
@@ -369,13 +344,13 @@
                             </div>
                             <div class="flex justify-between mt-6">
                                 <button type="button"
-                                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors prev-tab"
-                                        data-prev-tab="personal-tab">
+                                    class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors prev-tab"
+                                    data-prev-tab="personal-tab">
                                     <i class="fa-solid fa-arrow-left mr-2"></i> Kembali
                                 </button>
                                 <button type="button"
-                                        class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors next-tab"
-                                        data-next-tab="security-tab">
+                                    class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors next-tab"
+                                    data-next-tab="security-tab">
                                     Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i>
                                 </button>
                             </div>
@@ -385,45 +360,44 @@
                         <div class="tab-pane hidden" id="security" role="tabpanel" aria-labelledby="security-tab">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
-                                    <label for="mhs_user" class="block text-sm font-medium text-gray-700 mb-1">Username Mahasiswa</label>
-                                    <input type="text"
-                                           name="mhs_user"
-                                           id="mhs_user"
-                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                           placeholder="Username..."
-                                           value="{{ old('mhs_user') }}"
-                                           required>
+                                    <label for="mhs_user" class="block text-sm font-medium text-gray-700 mb-1">Username
+                                        Mahasiswa</label>
+                                    <input type="text" name="mhs_user" id="mhs_user"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        placeholder="Username..." value="{{ old('mhs_user') }}" required>
                                     @error('mhs_user')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="mhs_stat" class="block text-sm font-medium text-gray-700 mb-1">Pilih Status Mahasiswa</label>
-                                    <select name="mhs_stat"
-                                            id="mhs_stat"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                            required>
+                                    <label for="mhs_stat" class="block text-sm font-medium text-gray-700 mb-1">Pilih
+                                        Status Mahasiswa</label>
+                                    <select name="mhs_stat" id="mhs_stat"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                        required>
                                         <option value="" selected disabled>Pilih Status Mahasiswa</option>
-                                        <option value="0" {{ old('mhs_stat') == '0' ? 'selected' : '' }}>Calon Mahasiswa</option>
-                                        <option value="1" {{ old('mhs_stat') == '1' ? 'selected' : '' }}>Mahasiswa Aktif</option>
-                                        <option value="2" {{ old('mhs_stat') == '2' ? 'selected' : '' }}>Mahasiswa Non-Aktif</option>
-                                        <option value="3" {{ old('mhs_stat') == '3' ? 'selected' : '' }}>Mahasiswa Alumni</option>
+                                        <option value="0" {{ old('mhs_stat') == '0' ? 'selected' : '' }}>Calon
+                                            Mahasiswa</option>
+                                        <option value="1" {{ old('mhs_stat') == '1' ? 'selected' : '' }}>Mahasiswa
+                                            Aktif</option>
+                                        <option value="2" {{ old('mhs_stat') == '2' ? 'selected' : '' }}>Mahasiswa
+                                            Non-Aktif</option>
+                                        <option value="3" {{ old('mhs_stat') == '3' ? 'selected' : '' }}>Mahasiswa
+                                            Alumni</option>
                                     </select>
                                     @error('mhs_stat')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <label for="password"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                                     <div class="relative">
                                         <input type="password"
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                               name="password"
-                                               id="password"
-                                               placeholder="Password..."
-                                               required>
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                            name="password" id="password" placeholder="Password..." required>
                                         <button type="button"
-                                                class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-[#0C6E71] show-password">
+                                            class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-[#0C6E71] show-password">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
                                     </div>
@@ -432,16 +406,15 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
+                                    <label for="password_confirmation"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
                                     <div class="relative">
                                         <input type="password"
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                               name="password_confirmation"
-                                               id="password_confirmation"
-                                               placeholder="Konfirmasi password..."
-                                               required>
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                            name="password_confirmation" id="password_confirmation"
+                                            placeholder="Konfirmasi password..." required>
                                         <button type="button"
-                                                class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-[#0C6E71] show-password">
+                                            class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-[#0C6E71] show-password">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
                                     </div>
@@ -452,21 +425,21 @@
                             </div>
                             <div class="flex justify-between mt-6">
                                 <button type="button"
-                                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors prev-tab"
-                                        data-prev-tab="contact-tab">
+                                    class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors prev-tab"
+                                    data-prev-tab="contact-tab">
                                     <i class="fa-solid fa-arrow-left mr-2"></i> Kembali
                                 </button>
                                 <button type="submit"
-                                        class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors">
+                                    class="px-4 py-2 bg-[#0C6E71] text-white rounded-md hover:bg-[#0a5c5e] transition-colors">
                                     <i class="fa-solid fa-save mr-2"></i> Simpan Data
                                 </button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </form>
 @endsection
 
 @push('scripts')

@@ -581,7 +581,7 @@ class WorkersController extends Controller
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
             $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = storage_path('app/public/images/profile/dosen');
+            $destinationPath = storage_path('app/public/images/profile/mahasiswa');
             $destinationPaths = storage_path('app/public/images');
 
             // Compress image
@@ -653,7 +653,7 @@ class WorkersController extends Controller
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
             $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = storage_path('app/public/images/profile/dosen');
+            $destinationPath = storage_path('app/public/images/profile/mahasiswa');
             $destinationPaths = storage_path('app/public/images');
 
             // Compress image
@@ -666,7 +666,7 @@ class WorkersController extends Controller
             if ($user->mhs_image != 'default/default-profile.jpg') {
                 File::delete($destinationPaths . '/' . $user->mhs_image); // hapus gambar lama
             }
-            $user->mhs_image = "profile/dosen/" . $name;
+            $user->mhs_image = "profile/mahasiswa/" . $name;
             $user->save();
 
 
