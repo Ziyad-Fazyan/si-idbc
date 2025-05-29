@@ -26,6 +26,10 @@
                             class="inline-flex items-center px-3 py-2 border border-[#FF6B35] text-[#FF6B35] rounded-md hover:bg-[#FF6B35] hover:text-white transition-colors duration-300">
                             <i class="fa-solid fa-backward"></i>
                         </a>
+                        <a href="{{ route($prefix . 'master.kelas-management', $kelas->code) }}"
+                            class="inline-flex items-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </a>
                         <form action="{{ route($prefix . 'master.kelas-mahasiswa-cetak', $kelas->code) }}" method="post"
                             class="inline">
                             @csrf
@@ -126,9 +130,7 @@
             </div>
         </div>
     @endforeach
-@endsection
-
-@section('custom-js')
+    
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');

@@ -16,7 +16,6 @@ return new class extends Migration
             // KONEK MODEL
             $table->integer('taka_id')->default(0);
             $table->integer('years_id')->default(0);
-            $table->integer('class_id')->default(0);
             // DATA PRIBADI
             $table->integer('mhs_stat')->default(0);
             $table->string('mhs_nim')->unique()->nullable();

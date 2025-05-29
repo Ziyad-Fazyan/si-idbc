@@ -25,4 +25,8 @@ class Kelas extends Model
     {
         return $this->belongsTo(TahunAkademik::class, 'taka_id');
     }
+    public function mahasiswa()
+    {
+        return $this->belongsToMany(Mahasiswa::class, 'kelas_mahasiswa');
+    }
 }

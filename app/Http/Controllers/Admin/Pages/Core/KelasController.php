@@ -37,7 +37,7 @@ class KelasController extends Controller
         $class = Kelas::where('code', $code)->first();
         $data['kelas'] = Kelas::where('code', $code)->first();
         $data['taka'] = TahunAkademik::all();
-        $data['mahasiswa'] = Mahasiswa::where('class_id', $class->id)->get();
+        $data['mahasiswa'] = $data['kelas']->mahasiswa;
         $data['pstudi'] = ProgramStudi::all();
         $data['proku'] = ProgramKuliah::all();
         $data['dosen'] = Dosen::all();

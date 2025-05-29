@@ -140,7 +140,6 @@ class UserSeeder extends Seeder
         ]);
         Mahasiswa::create([
             'taka_id' => '1',
-            'class_id' => '1',
             'mhs_nim' => str_pad(rand(0, 9999999999), 10, '0', STR_PAD_LEFT),
             'mhs_name' => 'Mahasiswa A',
             'mhs_stat' => '1',
@@ -153,7 +152,6 @@ class UserSeeder extends Seeder
         ]);
         Mahasiswa::create([
             'taka_id' => '1',
-            'class_id' => '1',
             'mhs_nim' => str_pad(rand(0, 9999999999), 10, '0', STR_PAD_LEFT),
             'mhs_name' => 'Mahasiswa B',
             'mhs_stat' => '1',
@@ -166,7 +164,6 @@ class UserSeeder extends Seeder
         ]);
         Mahasiswa::create([
             'taka_id' => '2',
-            'class_id' => '2',
             'mhs_nim' => str_pad(rand(0, 9999999999), 10, '0', STR_PAD_LEFT),
             'mhs_name' => 'Mahasiswa C',
             'mhs_stat' => '1',
@@ -179,7 +176,6 @@ class UserSeeder extends Seeder
         ]);
         Mahasiswa::create([
             'taka_id' => '2',
-            'class_id' => '2',
             'mhs_nim' => str_pad(rand(0, 9999999999), 10, '0', STR_PAD_LEFT),
             'mhs_name' => 'Mahasiswa D',
             'mhs_stat' => '1',

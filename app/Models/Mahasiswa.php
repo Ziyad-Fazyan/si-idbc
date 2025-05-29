@@ -70,8 +70,9 @@ class Mahasiswa extends Authenticatable
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'class_id');
+        return $this->belongsToMany(Kelas::class, 'kelas_mahasiswa');
     }
+
     public function taka()
     {
         return $this->belongsTo(TahunAkademik::class, 'taka_id');

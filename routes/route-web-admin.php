@@ -117,6 +117,11 @@ Route::group([
                 Route::post('/{code}/cetak/mahasiswa', [KelasController::class, 'cetakMahasiswa'])->name('mahasiswa-cetak');
                 Route::patch('/{code}/update', [KelasController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [KelasController::class, 'destroy'])->name('destroy');
+                
+                // Kelas Management (Pivot Table)
+                Route::get('/{code}/management', [App\Http\Controllers\Admin\Pages\Core\KelasManagementController::class, 'index'])->name('management');
+                Route::post('/{code}/management/add', [App\Http\Controllers\Admin\Pages\Core\KelasManagementController::class, 'addMahasiswa'])->name('management-add');
+                Route::delete('/{code}/management/remove', [App\Http\Controllers\Admin\Pages\Core\KelasManagementController::class, 'removeMahasiswa'])->name('management-remove');
             });
 
             // Kurikulum

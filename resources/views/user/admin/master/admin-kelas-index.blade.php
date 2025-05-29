@@ -62,7 +62,7 @@
                                             {{ $item->proku->name . ' - ' . $item->name }}</td>
                                         <td class="px-4 py-3 text-center text-sm text-gray-500">
                                             {{ $item->pstudi->name . ' - ' . $item->taka->semester }}</td>
-                                        @php $mhs = \App\Models\Mahasiswa::where('class_id', $item->id)->count(); @endphp
+                                        @php $mhs = $item->mahasiswa()->count(); @endphp
                                         <td class="px-4 py-3 text-center text-sm text-gray-500">
                                             {{ $mhs . ' / ' . $item->capacity . ' Mahasiswa' }}</td>
                                         <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->dosen->dsn_name }}
@@ -77,6 +77,10 @@
                                                 <a href="{{ route($prefix . 'master.kelas-mahasiswa-view', $item->code) }}"
                                                     class="inline-flex items-center justify-center p-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
                                                     <i class="fa-solid fa-users"></i>
+                                                </a>
+                                                <a href="{{ route($prefix . 'master.kelas-management', $item->code) }}"
+                                                    class="inline-flex items-center justify-center p-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
+                                                    <i class="fa-solid fa-user-plus"></i>
                                                 </a>
                                                 <form id="delete-form-{{ $item->code }}"
                                                     action="{{ route($prefix . 'master.kelas-destroy', $item->code) }}"
