@@ -16,12 +16,12 @@ class FaceRecognitionController extends Controller
     public function index()
     {
         $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
-        return view('user.officer.pages.absen-wajah', compact('mahasiswas'));
+        return view('user.absen.pages.absen-wajah', compact('mahasiswas'));
     }
     public function daftar()
     {
         $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
-        return view('user.officer.pages.daftar-wajah', compact('mahasiswas'));
+        return view('user.absen.pages.daftar-wajah', compact('mahasiswas'));
     }
 
     public function hasilAbsen()
@@ -32,7 +32,7 @@ class FaceRecognitionController extends Controller
             return redirect()->route('upload.wajah')->with('error', '⚠️ Tidak ada hasil yang ditemukan.');
         }
 
-        return view('user.officer.pages.hasil-absen', compact('results'));
+        return view('user.absen.pages.hasil-absen', compact('results'));
     }
 
     // Simpan face_token setelah upload foto
@@ -152,7 +152,7 @@ class FaceRecognitionController extends Controller
 
             Session::put('jadwal_hari_ini', $jadwalHariIni);
 
-            return redirect()->route('officer.face-results');
+            return redirect()->route('absen.face-results');
         } catch (\Exception $e) {
             return back()->with('error', '⚠️ Gagal memproses wajah: ' . $e->getMessage());
         }

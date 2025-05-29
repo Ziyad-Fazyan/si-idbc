@@ -1,7 +1,11 @@
 <?php
 
-use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Root\ErrorController;
+use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,74 +17,65 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ERROR PAGE
-Route::get('/error/verify', [App\Http\Controllers\Root\ErrorController::class, 'ErrorVerify'])->name('error.verify');
-Route::get('/error/access', [App\Http\Controllers\Root\ErrorController::class, 'ErrorAccess'])->name('error.access');
-Route::get('/error/notfound', [App\Http\Controllers\Root\ErrorController::class, 'ErrorNotFound'])->name('error.notfound');
+// ERROR PAGES
+Route::prefix('error')->name('error.')->group(function() {
+    Route::get('/verify', [ErrorController::class, 'ErrorVerify'])->name('verify');
+    Route::get('/access', [ErrorController::class, 'ErrorAccess'])->name('access');
+    Route::get('/notfound', [ErrorController::class, 'ErrorNotFound'])->name('notfound');
+});
 
+// DEVELOPMENT ROUTE
 Route::get('/dev', function () {
     return view('base.base-root-index');
-    // return view('base.panel.base-panel-content');
 });
 
-// Route::get('/', [App\Http\Controllers\Root\HomeController::class, 'index'])->name('root.root-index');
-
-// HALAMAN AUTHENTIKASI
+// AUTHENTICATION ROUTES
 Route::middleware(['guest'])->group(function () {
+    // MAHASISWA AUTH
+    Route::prefix('mahasiswa')->name('mahasiswa.auth-')->group(function() {
+        Route::get('auth-signin', [MahasiswaAuthController::class, 'AuthSignInPage'])->name('signin-page');
+        Route::post('auth-signin/post', [MahasiswaAuthController::class, 'AuthSignInPost'])->name('signin-post');
+        Route::get('auth-forgot', [MahasiswaAuthController::class, 'AuthForgotPage'])->name('forgot-page');
+        Route::post('auth-forgot/verify', [MahasiswaAuthController::class, 'AuthForgotVerify'])->name('forgot-verify');
+        Route::get('auth-reset/{token}', [MahasiswaAuthController::class, 'AuthResetPage'])->name('reset-page');
+        Route::post('auth-reset/{token}/save', [MahasiswaAuthController::class, 'AuthResetPassword'])->name('reset-post');
+    });
 
-    // AUTENTIKASI MAHASISWA
-    Route::get('/mahasiswa/auth-signin', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthSignInPage'])->name('mahasiswa.auth-signin-page');
-    Route::post('/mahasiswa/auth-signin/post', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthSignInPost'])->name('mahasiswa.auth-signin-post');
-    Route::get('/mahasiswa/auth-forgot', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthForgotPage'])->name('mahasiswa.auth-forgot-page');
-    Route::post('/mahasiswa/auth-forgot/verify', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthForgotVerify'])->name('mahasiswa.auth-forgot-verify');
-    Route::get('/mahasiswa/auth-reset/{token}', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthResetPage'])->name('mahasiswa.auth-reset-page');
-    Route::post('/mahasiswa/auth-reset/{token}/save', [App\Http\Controllers\Mahasiswa\AuthController::class, 'AuthResetPassword'])->name('mahasiswa.auth-reset-post');
+    // ADMIN AUTH
+    Route::prefix('admin')->name('admin.auth-')->group(function() {
+        Route::get('auth-signin', [AdminAuthController::class, 'AuthSignInPage'])->name('signin-page');
+        Route::post('auth-signin/post', [AdminAuthController::class, 'AuthSignInPost'])->name('signin-post');
+        Route::get('auth-forgot', [AdminAuthController::class, 'AuthForgotPage'])->name('forgot-page');
+        Route::post('auth-forgot/verify', [AdminAuthController::class, 'AuthForgotVerify'])->name('forgot-verify');
+        Route::get('auth-reset/{token}', [AdminAuthController::class, 'AuthResetPage'])->name('reset-page');
+        Route::post('auth-reset/{token}/save', [AdminAuthController::class, 'AuthResetPassword'])->name('reset-post');
+    });
 
-    // AUTENTIKASI ADMIN
-    Route::get('/admin/auth-signin', [App\Http\Controllers\Admin\AuthController::class, 'AuthSignInPage'])->name('admin.auth-signin-page');
-    Route::post('/admin/auth-signin/post', [App\Http\Controllers\Admin\AuthController::class, 'AuthSignInPost'])->name('admin.auth-signin-post');
-    Route::get('/admin/auth-forgot', [App\Http\Controllers\Admin\AuthController::class, 'AuthForgotPage'])->name('admin.auth-forgot-page');
-    Route::post('/admin/auth-forgot/verify', [App\Http\Controllers\Admin\AuthController::class, 'AuthForgotVerify'])->name('admin.auth-forgot-verify');
-    Route::get('/admin/auth-reset/{token}', [App\Http\Controllers\Admin\AuthController::class, 'AuthResetPage'])->name('admin.auth-reset-page');
-    Route::post('/admin/auth-reset/{token}/save', [App\Http\Controllers\Admin\AuthController::class, 'AuthResetPassword'])->name('admin.auth-reset-post');
-
-    // AUTENTIKASI DOSEN
-    Route::get('/dosen/auth-signin', [App\Http\Controllers\Dosen\AuthController::class, 'AuthSignInPage'])->name('dosen.auth-signin-page');
-    Route::post('/dosen/auth-signin/post', [App\Http\Controllers\Dosen\AuthController::class, 'AuthSignInPost'])->name('dosen.auth-signin-post');
-    Route::get('/dosen/auth-forgot', [App\Http\Controllers\Dosen\AuthController::class, 'AuthForgotPage'])->name('dosen.auth-forgot-page');
-    Route::post('/dosen/auth-forgot/verify', [App\Http\Controllers\Dosen\AuthController::class, 'AuthForgotVerify'])->name('dosen.auth-forgot-verify');
-    Route::get('/dosen/auth-reset/{token}', [App\Http\Controllers\Dosen\AuthController::class, 'AuthResetPage'])->name('dosen.auth-reset-page');
-    Route::post('/dosen/auth-reset/{token}/save', [App\Http\Controllers\Dosen\AuthController::class, 'AuthResetPassword'])->name('dosen.auth-reset-post');
-
+    // DOSEN AUTH
+    Route::prefix('dosen')->name('dosen.auth-')->group(function() {
+        Route::get('auth-signin', [DosenAuthController::class, 'AuthSignInPage'])->name('signin-page');
+        Route::post('auth-signin/post', [DosenAuthController::class, 'AuthSignInPost'])->name('signin-post');
+        Route::get('auth-forgot', [DosenAuthController::class, 'AuthForgotPage'])->name('forgot-page');
+        Route::post('auth-forgot/verify', [DosenAuthController::class, 'AuthForgotVerify'])->name('forgot-verify');
+        Route::get('auth-reset/{token}', [DosenAuthController::class, 'AuthResetPage'])->name('reset-page');
+        Route::post('auth-reset/{token}/save', [DosenAuthController::class, 'AuthResetPassword'])->name('reset-post');
+    });
 });
 
-// HAK AKSES DEPARTEMENT WEB ADMINISTRATOR
-require __DIR__.'/route-web-admin.php';
-// HAK AKSES DEPARTEMENT ADMIN
-require __DIR__.'/route-musyrif.php';
-// HAK AKSES DEPARTEMENT AKADEMIK
-require __DIR__.'/route-akademik.php';
-// HAK AKSES DEPARTEMENT FINANSIAL
-require __DIR__.'/route-finance.php';
-// HAK AKSES DEPARTEMENT ABSEN
-require __DIR__.'/route-absen.php';
-// HAK AKSES DEPARTEMENT SUPPORT
-require __DIR__.'/route-support.php';
-// HAK AKSES DEPARTEMENT SITE MANAGER
-require __DIR__.'/route-sitemanager.php';
-// HAK AKSES DOSEN
-require __DIR__.'/route-dosen.php';
-// HAK AKSES MAHASISWA
-require __DIR__.'/route-mahasiswa.php';
-// HALAMAN ROOT
-require __DIR__.'/root.php';
+// MODULAR ROUTE FILES
+$routeFiles = [
+    'web-admin' => 'route-web-admin.php',
+    'musyrif' => 'route-musyrif.php',
+    'akademik' => 'route-akademik.php',
+    'finance' => 'route-finance.php',
+    'absen' => 'route-absen.php',
+    'support' => 'route-support.php',
+    'sitemanager' => 'route-sitemanager.php',
+    'dosen' => 'route-dosen.php',
+    'mahasiswa' => 'route-mahasiswa.php',
+    'root' => 'root.php'
+];
 
-
-
-
-
-
-
-
-
-
+foreach ($routeFiles as $file) {
+    require __DIR__.'/'.$file;
+}

@@ -11,37 +11,37 @@
         <!-- Role-based Menu Sections -->
         @if (Auth::user()->raw_type === 0)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">ADMINISTRATOR</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">ADMINISTRATOR</div>
                 @include('user.admin.admin-sidebar-index')
             </div>
         @elseif(Auth::user()->raw_type === 1)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">KEUANGAN</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">KEUANGAN</div>
                 @include('user.finance.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 2)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">ABSEN</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">ABSEN</div>
                 @include('user.absen.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 3)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">AKADEMIK</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">AKADEMIK</div>
                 @include('user.academic.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 4)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">MUSYRIF</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">MUSYRIF</div>
                 @include('user.musyrif.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 5)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">SUPPORT</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">SUPPORT</div>
                 @include('user.support.home-sidebar')
             </div>
         @elseif(Auth::user()->raw_type === 6)
             <div class="py-1">
-                <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">SITE MANAGER</div>
+                <div class="text-xs font-bold uppercase text-gray-500 mt-5 mb-2 ml-3">SITE MANAGER</div>
                 @include('user.sitemanager.home-sidebar')
             </div>
         @endif

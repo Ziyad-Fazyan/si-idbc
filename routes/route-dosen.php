@@ -1,44 +1,69 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dosen\AuthController;
+use App\Http\Controllers\Dosen\HomeController;
+use App\Http\Controllers\Dosen\Akademik\JadwalAjarController;
+use App\Http\Controllers\Dosen\Akademik\StudentTaskController;
+use App\Http\Controllers\Services\Ajax\GraphicController;
 
-// HAK AKSES DOSEN
-Route::group(['prefix' => 'dosen', 'middleware' => ['dsn-access:Dosen Aktif'], 'as' => 'dosen.'],function(){
-    // GLOBAL MENU AUTHENTIKASI
-    Route::get('/signout',[App\Http\Controllers\Dosen\AuthController::class, 'AuthSignOutPost'])->name('auth-signout-post');
+// =======================
+// HAK AKSES UNTUK DOSEN
+// =======================
+Route::group([
+    'prefix' => 'dosen',
+    'middleware' => ['dsn-access:Dosen Aktif'],
+    'as' => 'dosen.'
+], function () {
 
-    // GLOBAL MENU
-    Route::get('/home',[App\Http\Controllers\Dosen\HomeController::class, 'index'])->name('home-index');
-    Route::get('/profile',[App\Http\Controllers\Dosen\HomeController::class, 'profile'])->name('home-profile');
+    // ===============
+    // GLOBAL AUTH MENU
+    // ===============
+    Route::get('/signout', [AuthController::class, 'AuthSignOutPost'])->name('auth-signout-post');
 
-    // PRIVATE FUNCTION => PROFILE
-    Route::patch('/profile/update-image',[App\Http\Controllers\Dosen\HomeController::class, 'saveImageProfile'])->name('home-profile-save-image');
-    Route::patch('/profile/update-data',[App\Http\Controllers\Dosen\HomeController::class, 'saveDataProfile'])->name('home-profile-save-data');
-    Route::patch('/profile/update-kontak',[App\Http\Controllers\Dosen\HomeController::class, 'saveDataKontak'])->name('home-profile-save-kontak');
-    Route::patch('/profile/update-password',[App\Http\Controllers\Dosen\HomeController::class, 'saveDataPassword'])->name('home-profile-save-password');
+    // ==========
+    // DASHBOARD
+    // ==========
+    Route::get('/home', [HomeController::class, 'index'])->name('home-index');
+    Route::get('/profile', [HomeController::class, 'profile'])->name('home-profile');
 
-    // PRIVATE FUNCTION => DATA AKADEMIK - JADWAL MENGAJAR
-    Route::get('/data-akademik/jadwal',[App\Http\Controllers\Dosen\Akademik\JadwalAjarController::class, 'index'])->name('akademik.jadwal-index');
-    Route::get('/data-akademik/jadwal/{code}/absen',[App\Http\Controllers\Dosen\Akademik\JadwalAjarController::class, 'viewAbsen'])->name('akademik.jadwal-view-absen');
-    Route::get('/data-akademik/jadwal/{code}/feedback',[App\Http\Controllers\Dosen\Akademik\JadwalAjarController::class, 'viewFeedBack'])->name('akademik.jadwal-view-feedback');
-    Route::patch('/data-akademik/jadwal/absen/{code}/update',[App\Http\Controllers\Dosen\Akademik\JadwalAjarController::class, 'updateAbsen'])->name('akademik.jadwal-absen-update');
+    // ============
+    // PROFILE EDIT
+    // ============
+    Route::patch('/profile/update-image', [HomeController::class, 'saveImageProfile'])->name('home-profile-save-image');
+    Route::patch('/profile/update-data', [HomeController::class, 'saveDataProfile'])->name('home-profile-save-data');
+    Route::patch('/profile/update-kontak', [HomeController::class, 'saveDataKontak'])->name('home-profile-save-kontak');
+    Route::patch('/profile/update-password', [HomeController::class, 'saveDataPassword'])->name('home-profile-save-password');
 
-    // PRIVATE FUNCTION => DATA AKADEMIK - Kelola Tugas
-    Route::get('/data-akademik/kelola-tugas',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'index'])->name('akademik.stask-index');
-    Route::get('/data-akademik/kelola-tugas/tambah',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'create'])->name('akademik.stask-create');
-    Route::get('/data-akademik/kelola-tugas/view/{code}',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'view'])->name('akademik.stask-view');
-    Route::get('/data-akademik/kelola-tugas/view/detail/{code}',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'viewDetail'])->name('akademik.stask-view-detail');
-    Route::get('/data-akademik/kelola-tugas/edit/{code}',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'edit'])->name('akademik.stask-edit');
-    Route::get('/data-akademik/kelola-tugas/edit/{code}/score',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'editScore'])->name('akademik.stask-edit-score');
-    Route::post('/data-akademik/kelola-tugas/store',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'store'])->name('akademik.stask-store');
-    Route::patch('/data-akademik/kelola-tugas/update/{code}',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'update'])->name('akademik.stask-update');
-    Route::patch('/data-akademik/kelola-tugas/update/{code}/score',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'updateScore'])->name('akademik.stask-update-score');
-    Route::delete('/data-akademik/kelola-tugas/delete/{code}',[App\Http\Controllers\Dosen\Akademik\StudentTaskController::class, 'destroy'])->name('akademik.stask-destroy');
+    // ============================
+    // DATA AKADEMIK - JADWAL MENGAJAR
+    // ============================
+    Route::get('/data-akademik/jadwal', [JadwalAjarController::class, 'index'])->name('akademik.jadwal-index');
+    Route::get('/data-akademik/jadwal/{code}/absen', [JadwalAjarController::class, 'viewAbsen'])->name('akademik.jadwal-view-absen');
+    Route::get('/data-akademik/jadwal/{code}/feedback', [JadwalAjarController::class, 'viewFeedBack'])->name('akademik.jadwal-view-feedback');
+    Route::patch('/data-akademik/jadwal/absen/{code}/update', [JadwalAjarController::class, 'updateAbsen'])->name('akademik.jadwal-absen-update');
 
-    // PRIVATE FUNCTION => GRAPHIC AJAX FUNCTION
-    Route::get('/services/ajax/graphic/{code}/kepuasan-mengajar',[App\Http\Controllers\Services\Ajax\GraphicController::class, 'getKepuasanMengajar'])->name('services.ajax.graphic.kepuasan-mengajar');
-    Route::get('/services/ajax/graphic/kepuasan-mengajar/dosen',[App\Http\Controllers\Services\Ajax\GraphicController::class, 'getKepuasanMengajarDosen'])->name('services.ajax.graphic.kepuasan-mengajar-dosen');
+    // ============================
+    // DATA AKADEMIK - KELOLA TUGAS
+    // ============================
+    Route::prefix('/data-akademik/kelola-tugas')->name('akademik.stask-')->group(function () {
+        Route::get('/', [StudentTaskController::class, 'index'])->name('index');
+        Route::get('/tambah', [StudentTaskController::class, 'create'])->name('create');
+        Route::get('/view/{code}', [StudentTaskController::class, 'view'])->name('view');
+        Route::get('/view/detail/{code}', [StudentTaskController::class, 'viewDetail'])->name('view-detail');
+        Route::get('/edit/{code}', [StudentTaskController::class, 'edit'])->name('edit');
+        Route::get('/edit/{code}/score', [StudentTaskController::class, 'editScore'])->name('edit-score');
+        Route::post('/store', [StudentTaskController::class, 'store'])->name('store');
+        Route::patch('/update/{code}', [StudentTaskController::class, 'update'])->name('update');
+        Route::patch('/update/{code}/score', [StudentTaskController::class, 'updateScore'])->name('update-score');
+        Route::delete('/delete/{code}', [StudentTaskController::class, 'destroy'])->name('destroy');
+    });
 
-
+    // =====================
+    // AJAX: GRAPHIC SERVICE
+    // =====================
+    Route::prefix('/services/ajax/graphic')->name('services.ajax.graphic.')->group(function () {
+        Route::get('/{code}/kepuasan-mengajar', [GraphicController::class, 'getKepuasanMengajar'])->name('kepuasan-mengajar');
+        Route::get('/kepuasan-mengajar/dosen', [GraphicController::class, 'getKepuasanMengajarDosen'])->name('kepuasan-mengajar-dosen');
+    });
 });
-

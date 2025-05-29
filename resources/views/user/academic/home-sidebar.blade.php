@@ -1,3 +1,7 @@
+@php
+    $prefix = $prefix ?? 'academic.';
+@endphp
+
 <div class="sidebar-menu">
     <!-- Academic Menu Section -->
     <li class="list-none text-xs font-semibold uppercas text-gray-500 mt-5 mb-2 ml-3">Menu Akademik</li>
@@ -11,36 +15,105 @@
         </a>
     </li>
 
-    <!-- Course Data Dropdown -->
-    <li class="list-none sidebar-item has-sub {{ Route::is($prefix . 'master.*') ? 'active' : '' }}">
-        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ Route::is($prefix . 'master.*') ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
-            data-target="dropdown-perkuliahan">
-            <div class="flex items-center sidebar-link">
+    <!-- Academic Data Dropdown -->
+    @php
+        $akademikActive =
+            Route::is('academic.master.taka-*') ||
+            Route::is('academic.master.fakultas-*') ||
+            Route::is('academic.master.pstudi-*');
+    @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $akademikActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-akademik">
+            <div class="flex items-center">
                 <i class="fa-solid fa-school w-5 text-center mr-3"></i>
-                <span>Data Perkuliahan</span>
+                <span>Data Akademik</span>
             </div>
             <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
         </div>
-        <ul id="dropdown-perkuliahan"
-            class="submenu pl-12 mt-1 space-y-1 {{ Route::is($prefix . 'master.*') ? '' : 'hidden' }}">
-            <li class="submenu-item {{ Route::is($prefix . 'master.kurikulum-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'master.kurikulum-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'master.kurikulum-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+        <ul id="dropdown-akademik" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $akademikActive ? '' : 'hidden' }}">
+            <li
+                class="{{ Route::is('academic.master.taka-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.taka-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Tahun Akademik</a>
+            </li>
+            <li
+                class="{{ Route::is('academic.master.fakultas-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.fakultas-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Fakultas</a>
+            </li>
+            <li
+                class="{{ Route::is('academic.master.pstudi-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.pstudi-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Program Studi</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- PMB Data Dropdown -->
+    @php $pmbActive = Route::is('academic.master.proku-*'); @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $pmbActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-pmb">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
+                <span>Data PMB</span>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-pmb" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $pmbActive ? '' : 'hidden' }}">
+            <li
+                class="{{ Route::is('academic.master.proku-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.proku-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Program Kuliah</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- KBM Data Dropdown -->
+    @php
+        $kbmActive =
+            Route::is('academic.master.kurikulum-*') ||
+            Route::is('academic.master.kelas-*') ||
+            Route::is('academic.master.matkul-*') ||
+            Route::is('academic.master.jadkul-*');
+    @endphp
+    <li class="list-none mt-1">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $kbmActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-kbm">
+            <div class="flex items-center">
+                <i class="fa-solid fa-school w-5 text-center mr-3"></i>
+                <span>Data KBM</span>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+        <ul id="dropdown-kbm" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $kbmActive ? '' : 'hidden' }}">
+            <li
+                class="{{ Route::is('academic.master.kurikulum-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.kurikulum-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Kurikulum</a>
             </li>
-            <li class="submenu-item {{ Route::is($prefix . 'master.kelas-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'master.kelas-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'master.kelas-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+            <li
+                class="{{ Route::is('academic.master.kelas-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.kelas-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Kelas</a>
             </li>
-            <li class="submenu-item {{ Route::is($prefix . 'master.matkul-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'master.matkul-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'master.matkul-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+            <li
+                class="{{ Route::is('academic.master.matkul-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.matkul-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Mata Kuliah</a>
             </li>
-            <li class="submenu-item {{ Route::is($prefix . 'master.jadkul-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'master.jadkul-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'master.jadkul-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+            <li
+                class="{{ Route::is('academic.master.jadkul-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('academic.master.jadkul-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Jadwal Kuliah</a>
             </li>
         </ul>

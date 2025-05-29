@@ -46,6 +46,7 @@ class PpdbController extends Controller
     public function store(Request $request) 
     { 
         $user = new Mahasiswa; 
+        $school_name = webSettings::find(1)->school_name;
 
         $request->validate([ 
             'mhs_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196', 
@@ -57,11 +58,9 @@ class PpdbController extends Controller
             'mhs_phone' => 'required|numeric|unique:users,phone,' . $user->id, 
             'mhs_mail' => 'required|email|max:255|unique:users,email,' . $user->id, 
             'mhs_stat' => 'nullable|string', 
-            'password' => 'nullable|string', 
-            'password_confirm' => 'nullable|string|same:password', 
         ]); 
 
-        $user->class_id = $request->class_id; 
+        $user->class_id = 0; 
         $user->mhs_name = $request->mhs_name; 
         $user->mhs_user = $request->mhs_user; 
         $user->mhs_nim = $request->mhs_nim; 
@@ -85,7 +84,7 @@ class PpdbController extends Controller
         $user->mhs_stat = 0; // Status pendaftaran baru
         $user->mhs_code = 'MHS-' . Str::random(8); 
 
-        $user->password = Hash::make($request->password); 
+        $user->password = Hash::make("maba-$school_name"); 
         $user->save(); 
         
         if ($request->hasFile('mhs_image')) { 
@@ -120,6 +119,13 @@ class PpdbController extends Controller
         $data['prefix'] = $this->setPrefix();
         $data['title'] = " - Form Pendaftaran Lengkap";
         $data['menu'] = "Form Pendaftaran Lengkap";
+
+        // Add empty collections for address cascading dropdowns to avoid undefined variable errors
+        $data['provinces'] = collect();
+        $data['cities'] = collect();
+        $data['districts'] = collect();
+        $data['villages'] = collect();
+
         return view('root.pages.ppdb-form', $data);
     }
 }

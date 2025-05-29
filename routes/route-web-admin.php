@@ -1,158 +1,243 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Core\NotifyController;
+use App\Http\Controllers\Core\WebSettingController;
+use App\Http\Controllers\Admin\Pages\WorkersController;
+use App\Http\Controllers\Admin\Pages\Core\KelasController;
+use App\Http\Controllers\Admin\Pages\Core\FakultasController;
+use App\Http\Controllers\Admin\Pages\Core\KurikulumController;
+use App\Http\Controllers\Admin\Pages\Core\MataKuliahController;
+use App\Http\Controllers\Admin\Pages\Finance\BalanceController;
+use App\Http\Controllers\Admin\Pages\Inventory\RuangController;
+use App\Http\Controllers\Admin\Pages\Finance\ApprovalController;
+use App\Http\Controllers\Admin\Pages\Inventory\GedungController;
+use App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController;
+use App\Http\Controllers\Admin\Pages\Core\ProgramStudiController;
+use App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController;
+use App\Http\Controllers\Admin\Pages\Core\TahunAkademikController;
+use App\Http\Controllers\Admin\Pages\Finance\PembayaranController;
+use App\Http\Controllers\Admin\Pages\Finance\TicketSupportController;
+use App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController;
 
-// HAK AKSES WEB ADMINISTRATOR
-Route::group(['prefix' => 'web-admin', 'middleware' => ['user-access:Web Administrator'], 'as' => 'web-admin.'],function(){
-    // GLOBAL MENU AUTHENTIKASI
+// WEB ADMINISTRATOR ROUTES
+Route::group([
+    'prefix' => 'web-admin',
+    'middleware' => ['user-access:Web Administrator'],
+    'as' => 'web-admin.'
+], function () {
+    // GLOBAL ROUTES
+    require __DIR__ . '/route-global.php';
 
-    // GLOBAL ROUTE
-    require __DIR__.'/route-global.php';
-
-    // STATUS ACTIVE BOLEH AKSES INI
+    // ACTIVE USER ROUTES
     Route::middleware(['is-active:1'])->group(function () {
 
-        // ADMIN AUTHORITY
+        // WORKERS ROUTES
+        Route::prefix('workers')->name('workers.')->group(function () {
+            // Admin routes
+            Route::prefix('data-admin')->name('admin-')->group(function () {
+                Route::get('/', [WorkersController::class, 'indexAdmin'])->name('index');
+                Route::get('/create', [WorkersController::class, 'createAdmin'])->name('create');
+                Route::get('/{code}/edit', [WorkersController::class, 'editAdmin'])->name('edit');
+                Route::post('/store', [WorkersController::class, 'storeAdmin'])->name('store');
+                Route::patch('/{code}/update', [WorkersController::class, 'updateAdmin'])->name('update');
+                Route::delete('/{code}/destroy', [WorkersController::class, 'destroyAdmin'])->name('destroy');
+            });
 
-        // MENU KHUSUS DATA PENGGUNA => DATA ADMIN
-        Route::get('/workers/data-admin',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'indexAdmin'])->name('workers.admin-index');
-        Route::get('/workers/data-admin/create',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'createAdmin'])->name('workers.admin-create');
-        Route::get('/workers/data-admin/{code}/edit',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'editAdmin'])->name('workers.admin-edit');
-        Route::post('/workers/data-admin/store',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'storeAdmin'])->name('workers.admin-store');
-        Route::patch('/workers/data-admin/{code}/update',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'updateAdmin'])->name('workers.admin-update');
-        Route::delete('/workers/data-admin/{code}/destroy',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'destroyAdmin'])->name('workers.admin-destroy');
-        // MENU KHUSUS DATA PENGGUNA => DATA STAFF
-        Route::get('/workers/data-staff',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'indexWorkers'])->name('workers.staff-index');
-        Route::get('/workers/data-staff/create',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'createWorkers'])->name('workers.staff-create');
-        Route::get('/workers/data-staff/{code}/edit',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'editWorkers'])->name('workers.staff-edit');
-        Route::post('/workers/data-staff/store',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'storeWorkers'])->name('workers.staff-store');
-        Route::patch('/workers/data-staff/{code}/update',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'updateWorkers'])->name('workers.staff-update');
-        Route::delete('/workers/data-staff/{code}/destroy',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'destroyWorkers'])->name('workers.staff-destroy');
-        // MENU KHUSUS DATA PENGGUNA => DATA DOSEN
-        Route::get('/workers/data-dosen',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'indexLecture'])->name('workers.lecture-index');
-        Route::get('/workers/data-dosen/create',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'createLecture'])->name('workers.lecture-create');
-        Route::get('/workers/data-dosen/{code}/edit',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'editLecture'])->name('workers.lecture-edit');
-        Route::post('/workers/data-dosen/store',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'storeLecture'])->name('workers.lecture-store');
-        Route::patch('/workers/data-dosen/{code}/update',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'updateLecture'])->name('workers.lecture-update');
-        Route::delete('/workers/data-dosen/{code}/destroy',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'destroyLecture'])->name('workers.lecture-destroy');
-        // MENU KHUSUS DATA PENGGUNA => DATA MAHASISWA
-        Route::get('/workers/data-mahasiswa',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'indexStudent'])->name('workers.student-index');
-        Route::get('/workers/data-mahasiswa/create',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'createStudent'])->name('workers.student-create');
-        Route::get('/workers/data-mahasiswa/{code}/edit',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'editStudent'])->name('workers.student-edit');
-        Route::post('/workers/data-mahasiswa/store',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'storeStudent'])->name('workers.student-store');
-        Route::patch('/workers/data-mahasiswa/{code}/update',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'updateStudent'])->name('workers.student-update');
-        Route::delete('/workers/data-mahasiswa/{code}/destroy',[App\Http\Controllers\Admin\Pages\WorkersController::class, 'destroyStudent'])->name('workers.student-destroy');
+            // Staff routes
+            Route::prefix('data-staff')->name('staff-')->group(function () {
+                Route::get('/', [WorkersController::class, 'indexWorkers'])->name('index');
+                Route::get('/create', [WorkersController::class, 'createWorkers'])->name('create');
+                Route::get('/{code}/edit', [WorkersController::class, 'editWorkers'])->name('edit');
+                Route::post('/store', [WorkersController::class, 'storeWorkers'])->name('store');
+                Route::patch('/{code}/update', [WorkersController::class, 'updateWorkers'])->name('update');
+                Route::delete('/{code}/destroy', [WorkersController::class, 'destroyWorkers'])->name('destroy');
+            });
 
-        // MENU KHUSUS DATA MASTER => DATA FAKULTAS
-        Route::get('/master/data-fakultas',[App\Http\Controllers\Admin\Pages\Core\FakultasController::class, 'index'])->name('master.fakultas-index');
-        Route::post('/master/data-fakultas/store',[App\Http\Controllers\Admin\Pages\Core\FakultasController::class, 'store'])->name('master.fakultas-store');
-        Route::patch('/master/data-fakultas/{code}/update',[App\Http\Controllers\Admin\Pages\Core\FakultasController::class, 'update'])->name('master.fakultas-update');
-        Route::delete('/master/data-fakultas/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\FakultasController::class, 'destroy'])->name('master.fakultas-destroy');
-        // MENU KHUSUS DATA MASTER => DATA PROGRAM STUDI
-        Route::get('/master/data-pstudi',[App\Http\Controllers\Admin\Pages\Core\ProgramStudiController::class, 'index'])->name('master.pstudi-index');
-        Route::post('/master/data-pstudi/store',[App\Http\Controllers\Admin\Pages\Core\ProgramStudiController::class, 'store'])->name('master.pstudi-store');
-        Route::patch('/master/data-pstudi/{code}/update',[App\Http\Controllers\Admin\Pages\Core\ProgramStudiController::class, 'update'])->name('master.pstudi-update');
-        Route::delete('/master/data-pstudi/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\ProgramStudiController::class, 'destroy'])->name('master.pstudi-destroy');
-        // MENU KHUSUS DATA MASTER => DATA TAHUN AKADEMIK
-        Route::get('/master/data-taka',[App\Http\Controllers\Admin\Pages\Core\TahunAkademikController::class, 'index'])->name('master.taka-index');
-        Route::post('/master/data-taka/store',[App\Http\Controllers\Admin\Pages\Core\TahunAkademikController::class, 'store'])->name('master.taka-store');
-        Route::patch('/master/data-taka/{code}/update',[App\Http\Controllers\Admin\Pages\Core\TahunAkademikController::class, 'update'])->name('master.taka-update');
-        Route::delete('/master/data-taka/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\TahunAkademikController::class, 'destroy'])->name('master.taka-destroy');
-        // MENU KHUSUS DATA MASTER => DATA PROGRAM KULIAH
-        Route::get('/master/data-proku',[App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController::class, 'index'])->name('master.proku-index');
-        Route::post('/master/data-proku/store',[App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController::class, 'store'])->name('master.proku-store');
-        Route::patch('/master/data-proku/{code}/update',[App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController::class, 'update'])->name('master.proku-update');
-        Route::delete('/master/data-proku/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController::class, 'destroy'])->name('master.proku-destroy');
-        // MENU KHUSUS DATA MASTER => DATA KELAS
-        Route::get('/master/data-kelas',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'index'])->name('master.kelas-index');
-        Route::get('/master/data-kelas/{code}/view/mahasiswa',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'viewMahasiswa'])->name('master.kelas-mahasiswa-view');
-        Route::post('/master/data-kelas/store',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'store'])->name('master.kelas-store');
-        Route::post('/master/data-kelas/{code}/cetak/mahasiswa',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'cetakMahasiswa'])->name('master.kelas-mahasiswa-cetak');
-        Route::patch('/master/data-kelas/{code}/update',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'update'])->name('master.kelas-update');
-        Route::delete('/master/data-kelas/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\KelasController::class, 'destroy'])->name('master.kelas-destroy');
-        // MENU KHUSUS DATA MASTER => DATA KURIKULUM
-        Route::get('/master/data-kurikulum',[App\Http\Controllers\Admin\Pages\Core\KurikulumController::class, 'index'])->name('master.kurikulum-index');
-        Route::get('/master/data-kurikulum/{code}/view/',[App\Http\Controllers\Admin\Pages\Core\KurikulumController::class, 'view'])->name('master.kurikulum-view');
-        Route::post('/master/data-kurikulum/store',[App\Http\Controllers\Admin\Pages\Core\KurikulumController::class, 'store'])->name('master.kurikulum-store');
-        Route::patch('/master/data-kurikulum/{code}/update',[App\Http\Controllers\Admin\Pages\Core\KurikulumController::class, 'update'])->name('master.kurikulum-update');
-        Route::delete('/master/data-kurikulum/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\KurikulumController::class, 'destroy'])->name('master.kurikulum-destroy');
-        // MENU KHUSUS DATA MASTER => DATA MATAKULIAH
-        Route::get('/master/data-matkul',[App\Http\Controllers\Admin\Pages\Core\MataKuliahController::class, 'index'])->name('master.matkul-index');
-        Route::get('/master/data-matkul/create',[App\Http\Controllers\Admin\Pages\Core\MataKuliahController::class, 'create'])->name('master.matkul-create');
-        Route::post('/master/data-matkul/store',[App\Http\Controllers\Admin\Pages\Core\MataKuliahController::class, 'store'])->name('master.matkul-store');
-        Route::patch('/master/data-matkul/{code}/update',[App\Http\Controllers\Admin\Pages\Core\MataKuliahController::class, 'update'])->name('master.matkul-update');
-        Route::delete('/master/data-matkul/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\MataKuliahController::class, 'destroy'])->name('master.matkul-destroy');
-        // MENU KHUSUS DATA MASTER => DATA JADWAL KULIAH
-        Route::get('/master/data-jadkul',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'index'])->name('master.jadkul-index');
-        Route::get('/master/data-jadkul/{code}/viewAbsen',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'viewAbsen'])->name('master.jadkul-absen-view');
-        Route::get('/master/data-jadkul/create',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'create'])->name('master.jadkul-create');
-        Route::post('/master/data-jadkul/store',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'store'])->name('master.jadkul-store');
-        Route::post('/master/data-jadkul/{code}/cetakAbsen',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'cetakAbsen'])->name('master.jadkul-absen-cetak');
-        Route::patch('/master/data-jadkul/{code}/updateAbsen',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'updateAbsen'])->name('master.jadkul-absen-update');
-        Route::patch('/master/data-jadkul/{code}/update',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'update'])->name('master.jadkul-update');
-        Route::delete('/master/data-jadkul/{code}/destroy',[App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController::class, 'destroy'])->name('master.jadkul-destroy');
+            // Lecture routes
+            Route::prefix('data-dosen')->name('lecture-')->group(function () {
+                Route::get('/', [WorkersController::class, 'indexLecture'])->name('index');
+                Route::get('/create', [WorkersController::class, 'createLecture'])->name('create');
+                Route::get('/{code}/edit', [WorkersController::class, 'editLecture'])->name('edit');
+                Route::post('/store', [WorkersController::class, 'storeLecture'])->name('store');
+                Route::patch('/{code}/update', [WorkersController::class, 'updateLecture'])->name('update');
+                Route::delete('/{code}/destroy', [WorkersController::class, 'destroyLecture'])->name('destroy');
+            });
 
+            // Student routes
+            Route::prefix('data-mahasiswa')->name('student-')->group(function () {
+                Route::get('/', [WorkersController::class, 'indexStudent'])->name('index');
+                Route::get('/create', [WorkersController::class, 'createStudent'])->name('create');
+                Route::get('/{code}/edit', [WorkersController::class, 'editStudent'])->name('edit');
+                Route::post('/store', [WorkersController::class, 'storeStudent'])->name('store');
+                Route::patch('/{code}/update', [WorkersController::class, 'updateStudent'])->name('update');
+                Route::delete('/{code}/destroy', [WorkersController::class, 'destroyStudent'])->name('destroy');
+            });
+        });
 
-        // MENU KHUSUS DATA INVENTORY => DATA GEDUNG
-        Route::get('/inventory/data-gedung',[App\Http\Controllers\Admin\Pages\Inventory\GedungController::class, 'index'])->name('inventory.gedung-index');
-        Route::post('/inventory/data-gedung/store',[App\Http\Controllers\Admin\Pages\Inventory\GedungController::class, 'store'])->name('inventory.gedung-store');
-        Route::patch('/inventory/data-gedung/{code}/update',[App\Http\Controllers\Admin\Pages\Inventory\GedungController::class, 'update'])->name('inventory.gedung-update');
-        Route::delete('/inventory/data-gedung/{code}/destroy',[App\Http\Controllers\Admin\Pages\Inventory\GedungController::class, 'destroy'])->name('inventory.gedung-destroy');
-        // MENU KHUSUS DATA INVENTORY => DATA RUANG
-        Route::get('/inventory/data-ruang',[App\Http\Controllers\Admin\Pages\Inventory\RuangController::class, 'index'])->name('inventory.ruang-index');
-        Route::post('/inventory/data-ruang/store',[App\Http\Controllers\Admin\Pages\Inventory\RuangController::class, 'store'])->name('inventory.ruang-store');
-        Route::patch('/inventory/data-ruang/{code}/update',[App\Http\Controllers\Admin\Pages\Inventory\RuangController::class, 'update'])->name('inventory.ruang-update');
-        Route::delete('/inventory/data-ruang/{code}/destroy',[App\Http\Controllers\Admin\Pages\Inventory\RuangController::class, 'destroy'])->name('inventory.ruang-destroy');
+        // MASTER DATA ROUTES
+        Route::prefix('master')->name('master.')->group(function () {
+            // Fakultas
+            Route::prefix('data-fakultas')->name('fakultas-')->group(function () {
+                Route::get('/', [FakultasController::class, 'index'])->name('index');
+                Route::post('/store', [FakultasController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [FakultasController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [FakultasController::class, 'destroy'])->name('destroy');
+            });
 
+            // Program Studi
+            Route::prefix('data-pstudi')->name('pstudi-')->group(function () {
+                Route::get('/', [ProgramStudiController::class, 'index'])->name('index');
+                Route::post('/store', [ProgramStudiController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [ProgramStudiController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [ProgramStudiController::class, 'destroy'])->name('destroy');
+            });
 
+            // Tahun Akademik
+            Route::prefix('data-taka')->name('taka-')->group(function () {
+                Route::get('/', [TahunAkademikController::class, 'index'])->name('index');
+                Route::post('/store', [TahunAkademikController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [TahunAkademikController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [TahunAkademikController::class, 'destroy'])->name('destroy');
+            });
 
+            // Program Kuliah
+            Route::prefix('data-proku')->name('proku-')->group(function () {
+                Route::get('/', [ProgramKuliahController::class, 'index'])->name('index');
+                Route::post('/store', [ProgramKuliahController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [ProgramKuliahController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [ProgramKuliahController::class, 'destroy'])->name('destroy');
+            });
 
-        // MENU KHUSUS FINANCE DEPARTEMENT => DATA TAGIHAN
-        Route::get('/finance/data-tagihan',[App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController::class, 'index'])->name('finance.tagihan-index');
-        Route::get('/finance/data-tagihan/create',[App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController::class, 'create'])->name('finance.tagihan-create');
-        Route::post('/finance/data-tagihan/store',[App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController::class, 'store'])->name('finance.tagihan-store');
-        Route::patch('/finance/data-tagihan/{code}/update',[App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController::class, 'update'])->name('finance.tagihan-update');
-        Route::delete('/finance/data-tagihan/{code}/destroy',[App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController::class, 'destroy'])->name('finance.tagihan-destroy');
-        // MENU KHUSUS FINANCE DEPARTEMENT => DATA PEMBAYARAN
-        Route::get('/finance/data-pembayaran',[App\Http\Controllers\Admin\Pages\Finance\PembayaranController::class, 'index'])->name('finance.pembayaran-index');
-        Route::get('/finance/data-pembayaran/create',[App\Http\Controllers\Admin\Pages\Finance\PembayaranController::class, 'create'])->name('finance.pembayaran-create');
-        Route::post('/finance/data-pembayaran/store',[App\Http\Controllers\Admin\Pages\Finance\PembayaranController::class, 'store'])->name('finance.pembayaran-store');
-        Route::patch('/finance/data-pembayaran/{code}/update',[App\Http\Controllers\Admin\Pages\Finance\PembayaranController::class, 'update'])->name('finance.pembayaran-update');
-        Route::delete('/finance/data-pembayaran/{code}/destroy',[App\Http\Controllers\Admin\Pages\Finance\PembayaranController::class, 'destroy'])->name('finance.pembayaran-destroy');
-        // MENU KHUSUS FINANCE DEPARTEMENT => DATA KEUANGAN
-        Route::get('/finance/data-keuangan',[App\Http\Controllers\Admin\Pages\Finance\BalanceController::class, 'index'])->name('finance.keuangan-index');
-        Route::post('/finance/data-keuangan/store',[App\Http\Controllers\Admin\Pages\Finance\BalanceController::class, 'store'])->name('finance.keuangan-store');
-        Route::patch('/finance/data-keuangan/{code}/update',[App\Http\Controllers\Admin\Pages\Finance\BalanceController::class, 'update'])->name('finance.keuangan-update');
-        Route::delete('/finance/data-keuangan/{code}/destroy',[App\Http\Controllers\Admin\Pages\Finance\BalanceController::class, 'destroy'])->name('finance.keuangan-destroy');
-        // MENU KHUSUS FINANCE DEPARTEMENT => DATA APPROVAL ABSENSI KARYAWAN
-        Route::get('/finance/approval-absen',[App\Http\Controllers\Admin\Pages\Finance\ApprovalController::class, 'indexAbsen'])->name('approval.absen-index');
-        Route::get('/finance/approval-absen/approved',[App\Http\Controllers\Admin\Pages\Finance\ApprovalController::class, 'indexAbsenApproved'])->name('approval.absen-index-approved');
-        Route::get('/finance/approval-absen/rejected',[App\Http\Controllers\Admin\Pages\Finance\ApprovalController::class, 'indexAbsenRejected'])->name('approval.absen-index-rejected');
-        Route::patch('/finance/approval-absen/{code}/update/accept',[App\Http\Controllers\Admin\Pages\Finance\ApprovalController::class, 'updateAbsenAccept'])->name('approval.absen-update-accept');
-        Route::patch('/finance/approval-absen/{code}/update/reject',[App\Http\Controllers\Admin\Pages\Finance\ApprovalController::class, 'updateAbsenReject'])->name('approval.absen-update-reject');
+            // Kelas
+            Route::prefix('data-kelas')->name('kelas-')->group(function () {
+                Route::get('/', [KelasController::class, 'index'])->name('index');
+                Route::get('/{code}/view/mahasiswa', [KelasController::class, 'viewMahasiswa'])->name('mahasiswa-view');
+                Route::post('/store', [KelasController::class, 'store'])->name('store');
+                Route::post('/{code}/cetak/mahasiswa', [KelasController::class, 'cetakMahasiswa'])->name('mahasiswa-cetak');
+                Route::patch('/{code}/update', [KelasController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [KelasController::class, 'destroy'])->name('destroy');
+            });
 
-        // PRIVATE FUNCTION => SUPPORT TICKET
-        Route::get('/support',[App\Http\Controllers\Admin\Pages\Finance\TicketSupportController::class, 'index'])->name('support.ticket-index');
-        Route::get('/support/view/{code}',[App\Http\Controllers\Admin\Pages\Finance\TicketSupportController::class, 'view'])->name('support.ticket-view');
-        Route::post('/support/create/store-reply/{code}',[App\Http\Controllers\Admin\Pages\Finance\TicketSupportController::class, 'storeReply'])->name('support.ticket-store-reply');
+            // Kurikulum
+            Route::prefix('data-kurikulum')->name('kurikulum-')->group(function () {
+                Route::get('/', [KurikulumController::class, 'index'])->name('index');
+                Route::get('/{code}/view', [KurikulumController::class, 'view'])->name('view');
+                Route::post('/store', [KurikulumController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [KurikulumController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [KurikulumController::class, 'destroy'])->name('destroy');
+            });
 
+            // Mata Kuliah
+            Route::prefix('data-matkul')->name('matkul-')->group(function () {
+                Route::get('/', [MataKuliahController::class, 'index'])->name('index');
+                Route::get('/create', [MataKuliahController::class, 'create'])->name('create');
+                Route::post('/store', [MataKuliahController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [MataKuliahController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [MataKuliahController::class, 'destroy'])->name('destroy');
+            });
 
-        // MENU KHUSUS ATTRIBUTE SYSTEM => DATA NOTIFIKASI
-        Route::get('/system/notify',[App\Http\Controllers\Core\NotifyController::class, 'index'])->name('system.notify-index');
-        Route::post('/system/notify/store',[App\Http\Controllers\Core\NotifyController::class, 'store'])->name('system.notify-store');
-        Route::patch('/system/notify/{code}/update',[App\Http\Controllers\Core\NotifyController::class, 'update'])->name('system.notify-update');
-        Route::delete('/system/notify/{code}/destroy',[App\Http\Controllers\Core\NotifyController::class, 'destroy'])->name('system.notify-destroy');
+            // Jadwal Kuliah
+            Route::prefix('data-jadkul')->name('jadkul-')->group(function () {
+                Route::get('/', [JadwalKuliahController::class, 'index'])->name('index');
+                Route::get('/{code}/viewAbsen', [JadwalKuliahController::class, 'viewAbsen'])->name('absen-view');
+                Route::get('/create', [JadwalKuliahController::class, 'create'])->name('create');
+                Route::post('/store', [JadwalKuliahController::class, 'store'])->name('store');
+                Route::post('/{code}/cetakAbsen', [JadwalKuliahController::class, 'cetakAbsen'])->name('absen-cetak');
+                Route::patch('/{code}/updateAbsen', [JadwalKuliahController::class, 'updateAbsen'])->name('absen-update');
+                Route::patch('/{code}/update', [JadwalKuliahController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [JadwalKuliahController::class, 'destroy'])->name('destroy');
+            });
+        });
 
-        // MENU KHUSUS ATTRIBUTE SYSTEM => DATA WEB SETTINGS
-        Route::get('/system/setting',[App\Http\Controllers\Core\WebSettingController::class, 'index'])->name('system.setting-index');
-        Route::patch('/system/setting/update',[App\Http\Controllers\Core\WebSettingController::class, 'update'])->name('system.setting-update');
-        Route::get('/system/database/export',[App\Http\Controllers\Core\WebSettingController::class, 'databaseExport'])->name('system.database-export');
-        Route::post('/system/database/import',[App\Http\Controllers\Core\WebSettingController::class, 'databaseImport'])->name('system.database-import');
-        Route::post('/system/update/check',[App\Http\Controllers\Core\WebSettingController::class, 'updateCheck'])->name('system.website-check');
-        Route::post('/system/update/perform',[App\Http\Controllers\Core\WebSettingController::class, 'updatePerform'])->name('system.website-update');
+        // INVENTORY ROUTES
+        Route::prefix('inventory')->name('inventory.')->group(function () {
+            // Gedung
+            Route::prefix('data-gedung')->name('gedung-')->group(function () {
+                Route::get('/', [GedungController::class, 'index'])->name('index');
+                Route::post('/store', [GedungController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [GedungController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [GedungController::class, 'destroy'])->name('destroy');
+            });
 
+            // Ruang
+            Route::prefix('data-ruang')->name('ruang-')->group(function () {
+                Route::get('/', [RuangController::class, 'index'])->name('index');
+                Route::post('/store', [RuangController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [RuangController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [RuangController::class, 'destroy'])->name('destroy');
+            });
+        });
 
+        // FINANCE ROUTES
+        Route::prefix('finance')->name('finance.')->group(function () {
+            // Tagihan
+            Route::prefix('data-tagihan')->name('tagihan-')->group(function () {
+                Route::get('/', [GenerateTagihanController::class, 'index'])->name('index');
+                Route::get('/create', [GenerateTagihanController::class, 'create'])->name('create');
+                Route::post('/store', [GenerateTagihanController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [GenerateTagihanController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [GenerateTagihanController::class, 'destroy'])->name('destroy');
+            });
+
+            // Pembayaran
+            Route::prefix('data-pembayaran')->name('pembayaran-')->group(function () {
+                Route::get('/', [PembayaranController::class, 'index'])->name('index');
+                Route::get('/create', [PembayaranController::class, 'create'])->name('create');
+                Route::post('/store', [PembayaranController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [PembayaranController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [PembayaranController::class, 'destroy'])->name('destroy');
+            });
+
+            // Keuangan
+            Route::prefix('data-keuangan')->name('keuangan-')->group(function () {
+                Route::get('/', [BalanceController::class, 'index'])->name('index');
+                Route::post('/store', [BalanceController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [BalanceController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [BalanceController::class, 'destroy'])->name('destroy');
+            });
+        });
+
+        // Approval Absensi
+        Route::prefix('approval-absen')->name('approval.absen-')->group(function () {
+            Route::get('/', [ApprovalController::class, 'indexAbsen'])->name('index');
+            Route::get('/approved', [ApprovalController::class, 'indexAbsenApproved'])->name('index-approved');
+            Route::get('/rejected', [ApprovalController::class, 'indexAbsenRejected'])->name('index-rejected');
+            Route::patch('/{code}/update/accept', [ApprovalController::class, 'updateAbsenAccept'])->name('update-accept');
+            Route::patch('/{code}/update/reject', [ApprovalController::class, 'updateAbsenReject'])->name('update-reject');
+        });
+
+        // SUPPORT TICKET ROUTES
+        Route::prefix('support')->name('support.ticket-')->group(function () {
+            Route::get('/', [TicketSupportController::class, 'index'])->name('index');
+            Route::get('/view/{code}', [TicketSupportController::class, 'view'])->name('view');
+            Route::post('/create/store-reply/{code}', [TicketSupportController::class, 'storeReply'])->name('store-reply');
+        });
+
+        // SYSTEM ROUTES
+        Route::prefix('system')->name('system.')->group(function () {
+            // Notifikasi
+            Route::prefix('notify')->name('notify-')->group(function () {
+                Route::get('/', [NotifyController::class, 'index'])->name('index');
+                Route::post('/store', [NotifyController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [NotifyController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [NotifyController::class, 'destroy'])->name('destroy');
+            });
+
+            // Web Settings
+            Route::prefix('setting')->name('setting-')->group(function () {
+                Route::get('/', [WebSettingController::class, 'index'])->name('index');
+                Route::patch('/update', [WebSettingController::class, 'update'])->name('update');
+            });
+
+            // Database and Update
+            Route::prefix('database')->name('database-')->group(function () {
+                Route::get('/export', [WebSettingController::class, 'databaseExport'])->name('export');
+                Route::post('/import', [WebSettingController::class, 'databaseImport'])->name('import');
+            });
+
+            Route::post('/update/check', [WebSettingController::class, 'updateCheck'])->name('website-check');
+            Route::post('/update/perform', [WebSettingController::class, 'updatePerform'])->name('website-update');
+        });
     });
-
-
 });

@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
                     return '/musyrif/home';
                 case 5:
                     return '/support/home';
-                case 5:
+                case 6:
                     return '/sitemanager/home';
                 default:
                     return '/web-admin/home';
