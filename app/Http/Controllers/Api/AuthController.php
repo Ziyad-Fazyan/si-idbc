@@ -32,7 +32,9 @@ class AuthController extends Controller
         }
 
         // Coba cari user
-        $user = User::where($fieldType, $login)->first();
+        $user = User::where($fieldType, $login)
+            ->where('type', 2)
+            ->first();
 
         if (!$user) {
             return response()->json(['message' => 'Akun tidak ditemukan'], 404);
