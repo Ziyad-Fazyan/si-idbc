@@ -89,14 +89,13 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                             </svg>
                                         </button>
-                                        <button
-                                            onclick="openEditModal('{{ $item->code }}', '{{ $item->name }}', '{{ $item->type }}', '{{ $item->gend }}', '{{ $item->status }}')"
+                                        <a href="{{ route('web-admin.workers.staff-edit', $item->code) }}"
                                             class="inline-flex items-center p-2 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition-colors duration-200"
                                             title="Edit">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                             </svg>
-                                        </button>
+                                        </a>
                                         <form action="{{ route('web-admin.workers.staff-destroy', $item->code) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
