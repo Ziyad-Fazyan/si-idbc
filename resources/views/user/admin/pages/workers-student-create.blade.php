@@ -106,18 +106,20 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="class_id" class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
-                                    <select name="class_id" id="class_id"
+                                    <label for="class_id" class="block text-sm font-medium text-gray-700 mb-1">Kelas (Pilih
+                                        satu atau lebih)</label>
+                                    <select name="class_id[]" id="class_id" multiple
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
                                         required>
-                                        <option value="" selected disabled>Pilih Kelas</option>
                                         @foreach ($kelas as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ old('class_id') == $item->id ? 'selected' : '' }}>
+                                                {{ is_array(old('class_id')) && in_array($item->id, old('class_id')) ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    <small class="text-gray-500">Tahan tombol Ctrl (Windows) atau Command (Mac) untuk
+                                        memilih beberapa kelas</small>
                                     @error('class_id')
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror

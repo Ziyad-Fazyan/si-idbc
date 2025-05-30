@@ -56,7 +56,6 @@ class AuthController extends Controller
 
         $user = Mahasiswa::where($fieldType, $request->login)->first();
 
-
         if (!$user) {
             Alert::error('Error', 'Mohon maaf akun anda belum terdaftar');
             return back();
@@ -64,18 +63,19 @@ class AuthController extends Controller
 
         $remember_me = $request->has('remember_me') ? true : false;
 
-        // Coba untuk melakukan autentikasi menggunakan metode 'attempt' dari facade 'Auth'
-        if (Auth::guard('mahasiswa')->attempt(array($fieldType => $login, 'password' => $request->input('password')), $remember_me)) {
-            // Jika autentikasi berhasil, pengguna akan dialihkan ke dashboard
-            if ($user->rawtype == 0) {
+        if (Auth::guard('mahasiswa')->attempt([$fieldType => $login, 'password' => $request->input('password')], $remember_me)) {
+
+            // 🚫 Cek jika akun tidak aktif
+            if ($user->raw_mhs_stat != 1) {
+                Auth::guard('mahasiswa')->logout();
+                Alert::error('Akun Tidak Aktif', 'Akun kamu belum aktif atau diblokir. Silakan hubungi admin.');
+                return redirect()->route('mahasiswa.auth-signin-page');
+            }
+
+            // ✅ Lanjut login
+            if ($user->raw_mhs_stat == 1) {
                 Alert::success('Success', 'Anda berhasil login Sebagai Calon Mahasiswa');
-                // return redirect()->route('web-admin.dashboard-page');
                 return redirect()->route('mahasiswa.home-index');
-                // echo "Anda login sebagai admin.";
-            } elseif ($user->rawtype == 1) {
-                return redirect()->route('web-admin.home-index');
-                Alert::success('Success', 'Anda berhasil login');
-                // return back();
             }
         } else {
             Alert::error('Error', 'Mohon Maaf, Username / Email atau password salah');

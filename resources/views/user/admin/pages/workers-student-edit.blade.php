@@ -160,7 +160,7 @@
                                                 Tahun Masuk
                                             </label>
                                             <input type="text" name="years_id" id="years_id"
-                                                value="Angkatan {{ $student->kelas->taka->year_start }}"
+                                                value="Angkatan {{ $student->kelas->first() ? $student->kelas->first()->taka->year_start : 'Tidak ada' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 sm:text-sm"
                                                 readonly>
                                             @error('years_id')
@@ -173,7 +173,7 @@
                                                 Fakultas
                                             </label>
                                             <input type="text" name="faku_id" id="faku_id"
-                                                value="{{ $student->kelas->pstudi->fakultas->name }}"
+                                                value="{{ $student->kelas->first() ? $student->kelas->first()->pstudi->fakultas->name : 'Tidak ada' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 sm:text-sm"
                                                 readonly>
                                             @error('faku_id')
@@ -186,7 +186,7 @@
                                                 Program Studi
                                             </label>
                                             <input type="text" name="pstudi_id" id="pstudi_id"
-                                                value="{{ $student->kelas->pstudi->name . ' - ' . $student->kelas->taka->semester }}"
+                                                value="{{ $student->kelas->first() ? $student->kelas->first()->pstudi->name . ' - ' . $student->kelas->first()->taka->semester : 'Tidak ada' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 sm:text-sm"
                                                 readonly>
                                             @error('pstudi_id')
@@ -196,18 +196,19 @@
 
                                         <div class="form-group">
                                             <label for="class_id" class="block text-sm font-medium text-gray-700 mb-2">
-                                                Kelas
+                                                Kelas (Pilih satu atau lebih)
                                             </label>
-                                            <select name="class_id" id="class_id"
+                                            <select name="class_id[]" id="class_id" multiple
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                                <option value="">Pilih Kelas</option>
                                                 @foreach ($kelas as $item)
                                                     <option value="{{ $item->id }}"
-                                                        {{ $item->id === $student->class_id ? 'selected' : '' }}>
+                                                        {{ $student->kelas->contains($item->id) ? 'selected' : '' }}>
                                                         {{ $item->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <small class="text-gray-500">Tahan tombol Ctrl (Windows) atau Command (Mac)
+                                                untuk memilih beberapa kelas</small>
                                             @error('class_id')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror

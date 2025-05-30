@@ -18,7 +18,7 @@ class StudentTaskController extends Controller
         $user = Auth::guard('mahasiswa')->user();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['stask'] = StudentTask::whereHas('jadkul', function ($query) use ($user) {
-            $query->where('kelas_id', $user->class_id);
+            $query->whereIn('kelas_id', $user->kelas()->pluck('id'));
         })->get();
 
         return view('mahasiswa.pages.stask-index', $data);

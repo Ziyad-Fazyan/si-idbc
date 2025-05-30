@@ -66,7 +66,7 @@
                             <label for="mhs_class" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Kelas</label>
                             <input type="text" readonly id="mhs_class" name="mhs_class"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
-                                value="{{ $score->student->kelas->name }}">
+                                value="@forelse($score->student->kelas as $kelas){{ $kelas->name }}@if(!$loop->last), @endif@empty Tidak ada kelas @endforelse">
                             @error('mhs_class')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror

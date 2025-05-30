@@ -51,7 +51,10 @@ class NotifyController extends Controller
         $notify->faku_id = $request->faku_id;
         $notify->prodi_id = $request->prodi_id;
         $notify->proku_id = $request->proku_id;
-        $notify->class_id = $request->class_id;
+        // Jika class_id diisi, simpan sebagai array untuk mendukung relasi many-to-many
+        if ($request->class_id) {
+            $notify->class_id = $request->class_id;
+        }
         $notify->student_id = $request->student_id;
         $notify->lecture_id = $request->lecture_id;
         $notify->name = $request->name;

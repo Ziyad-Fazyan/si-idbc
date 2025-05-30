@@ -52,7 +52,7 @@ class KelasController extends Controller
         $data['prefix'] = $this->setPrefix();
         $class = Kelas::where('code', $code)->first();
         $data['kelas'] = Kelas::where('code', $code)->first();
-        $data['mahasiswa'] = Mahasiswa::where('class_id', $class->id)->get();
+        $data['mahasiswa'] = $class->mahasiswa;
 
         return view('base.cetak.cetak-data-kehadiran', $data);
         // $pdf = PDF::loadView('base.cetak.cetak-data-kehadiran', $data);

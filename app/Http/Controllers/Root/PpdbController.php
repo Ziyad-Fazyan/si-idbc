@@ -60,7 +60,7 @@ class PpdbController extends Controller
             'mhs_stat' => 'nullable|string', 
         ]); 
 
-        $user->class_id = 0; 
+        // Class relationship will be handled through pivot table
         $user->mhs_name = $request->mhs_name; 
         $user->mhs_user = $request->mhs_user; 
         $user->mhs_nim = $request->mhs_nim; 

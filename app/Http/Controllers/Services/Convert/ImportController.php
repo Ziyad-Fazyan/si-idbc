@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Services\Convert;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use App\Models\Kelas;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -63,7 +64,7 @@ class ImportController extends Controller
 
         $path = $request->file('import')->store('public/excel-files');
         $users = (new FastExcel)->import(storage_path('app/' . $path), function ($line) {
-            return Mahasiswa::create([
+            return $mahasiswa = Mahasiswa::create([
                 'mhs_nim' => $line['NIM'],
                 'mhs_mail' => $line['Email'],
                 'mhs_phone' => $line['Phone'],
@@ -74,11 +75,25 @@ class ImportController extends Controller
                 'mhs_birthdate' => $line['BirthDate'] == null ? null : $line['BirthDate'],
                 'mhs_stat' => $line['TypeUser'],
                 'years_id' => $line['YearsID'],
-                'class_id' => $line['ClassID'],
                 'mhs_code' => Str::random(6),
                 'mhs_user' => Str::random(6),
                 'password' => Hash::make($line['Phone']),
             ]);
+            
+            // Attach kelas jika ClassID valid
+            if (!empty($line['ClassID'])) {
+                // Periksa apakah ClassID adalah array atau nilai tunggal
+                if (is_array($line['ClassID'])) {
+                    // Jika array, attach semua kelas yang ada
+                    $mahasiswa->kelas()->attach($line['ClassID']);
+                } else {
+                    // Jika nilai tunggal, cari kelas dan attach
+                    $kelas = Kelas::find($line['ClassID']);
+                    if ($kelas) {
+                        $mahasiswa->kelas()->attach($kelas->id);
+                    }
+                }
+            }
         });
 
         Alert::success('Sukses', 'Data berhasil diimport !');

@@ -48,7 +48,7 @@ class ExportController extends Controller
                 'BirthDate' => $user->mhs_birthdate,
                 'TypeUser' => $user->raw_mhs_stat,
                 'YearsID' => $user->years_id,
-                'ClassID' => $user->class_id,
+                'ClassID' => $user->kelas()->exists() ? $user->kelas()->first()->id : 0,
             ];
         });
 

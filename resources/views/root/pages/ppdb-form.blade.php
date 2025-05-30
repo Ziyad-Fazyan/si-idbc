@@ -103,15 +103,15 @@
                         </div>
                         
                         <div class="space-y-1">
-                            <label for="class_id" class="block text-sm font-medium text-gray-700">Kelas</label>
-                            <select id="class_id" name="class_id" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('class_id') border-red-500 @enderror">
-                                <option value="">Pilih Kelas</option>
+                            <label for="class_id" class="block text-sm font-medium text-gray-700">Kelas (Pilih satu atau lebih)</label>
+                            <select id="class_id" name="class_id[]" multiple class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('class_id') border-red-500 @enderror">
                                 @foreach($kelas ?? [] as $kls)
-                                    <option value="{{ $kls->id }}" {{ old('class_id') == $kls->id ? 'selected' : '' }}>
+                                    <option value="{{ $kls->id }}" {{ (is_array(old('class_id')) && in_array($kls->id, old('class_id'))) ? 'selected' : '' }}>
                                         {{ $kls->class_name }}
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="text-gray-500">Tahan tombol Ctrl (Windows) atau Command (Mac) untuk memilih beberapa kelas</small>
                             @error('class_id')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror

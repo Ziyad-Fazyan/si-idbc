@@ -115,7 +115,13 @@
                                         <div>
                                             <p class="font-semibold">{{ $item->users->mhs_name }}</p>
                                             <p class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
-                                            <p class="text-xs text-gray-400">Kelas {{ $item->users->kelas->name }}</p>
+                                            <p class="text-xs text-gray-400">Kelas: 
+                                                @forelse($item->users->kelas as $kelas)
+                                                    {{ $kelas->name }}@if(!$loop->last), @endif
+                                                @empty
+                                                    Tidak ada kelas
+                                                @endforelse
+                                            </p>
                                         </div>
                                     @elseif ($item->admin_id !== null)
                                         <img src="{{ asset('storage/images/' . $item->admin->image) }}"
@@ -157,7 +163,13 @@
                                 <div>
                                     <p class="font-semibold">{{ $ticket->users->mhs_name }}</p>
                                     <p class="text-sm text-gray-500">{{ $ticket->created_at->diffForHumans() }}</p>
-                                    <p class="text-xs text-gray-400">Kelas {{ $ticket->users->kelas->name }}</p>
+                                    <p class="text-xs text-gray-400">Kelas: 
+                                        @forelse($ticket->users->kelas as $kelas)
+                                            {{ $kelas->name }}@if(!$loop->last), @endif
+                                        @empty
+                                            Tidak ada kelas
+                                        @endforelse
+                                    </p>
                                 </div>
                             </div>
                         </div>

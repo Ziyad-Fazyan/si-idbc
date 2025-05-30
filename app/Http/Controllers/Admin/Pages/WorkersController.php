@@ -83,8 +83,29 @@ class WorkersController extends Controller
         $user->code = Str::random(6);
 
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -144,8 +165,29 @@ class WorkersController extends Controller
         $user->contact_phone_2 = $request->contact_phone_2;
         $user->type = $request->type;
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -246,8 +288,29 @@ class WorkersController extends Controller
         $user->code = Str::random(6);
 
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -307,8 +370,29 @@ class WorkersController extends Controller
         $user->contact_phone_2 = $request->contact_phone_2;
         $user->type = $request->type;
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = 'profile-' . $user->code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -402,8 +486,29 @@ class WorkersController extends Controller
         // $user->type = $request->type;
         $user->dsn_code = Str::random(6);
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('dsn_image')) {
             $image = $request->file('dsn_image');
             $name = 'profile-' . $user->dsn_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -461,8 +566,29 @@ class WorkersController extends Controller
         // $user->type = $request->type;
         // $user->code = Str::random(6);
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('dsn_image')) {
             $image = $request->file('dsn_image');
             $name = 'profile-' . $user->dsn_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -549,7 +675,7 @@ class WorkersController extends Controller
         ]);
 
 
-        $user->class_id = $request->class_id;
+        // Akan diatur melalui relasi many-to-many setelah save
         $user->mhs_name = $request->mhs_name;
         $user->mhs_user = $request->mhs_user;
         $user->mhs_nim = $request->mhs_nim;
@@ -576,8 +702,29 @@ class WorkersController extends Controller
 
 
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
             $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -623,7 +770,7 @@ class WorkersController extends Controller
         ]);
 
 
-        $user->class_id = $request->class_id;
+        // Akan diatur melalui relasi many-to-many setelah save
         $user->mhs_name = $request->mhs_name;
         // $user->mhs_user = $request->mhs_user;
         $user->mhs_nim = $request->mhs_nim;
@@ -648,8 +795,29 @@ class WorkersController extends Controller
         $user->mhs_stat = $request->mhs_stat;
 
 
-        $user->password = Hash::make($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
+
+        // Update relasi kelas
+        if ($request->class_id) {
+            // Detach semua kelas yang ada
+            $user->kelas()->detach();
+
+            // Attach kelas baru
+            // Periksa apakah class_id adalah array atau nilai tunggal
+            if (is_array($request->class_id)) {
+                // Jika array, attach semua kelas yang dipilih
+                $user->kelas()->attach($request->class_id);
+            } else {
+                // Jika nilai tunggal, cari kelas dan attach
+                $kelas = Kelas::find($request->class_id);
+                if ($kelas) {
+                    $user->kelas()->attach($kelas->id);
+                }
+            }
+        }
         if ($request->hasFile('mhs_image')) {
             $image = $request->file('mhs_image');
             $name = 'profile-' . $user->mhs_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();

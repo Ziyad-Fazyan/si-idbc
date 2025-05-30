@@ -191,7 +191,15 @@
                             <td style="text-align: center">{{ ++$key }}</td>
                             <td style="text-align: center">{{ $std->mhs_nim }}</td>
                             <td>{{ $std->mhs_name }}</td>
-                            <td style="text-align: center">{{ $std->kelas->name }}</td>
+                            <td style="text-align: center">
+                                @forelse($std->kelas as $kelas)
+                                    {{ $kelas->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
+                                @empty
+                                    Tidak ada kelas
+                                @endforelse
+                            </td>
                             <td style="text-align: center">
                                 @php
                                     $absent = $absen->where('author_id', $std->id)->first();

@@ -34,14 +34,34 @@ class HomeController extends Controller
     {
         $user = Auth::guard('mahasiswa')->user();
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere('proku_id', $user->kelas->proku->id)->orwhere('prodi_id', $user->kelas->pstudi->id)->sum('price');
-        $data['history'] = HistoryTagihan::where('users_id', $user->id)->where('stat', 1)->whereHas('tagihan', function ($query) use ($request) {
-            $query->select('price');
-        })->with('tagihan')->get()->sum(function ($history) {
-            return $history->tagihan->price;
-        });
+
+        // Mengambil kelas pertama dari relasi many-to-many
+        $kelas = $user->kelas()->first();
+
+        if ($kelas) {
+            $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)
+                ->orWhere('proku_id', $kelas->proku_id)
+                ->orWhere('prodi_id', $kelas->pstudi_id)
+                ->sum('price');
+
+            $data['jadkul'] = JadwalKuliah::where('kelas_id', $kelas->id)->count();
+        } else {
+            $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->sum('price');
+            $data['jadkul'] = 0;
+        }
+
+        $data['history'] = HistoryTagihan::where('users_id', $user->id)
+            ->where('stat', 1)
+            ->whereHas('tagihan', function ($query) use ($request) {
+                $query->select('price');
+            })
+            ->with('tagihan')
+            ->get()
+            ->sum(function ($history) {
+                return $history->tagihan->price;
+            });
+
         $data['sisatagihan'] = $data['tagihan'] - $data['history'];
-        $data['jadkul'] = JadwalKuliah::where('kelas_id', $user->class_id)->count();
         $data['habsen'] = AbsensiMahasiswa::where('author_id', $user->id)->where('absen_type', 'H')->count();
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->latest()->paginate(5);
 
@@ -66,7 +86,9 @@ class HomeController extends Controller
         // $data['dosen'] = MataKuliah::where('dosen');
         $data['pstudi'] = ProgramStudi::all();
         $data['matkul'] = MataKuliah::all();
-        $data['jadkul'] = JadwalKuliah::where('kelas_id', Auth::guard('mahasiswa')->user()->class_id)->get();
+        $user = Auth::guard('mahasiswa')->user();
+        $kelasIds = $user->kelas()->pluck('id');
+        $data['jadkul'] = JadwalKuliah::whereIn('kelas_id', $kelasIds)->get();
         $data['ruang'] = Ruang::all();
         $data['kelas'] = Kelas::all();
         $data['web'] = webSettings::where('id', 1)->first();
