@@ -136,15 +136,22 @@ class FaceRecognitionController extends Controller
                         'id' => $mahasiswaData->id,
                         'nim' => $mahasiswaData->mhs_nim,
                         'name' => $mahasiswaData->mhs_name,
-                        'kelas' => $mahasiswaData->kelas ? $mahasiswaData->kelas->name : 'Tidak ada kelas',
-                        'program_studi' => $mahasiswaData->kelas && $mahasiswaData->kelas->pstudi ? $mahasiswaData->kelas->pstudi->name : 'Tidak ada prodi',
+                        'kelas' => $mahasiswaData->kelas->count() > 0 ? $mahasiswaData->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
+                        'program_studi' => $mahasiswaData->kelas->count() > 0 && $mahasiswaData->kelas->first()->pstudi ? $mahasiswaData->kelas->first()->pstudi->name : 'Tidak ada prodi',
                         'status' => $mahasiswaData->mhs_stat
                     ];
 
                     // Cari jadwal kuliah hari ini untuk kelas mahasiswa
-                    $jadwalHariIni = JadwalKuliah::where('kelas_id', $mahasiswaData->class_id)
-                        ->where('date', $today)
-                        ->first();
+                    // Ambil kelas pertama yang terkait dengan mahasiswa
+                    $kelas = $mahasiswaData->kelas()->first();
+                    $kelasId = $kelas ? $kelas->id : null;
+                    
+                    $jadwalHariIni = null;
+                    if ($kelasId) {
+                        $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
+                            ->where('date', $today)
+                            ->first();
+                    }
                 }
             }
 
