@@ -128,7 +128,8 @@
 
                 // Utility functions
                 async function fetchPerolehanData(id) {
-                    const response = await fetch(`{{ route($prefix . 'inventory.perolehan-show', ['id' => ':id']) }}`.replace(':id', id));
+                    const response = await fetch(
+                        `{{ route($prefix . 'inventory.perolehan-show', ['id' => ':id']) }}`.replace(':id', id));
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     return await response.json();
                 }
@@ -186,7 +187,9 @@
                         const data = await fetchPerolehanData(id);
                         elements.editName.value = data.name;
                         elements.editDescription.value = data.description || '';
-                        elements.editForm.action = `{{ route($prefix . 'inventory.perolehan-update', ['code' => ':id']) }}`.replace(':id', id);
+                        elements.editForm.action =
+                            `{{ route($prefix . 'inventory.perolehan-update', ['code' => ':id']) }}`.replace(':id',
+                                id);
 
                         hideLoading('edit');
                     } catch (error) {

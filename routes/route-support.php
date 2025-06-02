@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Inventory\{
     CommodityAcquisitionController,
+    CommodityController,
     CommodityLocationController,
     GedungController,
     RuangController
@@ -57,6 +58,20 @@ Route::group([
 
                 Route::post('/import', [CommodityLocationController::class, 'import'])->name('import');
                 Route::post('/export', [CommodityLocationController::class, 'export'])->name('export');
+            });
+
+            // Barang
+            Route::prefix('data-barang')->name('barang-')->group(function () {
+                Route::get('/', [CommodityController::class, 'index'])->name('index');
+                Route::get('/{id}/show', [CommodityController::class, 'show'])->name('show');
+                Route::post('/store', [CommodityController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [CommodityController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [CommodityController::class, 'destroy'])->name('destroy');
+
+                Route::post('/print', [CommodityController::class, 'generatePDF'])->name('print');
+                Route::post('/print/{id}', [CommodityController::class, 'generatePDFIndividually'])->name('print-individual');
+                Route::post('/export', [CommodityController::class, 'export'])->name('export');
+                Route::post('/import', [CommodityController::class, 'import'])->name('import');
             });
         });
     });
