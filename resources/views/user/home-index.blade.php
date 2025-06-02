@@ -266,7 +266,7 @@
                                             </div>
                                             <div>
                                                 <p class="text-lg font-semibold text-gray-800">
-                                                    {{ \App\Models\Ruang::all()->count() }}</p>
+                                                    {{ \App\Models\CommodityLocation::all()->count() }}</p>
                                                 <p class="text-sm text-gray-600">Ruangan</p>
                                             </div>
                                         </div>

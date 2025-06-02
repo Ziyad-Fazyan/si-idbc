@@ -66,18 +66,27 @@ class CommodityLocationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CommodityLocation $commodityLocation, $code)
+    public function destroy($code)
     {
-        if ($commodityLocation->commodities->isNotEmpty()) {
-            return to_route('ruangan.index')
-                ->with('error', 'Ruangan tidak dapat dihapus karena masih terkait dengan data komoditas!');
+        try {
+            $commodityLocation = CommodityLocation::findOrFail($code);
+
+            if ($commodityLocation->commodities()->exists()) {
+                Alert::error('Error', 'Ruangan tidak dapat dihapus karena masih terkait dengan data barang!');
+                return back();
+            }
+
+            $commodityLocation->delete();
+
+            Alert::success('Success', 'Data ruangan berhasil dihapus');
+            return back();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Alert::error('Error', 'Data ruangan tidak ditemukan!');
+            return back();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+            return back();
         }
-
-        $commodityLocation = CommodityLocation::where('id', $code)->first();
-        $commodityLocation->delete();
-
-        Alert::success('success', 'Data telah berhasil dihapus');
-        return back();
     }
 
     /**

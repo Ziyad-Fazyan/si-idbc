@@ -22,6 +22,7 @@
     @include('user.admin.master-inventory.commodities.partials.statistics-cards')
 
     <!-- Filter -->
+    @include('user.admin.master-inventory.commodities.partials.filter')
 
     <!-- Main Content -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">

@@ -277,18 +277,6 @@
         <ul id="dropdown-inventory"
             class="dropdown-menu pl-12 mt-1 space-y-1 {{ $inventoryActive ? '' : 'hidden' }}">
             <li
-                class="{{ Route::is('web-admin.inventory.gedung-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
-                <a href="{{ route('web-admin.inventory.gedung-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
-                    Gedung</a>
-            </li>
-            <li
-                class="{{ Route::is('web-admin.inventory.ruang-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
-                <a href="{{ route('web-admin.inventory.ruang-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
-                    Ruangan</a>
-            </li>
-            <li
                 class="{{ Route::is('web-admin.inventory.perolehan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route('web-admin.inventory.perolehan-index') }}"
                     class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data

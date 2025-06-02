@@ -14,16 +14,6 @@
         </div>
         <ul id="dropdown-inventory"
             class="submenu pl-12 mt-1 space-y-1 {{ Route::is($prefix . 'inventory.*') ? '' : 'hidden' }}">
-            <li class="submenu-item {{ Route::is($prefix . 'inventory.gedung-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'inventory.gedung-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'inventory.gedung-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
-                    Gedung</a>
-            </li>
-            <li class="submenu-item {{ Route::is($prefix . 'inventory.ruang-*') ? 'active' : '' }}">
-                <a href="{{ route($prefix . 'inventory.ruang-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'inventory.ruang-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
-                    Ruangan</a>
-            </li>
             <li
                 class="{{ Route::is($prefix . 'inventory.perolehan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route($prefix . 'inventory.perolehan-index') }}"
