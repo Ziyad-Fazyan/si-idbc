@@ -188,6 +188,7 @@ Route::group([
             Route::prefix('data-lokasi')->name('lokasi-')->group(function () {
                 Route::get('/', [CommodityLocationController::class, 'index'])->name('index');
                 Route::post('/store', [CommodityLocationController::class, 'store'])->name('store');
+                Route::get('/{id}/show', [CommodityLocationController::class, 'show'])->name('show');
                 Route::patch('/{code}/update', [CommodityLocationController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [CommodityLocationController::class, 'destroy'])->name('destroy');
 

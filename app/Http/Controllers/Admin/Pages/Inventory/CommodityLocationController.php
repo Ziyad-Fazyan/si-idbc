@@ -24,9 +24,15 @@ class CommodityLocationController extends Controller
     {
         $web = webSettings::where('id', 1)->first();
         $prefix = $this->setPrefix();
-        $commodity_locations = CommodityLocation::orderBy('name', 'ASC')->get();
+        $commodityLocations = CommodityLocation::orderBy('name', 'ASC')->get();
+        $commodityLocations = CommodityLocation::latest()->paginate(7);
+        return view('user.admin.master-inventory.commodity-locations.index', compact('commodityLocations', 'web', 'prefix'));
+    }
 
-        return view('user.admin.master-inventory.commodity-locations.index', compact('commodity_locations', 'web', 'prefix'));
+    public function show($id)
+    {
+        $commodityLocation = CommodityLocation::findOrFail($id);
+        return response()->json($commodityLocation);
     }
 
     /**
@@ -43,12 +49,19 @@ class CommodityLocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommodityLocationRequest $request, CommodityLocation $commodityLocation)
+    public function update(UpdateCommodityLocationRequest $request, $code)
     {
+        $commodityLocation = CommodityLocation::where('id', $code)->first();
+
+        if (!$commodityLocation) {
+            return back()->with('error', 'Perolehan tidak ditemukan!');
+        }
+
         $commodityLocation->update($request->all());
 
-        return to_route('ruangan.index')->with('success', 'Data berhasil diubah!');
-    }
+        Alert::success('success', 'Data telah berhasil disimpan');
+        return back();
+        }
 
     /**
      * Remove the specified resource from storage.
