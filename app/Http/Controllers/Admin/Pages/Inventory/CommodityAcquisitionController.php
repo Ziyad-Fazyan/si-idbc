@@ -28,6 +28,15 @@ class CommodityAcquisitionController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $commodityAcquisition = CommodityAcquisition::findOrFail($id);
+        return response()->json($commodityAcquisition);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCommodityAcquisitionRequest $request)

@@ -178,6 +178,7 @@ Route::group([
             // Aquisition
             Route::prefix('data-perolehan')->name('perolehan-')->group(function () {
                 Route::get('/', [CommodityAcquisitionController::class, 'index'])->name('index');
+                Route::get('/{id}/show', [CommodityAcquisitionController::class, 'show'])->name('show');
                 Route::post('/store', [CommodityAcquisitionController::class, 'store'])->name('store');
                 Route::patch('/{code}/update', [CommodityAcquisitionController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [CommodityAcquisitionController::class, 'destroy'])->name('destroy');
