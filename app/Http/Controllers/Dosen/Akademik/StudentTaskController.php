@@ -83,6 +83,14 @@ class StudentTaskController extends Controller
                 'detail_task' => 'Detail tugas kuliah wajib diisi.',
             ]
         );
+        
+        // Cek apakah sudah ada tugas dengan jadkul_id yang sama
+        $existingTask = studentTask::where('jadkul_id', $request->jadkul_id)->first();
+        if ($existingTask) {
+            Alert::error('Error', 'Tugas untuk jadwal kuliah ini sudah ada. Silakan edit tugas yang sudah ada atau pilih jadwal kuliah lain.');
+            return back()->withInput();
+        }
+        
         $stask = new studentTask;
         $stask->dosen_id = Auth::guard('dosen')->user()->id;
         $stask->code = Str::random(6);
