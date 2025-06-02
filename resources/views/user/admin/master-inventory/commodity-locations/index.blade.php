@@ -21,17 +21,17 @@
     <div class="flex flex-col space-y-6">
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-4">
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" aria-label="Import data dari Excel">
                 <i class="fas fa-fw fa-upload mr-2"></i>
                 Import Excel
             </button>
 
-            <button type="button" class="btn btn-secondary">
+            <button type="button" class="btn btn-secondary" aria-label="Export data ke Excel">
                 <i class="fas fa-fw fa-download mr-2"></i>
                 Export
             </button>
 
-            <button type="button" x-data @click="$dispatch('open-modal', {name: 'create-lokasi'})" class="btn btn-success">
+            <button type="button" x-data @click="$dispatch('open-modal', {name: 'create-lokasi'})" class="btn btn-success" aria-label="Tambah data lokasi baru">
                 <i class="fas fa-fw fa-plus mr-2"></i>
                 Tambah Data
             </button>
@@ -71,12 +71,14 @@
                                     <div class="flex space-x-2">
                                         <button type="button" data-action="show-detail"
                                             data-id="{{ $commodity_location->id }}"
-                                            class="text-blue-600 hover:text-blue-900 transition-colors">
+                                            class="text-blue-600 hover:text-blue-900 transition-colors"
+                                            aria-label="Lihat detail lokasi {{ $commodity_location->name }}">
                                             <i class="fas fa-fw fa-search"></i>
                                         </button>
-                                        <button type="button" data-action="show-edit"
+                                        <button type="button" data-action="edit-lokasi"
                                             data-id="{{ $commodity_location->id }}"
-                                            class="text-yellow-600 hover:text-yellow-900 transition-colors">
+                                            class="text-yellow-600 hover:text-yellow-900 transition-colors"
+                                            aria-label="Edit lokasi {{ $commodity_location->name }}">
                                             <i class="fas fa-fw fa-edit"></i>
                                         </button>
                                         <form
@@ -85,7 +87,8 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900 transition-colors"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
+                                                aria-label="Hapus lokasi {{ $commodity_location->name }}">
                                                 <i class="fas fa-fw fa-trash-alt"></i>
                                             </button>
                                         </form>
@@ -110,71 +113,112 @@
     <x-modal name="edit-lokasi">
         @include('user.admin.master-inventory.commodity-locations.modal.edit')
     </x-modal>
-@endsection
 
-@push('scripts')
+    @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Detail functionality
-            const detailButtons = document.querySelectorAll('[data-action="show-detail"]');
-            const editButtons = document.querySelectorAll('[data-action="show-edit"]');
-            detailButtons.forEach(button => {
-                button.addEventListener('click', async function() {
-                    const id = this.getAttribute('data-id');
-                    try {
-                        const response = await fetch(
-                            `{{ url('/web-admin/inventory/data-lokasi/') }}/${id}/show`);
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        const data = await response.json();
+            // Cache DOM elements
+            const elements = {
+                showName: document.getElementById('show-name'),
+                showDescription: document.getElementById('show-description'),
+                editName: document.getElementById('edit-name'),
+                editDescription: document.getElementById('edit-description'),
+                editForm: document.getElementById('edit-form'),
+                loadingShow: document.getElementById('loading-show'),
+                contentShow: document.getElementById('content-show'),
+                loadingEdit: document.getElementById('loading-edit'),
+                contentEdit: document.getElementById('content-edit')
+            };
 
-                        // Update modal content
-                        document.getElementById('show-name').textContent = data.name;
-                        document.getElementById('show-description').textContent = data
-                            .description || 'Tidak ada deskripsi';
+            // Utility functions
+            async function fetchPerolehanData(id) {
+                const response = await fetch(`{{ route($prefix . 'inventory.lokasi-show', ['id' => ':id']) }}`.replace(':id', id));
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            }
 
-                        // Open modal
-                        window.dispatchEvent(new CustomEvent('open-modal', {
-                            detail: {
-                                name: 'show-lokasi'
-                            }
-                        }));
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat mengambil data');
+            function openModal(modalName) {
+                window.dispatchEvent(new CustomEvent('open-modal', {
+                    detail: {
+                        name: modalName
                     }
-                });
-            });
+                }));
+            }
 
-            // Edit functionality
-            editButtons.forEach(button => {
-                button.addEventListener('click', async function() {
-                    const id = this.getAttribute('data-id');
-                    try {
-                        const response = await fetch(
-                            `{{ url('/web-admin/inventory/data-lokasi/') }}/${id}/show`);
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        const data = await response.json();
+            function showLoading(modalType) {
+                if (modalType === 'show') {
+                    elements.loadingShow.classList.remove('hidden');
+                    elements.contentShow.classList.add('hidden');
+                } else {
+                    elements.loadingEdit.classList.remove('hidden');
+                    elements.contentEdit.classList.add('hidden');
+                }
+            }
 
-                        // Update modal content
-                        document.getElementById('edit-name').value = data.name;
-                        document.getElementById('edit-description').value = data.description || '';
+            function hideLoading(modalType) {
+                if (modalType === 'show') {
+                    elements.loadingShow.classList.add('hidden');
+                    elements.contentShow.classList.remove('hidden');
+                } else {
+                    elements.loadingEdit.classList.add('hidden');
+                    elements.contentEdit.classList.remove('hidden');
+                }
+            }
 
-                        // Update form action URL
-                        document.getElementById('edit-form').action =
-                            `{{ url('/web-admin/inventory/data-lokasi/') }}/${id}/update`;
+            async function handleShowDetail(id) {
+                try {
+                    showLoading('show');
+                    openModal('show-lokasi');
 
-                        // Open modal
-                        window.dispatchEvent(new CustomEvent('open-modal', {
-                            detail: {
-                                name: 'edit-lokasi'
-                            }
-                        }));
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat mengambil data');
-                    }
-                });
+                    const data = await fetchPerolehanData(id);
+                    elements.showName.textContent = data.name;
+                    elements.showDescription.textContent = data.description || 'Tidak ada deskripsi';
+
+                    hideLoading('show');
+                } catch (error) {
+                    console.error('Error showing detail:', error);
+                    hideLoading('show');
+                    alert('Gagal mengambil detail data');
+                }
+            }
+
+            async function handleEditPerolehan(id) {
+                try {
+                    showLoading('edit');
+                    openModal('edit-lokasi');
+
+                    const data = await fetchPerolehanData(id);
+                    elements.editName.value = data.name;
+                    elements.editDescription.value = data.description || '';
+                    elements.editForm.action = `{{ route($prefix . 'inventory.lokasi-update', ['code' => ':id']) }}`.replace(':id', id);
+
+                    hideLoading('edit');
+                } catch (error) {
+                    console.error('Error loading edit data:', error);
+                    hideLoading('edit');
+                    alert('Gagal mengambil data untuk edit');
+                }
+            }
+
+            // Event delegation
+            document.addEventListener('click', async function(e) {
+                const button = e.target.closest('[data-action]');
+                if (!button) return;
+
+                const action = button.getAttribute('data-action');
+                const id = button.getAttribute('data-id');
+
+                switch (action) {
+                    case 'show-detail':
+                        await handleShowDetail(id);
+                        break;
+                    case 'edit-lokasi':
+                        await handleEditPerolehan(id);
+                        break;
+                }
             });
         });
     </script>
-@endpush
+    @endpush
+@endsection
+
