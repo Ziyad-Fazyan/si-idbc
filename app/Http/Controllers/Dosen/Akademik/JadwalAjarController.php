@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Dosen\Akademik;
 
+use App\Models\Kelas;
+use App\Models\Mahasiswa;
 use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use App\Models\AbsensiMahasiswa;
@@ -27,7 +29,8 @@ class JadwalAjarController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $dosenId = Auth::guard('dosen')->user();
         $jadkul = JadwalKuliah::where('code', $code)->first();
-        // $data['student'] = Mahasiswa::where('class_id', $jadkul->kelas->id)->get();
+        $data['kelas'] = Kelas::where('code', $code)->first();
+        $data['student'] = $data['kelas']->mahasiswa;
         $data['absen'] = AbsensiMahasiswa::where('jadkul_code', $code)->get();
 
         return view('dosen.pages.jadwal-absen', $data);
