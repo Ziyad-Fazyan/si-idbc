@@ -1,36 +1,26 @@
-<div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-        <!-- Modal Header -->
-        <div class="flex justify-between items-center p-4 border-b">
-            <h5 class="text-xl font-semibold text-gray-800">Detail Data Ruangan</h5>
-            <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none" x-data
-                @click="$dispatch('close-modal', {name: 'show-lokasi'})">
-                <i class="fas fa-times"></i>
-                <span class="text-2xl">Keluar</span>
-            </button>
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div id="loading-show" class="hidden py-4">
+        <div class="flex justify-center items-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
         </div>
-
-        <!-- Modal Body -->
-        <div class="p-6 overflow-y-auto flex-grow">
-            <div class="space-y-4" x-data>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Perolehan</label>
-                    <p id="show-name" class="text-gray-900"></p>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Perolehan</label>
-                    <p id="show-description" class="text-gray-900 whitespace-pre-wrap"></p>
-                </div>
+    </div>
+    <!-- Header -->
+    <div class="p-6">
+        <h2 class="text-lg font-medium text-gray-900">Detail Perolehan</h2>
+        <div id="loading-show" class="hidden py-4">
+            <div class="flex justify-center items-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
             </div>
         </div>
-
-        <!-- Modal Footer -->
-        <div class="flex justify-end p-4 border-t bg-gray-50 rounded-b-lg">
-            <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none" x-data
-                @click="$dispatch('close-modal', {name: 'show-lokasi'})">
-                <span class="text-2xl">Keluar</span>
-                Tutup
-            </button>
+        <div id="content-show">
+            <div class="mt-4">
+                <p class="text-sm font-medium text-gray-500">Nama:</p>
+                <p id="show-name" class="mt-1 text-sm text-gray-900"></p>
+            </div>
+            <div class="mt-4">
+                <p class="text-sm font-medium text-gray-500">Deskripsi:</p>
+                <p id="show-description" class="mt-1 text-sm text-gray-900"></p>
+            </div>
         </div>
     </div>
 </div>

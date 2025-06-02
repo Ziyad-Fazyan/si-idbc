@@ -23,7 +23,8 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Daftar Perolehan</h1>
             <button type="button" x-data @click="$dispatch('open-modal', {name: 'create-perolehan'})"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors"
+                aria-label="Tambah data perolehan baru">
                 <i class="fas fa-fw fa-plus mr-2"></i>
                 Tambah Data
             </button>
@@ -62,13 +63,15 @@
                                     <div class="flex space-x-2">
                                         <button type="button" data-action="show-detail"
                                             data-id="{{ $commodityAcquisition->id }}"
-                                            class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors">
+                                            class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors"
+                                            aria-label="Lihat detail perolehan {{ $commodityAcquisition->name }}">
                                             <i class="fas fa-fw fa-search"></i>
                                             <span class="sr-only md:not-sr-only">Detail</span>
                                         </button>
                                         <button type="button" data-action="edit-perolehan"
                                             data-id="{{ $commodityAcquisition->id }}"
-                                            class="text-yellow-600 hover:text-yellow-900 p-1 rounded hover:bg-yellow-50 transition-colors">
+                                            class="text-yellow-600 hover:text-yellow-900 p-1 rounded hover:bg-yellow-50 transition-colors"
+                                            aria-label="Edit perolehan {{ $commodityAcquisition->name }}">
                                             <i class="fas fa-fw fa-edit"></i>
                                             <span class="sr-only md:not-sr-only">Edit</span>
                                         </button>
@@ -79,6 +82,7 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors"
+                                                aria-label="Hapus perolehan {{ $commodityAcquisition->name }}"
                                                 onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                 <i class="fas fa-fw fa-trash-alt"></i>
                                                 <span class="sr-only md:not-sr-only">Hapus</span>
@@ -109,66 +113,105 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Detail functionality
-                const detailButtons = document.querySelectorAll('[data-action="show-detail"]');
-                const editButtons = document.querySelectorAll('[data-action="edit-perolehan"]');
-                detailButtons.forEach(button => {
-                    button.addEventListener('click', async function() {
-                        const id = this.getAttribute('data-id');
-                        try {
-                            const response = await fetch(
-                                `{{ url('/web-admin/inventory/data-perolehan/') }}/${id}/show`);
-                            if (!response.ok) throw new Error('Network response was not ok');
-                            const data = await response.json();
+                // Cache DOM elements
+                const elements = {
+                    showName: document.getElementById('show-name'),
+                    showDescription: document.getElementById('show-description'),
+                    editName: document.getElementById('edit-name'),
+                    editDescription: document.getElementById('edit-description'),
+                    editForm: document.getElementById('edit-form'),
+                    loadingShow: document.getElementById('loading-show'),
+                    contentShow: document.getElementById('content-show'),
+                    loadingEdit: document.getElementById('loading-edit'),
+                    contentEdit: document.getElementById('content-edit')
+                };
 
-                            // Update modal content
-                            document.getElementById('show-name').textContent = data.name;
-                            document.getElementById('show-description').textContent = data
-                                .description || 'Tidak ada deskripsi';
+                // Utility functions
+                async function fetchPerolehanData(id) {
+                    const response = await fetch(`{{ route($prefix . 'inventory.perolehan-show', ['id' => ':id']) }}`.replace(':id', id));
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return await response.json();
+                }
 
-                            // Open modal
-                            window.dispatchEvent(new CustomEvent('open-modal', {
-                                detail: {
-                                    name: 'show-perolehan'
-                                }
-                            }));
-                        } catch (error) {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat mengambil data');
+                function openModal(modalName) {
+                    window.dispatchEvent(new CustomEvent('open-modal', {
+                        detail: {
+                            name: modalName
                         }
-                    });
-                });
+                    }));
+                }
 
-                // Edit functionality
-                editButtons.forEach(button => {
-                    button.addEventListener('click', async function() {
-                        const id = this.getAttribute('data-id');
-                        try {
-                            const response = await fetch(
-                                `{{ url('/web-admin/inventory/data-perolehan/') }}/${id}/show`);
-                            if (!response.ok) throw new Error('Network response was not ok');
-                            const data = await response.json();
+                function showLoading(modalType) {
+                    if (modalType === 'show') {
+                        elements.loadingShow.classList.remove('hidden');
+                        elements.contentShow.classList.add('hidden');
+                    } else {
+                        elements.loadingEdit.classList.remove('hidden');
+                        elements.contentEdit.classList.add('hidden');
+                    }
+                }
 
-                            // Update edit form fields
-                            document.getElementById('edit-name').value = data.name;
-                            document.getElementById('edit-description').value = data.description ||
-                                '';
+                function hideLoading(modalType) {
+                    if (modalType === 'show') {
+                        elements.loadingShow.classList.add('hidden');
+                        elements.contentShow.classList.remove('hidden');
+                    } else {
+                        elements.loadingEdit.classList.add('hidden');
+                        elements.contentEdit.classList.remove('hidden');
+                    }
+                }
 
-                            // Update form action URL
-                            document.getElementById('edit-form').action =
-                                `{{ url('/web-admin/inventory/data-perolehan/') }}/${id}/update`;
+                async function handleShowDetail(id) {
+                    try {
+                        showLoading('show');
+                        openModal('show-perolehan');
 
-                            // Open edit modal
-                            window.dispatchEvent(new CustomEvent('open-modal', {
-                                detail: {
-                                    name: 'edit-perolehan'
-                                }
-                            }));
-                        } catch (error) {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat mengambil data');
-                        }
-                    });
+                        const data = await fetchPerolehanData(id);
+                        elements.showName.textContent = data.name;
+                        elements.showDescription.textContent = data.description || 'Tidak ada deskripsi';
+
+                        hideLoading('show');
+                    } catch (error) {
+                        console.error('Error showing detail:', error);
+                        hideLoading('show');
+                        alert('Gagal mengambil detail data');
+                    }
+                }
+
+                async function handleEditPerolehan(id) {
+                    try {
+                        showLoading('edit');
+                        openModal('edit-perolehan');
+
+                        const data = await fetchPerolehanData(id);
+                        elements.editName.value = data.name;
+                        elements.editDescription.value = data.description || '';
+                        elements.editForm.action = `{{ route($prefix . 'inventory.perolehan-update', ['code' => ':id']) }}`.replace(':id', id);
+
+                        hideLoading('edit');
+                    } catch (error) {
+                        console.error('Error loading edit data:', error);
+                        hideLoading('edit');
+                        alert('Gagal mengambil data untuk edit');
+                    }
+                }
+
+                // Event delegation
+                document.addEventListener('click', async function(e) {
+                    const button = e.target.closest('[data-action]');
+                    if (!button) return;
+
+                    const action = button.getAttribute('data-action');
+                    const id = button.getAttribute('data-id');
+
+                    switch (action) {
+                        case 'show-detail':
+                            await handleShowDetail(id);
+                            break;
+                        case 'edit-perolehan':
+                            await handleEditPerolehan(id);
+                            break;
+                    }
                 });
             });
         </script>

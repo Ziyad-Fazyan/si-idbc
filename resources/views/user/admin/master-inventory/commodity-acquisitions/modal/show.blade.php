@@ -1,22 +1,26 @@
 <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-6 border-b pb-3">
-        <h5 class="text-lg font-semibold text-gray-800">Detail Data Perolehan</h5>
-        <button type="button" x-data @click="$dispatch('close-modal', {name: 'show-perolehan'})"
-            class="text-gray-500 hover:text-gray-700 transition-colors">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <!-- Content -->
-    <div class="space-y-4" x-data>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Perolehan</label>
-            <p id="show-name" class="text-gray-900"></p>
+    <div id="loading-show" class="hidden py-4">
+        <div class="flex justify-center items-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
         </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Perolehan</label>
-            <p id="show-description" class="text-gray-900 whitespace-pre-wrap"></p>
+    </div>
+    <!-- Header -->
+    <div class="p-6">
+        <h2 class="text-lg font-medium text-gray-900">Detail Perolehan</h2>
+        <div id="loading-show" class="hidden py-4">
+            <div class="flex justify-center items-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            </div>
+        </div>
+        <div id="content-show">
+            <div class="mt-4">
+                <p class="text-sm font-medium text-gray-500">Nama:</p>
+                <p id="show-name" class="mt-1 text-sm text-gray-900"></p>
+            </div>
+            <div class="mt-4">
+                <p class="text-sm font-medium text-gray-500">Deskripsi:</p>
+                <p id="show-description" class="mt-1 text-sm text-gray-900"></p>
+            </div>
         </div>
     </div>
 </div>
