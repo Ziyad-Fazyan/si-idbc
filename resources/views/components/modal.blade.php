@@ -195,7 +195,7 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
                 @else
                     {{ $scrollable ? 'max-h-[90vh] overflow-y-auto' : '' }}
                 @endif
-                bg-white dark:bg-gray-800
+                bg-white
                 {{ $fullscreen ? '' : 'rounded-lg shadow-xl' }}
                 transform transition-all
             "

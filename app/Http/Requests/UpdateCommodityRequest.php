@@ -26,7 +26,7 @@ class UpdateCommodityRequest extends FormRequest
         return [
             'commodity_acquisition_id' => 'required|numeric|exists:commodity_acquisitions,id',
             'commodity_location_id' => 'required|numeric|exists:commodity_locations,id',
-            'item_code' => 'required|unique:commodities,item_code,'.$this->commodity->id.'|min:3|max:255',
+            'item_code' => 'required|unique:commodities,item_code,' . $this->route('code') . '|min:3|max:255',
             'name' => 'required|string|min:3|max:255',
             'brand' => 'required|string|min:3|max:255',
             'material' => 'required|string|min:3|max:255',

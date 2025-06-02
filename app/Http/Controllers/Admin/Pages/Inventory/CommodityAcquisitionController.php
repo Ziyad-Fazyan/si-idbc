@@ -67,17 +67,26 @@ class CommodityAcquisitionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CommodityAcquisition $commodityAcquisition, $code)
+    public function destroy($code)
     {
-        if ($commodityAcquisition->commodities->isNotEmpty()) {
-            return to_route('perolehan.index')
-                ->with('error', 'Perolehan tidak dapat dihapus karena masih terkait dengan data komoditas!');
+        try {
+            $commodityAcquisition = CommodityAcquisition::findOrFail($code);
+
+            if ($commodityAcquisition->commodities()->exists()) {
+                Alert::error('Error', 'Perolehan tidak dapat dihapus karena masih terkait dengan data barang!');
+                return back();
+            }
+
+            $commodityAcquisition->delete();
+
+            Alert::success('Success', 'Data perolehan berhasil dihapus');
+            return back();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Alert::error('Error', 'Data perolehan tidak ditemukan!');
+            return back();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+            return back();
         }
-
-        $commodityAcquisition = CommodityAcquisition::where('id', $code)->first();
-        $commodityAcquisition->delete();
-
-        Alert::success('success', 'Data telah berhasil dihapus');
-        return back();
     }
 }
