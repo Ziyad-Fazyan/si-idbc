@@ -288,6 +288,18 @@
                     class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Ruangan</a>
             </li>
+            <li
+                class="{{ Route::is('web-admin.inventory.perolehan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.inventory.perolehan-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Perolehan</a>
+            </li>
+            <li
+                class="{{ Route::is('web-admin.inventory.lokasi-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.inventory.lokasi-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Lokasi</a>
+            </li>
         </ul>
     </li>
 </div>

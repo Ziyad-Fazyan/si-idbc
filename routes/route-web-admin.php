@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\Pages\Core\TahunAkademikController;
 use App\Http\Controllers\Admin\Pages\Finance\PembayaranController;
 use App\Http\Controllers\Admin\Pages\Finance\TicketSupportController;
 use App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController;
+use App\Http\Controllers\Admin\Pages\Inventory\CommodityAcquisitionController;
+use App\Http\Controllers\Admin\Pages\Inventory\CommodityLocationController;
 
 // WEB ADMINISTRATOR ROUTES
 Route::group([
@@ -117,7 +119,7 @@ Route::group([
                 Route::post('/{code}/cetak/mahasiswa', [KelasController::class, 'cetakMahasiswa'])->name('mahasiswa-cetak');
                 Route::patch('/{code}/update', [KelasController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [KelasController::class, 'destroy'])->name('destroy');
-                
+
                 // Kelas Management (Pivot Table)
                 Route::get('/{code}/management', [App\Http\Controllers\Admin\Pages\Core\KelasManagementController::class, 'index'])->name('management');
                 Route::post('/{code}/management/add', [App\Http\Controllers\Admin\Pages\Core\KelasManagementController::class, 'addMahasiswa'])->name('management-add');
@@ -172,7 +174,29 @@ Route::group([
                 Route::patch('/{code}/update', [RuangController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [RuangController::class, 'destroy'])->name('destroy');
             });
+
+            // Aquisition
+            Route::prefix('data-perolehan')->name('perolehan-')->group(function () {
+                Route::get('/', [CommodityAcquisitionController::class, 'index'])->name('index');
+                Route::get('/{id}/show', [CommodityAcquisitionController::class, 'show'])->name('show');
+                Route::post('/store', [CommodityAcquisitionController::class, 'store'])->name('store');
+                Route::patch('/{code}/update', [CommodityAcquisitionController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [CommodityAcquisitionController::class, 'destroy'])->name('destroy');
+            });
+
+            // Location
+            Route::prefix('data-lokasi')->name('lokasi-')->group(function () {
+                Route::get('/', [CommodityLocationController::class, 'index'])->name('index');
+                Route::post('/store', [CommodityLocationController::class, 'store'])->name('store');
+                Route::get('/{id}/show', [CommodityLocationController::class, 'show'])->name('show');
+                Route::patch('/{code}/update', [CommodityLocationController::class, 'update'])->name('update');
+                Route::delete('/{code}/destroy', [CommodityLocationController::class, 'destroy'])->name('destroy');
+
+                Route::post('/import', [CommodityLocationController::class, 'import'])->name('import');
+                Route::post('/export', [CommodityLocationController::class, 'export'])->name('export');
+            });
         });
+
 
         // FINANCE ROUTES
         Route::prefix('finance')->name('finance.')->group(function () {
