@@ -83,8 +83,7 @@
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex items-center space-x-2">
-                                        <button type="button" x-data
-                                            @click="showDetail({{ $commodityAcquisition->id }})"
+                                        <button type="button" x-data @click="showDetail({{ $commodityAcquisition->id }})"
                                             class="text-blue-600 hover:text-blue-900 cursor-pointer transition-colors duration-200 p-1 rounded hover:bg-blue-50"
                                             aria-label="Lihat detail perolehan {{ $commodityAcquisition->name }}">
                                             <i class="fas fa-fw fa-search"></i>
@@ -148,8 +147,6 @@
                     // Update modal content
                     document.getElementById('show_name').textContent = data.name || '-';
                     document.getElementById('show_description').textContent = data.description || 'Tidak ada deskripsi';
-                    document.getElementById('show_created_at').textContent = data.created_at ? new Date(data.created_at)
-                        .toLocaleDateString('id-ID') : '-';
 
                     hideLoadingState('show');
                 } catch (error) {
@@ -174,8 +171,8 @@
                     document.getElementById('edit_name').value = data.name || '';
                     document.getElementById('edit_description').value = data.description || '';
 
-                    // Update form action
-                    const form = document.querySelector('#edit_perolehan form');
+                    // Update form action - Fix: Use 'code' parameter instead of 'id'
+                    const form = document.getElementById('edit-form');
                     if (form) {
                         form.action = `{{ route($prefix . 'inventory.perolehan-update', ['code' => ':id']) }}`.replace(
                             ':id', id);

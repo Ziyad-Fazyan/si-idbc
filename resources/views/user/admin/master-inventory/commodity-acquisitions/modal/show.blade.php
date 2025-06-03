@@ -26,7 +26,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Nama</p>
-                        <p id="show-name" class="text-lg font-semibold text-gray-800 break-words"></p>
+                        <p id="show_name" class="text-lg font-semibold text-gray-800 break-words"></p>
                     </div>
                     <div class="p-1.5 rounded-md bg-blue-50 text-blue-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Deskripsi</p>
-                        <p id="show-description" class="text-gray-700 leading-relaxed break-words"></p>
+                        <p id="show_description" class="text-gray-700 leading-relaxed break-words"></p>
                     </div>
                     <div class="p-1.5 rounded-md bg-green-50 text-green-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
