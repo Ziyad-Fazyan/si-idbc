@@ -5,7 +5,6 @@
         <button type="button" x-data @click="$dispatch('close-modal', {name: 'create-perolehan'})"
                 class="text-gray-500 hover:text-gray-700 transition-colors">
             <i class="fas fa-fw fa-times mr-1"></i>
-            <span>Keluar</span>
         </button>
     </div>
 

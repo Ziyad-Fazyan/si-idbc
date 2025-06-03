@@ -208,49 +208,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // SEEDER KHUSUS DATA MASTER INVENTARIS
-        \App\Models\Gedung::create([
-            'name'       => 'Palestina Land',
-            'code'       => 'PLN',
-        ]);
-        \App\Models\Gedung::create([
-            'name'       => 'Turki Land',
-            'code'       => 'TLN',
-        ]);
-        \App\Models\Gedung::create([
-            'name'       => 'Gedung Pink',
-            'code'       => 'GPK',
-        ]);
-        \App\Models\Gedung::create([
-            'name'       => 'Gedung Madinah',
-            'code'       => 'GMA',
-        ]);
-        \App\Models\Ruang::create([
-            'gedu_id'    => '1',
-            'floor'      => '1',
-            'type'       => '1',
-            'name'       => 'Kamar PA',
-            'code'       => 'C-101',
-        ]);
-        \App\Models\Ruang::create([
-            'gedu_id'    => '2',
-            'floor'      => '1',
-            'type'       => '1',
-            'name'       => 'Kelas 102',
-            'code'       => 'C-102',
-        ]);
-        \App\Models\Ruang::create([
-            'gedu_id'    => '3',
-            'floor'      => '1',
-            'type'       => '1',
-            'name'       => 'Dapur',
-            'code'       => 'C-103',
-        ]);
-        \App\Models\Ruang::create([
-            'gedu_id'    => '3',
-            'floor'      => '2',
-            'type'       => '1',
-            'name'       => 'Kelas',
-            'code'       => 'C-104',
+        $this->call([
+            CommodityAcquisitionSeeder::class,
+            CommodityLocationSeeder::class,
+            CommoditySeeder::class,
         ]);
 
         // TAGIHAN KULIAH
