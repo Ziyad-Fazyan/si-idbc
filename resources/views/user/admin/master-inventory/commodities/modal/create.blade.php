@@ -51,19 +51,19 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="commodity_location_id" class="block text-sm font-medium text-gray-700">
+                            <label for="ruang_id" class="block text-sm font-medium text-gray-700">
                                 Lokasi Barang<span class="text-red-500">*</span>
                             </label>
-                            <select name="commodity_location_id" id="commodity_location_id"
+                            <select name="ruang_id" id="ruang_id"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                                 <option value="" selected>Pilih..</option>
-                                @foreach ($commodityLocations as $commodityLocation)
-                                    <option value="{{ $commodityLocation->id }}" @selected(old('commodity_location_id') == $commodityLocation->id)>
-                                        {{ $commodityLocation->name }}
+                                @foreach ($ruangs as $ruang)
+                                    <option value="{{ $ruang->id }}" @selected(old('ruang_id') == $ruang->id)>
+                                        {{ $ruang->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('commodity_location_id', 'store')
+                            @error('ruang_id')
                                 <div class="text-sm text-red-600 mt-1">
                                     {{ $message }}
                                 </div>

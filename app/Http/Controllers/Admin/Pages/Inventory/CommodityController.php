@@ -10,6 +10,7 @@ use App\Models\Settings\webSettings;
 use App\Helpers\roleTrait;
 use App\Http\Requests\StoreCommodityRequest;
 use App\Http\Requests\UpdateCommodityRequest;
+use App\Models\Ruang;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -26,7 +27,7 @@ class CommodityController extends Controller
         $prefix = $this->setPrefix();
 
         // Base query with relationships
-        $query = Commodity::with(['commodity_location', 'commodity_acquisition']);
+        $query = Commodity::with(['ruang', 'commodity_acquisition']);
 
         // Apply filters based on request parameters
         $this->applyFilters($query, $request);
@@ -35,19 +36,32 @@ class CommodityController extends Controller
         $commodities = $query->get();
 
         // Get all data for filter dropdowns
-        $commodityLocations = CommodityLocation::all();
+        $ruangs = Ruang::all();
         $commodityAcquisitions = CommodityAcquisition::all();
+
+        // Calculate statistics
+        $totalItems = $commodities->count();
+        $goodCondition = $commodities->where('condition', 1)->count();
+        $minorDamage = $commodities->where('condition', 2)->count();
+        $heavyDamage = $commodities->where('condition', 3)->count();
+
+        // pagination
+        $commodities = $query->paginate(10)->withQueryString();
 
         // Get unique values for filter options
         $filterOptions = $this->getFilterOptions();
 
         return view('user.admin.master-inventory.commodities.index', compact(
             'commodities',
-            'commodityLocations',
+            'ruangs',
             'commodityAcquisitions',
             'web',
             'prefix',
-            'filterOptions'
+            'filterOptions',
+            'totalItems',
+            'goodCondition',
+            'minorDamage',
+            'heavyDamage'
         ));
     }
 
@@ -205,7 +219,7 @@ class CommodityController extends Controller
      */
     public function show($id)
     {
-        $commodity = Commodity::with(['commodity_location', 'commodity_acquisition'])
+        $commodity = Commodity::with(['ruang', 'commodity_acquisition'])
             ->findOrFail($id);
 
         return response()->json($commodity);

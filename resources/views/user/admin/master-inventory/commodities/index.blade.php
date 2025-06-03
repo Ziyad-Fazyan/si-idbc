@@ -22,7 +22,7 @@
     @include('user.admin.master-inventory.commodities.partials.statistics-cards')
 
     <!-- Filter -->
-    @include('user.admin.master-inventory.commodities.partials.filter')
+    {{-- @include('user.admin.master-inventory.commodities.partials.filter') --}}
 
     <!-- Main Content -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -80,10 +80,7 @@
                                     Nama Barang</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Bahan</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Merk</th>
+                                    Ruangan</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Tahun Pembelian</th>
@@ -116,9 +113,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-900">
                                         {{ Str::limit($commodity->name, 55, '...') }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $commodity->material }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $commodity->brand }}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $commodity->ruang->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {{ $commodity->year_of_purchase }}</td>
@@ -194,6 +189,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="mt-4">
+                    {{ $commodities->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -203,11 +201,11 @@
     </x-modal>
 
     <x-modal name="show-barang" maxWidth="4xl" :scrollable="true">
-        @include('user.admin.master-inventory.commodities.modal.show')
+        {{-- @include('user.admin.master-inventory.commodities.modal.show') --}}
     </x-modal>
 
     <x-modal name="edit-barang" maxWidth="4xl" :scrollable="true">
-        @include('user.admin.master-inventory.commodities.modal.edit')
+        {{-- @include('user.admin.master-inventory.commodities.modal.edit') --}}
     </x-modal>
 
     @push('scripts')
