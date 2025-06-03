@@ -336,7 +336,13 @@ class HomeController extends Controller
     {
         $user = Auth::guard('mahasiswa')->user();
 
-        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere('proku_id', $user->kelas->proku->id)->orwhere('prodi_id', $user->kelas->pstudi->id)->latest()->get();
+        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere(
+            'proku_id',
+            $user->kelas->first()?->proku?->id
+        )->orwhere(
+            'prodi_id',
+            $user->kelas->first()?->proku?->id
+        )->latest()->get();
         $data['history'] = HistoryTagihan::where('users_id', Auth::guard('mahasiswa')->user()->id)->where('stat', 1)->latest()->get();
 
         return response()->json($data);
@@ -347,7 +353,13 @@ class HomeController extends Controller
         $user = Auth::guard('mahasiswa')->user();
         // Mencari tagihan berdasarkan `users_id`
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->latest()->get();
+        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere(
+            'proku_id',
+            $user->kelas->first()?->proku?->id
+        )->orwhere(
+            'prodi_id',
+            $user->kelas->first()?->proku?->id
+        )->latest()->get();
         $data['history'] = HistoryTagihan::where('users_id', Auth::guard('mahasiswa')->user()->id)->where('stat', 1)->latest()->get();
 
 
@@ -379,10 +391,12 @@ class HomeController extends Controller
         \Midtrans\Config::$isSanitized  = config('services.midtrans.isSanitized');
         \Midtrans\Config::$is3ds        = config('services.midtrans.is3ds');
 
-        DB::transaction(function () use ($request) {
+        $response = []; // <- Inisialisasi dulu
+
+        DB::transaction(function () use ($request, $tagihan, &$response) {
             $donation = \App\Models\HistoryTagihan::create([
                 'users_id'      => Auth::guard('mahasiswa')->user()->id,
-                'tagihan_code'  => $request->code,
+                'tagihan_code'  => $tagihan->code, // pakai dari model, jangan $request->code
                 'code'          => Str::random(9),
                 'desc'          => $request->note,
             ]);
@@ -398,7 +412,7 @@ class HomeController extends Controller
                 ],
                 'item_details' => [
                     [
-                        'id'            => $request->code,
+                        'id'            => $tagihan->code,
                         'price'         => $request->amount,
                         'quantity'      => 1,
                         'name'          => $request->note,
@@ -408,20 +422,19 @@ class HomeController extends Controller
                     ],
                 ],
             ];
-            // dd($payload);
 
             $snapToken = \Midtrans\Snap::getSnapToken($payload);
             $donation->snap_token = $snapToken;
             $donation->save();
 
-            $this->response['code_uniq'] = $donation->code;
-            $this->response['snap_token'] = $snapToken;
+            $response['code_uniq'] = $donation->code;
+            $response['snap_token'] = $snapToken;
         });
 
         return response()->json([
             'status'     => 'success',
-            'snap_token' => $this->response['snap_token'],
-            'code_uniq' => $this->response['code_uniq'],
+            'snap_token' => $response['snap_token'],
+            'code_uniq'  => $response['code_uniq'],
         ]);
     }
 

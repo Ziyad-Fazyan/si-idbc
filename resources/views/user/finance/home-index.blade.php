@@ -1,4 +1,10 @@
 <div class="container mx-auto px-4">
+    <h4 class="text-md font-semibold text-gray-700 mb-3">
+        <i class="fa-solid fa-chart-pie text-[#0C6E71] mr-2"></i>Ikhtisar Keuangan
+    </h4>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+        <div id="financeChart" class="w-full h-64"></div>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="mb-4">
             <a href="{{ route($prefix . 'finance.keuangan-index') }}">
@@ -110,16 +116,52 @@
         </div>
     </div>
 </div>
-
 @push('scripts')
-<script>
-    // Example of modal toggle functionality
-    function openModal() {
-        document.getElementById('modal').classList.remove('hidden');
-    }
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // Finance Chart
+        var financeOptions = {
+            series: [{
+                name: 'Pendapatan',
+                data: [31000, 40000, 28000, 51000, 42000, 82000, 56000]
+            }, {
+                name: 'Pengeluaran',
+                data: [11000, 32000, 45000, 32000, 34000, 52000, 41000]
+            }],
+            chart: {
+                height: 250,
+                type: 'area',
+                toolbar: {
+                    show: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'category',
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy'
+                },
+            },
+            colors: ['#0C6E71', '#FF6B35'] // Primary and Accent colors
+        };
 
-    function closeModal() {
-        document.getElementById('modal').classList.add('hidden');
-    }
-</script>
+        var financeChart = new ApexCharts(document.querySelector("#financeChart"), financeOptions);
+        financeChart.render();
+        // Example of modal toggle functionality
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    </script>
 @endpush

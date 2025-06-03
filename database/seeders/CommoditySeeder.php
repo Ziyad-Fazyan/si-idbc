@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CommodityLocation;
+use App\Models\Ruang;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class CommoditySeeder extends Seeder
     {
         $carbon = new Carbon;
 
-        $commodity_locations = CommodityLocation::all();
+        $ruangs = Ruang::all();
 
         $commodities = [
             'Meja',
@@ -69,7 +70,7 @@ class CommoditySeeder extends Seeder
         for ($i = 1; $i <= count($commodities); $i++) {
             DB::table('commodities')->insert([
                 'commodity_acquisition_id' => mt_rand(1, 2),
-                'commodity_location_id' => mt_rand(1, count($commodity_locations)),
+                'ruang_id' => mt_rand(1, count($ruangs)),
                 'item_code' => 'BRG-'.mt_rand(1000, 9000).mt_rand(100, 900),
                 'name' => $commodities[array_rand($commodities)],
                 'brand' => $brands[array_rand($brands)],
