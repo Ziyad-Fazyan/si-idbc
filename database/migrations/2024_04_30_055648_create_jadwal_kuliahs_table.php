@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('meth_id');             // ID METODE PERTEMUAN
             $table->integer('days_id');             // ID HARI
             $table->integer('bsks');                // BEBAN SKS HARI INI
-            $table->date('date');                   // TANGGAL PERKULIAHAN
             $table->time('start');                  // WAKTU MULAI PERKULIAHAN
             $table->time('ended');                  // WAKTU SELESAI PERKULIAHAN
             $table->string('code')->unique();       // CODE JADWAL KULIAH

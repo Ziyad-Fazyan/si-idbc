@@ -34,27 +34,6 @@ class Mahasiswa extends Authenticatable
     {
         return $this->attributes['mhs_stat'];
     }
-    public function getAgamaAttribute($value)
-    {
-        $mhsrelis = [
-            0 => 'Belum Memilih',
-            1 => 'Agama Islam',
-            2 => 'Agama Kristen Katholik',
-            3 => 'Agama Kristen Protestan',
-            4 => 'Agama Hindu',
-            5 => 'Agama Buddha',
-            6 => 'Agama Konghuchu',
-            7 => 'Kepercayaan Lainnya',
-        ];
-
-        return isset($mhsrelis[$value]) ? $mhsrelis[$value] : 'Unknown';
-    }
-
-
-    public function getRawMhsReliAttribute()
-    {
-        return $this->attributes['mhs_reli'];
-    }
 
     public function getMhsPhoneAttribute($value)
     {
@@ -76,5 +55,10 @@ class Mahasiswa extends Authenticatable
     public function taka()
     {
         return $this->belongsTo(TahunAkademik::class, 'taka_id');
+    }
+
+    public function mahasiswaDetails()
+    {
+        return $this->hasOne(MahasiswaDetails::class);
     }
 }

@@ -232,7 +232,7 @@
             </a>
 
             <!-- Room Card -->
-            <a href="{{ route('web-admin.inventory.ruang-index') }}" class="group">
+            <a href="{{ route('web-admin.inventory.lokasi-index') }}" class="group">
                 <div
                     class="card bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group-hover:border-[#FF6B35]">
                     <div
@@ -243,7 +243,7 @@
                         </div>
                         <div>
                             <p class="text-lg font-semibold text-gray-800">
-                                {{ \App\Models\Ruang::all()->count() }}</p>
+                                {{ \App\Models\CommodityLocation::all()->count() }}</p>
                             <p class="text-sm text-gray-600">Ruangan</p>
                         </div>
                     </div>
@@ -420,95 +420,5 @@
 
         var financeChart = new ApexCharts(document.querySelector("#financeChart"), financeOptions);
         financeChart.render();
-
-        // Gender Charts
-        var genderMhsOptions = {
-            series: [65, 35], // Example data for male/female students
-            chart: {
-                type: 'donut',
-                height: 200
-            },
-            labels: ['Laki-laki', 'Perempuan'],
-            colors: ['#0C6E71', '#FF6B35'],
-            legend: {
-                position: 'bottom'
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        };
-
-        var genderDsnOptions = {
-            series: [70, 30], // Example data for male/female lecturers
-            chart: {
-                type: 'donut',
-                height: 200
-            },
-            labels: ['Laki-laki', 'Perempuan'],
-            colors: ['#0C6E71', '#FF6B35'],
-            legend: {
-                position: 'bottom'
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        };
-
-        var genderStaffOptions = {
-            series: [40, 60], // Example data for male/female staff
-            chart: {
-                type: 'donut',
-                height: 200
-            },
-            labels: ['Laki-laki', 'Perempuan'],
-            colors: ['#0C6E71', '#FF6B35'],
-            legend: {
-                position: 'bottom'
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        };
-
-        var genderMhsChart = new ApexCharts(document.querySelector("#genderMhsChart"), genderMhsOptions);
-        genderMhsChart.render();
-
-        var genderDsnChart = new ApexCharts(document.querySelector("#genderDsnChart"), genderDsnOptions);
-        genderDsnChart.render();
-
-        var genderStaffChart = new ApexCharts(document.querySelector("#genderStaffChart"), genderStaffOptions);
-        genderStaffChart.render();
-
-        // Time Frame Selector
-        document.getElementById('statsTimeFrame').addEventListener('change', function() {
-            // Here you would typically make an AJAX request to get new data
-            // For demo purposes, we'll just show an alert
-            alert('Changing time frame to: ' + this.value);
-            // In a real implementation, you would update the charts with new data
-        });
     </script>
 @endpush

@@ -237,7 +237,7 @@
                                                 Tempat Lahir
                                             </label>
                                             <input type="text" name="mhs_birthplace" id="mhs_birthplace"
-                                                value="{{ $student->mhs_birthplace }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_birthplace : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan tempat lahir">
                                             @error('mhs_birthplace')
@@ -251,7 +251,7 @@
                                                 Tanggal Lahir
                                             </label>
                                             <input type="date" name="mhs_birthdate" id="mhs_birthdate"
-                                                value="{{ $student->mhs_birthdate }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_birthdate : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                             @error('mhs_birthdate')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -266,22 +266,22 @@
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                                 <option value="">Pilih Agama</option>
                                                 <option value="1"
-                                                    {{ $student->raw_mhs_reli === '1' ? 'selected' : '' }}>Agama Islam
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '1' ? 'selected' : '' }}>Agama Islam
                                                 </option>
                                                 <option value="2"
-                                                    {{ $student->raw_mhs_reli === '2' ? 'selected' : '' }}>Agama Kristen
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '2' ? 'selected' : '' }}>Agama Kristen
                                                     Protestan</option>
                                                 <option value="3"
-                                                    {{ $student->raw_mhs_reli === '3' ? 'selected' : '' }}>Agama Kriten
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '3' ? 'selected' : '' }}>Agama Kriten
                                                     Katholik</option>
                                                 <option value="4"
-                                                    {{ $student->raw_mhs_reli === '4' ? 'selected' : '' }}>Agama Hindu
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '4' ? 'selected' : '' }}>Agama Hindu
                                                 </option>
                                                 <option value="5"
-                                                    {{ $student->raw_mhs_reli === '5' ? 'selected' : '' }}>Agama Buddha
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '5' ? 'selected' : '' }}>Agama Buddha
                                                 </option>
                                                 <option value="6"
-                                                    {{ $student->raw_mhs_reli === '6' ? 'selected' : '' }}>Agama Konghuchu
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '6' ? 'selected' : '' }}>Agama Konghuchu
                                                 </option>
                                             </select>
                                             @error('mhs_reli')
@@ -328,7 +328,7 @@
                                                 Nama Ayah
                                             </label>
                                             <input type="text" name="mhs_parent_father" id="mhs_parent_father"
-                                                value="{{ $student->mhs_parent_father }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_father : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama ayah">
                                             @error('mhs_parent_father')
@@ -343,7 +343,7 @@
                                             </label>
                                             <input type="tel" name="mhs_parent_father_phone"
                                                 id="mhs_parent_father_phone"
-                                                value="{{ $student->mhs_parent_father_phone }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_father_phone : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon ayah">
                                             @error('mhs_parent_father_phone')
@@ -357,7 +357,7 @@
                                                 Nama Ibu
                                             </label>
                                             <input type="text" name="mhs_parent_mother" id="mhs_parent_mother"
-                                                value="{{ $student->mhs_parent_mother }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_mother : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama ibu">
                                             @error('mhs_parent_mother')
@@ -372,7 +372,7 @@
                                             </label>
                                             <input type="tel" name="mhs_parent_mother_phone"
                                                 id="mhs_parent_mother_phone"
-                                                value="{{ $student->mhs_parent_mother_phone }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_mother_phone : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon ibu">
                                             @error('mhs_parent_mother_phone')
@@ -386,7 +386,7 @@
                                                 Nama Wali Mahasiswa
                                             </label>
                                             <input type="text" name="mhs_wali_name" id="mhs_wali_name"
-                                                value="{{ $student->mhs_wali_name }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_wali_name : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama wali">
                                             @error('mhs_wali_name')
@@ -400,7 +400,7 @@
                                                 Nomor Telepon Wali
                                             </label>
                                             <input type="tel" name="mhs_wali_phone" id="mhs_wali_phone"
-                                                value="{{ $student->mhs_wali_phone }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_wali_phone : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon wali">
                                             @error('mhs_wali_phone')
@@ -415,7 +415,7 @@
                                             </label>
                                             <textarea cols="15" rows="4" name="mhs_addr_domisili" id="mhs_addr_domisili"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan alamat lengkap">{{ $student->mhs_addr_domisili ?? '' }}</textarea>
+                                                placeholder="Masukkan alamat lengkap">{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_domisili : '' }}</textarea>
                                             @error('mhs_addr_domisili')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
@@ -427,7 +427,7 @@
                                                 Kelurahan
                                             </label>
                                             <input type="text" name="mhs_addr_kelurahan" id="mhs_addr_kelurahan"
-                                                value="{{ $student->mhs_addr_kelurahan }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kelurahan : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan kelurahan">
                                             @error('mhs_addr_kelurahan')
@@ -441,7 +441,7 @@
                                                 Kecamatan
                                             </label>
                                             <input type="text" name="mhs_addr_kecamatan" id="mhs_addr_kecamatan"
-                                                value="{{ $student->mhs_addr_kecamatan }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kecamatan : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan kecamatan">
                                             @error('mhs_addr_kecamatan')
@@ -455,7 +455,7 @@
                                                 Kota
                                             </label>
                                             <input type="text" name="mhs_addr_kota" id="mhs_addr_kota"
-                                                value="{{ $student->mhs_addr_kota }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kota : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan kota">
                                             @error('mhs_addr_kota')
@@ -469,7 +469,7 @@
                                                 Provinsi
                                             </label>
                                             <input type="text" name="mhs_addr_provinsi" id="mhs_addr_provinsi"
-                                                value="{{ $student->mhs_addr_provinsi }}"
+                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_provinsi : '' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan provinsi">
                                             @error('mhs_addr_provinsi')

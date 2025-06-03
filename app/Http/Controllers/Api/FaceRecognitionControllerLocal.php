@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use App\Models\Mahasiswa;
 use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
-use GuzzleHttp\Client;
 
 class FaceRecognitionController extends Controller
 {
@@ -99,15 +100,20 @@ class FaceRecognitionController extends Controller
                 }
             }
 
+            $now = Carbon::now();
+            $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
+            $waktuDatang = $now->format('H:i:s');
             $jadwalHariIni = null;
             if ($bestMatch) {
                 // Ambil kelas pertama yang terkait dengan mahasiswa
                 $kelas = $user->kelas()->first();
                 $kelasId = $kelas ? $kelas->id : null;
-                
+
                 if ($kelasId) {
                     $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
-                        ->where('date', now()->format('Y-m-d'))
+                        ->where('days_id', $hariIni)
+                        ->where('start', '<=', $waktuDatang)
+                        ->where('ended', '>=', $waktuDatang)
                         ->first();
                 }
             }

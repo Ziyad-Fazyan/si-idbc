@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Mahasiswa;
 use App\Models\JadwalKuliah;
@@ -123,13 +124,17 @@ class FaceRecognitionController extends Controller
             }
 
             // Cek jadwal hari ini
-            $today = now()->format('Y-m-d');
+            $now = Carbon::now();
+            $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
+            $waktuDatang = $now->format('H:i:s');
             $jadwalHariIni = null;
-
             if ($bestMatch['mahasiswa_data']['kelas'] !== 'Tidak ada kelas') {
                 $jadwalHariIni = JadwalKuliah::whereHas('kelas', function ($query) use ($bestMatch) {
                     $query->where('name', $bestMatch['mahasiswa_data']['kelas']);
-                })->where('date', $today)->first();
+                })->where('days_id', $hariIni)
+                    ->where('start', '<=', $waktuDatang)
+                    ->where('ended', '>=', $waktuDatang)
+                    ->first();
             }
 
             return response()->json([

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mahasiswa;
 
 use PDF;
+use Carbon\Carbon;
 use App\Models\Kelas;
 use App\Models\Ruang;
 use App\Models\Balance;
@@ -87,7 +88,7 @@ class HomeController extends Controller
         $data['pstudi'] = ProgramStudi::all();
         $data['matkul'] = MataKuliah::all();
         $user = Auth::guard('mahasiswa')->user();
-        $kelasIds = $user->kelas()->pluck('id');
+        $kelasIds = $user->kelas->pluck('id');
         $data['jadkul'] = JadwalKuliah::whereIn('kelas_id', $kelasIds)->get();
         $data['ruang'] = Ruang::all();
         $data['kelas'] = Kelas::all();
@@ -98,9 +99,13 @@ class HomeController extends Controller
     }
     public function jadkulAbsen($code)
     {
-        $date = \Carbon\Carbon::now()->format('Y-m-d');
+        $now = Carbon::now();
+        $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
+        $waktuDatang = $now->format('H:i:s');
         $checkAbsen = AbsensiMahasiswa::where('jadkul_code', $code)->where('author_id', Auth::guard('mahasiswa')->user()->id)->count();
-        $checkDate = JadwalKuliah::where('code', $code)->where('date', $date)->count();
+        $checkDate = JadwalKuliah::where('code', $code)->where('days_id', $hariIni)
+            ->where('start', '<=', $waktuDatang)
+            ->where('ended', '>=', $waktuDatang)->count();
 
         // dd($timeStart);
         if ($checkAbsen === 0) {
@@ -134,7 +139,7 @@ class HomeController extends Controller
         $request->validate([
             'absen_type' => 'required|string',
             'jadkul_code' => 'required|string',
-            'absen_date' => 'required|date',
+            'days_id' => 'required|integer',
             'absen_time' => 'required|string',
             'author_id' => 'required|integer',
         ]);
@@ -229,8 +234,8 @@ class HomeController extends Controller
         $request->validate([
             'mhs_name' => 'required|string|max:255',
             'mhs_nim' => 'required|string|max:255|unique:users,user,' . Auth::guard('mahasiswa')->user()->id,
-            'mhs_birthplace' => 'required|string|max:255', // New field
-            'mhs_birthdate' => 'required|date', // New field
+            'mhs_birthplace' => 'required|string|max:255',
+            'mhs_birthdate' => 'required|date',
         ]);
         $user = Auth::guard('mahasiswa')->user();
 
@@ -238,11 +243,18 @@ class HomeController extends Controller
         $user->mhs_nim = $request->mhs_nim;
         $user->mhs_reli = $request->mhs_reli;
         $user->mhs_gend = $request->mhs_gend;
-        $user->mhs_birthplace = $request->mhs_birthplace; // New field
-        $user->mhs_birthdate = $request->mhs_birthdate; // New field
-
-
         $user->save();
+
+        // Update atau buat data detail mahasiswa
+        $details = $user->mahasiswaDetails;
+        if (!$details) {
+            $details = new \App\Models\MahasiswaDetails();
+            $details->mahasiswa_id = $user->id;
+        }
+
+        $details->mhs_birthplace = $request->mhs_birthplace;
+        $details->mhs_birthdate = $request->mhs_birthdate;
+        $details->save();
 
         Alert::success('Success', 'Data berhasil diupdate');
         return back();
@@ -270,20 +282,27 @@ class HomeController extends Controller
 
         $user->mhs_phone = $request->mhs_phone;
         $user->mhs_mail = $request->mhs_mail;
-        $user->mhs_parent_father = $request->mhs_parent_father;
-        $user->mhs_parent_father_phone = $request->mhs_parent_father_phone;
-        $user->mhs_parent_mother = $request->mhs_parent_mother;
-        $user->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
-        $user->mhs_wali_name = $request->mhs_wali_name;
-        $user->mhs_wali_phone = $request->mhs_wali_phone;
-        $user->mhs_addr_domisili = $request->mhs_addr_domisili;
-        $user->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
-        $user->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
-        $user->mhs_addr_kota = $request->mhs_addr_kota;
-        $user->mhs_addr_provinsi = $request->mhs_addr_provinsi;
-
-
         $user->save();
+
+        // Update atau buat data detail mahasiswa
+        $details = $user->mahasiswaDetails;
+        if (!$details) {
+            $details = new \App\Models\MahasiswaDetails();
+            $details->mahasiswa_id = $user->id;
+        }
+
+        $details->mhs_parent_father = $request->mhs_parent_father;
+        $details->mhs_parent_father_phone = $request->mhs_parent_father_phone;
+        $details->mhs_parent_mother = $request->mhs_parent_mother;
+        $details->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
+        $details->mhs_wali_name = $request->mhs_wali_name;
+        $details->mhs_wali_phone = $request->mhs_wali_phone;
+        $details->mhs_addr_domisili = $request->mhs_addr_domisili;
+        $details->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
+        $details->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
+        $details->mhs_addr_kota = $request->mhs_addr_kota;
+        $details->mhs_addr_provinsi = $request->mhs_addr_provinsi;
+        $details->save();
 
         Alert::success('Success', 'Data berhasil diupdate');
         return back();
@@ -328,7 +347,7 @@ class HomeController extends Controller
         $user = Auth::guard('mahasiswa')->user();
         // Mencari tagihan berdasarkan `users_id`
         $data['web'] = webSettings::where('id', 1)->first();
-        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere('proku_id', $user->kelas->proku->id)->orwhere('prodi_id', $user->kelas->pstudi->id)->latest()->get();
+        $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->latest()->get();
         $data['history'] = HistoryTagihan::where('users_id', Auth::guard('mahasiswa')->user()->id)->where('stat', 1)->latest()->get();
 
 

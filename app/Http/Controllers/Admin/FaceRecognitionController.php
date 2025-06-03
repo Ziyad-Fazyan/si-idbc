@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Mahasiswa;
 use App\Models\JadwalKuliah;
@@ -121,9 +122,10 @@ class FaceRecognitionController extends Controller
             }
 
             // Simpan hanya 1 data ke session
-            $today = now()->format('Y-m-d');
+            $now = Carbon::now();
+            $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
+            $waktuDatang = $now->format('H:i:s');
             $userId = $bestMatch['mahasiswa'] ?? null;
-
             $jadwalHariIni = null;
             $mahasiswaData = null;
 
@@ -149,7 +151,9 @@ class FaceRecognitionController extends Controller
                     $jadwalHariIni = null;
                     if ($kelasId) {
                         $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
-                            ->where('date', $today)
+                            ->where('days_id', $hariIni)
+                            ->where('start', '<=', $waktuDatang)
+                            ->where('ended', '>=', $waktuDatang)
                             ->first();
                     }
                 }

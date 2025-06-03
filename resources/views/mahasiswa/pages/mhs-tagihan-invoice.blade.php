@@ -121,8 +121,8 @@
                     <h3 class="text-lg font-semibold text-[#0C6E71] mb-3">Invoiced to:</h3>
                     <p class="text-lg font-bold text-[#2E2E2E] mb-1">{{ $history->users->mhs_name }}</p>
                     <p class="text-sm text-[#3B3B3B]">
-                        {{ $history->users->mhs_addr_kota == null ? 'Nama Kota' : $history->users->mhs_addr_kota }},
-                        {{ $history->users->mhs_addr_provinsi == null ? 'Nama Provinsi' : $history->users->mhs_addr_provinsi }}
+                        {{ $history->users->mahasiswaDetails && $history->users->mahasiswaDetails->mhs_addr_kota ? $history->users->mahasiswaDetails->mhs_addr_kota : 'Nama Kota' }},
+                        {{ $history->users->mahasiswaDetails && $history->users->mahasiswaDetails->mhs_addr_provinsi ? $history->users->mahasiswaDetails->mhs_addr_provinsi : 'Nama Provinsi' }}
                     </p>
                     <p class="text-sm text-[#3B3B3B] mt-3">Thank you for your business. Please contact us if you have
                         any questions.</p>

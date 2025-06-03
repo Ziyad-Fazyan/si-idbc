@@ -664,8 +664,8 @@ class WorkersController extends Controller
             'mhs_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',
             'mhs_name' => 'required|string|max:255',
             'mhs_user' => 'required|string|max:255|unique:mahasiswas,mhs_user' . $user->id,
-            'mhs_birthplace' => 'nullable|string|max:255', // New field
-            'mhs_birthdate' => 'nullable|date', // New field
+            'mhs_birthplace' => 'nullable|string|max:255',
+            'mhs_birthdate' => 'nullable|date',
             'mhs_gend' => 'nullable|string',
             'mhs_phone' => 'required|numeric|unique:users,phone,' . $user->id,
             'mhs_mail' => 'required|email|max:255|unique:users,email,' . $user->id,
@@ -680,32 +680,34 @@ class WorkersController extends Controller
         $user->mhs_user = $request->mhs_user;
         $user->mhs_nim = $request->mhs_nim;
         $user->mhs_gend = $request->mhs_gend;
-        $user->mhs_birthplace = $request->mhs_birthplace;
-        $user->mhs_birthdate = $request->mhs_birthdate;
-        $user->mhs_birthdate = $request->mhs_birthdate;
-        $user->mhs_reli = $request->mhs_reli;
         $user->mhs_phone = $request->mhs_phone;
         $user->mhs_mail = $request->mhs_mail;
-        $user->mhs_parent_mother = $request->mhs_parent_mother;
-        $user->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
-        $user->mhs_parent_father = $request->mhs_parent_father;
-        $user->mhs_parent_father_phone = $request->mhs_parent_father_phone;
-        $user->mhs_wali_name = $request->mhs_wali_name;
-        $user->mhs_wali_phone = $request->mhs_wali_phone;
-        $user->mhs_addr_domisili = $request->mhs_addr_domisili;
-        $user->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
-        $user->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
-        $user->mhs_addr_kota = $request->mhs_addr_kota;
-        $user->mhs_addr_provinsi = $request->mhs_addr_provinsi;
         $user->mhs_stat = $request->mhs_stat;
         $user->mhs_code = Str::random(6);
-
-
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
         $user->save();
+
+        // Buat data detail mahasiswa
+        $details = new \App\Models\MahasiswaDetails();
+        $details->mahasiswa_id = $user->id;
+        $details->mhs_reli = $request->mhs_reli;
+        $details->mhs_birthplace = $request->mhs_birthplace;
+        $details->mhs_birthdate = $request->mhs_birthdate;
+        $details->mhs_parent_mother = $request->mhs_parent_mother;
+        $details->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
+        $details->mhs_parent_father = $request->mhs_parent_father;
+        $details->mhs_parent_father_phone = $request->mhs_parent_father_phone;
+        $details->mhs_wali_name = $request->mhs_wali_name;
+        $details->mhs_wali_phone = $request->mhs_wali_phone;
+        $details->mhs_addr_domisili = $request->mhs_addr_domisili;
+        $details->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
+        $details->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
+        $details->mhs_addr_kota = $request->mhs_addr_kota;
+        $details->mhs_addr_provinsi = $request->mhs_addr_provinsi;
+        $details->save();
 
         // Update relasi kelas
         if ($request->class_id) {
@@ -759,8 +761,8 @@ class WorkersController extends Controller
             'mhs_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196',
             'mhs_name' => 'required|string|max:255',
             'mhs_user' => 'string|max:255|unique:users,user,' . $user->id,
-            'mhs_birthplace' => 'nullable|string|max:255', // New field
-            'mhs_birthdate' => 'nullable|date', // New field
+            'mhs_birthplace' => 'nullable|string|max:255',
+            'mhs_birthdate' => 'nullable|date',
             'mhs_gend' => 'nullable|string',
             'mhs_phone' => 'required|numeric|unique:users,phone,' . $user->id,
             'mhs_mail' => 'required|email|max:255|unique:users,email,' . $user->id,
@@ -770,29 +772,37 @@ class WorkersController extends Controller
         ]);
 
 
-        // Akan diatur melalui relasi many-to-many setelah save
+        // Update data mahasiswa
         $user->mhs_name = $request->mhs_name;
         // $user->mhs_user = $request->mhs_user;
         $user->mhs_nim = $request->mhs_nim;
         $user->mhs_gend = $request->mhs_gend;
-        $user->mhs_birthplace = $request->mhs_birthplace;
-        $user->mhs_birthdate = $request->mhs_birthdate;
-        $user->mhs_birthdate = $request->mhs_birthdate;
-        $user->mhs_reli = $request->mhs_reli;
         $user->mhs_phone = $request->mhs_phone;
         $user->mhs_mail = $request->mhs_mail;
-        $user->mhs_parent_mother = $request->mhs_parent_mother;
-        $user->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
-        $user->mhs_parent_father = $request->mhs_parent_father;
-        $user->mhs_parent_father_phone = $request->mhs_parent_father_phone;
-        $user->mhs_wali_name = $request->mhs_wali_name;
-        $user->mhs_wali_phone = $request->mhs_wali_phone;
-        $user->mhs_addr_domisili = $request->mhs_addr_domisili;
-        $user->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
-        $user->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
-        $user->mhs_addr_kota = $request->mhs_addr_kota;
-        $user->mhs_addr_provinsi = $request->mhs_addr_provinsi;
         $user->mhs_stat = $request->mhs_stat;
+
+        // Update atau buat data detail mahasiswa
+        $details = $user->mahasiswaDetails;
+        if (!$details) {
+            $details = new \App\Models\MahasiswaDetails();
+            $details->mahasiswa_id = $user->id;
+        }
+
+        $details->mhs_reli = $request->mhs_reli;
+        $details->mhs_birthplace = $request->mhs_birthplace;
+        $details->mhs_birthdate = $request->mhs_birthdate;
+        $details->mhs_parent_mother = $request->mhs_parent_mother;
+        $details->mhs_parent_mother_phone = $request->mhs_parent_mother_phone;
+        $details->mhs_parent_father = $request->mhs_parent_father;
+        $details->mhs_parent_father_phone = $request->mhs_parent_father_phone;
+        $details->mhs_wali_name = $request->mhs_wali_name;
+        $details->mhs_wali_phone = $request->mhs_wali_phone;
+        $details->mhs_addr_domisili = $request->mhs_addr_domisili;
+        $details->mhs_addr_kelurahan = $request->mhs_addr_kelurahan;
+        $details->mhs_addr_kecamatan = $request->mhs_addr_kecamatan;
+        $details->mhs_addr_kota = $request->mhs_addr_kota;
+        $details->mhs_addr_provinsi = $request->mhs_addr_provinsi;
+        $details->save();
 
 
         if ($request->password) {
@@ -849,8 +859,13 @@ class WorkersController extends Controller
         $destinationPaths = storage_path('app/public/images');
 
         $student = Mahasiswa::where('mhs_code', $code)->first();
-        if ($student->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths . '/' . $student->image); // hapus gambar lama
+        if ($student->mhs_image != 'default/default-profile.jpg') {
+            File::delete($destinationPaths . '/' . $student->mhs_image); // hapus gambar lama
+        }
+
+        // Hapus detail mahasiswa jika ada
+        if ($student->mahasiswaDetails) {
+            $student->mahasiswaDetails->delete();
         }
 
         $student->delete();

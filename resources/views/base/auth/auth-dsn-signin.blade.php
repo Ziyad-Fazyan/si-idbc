@@ -71,17 +71,12 @@
             <!-- Right side - Login Form -->
             <div class="w-full max-w-md mx-auto lg:mx-0">
                 <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
-
                     <!-- Logo & Header -->
                     <div class="text-center mb-8">
                         <div class="flex justify-center mb-6">
                             <div class="relative">
                                 <img src="{{ asset('storage/images/' . $web->school_logo) }}" alt="School Logo"
                                     class="max-h-16 object-contain">
-                                <div
-                                    class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-secondary to-primary rounded-full flex items-center justify-center">
-                                    <i class="fas fa-graduation-cap text-xs text-white"></i>
-                                </div>
                             </div>
                         </div>
                         <h2 class="text-2xl font-bold text-gray-900 mb-2">Login Guru</h2>
@@ -96,41 +91,43 @@
                         @csrf
 
                         <!-- NIDN/Email/Phone Field -->
-                        <div class="form-group">
-                            <label for="login" class="form-label">
+                        <div class="mb-4">
+                            <label for="login" class="block text-sm font-medium text-gray-700 mb-1">
                                 <i class="fas fa-id-card text-gray-500 mr-2"></i>
                                 NIDN / Email / Telepon
                             </label>
-                            <div class="form-input-container">
-                                <div class="form-input-icon">
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <input type="text" name="login" id="login" class="form-input teacher-input"
+                                <input type="text" name="login" id="login"
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm"
                                     placeholder="Masukkan NIDN, email atau nomor telepon" autocomplete="username">
                             </div>
                             @error('login')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Password Field -->
-                        <div class="form-group">
-                            <label for="password" class="form-label">
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
                                 <i class="fas fa-lock text-gray-500 mr-2"></i>
                                 Password
                             </label>
-                            <div class="form-input-container">
-                                <div class="form-input-icon">
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <input type="password" name="password" id="password" class="form-input teacher-input"
+                                <input type="password" name="password" id="password"
+                                    class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm"
                                     placeholder="••••••••" autocomplete="current-password">
                                 <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
                                     id="togglePassword">
@@ -145,7 +142,7 @@
                                 </button>
                             </div>
                             @error('password')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -153,8 +150,8 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
                                 <input type="checkbox" id="rememberMe" name="remember"
-                                    class="form-checkbox teacher-checkbox">
-                                <label for="rememberMe" class="ml-2 text-sm text-gray-700 font-medium">
+                                    class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded">
+                                <label for="rememberMe" class="ml-2 block text-sm text-gray-700 font-medium">
                                     Ingat saya
                                 </label>
                             </div>
@@ -165,23 +162,22 @@
                         </div>
 
                         <!-- Turnstile Widget -->
-                        <div class="turnstile-container teacher-turnstile">
+                        <div class="mt-4">
                             <x-turnstile-widget theme="auto" language="id" />
                             @error('cf-turnstile-response')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn-teacher">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
-                                    </path>
-                                </svg>
-                                <span>Masuk ke Dashboard</span>
-                            </div>
+                        <button type="submit"
+                            class="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
+                                </path>
+                            </svg>
+                            <span>Masuk ke Dashboard</span>
                         </button>
                     </form>
 
@@ -216,96 +212,94 @@
         </div>
     </section>
 
-@push('styles')
+    @push('styles')
+        <style>
+            /* Form Styles - Teacher Specific */
+            .form-group {
+                @apply space-y-2;
+            }
 
-    <style>
-        /* Form Styles - Teacher Specific */
-        .form-group {
-            @apply space-y-2;
-        }
+            .form-label {
+                @apply flex items-center text-sm font-semibold text-gray-700;
+            }
 
-        .form-label {
-            @apply flex items-center text-sm font-semibold text-gray-700;
-        }
+            .form-input-container {
+                @apply relative;
+            }
 
-        .form-input-container {
-            @apply relative;
-        }
+            .form-input-icon {
+                @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+            }
 
-        .form-input-icon {
-            @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
-        }
-
-        .teacher-input {
-            @apply w-full pl-10 pr-4 py-3 bg-white/80 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 backdrop-blur-sm;
-        }
-
-        .teacher-input:focus {
-            @apply bg-white shadow-lg;
-        }
-
-        .form-error {
-            @apply text-sm text-red-600 font-medium flex items-center;
-        }
-
-        .form-error::before {
-            content: "⚠";
-            @apply mr-1;
-        }
-
-        .teacher-checkbox {
-            @apply w-4 h-4 text-secondary bg-white border-2 border-gray-300 rounded focus:ring-secondary/20 focus:ring-2 transition-all duration-200;
-        }
-
-        .btn-teacher {
-            @apply w-full bg-gradient-to-r from-secondary to-secondary-light hover:from-secondary-light hover:to-secondary text-white font-semibold py-3 px-6 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:ring-offset-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02];
-        }
-
-        .teacher-turnstile {
-            @apply bg-orange-50/80 rounded-xl p-4 border border-orange-200;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
             .teacher-input {
-                @apply py-3.5;
-            }
-        }
-
-        /* Teacher-specific accent colors */
-        .text-teacher-primary {
-            color: #FF6B35;
-        }
-
-        .bg-teacher-primary {
-            background-color: #FF6B35;
-        }
-
-        /* Additional teacher-themed elements */
-        .teacher-badge {
-            @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary;
-        }
-    </style>
-
-    <style>
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+                @apply w-full pl-10 pr-4 py-3 bg-white/80 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 backdrop-blur-sm;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .teacher-input:focus {
+                @apply bg-white shadow-lg;
             }
-        }
 
-        .animate-fade-in-up {
-            animation: fade-in-up 0.6s ease-out forwards;
-        }
-    </style>
+            .form-error {
+                @apply text-sm text-red-600 font-medium flex items-center;
+            }
 
-@endpush
+            .form-error::before {
+                content: "⚠";
+                @apply mr-1;
+            }
+
+            .teacher-checkbox {
+                @apply w-4 h-4 text-secondary bg-white border-2 border-gray-300 rounded focus:ring-secondary/20 focus:ring-2 transition-all duration-200;
+            }
+
+            .btn-teacher {
+                @apply w-full bg-gradient-to-r from-secondary to-secondary-light hover:from-secondary-light hover:to-secondary text-white font-semibold py-3 px-6 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:ring-offset-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02];
+            }
+
+            .teacher-turnstile {
+                @apply bg-orange-50/80 rounded-xl p-4 border border-orange-200;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 1024px) {
+                .teacher-input {
+                    @apply py-3.5;
+                }
+            }
+
+            /* Teacher-specific accent colors */
+            .text-teacher-primary {
+                color: #FF6B35;
+            }
+
+            .bg-teacher-primary {
+                background-color: #FF6B35;
+            }
+
+            /* Additional teacher-themed elements */
+            .teacher-badge {
+                @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary;
+            }
+        </style>
+
+        <style>
+            @keyframes fade-in-up {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .animate-fade-in-up {
+                animation: fade-in-up 0.6s ease-out forwards;
+            }
+        </style>
+    @endpush
 
     <script>
         // Password toggle functionality

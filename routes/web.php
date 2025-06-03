@@ -29,6 +29,11 @@ Route::get('/dev', function () {
     return view('base.base-root-index');
 });
 
+// ROOT ROUTE
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 // AUTHENTICATION ROUTES
 Route::middleware(['guest'])->group(function () {
     // MAHASISWA AUTH

@@ -6,14 +6,17 @@
             <!-- Left side - Illustration/Info -->
             <div class="hidden lg:flex flex-col justify-center space-y-8">
                 <div class="text-center lg:text-left">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl shadow-xl mb-6">
+                    <div
+                        class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl shadow-xl mb-6">
                         <i class="fas fa-graduation-cap text-3xl text-white"></i>
                     </div>
                     <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                        Student <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500">Portal</span>
+                        Student <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500">Portal</span>
                     </h1>
                     <p class="text-lg text-gray-600 leading-relaxed">
-                        Akses platform pembelajaran digital Anda. Kelola jadwal kuliah, tugas, nilai, dan komunikasi dengan dosen dalam satu dashboard terintegrasi.
+                        Akses platform pembelajaran digital Anda. Kelola jadwal kuliah, tugas, nilai, dan komunikasi dengan
+                        dosen dalam satu dashboard terintegrasi.
                     </p>
                 </div>
 
@@ -46,16 +49,12 @@
             <!-- Right side - Login Form -->
             <div class="w-full max-w-md mx-auto lg:mx-0">
                 <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
-
                     <!-- Logo & Header -->
                     <div class="text-center mb-8">
                         <div class="flex justify-center mb-6">
                             <div class="relative">
                                 <img src="{{ asset('storage/images/' . $web->school_logo) }}" alt="School Logo"
                                     class="max-h-16 object-contain">
-                                <div class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-graduation-cap text-xs text-white"></i>
-                                </div>
                             </div>
                         </div>
                         <h2 class="text-2xl font-bold text-gray-900 mb-2">Student Sign In</h2>
@@ -70,85 +69,93 @@
                         @csrf
 
                         <!-- Student ID/Email/Phone Field -->
-                        <div class="form-group">
-                            <label for="login" class="form-label">
+                        <div class="mb-4">
+                            <label for="login" class="block text-sm font-medium text-gray-700 mb-1">
                                 <i class="fas fa-id-card text-gray-500 mr-2"></i>
                                 Student ID / Email / Phone
                             </label>
-                            <div class="form-input-container">
-                                <div class="form-input-icon">
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </div>
                                 <input type="text" name="login" id="login"
-                                    class="form-input"
-                                    placeholder="Masukkan Student ID, email atau nomor telepon"
-                                    autocomplete="username">
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                                    placeholder="Masukkan Student ID, email atau nomor telepon" autocomplete="username">
                             </div>
                             @error('login')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Password Field -->
-                        <div class="form-group">
-                            <label for="password" class="form-label">
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
                                 <i class="fas fa-lock text-gray-500 mr-2"></i>
                                 Password
                             </label>
-                            <div class="form-input-container">
-                                <div class="form-input-icon">
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                        <path fill-rule="evenodd"
+                                            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </div>
                                 <input type="password" name="password" id="password"
-                                    class="form-input"
-                                    placeholder="••••••••"
-                                    autocomplete="current-password">
-                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" id="togglePassword">
-                                    <svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                                    placeholder="••••••••" autocomplete="current-password">
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                    id="togglePassword">
+                                    <svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
                                     </svg>
                                 </button>
                             </div>
                             @error('password')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Remember Me -->
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <input type="checkbox" id="rememberMe" name="remember" class="form-checkbox">
-                                <label for="rememberMe" class="ml-2 text-sm text-gray-700 font-medium">
+                                <input type="checkbox" id="rememberMe" name="remember"
+                                    class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <label for="rememberMe" class="ml-2 block text-sm text-gray-700 font-medium">
                                     Ingat saya
                                 </label>
                             </div>
                             <a href="{{ route('mahasiswa.auth-forgot-page') }}"
-                               class="text-sm text-green-600 hover:text-green-500 font-medium transition-colors">
+                                class="text-sm text-green-600 hover:text-green-500 font-medium transition-colors">
                                 Lupa password?
                             </a>
                         </div>
 
                         <!-- Turnstile Widget -->
-                        <div class="turnstile-container">
+                        <div class="mt-4">
                             <x-turnstile-widget theme="auto" language="id" />
                             @error('cf-turnstile-response')
-                                <p class="form-error">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn-primary-student">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                                </svg>
-                                <span>Masuk ke Portal</span>
-                            </div>
+                        <button type="submit"
+                            class="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
+                                </path>
+                            </svg>
+                            <span>Masuk ke Portal</span>
                         </button>
                     </form>
 
@@ -161,7 +168,7 @@
                         </div>
 
                         <a href="{{ route('root.home-index') }}"
-                           class="inline-flex items-center text-sm text-gray-600 hover:text-green-600 transition-colors font-medium">
+                            class="inline-flex items-center text-sm text-gray-600 hover:text-green-600 transition-colors font-medium">
                             <i class="fas fa-arrow-left mr-2"></i>
                             Kembali ke Beranda
                         </a>
@@ -172,7 +179,9 @@
                 <div class="mt-6 text-center">
                     <div class="inline-flex items-center px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
                         <svg class="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
                         </svg>
                         <span class="text-sm text-green-700 font-medium">Dilindungi Cloudflare Turnstile</span>
                     </div>
@@ -182,60 +191,60 @@
     </section>
 
     @push('styles')
-    <style>
-        /* Form Styles */
-        .form-group {
-            @apply space-y-2;
-        }
-
-        .form-label {
-            @apply flex items-center text-sm font-semibold text-gray-700;
-        }
-
-        .form-input-container {
-            @apply relative;
-        }
-
-        .form-input-icon {
-            @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
-        }
-
-        .form-input {
-            @apply w-full pl-10 pr-4 py-3 bg-white/80 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200 backdrop-blur-sm;
-        }
-
-        .form-input:focus {
-            @apply bg-white shadow-lg;
-        }
-
-        .form-error {
-            @apply text-sm text-red-600 font-medium flex items-center;
-        }
-
-        .form-error::before {
-            content: "⚠";
-            @apply mr-1;
-        }
-
-        .form-checkbox {
-            @apply w-4 h-4 text-green-600 bg-white border-2 border-gray-300 rounded focus:ring-green-500/20 focus:ring-2 transition-all duration-200;
-        }
-
-        .btn-primary-student {
-            @apply w-full bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-white font-semibold py-3 px-6 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:ring-offset-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02];
-        }
-
-        .turnstile-container {
-            @apply bg-gray-50/80 rounded-xl p-4 border border-gray-200;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .form-input {
-                @apply py-3.5;
+        <style>
+            /* Form Styles */
+            .form-group {
+                @apply space-y-2;
             }
-        }
-    </style>
+
+            .form-label {
+                @apply flex items-center text-sm font-semibold text-gray-700;
+            }
+
+            .form-input-container {
+                @apply relative;
+            }
+
+            .form-input-icon {
+                @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
+            }
+
+            .form-input {
+                @apply w-full pl-10 pr-4 py-3 bg-white/80 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200 backdrop-blur-sm;
+            }
+
+            .form-input:focus {
+                @apply bg-white shadow-lg;
+            }
+
+            .form-error {
+                @apply text-sm text-red-600 font-medium flex items-center;
+            }
+
+            .form-error::before {
+                content: "⚠";
+                @apply mr-1;
+            }
+
+            .form-checkbox {
+                @apply w-4 h-4 text-green-600 bg-white border-2 border-gray-300 rounded focus:ring-green-500/20 focus:ring-2 transition-all duration-200;
+            }
+
+            .btn-primary-student {
+                @apply w-full bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-white font-semibold py-3 px-6 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:ring-offset-2 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02];
+            }
+
+            .turnstile-container {
+                @apply bg-gray-50/80 rounded-xl p-4 border border-gray-200;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 1024px) {
+                .form-input {
+                    @apply py-3.5;
+                }
+            }
+        </style>
     @endpush
 
     <script>
@@ -246,12 +255,12 @@
             password.setAttribute('type', type);
 
             // Toggle icon
-            this.innerHTML = type === 'password'
-                ? `<svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            this.innerHTML = type === 'password' ?
+                `<svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                   </svg>`
-                : `<svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   </svg>` :
+                `<svg class="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
                    </svg>`;
         });

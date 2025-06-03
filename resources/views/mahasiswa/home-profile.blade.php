@@ -213,7 +213,7 @@
                                                     Lahir</label>
                                                 <input type="text" name="mhs_birthplace" id="mhs_birthplace"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_birthplace }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_birthplace : '' }}">
                                                 @error('mhs_birthplace')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -225,7 +225,7 @@
                                                     Lahir</label>
                                                 <input type="date" name="mhs_birthdate" id="mhs_birthdate"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_birthdate }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_birthdate : '' }}">
                                                 @error('mhs_birthdate')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -316,7 +316,7 @@
                                                     class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Ayah</label>
                                                 <input type="text" name="mhs_parent_father" id="mhs_parent_father"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_parent_father : '' }}">
                                                 @error('mhs_parent_father')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -329,7 +329,7 @@
                                                 <input type="text" name="mhs_parent_father_phone"
                                                     id="mhs_parent_father_phone"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_father_phone }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_parent_father_phone : '' }}">
                                                 @error('mhs_parent_father_phone')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -342,7 +342,7 @@
                                                     class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Ibu</label>
                                                 <input type="text" name="mhs_parent_mother" id="mhs_parent_mother"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_parent_mother : '' }}">
                                                 @error('mhs_parent_mother')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -355,7 +355,7 @@
                                                 <input type="text" name="mhs_parent_mother_phone"
                                                     id="mhs_parent_mother_phone"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_parent_mother_phone }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_parent_mother_phone : '' }}">
                                                 @error('mhs_parent_mother_phone')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -370,7 +370,7 @@
                                                     Mahasiswa</label>
                                                 <input type="text" name="mhs_wali_name" id="mhs_wali_name"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_name }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_wali_name : '' }}">
                                                 @error('mhs_wali_name')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -382,7 +382,7 @@
                                                     Wali</label>
                                                 <input type="text" name="mhs_wali_phone" id="mhs_wali_phone"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_wali_phone }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_wali_phone : '' }}">
                                                 @error('mhs_wali_phone')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -396,7 +396,7 @@
                                                     class="block text-sm font-medium text-[#2E2E2E] mb-1">Alamat Lengkap
                                                     Domisili</label>
                                                 <textarea name="mhs_addr_domisili" id="mhs_addr_domisili" rows="3"
-                                                    class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">{{ Auth::guard('mahasiswa')->user()->mhs_addr_domisili == null ? 'inputkan alamat lengkap / domisili' : Auth::guard('mahasiswa')->user()->mhs_addr_domisili }}</textarea>
+                                                    class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails && Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_domisili ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_domisili : 'inputkan alamat lengkap / domisili' }}</textarea>
                                                 @error('mhs_addr_domisili')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -409,7 +409,7 @@
                                                     <input type="text" name="mhs_addr_kelurahan"
                                                         id="mhs_addr_kelurahan"
                                                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                        value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kelurahan }}">
+                                                        value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_kelurahan : '' }}">
                                                     @error('mhs_addr_kelurahan')
                                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                     @enderror
@@ -421,7 +421,7 @@
                                                     <input type="text" name="mhs_addr_kecamatan"
                                                         id="mhs_addr_kecamatan"
                                                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                        value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kecamatan }}">
+                                                        value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_kecamatan : '' }}">
                                                     @error('mhs_addr_kecamatan')
                                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                     @enderror
@@ -432,7 +432,7 @@
                                                         class="block text-sm font-medium text-[#2E2E2E] mb-1">Kota</label>
                                                     <input type="text" name="mhs_addr_kota" id="mhs_addr_kota"
                                                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                        value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_kota }}">
+                                                        value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_kota : '' }}">
                                                     @error('mhs_addr_kota')
                                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                     @enderror
@@ -443,7 +443,7 @@
                                                         class="block text-sm font-medium text-[#2E2E2E] mb-1">Provinsi</label>
                                                     <input type="text" name="mhs_addr_provinsi" id="mhs_addr_provinsi"
                                                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md"
-                                                        value="{{ Auth::guard('mahasiswa')->user()->mhs_addr_provinsi }}">
+                                                        value="{{ Auth::guard('mahasiswa')->user()->mahasiswaDetails ? Auth::guard('mahasiswa')->user()->mahasiswaDetails->mhs_addr_provinsi : '' }}">
                                                     @error('mhs_addr_provinsi')
                                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                     @enderror

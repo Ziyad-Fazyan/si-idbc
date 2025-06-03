@@ -65,27 +65,32 @@ class PpdbController extends Controller
         $user->mhs_user = $request->mhs_user; 
         $user->mhs_nim = $request->mhs_nim; 
         $user->mhs_gend = $request->mhs_gend; 
-        $user->mhs_birthplace = $request->mhs_birthplace; 
-        $user->mhs_birthdate = $request->mhs_birthdate; 
-        $user->mhs_reli = $request->mhs_reli; 
         $user->mhs_phone = $request->mhs_phone; 
         $user->mhs_mail = $request->mhs_mail; 
-        $user->mhs_parent_mother = $request->mhs_parent_mother; 
-        $user->mhs_parent_mother_phone = $request->mhs_parent_mother_phone; 
-        $user->mhs_parent_father = $request->mhs_parent_father; 
-        $user->mhs_parent_father_phone = $request->mhs_parent_father_phone; 
-        $user->mhs_wali_name = $request->mhs_wali_name; 
-        $user->mhs_wali_phone = $request->mhs_wali_phone; 
-        $user->mhs_addr_domisili = $request->mhs_addr_domisili; 
-        $user->mhs_addr_kelurahan = $request->mhs_addr_kelurahan; 
-        $user->mhs_addr_kecamatan = $request->mhs_addr_kecamatan; 
-        $user->mhs_addr_kota = $request->mhs_addr_kota; 
-        $user->mhs_addr_provinsi = $request->mhs_addr_provinsi; 
         $user->mhs_stat = 0; // Status pendaftaran baru
         $user->mhs_code = 'MHS-' . Str::random(8); 
 
         $user->password = Hash::make("maba-$school_name"); 
         $user->save(); 
+        
+        // Simpan detail mahasiswa ke tabel mahasiswa_details
+        $user->mahasiswaDetails()->create([
+            'mhs_birthplace' => $request->mhs_birthplace,
+            'mhs_birthdate' => $request->mhs_birthdate,
+            'mhs_reli' => $request->mhs_reli,
+            'mhs_parent_mother' => $request->mhs_parent_mother,
+            'mhs_parent_mother_phone' => $request->mhs_parent_mother_phone,
+            'mhs_parent_father' => $request->mhs_parent_father,
+            'mhs_parent_father_phone' => $request->mhs_parent_father_phone,
+            'mhs_wali_name' => $request->mhs_wali_name,
+            'mhs_wali_phone' => $request->mhs_wali_phone,
+            'mhs_addr_domisili' => $request->mhs_addr_domisili,
+            'mhs_addr_kelurahan' => $request->mhs_addr_kelurahan,
+            'mhs_addr_kecamatan' => $request->mhs_addr_kecamatan,
+            'mhs_addr_kota' => $request->mhs_addr_kota,
+            'mhs_addr_provinsi' => $request->mhs_addr_provinsi,
+        ]);
+
         
         if ($request->hasFile('mhs_image')) { 
             $image = $request->file('mhs_image'); 

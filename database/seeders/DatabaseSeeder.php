@@ -156,7 +156,6 @@ class DatabaseSeeder extends Seeder
             'days_id'  => '1',
             'bsks'  => '3',
             'code'  => Str::random(8),
-            'date'  => now()->format('Y-m-d'),
             'start'  => '01:00:00',
             'ended'  => '23:00:00',
 
@@ -171,7 +170,6 @@ class DatabaseSeeder extends Seeder
             'days_id'  => '1',
             'bsks'  => '3',
             'code'  => Str::random(8),
-            'date'  => now()->format('Y-m-d'),
             'start'  => '01:00:00',
             'ended'  => '23:00:00',
 
@@ -186,7 +184,6 @@ class DatabaseSeeder extends Seeder
             'days_id'  => '1',
             'bsks'  => '3',
             'code'  => Str::random(8),
-            'date'  => now()->format('Y-m-d'),
             'start'  => '01:00:00',
             'ended'  => '23:00:00',
 
@@ -201,7 +198,6 @@ class DatabaseSeeder extends Seeder
             'days_id'  => '1',
             'bsks'  => '3',
             'code'  => Str::random(8),
-            'date'  => now()->format('Y-m-d'),
             'start'  => '01:00:00',
             'ended'  => '23:00:00',
 
