@@ -16,11 +16,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class JadwalAjarController extends Controller
 {
-    public function index()
+public function index()
     {
         $data['web'] = webSettings::where('id', 1)->first();
         $dosenId = Auth::guard('dosen')->user();
-        $data['jadkul'] = JadwalKuliah::where('dosen_id', $dosenId->id)->latest()->get();
+        $data['jadkul'] = JadwalKuliah::with(['matkul', 'dosen', 'kelas', 'ruang'])
+            ->where('dosen_id', $dosenId->id)
+            ->latest()
+            ->get();
 
         return view('dosen.pages.jadwal-index', $data);
     }

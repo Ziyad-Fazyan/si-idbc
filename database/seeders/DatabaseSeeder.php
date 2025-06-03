@@ -219,28 +219,28 @@ class DatabaseSeeder extends Seeder
             'code'       => 'GMA',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '1',
+            'gedung_id'    => '1',
             'floor'      => '1',
             'type'       => '1',
             'name'       => 'Kamar PA',
             'code'       => 'C-101',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '2',
+            'gedung_id'    => '2',
             'floor'      => '1',
             'type'       => '1',
             'name'       => 'Kelas 102',
             'code'       => 'C-102',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '3',
+            'gedung_id'    => '3',
             'floor'      => '1',
             'type'       => '1',
             'name'       => 'Dapur',
             'code'       => 'C-103',
         ]);
         \App\Models\Ruang::create([
-            'gedu_id'    => '3',
+            'gedung_id'    => '3',
             'floor'      => '2',
             'type'       => '1',
             'name'       => 'Kelas',

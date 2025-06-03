@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ruangs', function (Blueprint $table) {
             $table->id();
-            $table->integer('gedu_id');         // GEDUNG ID
+            $table->foreignId('gedung_id')->constrained('gedungs'); // FOREIGN KEY KE TABEL GEDUNG
             $table->integer('type');            // TIPE RUANGAN => 0 = RUANG KELAS ; 1 = RUANG LABORATORIUM ; 2 = RUANG KERJA ; 3 = RUANG PRIBADI ; 4 = FASILITAS UMUM
             $table->integer('floor');           // LANTAI RUANGAN
             $table->string('name');             // NAMA RUANGAN

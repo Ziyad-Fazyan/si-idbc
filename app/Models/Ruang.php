@@ -31,7 +31,7 @@ class Ruang extends Model
 
     public function gedung()
     {
-        return $this->belongsTo(Gedung::class, 'gedu_id');
+        return $this->belongsTo(Gedung::class, 'gedung_id');
     }
 
     public function barang()
