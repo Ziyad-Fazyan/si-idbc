@@ -20,9 +20,9 @@ class Commodity extends Model
     /**
      * Get the commodity location associated with the commodity.
      */
-    public function commodity_location()
+    public function ruang()
     {
-        return $this->belongsTo(CommodityLocation::class);
+        return $this->belongsTo(Ruang::class);
     }
 
     /**

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('commodities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ruang_id')->constrained();
             $table->foreignId('commodity_acquisition_id')->constrained()->nullable();
-            $table->foreignId('commodity_location_id')->constrained();
             $table->string('item_code')->unique();
             $table->string('name');
             $table->string('brand');
