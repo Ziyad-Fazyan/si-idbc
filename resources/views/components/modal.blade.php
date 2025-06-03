@@ -8,8 +8,6 @@
     'position' => 'center',
     'animation' => 'scale',
     'persistent' => false,
-    'scrollable' => false,
-    'fullscreen' => false,
     'mobile' => 'responsive'
 ])
 
@@ -139,10 +137,7 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
     x-init="
         $watch('show', value => {
             if (value) {
-                document.body.classList.add('overflow-hidden');
                 {{ $attributes->has('autofocus') ? '$nextTick(() => firstFocusable()?.focus());' : '' }}
-            } else {
-                document.body.classList.remove('overflow-hidden');
             }
         });
     "
@@ -159,7 +154,7 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
 
     x-cloak
     x-show="show"
-    class="fixed inset-0 z-50 {{ $scrollable ? 'overflow-y-auto' : '' }} {{ $fullscreen ? 'p-0' : 'p-4' }}"
+    class="fixed inset-0 z-50 py-8"
     style="display: {{ $show ? 'block' : 'none' }};"
 >
     {{-- Backdrop --}}
@@ -178,7 +173,7 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
     ></div>
 
     {{-- Modal Container --}}
-    <div class="relative min-h-screen flex {{ $positionClass }}">
+    <div class="relative min-h-full flex {{ $positionClass }}">
         <div
             x-show="show"
             x-trap.inert.noscroll="show"
@@ -188,17 +183,7 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="{{ $animationConfig['leave'] }}"
             x-transition:leave-end="{{ $animationConfig['leave-end'] }}"
-            class="
-                relative w-full {{ $maxWidthClass }} {{ $mobileClass }}
-                @if($fullscreen)
-                    h-full
-                @else
-                    {{ $scrollable ? 'max-h-[90vh] overflow-y-auto' : '' }}
-                @endif
-                bg-white
-                {{ $fullscreen ? '' : 'rounded-lg shadow-xl' }}
-                transform transition-all
-            "
+            class=" relative w-full {{ $maxWidthClass }} {{ $mobileClass }} my-auto"
             x-on:click.stop
         >
             {{-- Header Slot --}}
@@ -220,18 +205,6 @@ $mobileClass = $mobileClasses[$mobile] ?? $mobileClasses['responsive'];
                 </div>
             @endif
 
-            {{-- Close Button (jika closable dan tidak persistent) --}}
-            @if($closable && !$persistent && !isset($header))
-                <button
-                    x-on:click="close()"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1"
-                    aria-label="Close modal"
-                >
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            @endif
         </div>
     </div>
 </div>
