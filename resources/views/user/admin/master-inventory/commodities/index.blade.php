@@ -200,12 +200,12 @@
         @include('user.admin.master-inventory.commodities.modal.create')
     </x-modal>
 
-    <x-modal name="show-barang" maxWidth="4xl" :scrollable="true">
-        {{-- @include('user.admin.master-inventory.commodities.modal.show') --}}
+    <x-modal name="show-barang" maxWidth="4xl">
+        @include('user.admin.master-inventory.commodities.modal.show')
     </x-modal>
 
-    <x-modal name="edit-barang" maxWidth="4xl" :scrollable="true">
-        {{-- @include('user.admin.master-inventory.commodities.modal.edit') --}}
+    <x-modal name="edit-barang" maxWidth="4xl">
+        @include('user.admin.master-inventory.commodities.modal.edit')
     </x-modal>
 
     @push('scripts')
@@ -285,7 +285,7 @@
                     document.getElementById('edit_note').value = data.note || '';
 
                     // Update select fields
-                    document.getElementById('edit_commodity_location_id').value = data.commodity_location_id || '';
+                    document.getElementById('edit_commodity_location_id').value = data.ruang_id || '';
                     document.getElementById('edit_commodity_acquisition_id').value = data.commodity_acquisition_id || '';
                     document.getElementById('edit_condition').value = data.condition || '';
 
