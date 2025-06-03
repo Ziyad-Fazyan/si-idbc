@@ -64,8 +64,8 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                     required>
                                 <option value="">Pilih Lokasi...</option>
-                                @foreach ($commodityLocations as $commodityLocation)
-                                    <option value="{{ $commodityLocation->id }}">{{ $commodityLocation->name }}</option>
+                                @foreach ($ruangs as $ruang)
+                                    <option value="{{ $ruang->id }}">{{ $ruang->name }}</option>
                                 @endforeach
                             </select>
                         </div>

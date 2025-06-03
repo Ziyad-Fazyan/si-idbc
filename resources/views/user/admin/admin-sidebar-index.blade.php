@@ -276,17 +276,21 @@
         </div>
         <ul id="dropdown-inventory"
             class="dropdown-menu pl-12 mt-1 space-y-1 {{ $inventoryActive ? '' : 'hidden' }}">
+            <li class="submenu-item {{ Route::is($prefix . 'inventory.gedung-*') ? 'active' : '' }}">
+                <a href="{{ route($prefix . 'inventory.gedung-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'inventory.gedung-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+                    Gedung</a>
+            </li>
+            <li class="submenu-item {{ Route::is($prefix . 'inventory.ruang-*') ? 'active' : '' }}">
+                <a href="{{ route($prefix . 'inventory.ruang-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200 {{ Route::is($prefix . 'inventory.ruang-*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-600' }}">Data
+                    Ruangan</a>
+            </li>
             <li
                 class="{{ Route::is('web-admin.inventory.perolehan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route('web-admin.inventory.perolehan-index') }}"
                     class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Perolehan</a>
-            </li>
-            <li
-                class="{{ Route::is('web-admin.inventory.lokasi-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
-                <a href="{{ route('web-admin.inventory.lokasi-index') }}"
-                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
-                    Lokasi</a>
             </li>
             <li
                 class="{{ Route::is('web-admin.inventory.barang-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">

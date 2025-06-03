@@ -96,11 +96,11 @@
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Harga Total</label>
-                                    <p id="show_price" class="text-gray-900 font-semibold text-lg bg-white px-3 py-2 rounded border text-green-600">-</p>
+                                    <p id="show_price" class="text-gray-900 font-semibold text-lg bg-white px-3 py-2 rounded border">-</p>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-600 mb-1">Harga Satuan</label>
-                                    <p id="show_price_per_item" class="text-gray-900 font-medium bg-white px-3 py-2 rounded border text-green-600">-</p>
+                                    <p id="show_price_per_item" class="text-gray-900 font-medium bg-white px-3 py-2 rounded border">-</p>
                                 </div>
                             </div>
                         </div>
