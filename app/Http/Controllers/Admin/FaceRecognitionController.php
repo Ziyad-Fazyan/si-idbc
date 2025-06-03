@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class FaceRecognitionController extends Controller
 {
@@ -84,8 +87,24 @@ class FaceRecognitionController extends Controller
         ]);
 
         try {
-            $foto = file_get_contents($request->file('foto'));
-            $base64 = base64_encode($foto);
+            $foto = $request->file('foto');
+            $fotoContents = file_get_contents($foto->getRealPath());
+            $base64 = base64_encode($fotoContents);
+
+            // Simpan foto untuk digunakan nanti dalam absensi
+            $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
+            $fotoPath = 'presensi/' . $fotoName;
+            $destinationPath = storage_path('app/public/images/presensi');
+            
+            // Pastikan direktori ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Kompres dan simpan gambar
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($foto->getRealPath());
+            $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
 
             $client = new Client();
             $res = $client->post('https://api-us.faceplusplus.com/facepp/v3/detect', [
@@ -159,8 +178,9 @@ class FaceRecognitionController extends Controller
                 }
             }
 
+            // Simpan path foto ke session untuk digunakan saat menyimpan absensi
+            Session::put('face_image_path', $fotoPath);
             Session::put('face_results', [$bestMatch]);
-
             Session::put('jadwal_hari_ini', $jadwalHariIni);
 
             return redirect()->route('absen.face-results');

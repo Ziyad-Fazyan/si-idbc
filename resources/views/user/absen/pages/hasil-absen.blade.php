@@ -306,6 +306,7 @@
                                                         <input type="hidden" name="jadkul_code" value="{{ $jadwal->code }}">
                                                         <input type="hidden" name="absen_date" value="{{ now()->format('Y-m-d') }}">
                                                         <input type="hidden" name="absen_time" value="{{ now()->format('H:i:s') }}">
+                                                        <input type="hidden" name="days_id" value="{{ now()->dayOfWeekIso }}">
                                                         
                                                         <div class="mb-4">
                                                             <label for="absen_type" class="block text-sm font-medium text-gray-700 mb-2">

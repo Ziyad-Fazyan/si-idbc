@@ -107,11 +107,6 @@
                     <h2 class="text-xl font-semibold text-white">
                         @yield('submenu')
                     </h2>
-                    <a href="{{ route('web-admin.master.jadkul-create') }}"
-                        class="bg-white hover:bg-gray-100 text-[#0C6E71] px-3 py-2 rounded-md flex items-center transition-colors border border-[#0C6E71]">
-                        <i class="fa-solid fa-plus mr-2"></i>
-                        <span class="hidden sm:inline">Tambah</span>
-                    </a>
                 </div>
 
                 <!-- Card Body -->

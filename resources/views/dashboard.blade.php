@@ -306,7 +306,7 @@
         <header class="header-section text-white">
             <div class="header-grid">
                 <!-- Left: Date -->
-                <div class="glass-card rounded-xl px-4 py-3 glow-hover">
+                <div class="glass-card rounded-xl px-4 py-3 glow-hover" style="width: fit-content">
                     <div class="text-xs text-blue-200">
                         <i class="fas fa-calendar-alt mr-1"></i>Today
                     </div>
@@ -318,9 +318,9 @@
                     <button onclick="openFullscreen()">
                         <div class="title-backdrop">
                             <h1 class="text-4xl font-extrabold mb-1 neon-text">
-                                <span class="text-white">SIPEN</span><span class="text-blue-300">DEKAR</span>
+                                <span class="text-white">SI-</span><span class="text-blue-300">IDBC</span>
                             </h1>
-                            <p class="text-sm font-medium tracking-wider text-blue-100">SISTEM PENDIDIKAN KADER</p>
+                            <p class="text-sm font-medium tracking-wider text-blue-100">Sistem Informasi IDBC</p>
                             <div
                                 class="w-24 h-0.5 bg-gradient-to-r from-blue-300 to-blue-400 mx-auto mt-2 rounded-full opacity-80">
                             </div>
@@ -347,6 +347,7 @@
                 <!-- Attendance Card -->
                 <div class="glass-card rounded-xl overflow-hidden glow-hover h-full">
                     <div class="bright-card rounded-xl p-4 h-full flex flex-col">
+                        <!-- Header Section -->
                         <div class="flex items-center mb-4">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mr-3 accent-gradient">
                                 <i class="fas fa-user-check text-white text-sm"></i>
@@ -357,30 +358,123 @@
                             </div>
                         </div>
 
-                        <div class="flex-1 flex flex-col justify-between">
-                            <div class="bg-subtle rounded-lg p-3 mb-4 subtle-border">
-                                <select class="w-full bg-transparent blue-accent text-sm border-0 focus:outline-none">
-                                    <option>Web Programming</option>
-                                    <option>Design Grafis</option>
-                                    <option>Mobile Dev</option>
-                                </select>
-                            </div>
-
-                            <div class="text-center mb-4">
-                                <div class="text-3xl font-bold blue-accent animated-counter">40</div>
-                                <p class="text-muted text-sm">Total Students</p>
-                            </div>
-
-                            <div class="flex justify-center space-x-6">
-                                <div class="text-center">
-                                    <div class="w-3 h-3 bg-sky-500 rounded-full pulse-dot mx-auto mb-2"></div>
-                                    <div class="text-sky-600 font-semibold text-lg">32</div>
-                                    <div class="text-muted text-xs">Present</div>
+                        <!-- Filter Form -->
+                        <form action="{{ route('dashboard') }}" method="GET" class="mb-4 w-full">
+                            <div class="flex flex-row items-center gap-2 flex-wrap w-full">
+                                <!-- Dropdown Kelas -->
+                                <div class="bg-subtle rounded-md px-2 py-1 subtle-border flex-grow min-w-[120px]">
+                                    <select name="kelas_id"
+                                        class="w-full bg-transparent text-sm border-0 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                                        <option value="">All Classes</option>
+                                        @foreach ($kelas as $k)
+                                            <option value="{{ $k->id }}"
+                                                {{ $kelasId == $k->id ? 'selected' : '' }}>
+                                                {{ $k->kelas_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="text-center">
-                                    <div class="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-2"></div>
-                                    <div class="text-blue-600 font-semibold text-lg">8</div>
-                                    <div class="text-muted text-xs">Absent</div>
+
+                                <!-- Dropdown Gender -->
+                                <div class="bg-subtle rounded-md px-2 py-1 subtle-border">
+                                    <select name="gender"
+                                        class="w-20 bg-transparent text-sm border-0 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                                        <option value="">All</option>
+                                        <option value="L" {{ $gender == 'L' ? 'selected' : '' }}>Male</option>
+                                        <option value="P" {{ $gender == 'P' ? 'selected' : '' }}>Female</option>
+                                    </select>
+                                </div>
+
+                                <!-- Filter Button -->
+                                <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-md text-xs transition-all shadow-sm flex items-center gap-1">
+                                    <i class="fas fa-filter"></i>
+                                    <span>Filter</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Attendance List -->
+                        <div class="flex-1 overflow-y-auto pr-1 mb-3">
+                            <h4
+                                class="text-sm font-semibold text-slate-800 mb-2 sticky top-0 bg-white/80 backdrop-blur-sm z-10 py-1">
+                                Today's Attendance</h4>
+                            @forelse($detailAbsensi as $absen)
+                                <div
+                                    class="flex items-center p-2 bg-subtle rounded-lg subtle-border mb-2 hover:bg-slate-50 transition-colors">
+                                    <div class="relative shrink-0">
+                                        @if ($absen['image'])
+                                            <img src="{{ asset('storage/images/' . $absen['image']) }}"
+                                                alt="{{ $absen['nama'] }}"
+                                                class="w-10 h-10 rounded-full object-cover border border-slate-200">
+                                        @else
+                                            <div
+                                                class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center border border-slate-200">
+                                                <i class="fas fa-user text-gray-400"></i>
+                                            </div>
+                                        @endif
+                                        <div
+                                            class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full border border-white 
+                            {{ $absen['status'] == 'H' ? 'bg-green-500' : ($absen['status'] == 'S' ? 'bg-yellow-500' : 'bg-blue-500') }}">
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex-1 min-w-0">
+                                        <div class="flex justify-between items-center gap-2">
+                                            <div class="text-sm font-medium text-slate-700 truncate">
+                                                {{ $absen['nama'] }}</div>
+                                            <div class="text-xs text-slate-500 whitespace-nowrap">{{ $absen['waktu'] }}
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center gap-2 mt-1">
+                                            <div class="text-xs text-slate-500 truncate">
+                                                {{ $absen['nim'] }} •
+                                                {{ $absen['gender'] == 'L' ? 'Male' : 'Female' }}
+                                            </div>
+                                            <div
+                                                class="text-xs px-2 py-0.5 rounded-full whitespace-nowrap
+                                {{ $absen['status'] == 'H'
+                                    ? 'bg-green-100 text-green-700'
+                                    : ($absen['status'] == 'S'
+                                        ? 'bg-yellow-100 text-yellow-700'
+                                        : 'bg-blue-100 text-blue-700') }}">
+                                                {{ $absen['status'] == 'H' ? 'Present' : ($absen['status'] == 'S' ? 'Sick' : 'Permit') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center py-6 text-slate-400 text-sm bg-slate-50 rounded-lg">
+                                    <i class="fas fa-calendar-xmark mb-2 text-lg"></i>
+                                    <p>No attendance data today</p>
+                                </div>
+                            @endforelse
+                        </div>
+
+                        <!-- Summary Stats (Moved to Bottom) -->
+                        <div class="mt-auto pt-3 border-t border-slate-100">
+                            <div class="grid grid-cols-4 gap-2">
+                                <!-- Total Students -->
+                                <div class="text-center p-2 bg-blue-50 rounded-lg">
+                                    <div class="text-xl font-bold text-blue-600">{{ $totalMahasiswa }}</div>
+                                    <div class="text-xs text-slate-500 mt-1">Total</div>
+                                </div>
+
+                                <!-- Present -->
+                                <div class="text-center p-2 bg-green-50 rounded-lg">
+                                    <div class="text-xl font-bold text-green-600">{{ $hadir }}</div>
+                                    <div class="text-xs text-slate-500 mt-1">Present</div>
+                                </div>
+
+                                <!-- Sick -->
+                                <div class="text-center p-2 bg-yellow-50 rounded-lg">
+                                    <div class="text-xl font-bold text-yellow-600">{{ $tidakHadir }}</div>
+                                    <div class="text-xs text-slate-500 mt-1">Sick</div>
+                                </div>
+
+                                <!-- Not Present -->
+                                <div class="text-center p-2 bg-red-50 rounded-lg">
+                                    <div class="text-xl font-bold text-red-600">{{ $belumAbsen }}</div>
+                                    <div class="text-xs text-slate-500 mt-1">Absent</div>
                                 </div>
                             </div>
                         </div>
@@ -401,15 +495,32 @@
                                 <i class="fas fa-play text-2xl text-white ml-1"></i>
                             </div>
 
-                            <h2 class="text-3xl font-bold mb-2">WEB PROGRAMMING</h2>
-                            <p class="text-base opacity-90 mb-3">Laravel & React Development</p>
-                            <div class="flex justify-center space-x-2">
-                                <span
-                                    class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">Advanced
-                                    Level</span>
-                                <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">⭐
-                                    4.8 Rating</span>
-                            </div>
+                            @if ($featuredCourse)
+                                <h2 class="text-3xl font-bold mb-2">
+                                    {{ $featuredCourse->matkul->makul_name ?? 'TIDAK ADA JADWAL' }}</h2>
+                                <p class="text-base opacity-90 mb-3">
+                                    {{ $featuredCourse->dosen->dosen_name ?? 'Tidak ada dosen' }}</p>
+                                <div class="flex justify-center space-x-2">
+                                    <span
+                                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">
+                                        {{ $featuredCourse->start_time ?? '00:00' }} -
+                                        {{ $featuredCourse->end_time ?? '00:00' }}
+                                    </span>
+                                    <span
+                                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">
+                                        {{ $featuredCourse->kelas->kelas_name ?? 'Tidak ada kelas' }}
+                                    </span>
+                                </div>
+                            @else
+                                <h2 class="text-3xl font-bold mb-2">TIDAK ADA JADWAL</h2>
+                                <p class="text-base opacity-90 mb-3">Tidak ada jadwal kuliah hari ini</p>
+                                <div class="flex justify-center space-x-2">
+                                    <span
+                                        class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium backdrop-blur-sm">
+                                        Libur
+                                    </span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -420,45 +531,61 @@
                     <div class="glass-card rounded-xl glow-hover">
                         <div class="bright-card rounded-xl p-4 h-full">
                             <div class="flex items-center mb-4">
-                                <i class="fas fa-chart-line text-lg blue-accent mr-2"></i>
-                                <h3 class="font-semibold text-sm text-slate-800">CLASS PERFORMANCE</h3>
+                                <i class="fas fa-chart-line text-lg text-sky-600 mr-2"></i>
+                                <h3 class="font-semibold text-sm text-slate-800">PERFORMANCE STATS</h3>
                             </div>
 
                             <div class="space-y-3">
-                                <div class="relative w-full max-w-md mx-auto overflow-hidden">
-                                    <div id="gradeSlider" class="flex transition-transform duration-500 ease-in-out">
-                                        <!-- Slide 1 -->
-                                        <div class="min-w-full px-2">
+                                @forelse($kelasPerformance as $index => $performance)
+                                    <!-- Class {{ $index + 1 }} -->
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            @php
+                                                $colors = [
+                                                    'blue',
+                                                    'green',
+                                                    'yellow',
+                                                    'purple',
+                                                    'red',
+                                                    'indigo',
+                                                    'pink',
+                                                ];
+                                                $colorIndex = $index % count($colors);
+                                                $color = $colors[$colorIndex];
+                                                $initial = substr($performance['kelas_name'] ?? 'X', 0, 1);
+                                            @endphp
                                             <div
-                                                class="flex justify-between items-center p-3 bg-subtle rounded-lg subtle-border">
-                                                <div class="flex items-center">
-                                                    <span class="text-lg mr-3">💻</span>
-                                                    <div>
-                                                        <div class="text-slate-700 font-medium text-sm">Programming
-                                                        </div>
-                                                        <div class="text-muted text-xs">85% Attendance</div>
-                                                    </div>
+                                                class="w-8 h-8 rounded-full bg-{{ $color }}-100 flex items-center justify-center">
+                                                <span
+                                                    class="text-{{ $color }}-600 text-xs font-semibold">{{ $initial }}</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <div class="text-sm font-medium">
+                                                    {{ $performance['kelas_name'] ?? 'Tidak Diketahui' }}
                                                 </div>
-                                                <div class="text-sky-600 font-bold text-xl">A</div>
+                                                <div class="text-xs text-muted">
+                                                    {{ number_format($performance['attendance_rate'], 1) }}% Attendance
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <!-- Slide 2 -->
-                                        <div class="min-w-full px-2">
-                                            <div
-                                                class="flex justify-between items-center p-3 bg-subtle rounded-lg subtle-border">
-                                                <div class="flex items-center">
-                                                    <span class="text-lg mr-3">🎨</span>
-                                                    <div>
-                                                        <div class="text-slate-700 font-medium text-sm">Design</div>
-                                                        <div class="text-muted text-xs">88% Attendance</div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-sky-600 font-bold text-xl">A</div>
-                                            </div>
-                                        </div>
+                                        @php
+                                            $gradeColors = [
+                                                'A' => 'text-green-500',
+                                                'B' => 'text-blue-500',
+                                                'C' => 'text-yellow-500',
+                                                'D' => 'text-orange-500',
+                                                'E' => 'text-red-500',
+                                            ];
+                                            $gradeColor = $gradeColors[$performance['grade']] ?? 'text-gray-500';
+                                        @endphp
+                                        <div class="{{ $gradeColor }} font-semibold text-sm">
+                                            {{ $performance['grade'] }}</div>
                                     </div>
-                                </div>
+                                @empty
+                                    <div class="text-center py-4">
+                                        <div class="text-gray-500 text-sm">Tidak ada data performa kelas</div>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -474,31 +601,52 @@
                             <div class="space-y-3">
                                 <div class="relative w-full max-w-xl mx-auto overflow-hidden">
                                     <div id="slider" class="flex transition-transform duration-500 ease-in-out">
-                                        <!-- Slide 1 -->
-                                        <div class="min-w-full px-4">
-                                            <div class="bg-blue-50 rounded-lg p-3 border-l-4 border-blue-400">
-                                                <div class="text-blue-600 font-semibold text-sm mb-1">🎥 MULTIMEDIA
+                                        @forelse($jadwalHariIni as $index => $jadwal)
+                                            <!-- Slide {{ $index + 1 }} -->
+                                            <div class="min-w-full px-4">
+                                                <div class="bg-blue-50 rounded-lg p-3 border-l-4 border-blue-400">
+                                                    <div class="text-blue-600 font-semibold text-sm mb-1">
+                                                        {{ $jadwal->matkul->makul_name ?? 'Tidak ada mata kuliah' }}
+                                                    </div>
+                                                    <div class="text-muted text-xs mb-1">
+                                                        {{ $jadwal->dosen->dosen_name ?? 'Tidak ada dosen' }}</div>
+                                                    <div class="text-muted text-xs">{{ $jadwal->start ?? '00:00' }} -
+                                                        {{ $jadwal->ended ?? '00:00' }}</div>
+                                                    @php
+                                                        $now = \Carbon\Carbon::now();
+                                                        $startTime = \Carbon\Carbon::createFromFormat(
+                                                            'H:i:s',
+                                                            $jadwal->start,
+                                                        );
+                                                        $endTime = \Carbon\Carbon::createFromFormat(
+                                                            'H:i:s',
+                                                            $jadwal->ended,
+                                                        );
+                                                        $isActive = $now->between($startTime, $endTime);
+                                                        $isNext = $now->lt($startTime);
+                                                    @endphp
+                                                    <div
+                                                        class="inline-block px-2 py-1 {{ $isActive ? 'bg-blue-500' : ($isNext ? 'bg-slate-500' : 'bg-gray-500') }} text-white text-xs rounded-full mt-1">
+                                                        {{ $isActive ? 'ACTIVE' : ($isNext ? 'NEXT' : 'DONE') }}
+                                                    </div>
                                                 </div>
-                                                <div class="text-muted text-xs mb-1">Ust Arif Febri S</div>
-                                                <div class="text-muted text-xs">08:00 - 10:00</div>
-                                                <div
-                                                    class="inline-block px-2 py-1 bg-blue-500 text-white text-xs rounded-full mt-1">
-                                                    ACTIVE</div>
                                             </div>
-                                        </div>
-
-                                        <!-- Slide 2 -->
-                                        <div class="min-w-full px-4">
-                                            <div class="bg-sky-50 rounded-lg p-3 border-l-4 border-sky-400">
-                                                <div class="text-sky-600 font-semibold text-sm mb-1">⚡ PHP LARAVEL
+                                        @empty
+                                            <!-- No Schedule Slide -->
+                                            <div class="min-w-full px-4">
+                                                <div class="bg-gray-50 rounded-lg p-3 border-l-4 border-gray-400">
+                                                    <div class="text-gray-600 font-semibold text-sm mb-1">Tidak Ada
+                                                        Jadwal</div>
+                                                    <div class="text-muted text-xs mb-1">Tidak ada jadwal kuliah hari
+                                                        ini</div>
+                                                    <div class="text-muted text-xs">--:-- - --:--</div>
+                                                    <div
+                                                        class="inline-block px-2 py-1 bg-gray-500 text-white text-xs rounded-full mt-1">
+                                                        LIBUR
+                                                    </div>
                                                 </div>
-                                                <div class="text-muted text-xs mb-1">Andika Yuli Setyanto</div>
-                                                <div class="text-muted text-xs">10:15 - 12:15</div>
-                                                <div
-                                                    class="inline-block px-2 py-1 bg-slate-500 text-white text-xs rounded-full mt-1">
-                                                    NEXT</div>
                                             </div>
-                                        </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>

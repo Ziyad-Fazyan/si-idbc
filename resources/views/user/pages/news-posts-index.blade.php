@@ -132,7 +132,7 @@
             const deleteForm = document.getElementById('deleteForm');
             const deleteItemName = document.getElementById('deleteItemName');
 
-            deleteForm.action = "{{ route($prefix . 'news.post-destroy', '') }}/" + slug;
+            deleteForm.action = "{{ route($prefix . 'news.post-destroy', ':slug') }}".replace(':slug', slug);
             deleteItemName.textContent = name;
             modal.classList.remove('hidden');
         }

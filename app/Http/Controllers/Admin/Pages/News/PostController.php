@@ -140,6 +140,12 @@ class PostController extends Controller
             if (!File::exists($destinationPath)) {
                 File::makeDirectory($destinationPath, 0755, true, true);
             }
+
+            // Hapus foto lama jika ada
+            if ($post->image && File::exists(storage_path('app/public/images/' . $post->image))) {
+                File::delete(storage_path('app/public/images/' . $post->image));
+            }
+
             // Mengompres gambar dan menyimpannya
             $manager = new ImageManager(new Driver());
             $image = $manager->read($image->getRealPath());

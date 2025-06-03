@@ -16,7 +16,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class JadwalAjarController extends Controller
 {
-public function index()
+    public function index()
     {
         $data['web'] = webSettings::where('id', 1)->first();
         $dosenId = Auth::guard('dosen')->user();
@@ -33,7 +33,7 @@ public function index()
         $dosenId = Auth::guard('dosen')->user();
         $jadkul = JadwalKuliah::where('code', $code)->first();
         $data['kelas'] = Kelas::where('code', $code)->first();
-        $data['student'] = $data['kelas']->mahasiswa;
+        $data['student'] = optional($data['kelas'])->mahasiswa ?? collect();
         $data['absen'] = AbsensiMahasiswa::where('jadkul_code', $code)->get();
 
         return view('dosen.pages.jadwal-absen', $data);

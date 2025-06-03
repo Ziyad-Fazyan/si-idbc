@@ -18,6 +18,7 @@ use App\Models\TagihanKuliah;
 use App\Models\TahunAkademik;
 use App\Models\HistoryTagihan;
 use App\Models\AbsensiMahasiswa;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
@@ -142,6 +143,7 @@ class HomeController extends Controller
             'days_id' => 'required|integer',
             'absen_time' => 'required|string',
             'author_id' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $timeStart = now()->format('H:i:s');
@@ -181,6 +183,32 @@ class HomeController extends Controller
         $absen->absen_time = $request->absen_time;
         $absen->absen_type = $request->absen_type;
         $absen->code = uniqid();
+        
+        // Jika ada gambar dari face recognition atau upload manual
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = 'presensi-' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = storage_path('app/public/images/presensi');
+
+            // Membuat direktori jika belum ada
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true, true);
+            }
+
+            // Mengompres gambar dan menyimpannya
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($image->getRealPath());
+            $image->scaleDown(height: 300)->save($destinationPath . '/' . $name);
+
+            // Menyimpan nama file gambar ke database
+            $absen->image = "presensi/" . $name;
+        } 
+        // Jika ada gambar dari face recognition yang disimpan di session
+        elseif (Session::has('face_image_path')) {
+            $absen->image = Session::get('face_image_path');
+            Session::forget('face_image_path');
+        }
+        
         $absen->save();
 
         // Tentukan pesan berdasarkan sumber request (dari mahasiswa atau dari pengenalan wajah)

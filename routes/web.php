@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Root\ErrorController;
-use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +32,8 @@ Route::get('/dev', function () {
 });
 
 // ROOT ROUTE
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/attendance/{kelasId}', [DashboardController::class, 'getAttendanceAjax']);
 
 // AUTHENTICATION ROUTES
 Route::middleware(['guest'])->group(function () {
@@ -84,3 +85,4 @@ $routeFiles = [
 foreach ($routeFiles as $file) {
     require __DIR__.'/'.$file;
 }
+
