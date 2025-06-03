@@ -33,15 +33,15 @@
                 </div>
                 <div class="p-4 space-y-4">
                     <div class="space-y-1">
-                        <label for="gedu_id" class="block text-sm font-medium text-gray-700">Gedung</label>
-                        <select name="gedu_id" id="gedu_id"
+                        <label for="gedung_id" class="block text-sm font-medium text-gray-700">Gedung</label>
+                        <select name="gedung_id" id="gedung_id"
                             class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent">
                             <option value="" selected>Pilih Gedung</option>
                             @foreach ($gedung as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                        @error('gedu_id')
+                        @error('gedung_id')
                             <small class="text-red-500 text-sm">{{ $message }}</small>
                         @enderror
                     </div>
@@ -181,17 +181,17 @@
                             </div>
                             <div class="mt-4 space-y-4">
                                 <div class="space-y-1">
-                                    <label for="gedu_id" class="block text-sm font-medium text-gray-700">Gedung</label>
-                                    <select name="gedu_id" id="gedu_id"
+                                    <label for="gedung_id" class="block text-sm font-medium text-gray-700">Gedung</label>
+                                    <select name="gedung_id" id="gedung_id"
                                         class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent">
                                         <option value="" selected>Pilih Gedung</option>
                                         @foreach ($gedung as $gd)
                                             <option value="{{ $gd->id }}"
-                                                {{ $item->gedu_id == $gd->id ? 'selected' : '' }}>{{ $gd->name }}
+                                                {{ $item->gedung_id == $gd->id ? 'selected' : '' }}>{{ $gd->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('gedu_id')
+                                    @error('gedung_id')
                                         <small class="text-red-500 text-sm">{{ $message }}</small>
                                     @enderror
                                 </div>

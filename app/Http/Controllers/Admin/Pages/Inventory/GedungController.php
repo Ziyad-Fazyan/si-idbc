@@ -56,11 +56,24 @@ class GedungController extends Controller
 
     public function destroy(Request $request, $code)
     {
+        try {
+            $gedung = Gedung::where('code', $code)->first();
 
-        $gedung = Gedung::where('code', $code)->first();
-        $gedung->delete();
+            if ($gedung->ruangs()->exists()) {
+                Alert::error('Error', 'Gedung tidak dapat dihapus karena masih terkait dengan data Ruang!');
+                return back();
+            }
 
-        Alert::success('success', 'Data telah berhasil dihapus');
-        return back();
+            $gedung->delete();
+
+            Alert::success('Success', 'Data Gedung berhasil dihapus');
+            return back();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Alert::error('Error', 'Data Gedung tidak ditemukan!');
+            return back();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+            return back();
+        }
     }
 }

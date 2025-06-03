@@ -9,4 +9,9 @@ class Gedung extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function ruangs()
+    {
+        return $this->hasMany(Ruang::class);
+    }
 }

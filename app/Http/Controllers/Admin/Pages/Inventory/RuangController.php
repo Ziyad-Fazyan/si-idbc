@@ -27,7 +27,7 @@ class RuangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gedu_id' => 'required|integer',
+            'gedung_id' => 'required|integer',
             'type' => 'required|integer',
             'floor' => 'required|integer',
             'name' => 'required|string|max:255',
@@ -35,7 +35,7 @@ class RuangController extends Controller
         ]);
 
         $ruang = new Ruang;
-        $ruang->gedu_id = $request->gedu_id;
+        $ruang->gedung_id = $request->gedung_id;
         $ruang->type = $request->type;
         $ruang->floor = $request->floor;
         $ruang->name = $request->name;
@@ -49,7 +49,7 @@ class RuangController extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'gedu_id' => 'required|integer',
+            'gedung_id' => 'required|integer',
             'type' => 'required|integer',
             'floor' => 'required|integer',
             'name' => 'required|string|max:255',
@@ -57,7 +57,7 @@ class RuangController extends Controller
         ]);
 
         $ruang = Ruang::where('code', $code)->first();
-        $ruang->gedu_id = $request->gedu_id;
+        $ruang->gedung_id = $request->gedung_id;
         $ruang->type = $request->type;
         $ruang->floor = $request->floor;
         $ruang->name = $request->name;
@@ -70,11 +70,24 @@ class RuangController extends Controller
 
     public function destroy(Request $request, $code)
     {
+        try {
+            $ruang = Ruang::where('code', $code)->first();
 
-        $ruang = Ruang::where('code', $code)->first();
-        $ruang->delete();
+            if ($ruang->barang()->exists()) {
+                Alert::error('Error', 'Ruangan tidak dapat dihapus karena masih terkait dengan Barang!');
+                return back();
+            }
 
-        Alert::success('success', 'Data telah berhasil dihapus');
-        return back();
+            $ruang->delete();
+
+            Alert::success('Success', 'Data Gedung berhasil dihapus');
+            return back();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Alert::error('Error', 'Data Gedung tidak ditemukan!');
+            return back();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+            return back();
+        }
     }
 }
