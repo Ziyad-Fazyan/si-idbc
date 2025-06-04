@@ -24,7 +24,7 @@ class AbsensiMahasiswa extends Model
 
     public function getRawAbsenTypeAttribute()
     {
-        return $this->attributes['dsn_stat'] ?? 'Unknown';
+        return $this->getRawOriginal('absen_type') ?? 'Unknown';
     }
 
     public function mahasiswa()
