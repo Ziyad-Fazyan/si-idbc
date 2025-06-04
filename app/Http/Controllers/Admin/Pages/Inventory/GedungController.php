@@ -18,8 +18,9 @@ class GedungController extends Controller
         $data['web'] = webSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['gedung'] = Gedung::all();
+        $data['gedung'] = Gedung::paginate(10);
 
-        return view('user.admin.master-inventory.admin-gedung-index', $data);
+        return view('user.admin.master-inventory.gedung.index', $data);
     }
 
     public function store(Request $request)
