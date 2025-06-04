@@ -21,7 +21,7 @@ class RuangController extends Controller
         $data['gedung'] = Gedung::all();
         $data['ruang'] = Ruang::all();
 
-        return view('user.admin.master-inventory.admin-ruang-index', $data);
+        return view('user.admin.master-inventory.ruang.index', $data);
     }
 
     public function store(Request $request)
