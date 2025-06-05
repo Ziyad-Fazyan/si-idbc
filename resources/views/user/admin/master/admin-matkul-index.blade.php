@@ -164,16 +164,6 @@
                                 @enderror
                             </div>
                             <div class="space-y-2">
-                                <label for="bsks" class="block text-sm font-medium text-gray-700">Bebas SKS Mata
-                                    Kuliah</label>
-                                <input type="number" min="10" max="40" name="bsks" id="bsks"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    value="{{ $item->bsks }}">
-                                @error('bsks')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
                                 <label for="kuri_id" class="block text-sm font-medium text-gray-700">Kurikulum</label>
                                 <select name="kuri_id" id="kuri_id"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">

@@ -6,7 +6,7 @@
     Data Tugas Kuliah
 @endsection
 @section('submenu')
-    Tugas {{ $stask->jadkul->matkul->name }} - {{ $stask->jadkul->pert_id }}
+    Tugas {{ $stask->jadkul->matkul->name }}
 @endsection
 @section('urlmenu')
     {{ route('mahasiswa.akademik.tugas-index') }}
@@ -42,7 +42,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Mata Kuliah</label>
                         <input type="text" readonly
-                            value="{{ $stask->jadkul->matkul->name }} - {{ $stask->jadkul->pert_id }}"
+                            value="{{ $stask->jadkul->matkul->name }} "
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
                     </div>
 

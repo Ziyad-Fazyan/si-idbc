@@ -150,7 +150,7 @@
                         Absen Mata Kuliah
                     </label>
                     <input type="text" name="jadkul_name" id="jadkul_name"
-                        value="{{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}" readonly
+                        value="{{ $jadkul->matkul->name }}" readonly
                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('jadkul_name')
                         <p class="text-sm text-red-600">{{ $message }}</p>

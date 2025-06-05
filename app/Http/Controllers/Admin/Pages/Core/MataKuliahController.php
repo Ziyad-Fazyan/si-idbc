@@ -47,7 +47,6 @@ class MataKuliahController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
-            'bsks' => 'required|string|max:255',
             'desc' => 'required|string',
             'pstudi_id' => 'required',
             'kuri_id' => 'required',
@@ -61,7 +60,6 @@ class MataKuliahController extends Controller
         $matkul = new MataKuliah;
         $matkul->name = $request->name;
         $matkul->code = $request->code;
-        $matkul->bsks = $request->bsks;
         $matkul->desc = $request->desc;
         $matkul->pstudi_id = $request->pstudi_id;
         $matkul->kuri_id = $request->kuri_id;
@@ -81,7 +79,6 @@ class MataKuliahController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
-            'bsks' => 'required|string|max:255',
             'desc' => 'required|string',
             'pstudi_id' => 'required',
             'kuri_id' => 'required',
@@ -95,7 +92,6 @@ class MataKuliahController extends Controller
         $matkul = MataKuliah::where('code', $code)->first();
         $matkul->name = $request->name;
         $matkul->code = $request->code;
-        $matkul->bsks = $request->bsks;
         $matkul->desc = $request->desc;
         $matkul->pstudi_id = $request->pstudi_id;
         $matkul->kuri_id = $request->kuri_id;

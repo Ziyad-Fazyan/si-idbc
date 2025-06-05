@@ -17,10 +17,7 @@ return new class extends Migration
             $table->integer('kelas_id');            // ID KELAS
             $table->integer('dosen_id');            // ID DOSEN
             $table->integer('ruang_id');            // ID RUANGAN
-            $table->integer('pert_id');             // ID PERTEMUAN
-            $table->integer('meth_id');             // ID METODE PERTEMUAN
             $table->integer('days_id');             // ID HARI
-            $table->integer('bsks');                // BEBAN SKS HARI INI
             $table->time('start');                  // WAKTU MULAI PERKULIAHAN
             $table->time('ended');                  // WAKTU SELESAI PERKULIAHAN
             $table->string('code')->unique();       // CODE JADWAL KULIAH

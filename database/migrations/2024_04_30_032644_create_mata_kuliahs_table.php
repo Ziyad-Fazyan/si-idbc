@@ -18,11 +18,10 @@ return new class extends Migration
             $table->integer('requ_id')->nullable();     // ID Persyaratan Mata Kuliah
             $table->integer('pstudi_id');               // ID Program Studi
             $table->integer('dosen_1');                 // Dosen Utama
-            $table->integer('dosen_2')->nullable();     // Dosen Cadangan 1 
+            $table->integer('dosen_2')->nullable();     // Dosen Cadangan 1
             $table->integer('dosen_3')->nullable();     // Dosen Cadangan 2
-            $table->string('name');                     // Nama Mata Kuliah    
+            $table->string('name');                     // Nama Mata Kuliah
             $table->string('code')->unique();           // Kode Mata Kuliah
-            $table->string('bsks');                     // Beban SKS
             $table->longText('desc');                   // Deskripsi Mata Kuliah
             $table->timestamps();
         });

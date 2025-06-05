@@ -6,7 +6,7 @@
     Data Tugas Kuliah Mahasiswa
 @endsection
 @section('submenu')
-    Tugas {{ $score->task->jadkul->matkul->name }} - {{ $score->task->jadkul->pert_id }}
+    Tugas {{ $score->task->jadkul->matkul->name }} 
 @endsection
 @section('urlmenu')
     {{ route('dosen.akademik.stask-view', $score->task->code) }}

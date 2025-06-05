@@ -58,7 +58,6 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">{{ $item->jadkul->matkul->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $item->jadkul->pert_id }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">
@@ -69,7 +68,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <a href="{{ route('mahasiswa.akademik.tugas-view', $item->code) }}" 
+                                <a href="{{ route('mahasiswa.akademik.tugas-view', $item->code) }}"
                                    class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                     <i class="fa-solid fa-eye mr-1"></i> Lihat
                                 </a>

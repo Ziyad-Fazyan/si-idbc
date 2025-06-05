@@ -8,66 +8,66 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8fafc;
         }
-        
+
         .similarity-high {
             background-color: #d1fae5;
             color: #065f46;
         }
-        
+
         .similarity-medium {
             background-color: #fef3c7;
             color: #92400e;
         }
-        
+
         .similarity-low {
             background-color: #fee2e2;
             color: #991b1b;
         }
-        
+
         .status-verified {
             background-color: #dcfce7;
             color: #166534;
         }
-        
+
         .status-pending {
             background-color: #fef9c3;
             color: #854d0e;
         }
-        
+
         .status-rejected {
             background-color: #fee2e2;
             color: #991b1b;
         }
-        
+
         .btn-primary {
             background-color: #0C6E71;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary:hover {
             background-color: #0A5C5E;
             transform: translateY(-1px);
         }
-        
+
         .btn-secondary {
             background-color: #f1f5f9;
             transition: all 0.3s ease;
         }
-        
+
         .btn-secondary:hover {
             background-color: #e2e8f0;
             transform: translateY(-1px);
         }
-        
+
         .face-match-animation {
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(12, 110, 113, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(12, 110, 113, 0); }
@@ -95,11 +95,11 @@
 
                 <div class="p-6">
                     @if(session('face_results'))
-                        @php 
+                        @php
                             $results = session('face_results');
-                            $jadwal = session('jadwal_hari_ini'); 
+                            $jadwal = session('jadwal_hari_ini');
                         @endphp
-                        
+
                         @if(count($results) > 0)
                             @foreach($results as $result)
                                 <div class="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl mb-6 shadow-sm border border-gray-200 face-match-animation">
@@ -114,7 +114,7 @@
                                                     </div>
                                                     <h3 class="text-xl font-semibold text-gray-800">Data Mahasiswa</h3>
                                                 </div>
-                                                
+
                                                 @if(isset($result['mahasiswa_data']))
                                                     <div class="space-y-3">
                                                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
@@ -161,7 +161,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Recognition Result Card -->
                                         <div class="w-full lg:w-1/2">
                                             <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 h-full">
@@ -171,7 +171,7 @@
                                                     </div>
                                                     <h3 class="text-xl font-semibold text-gray-800">Hasil Pengenalan</h3>
                                                 </div>
-                                                
+
                                                 <div class="space-y-3">
                                                     <div class="flex justify-between items-center py-2 border-b border-gray-100">
                                                         <span class="text-gray-600 flex items-center">
@@ -210,7 +210,7 @@
                                                     </div>
                                                     <div class="mt-4">
                                                         <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                                            <div class="bg-[#0C6E71] h-2.5 rounded-full" 
+                                                            <div class="bg-[#0C6E71] h-2.5 rounded-full"
                                                                  style="width: {{ $result['similarity'] }}%"></div>
                                                         </div>
                                                         <div class="flex justify-between text-xs text-gray-500 mt-1">
@@ -223,7 +223,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Today's Schedule -->
                                     @if($jadwal)
                                         <div class="mb-6">
@@ -234,7 +234,7 @@
                                                     </div>
                                                     <h3 class="text-xl font-semibold text-gray-800">Jadwal Kuliah Hari Ini</h3>
                                                 </div>
-                                                
+
                                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div class="flex items-center p-3 bg-gray-50 rounded-lg">
                                                         <div class="p-2 rounded-lg bg-gray-200 text-gray-700 mr-3">
@@ -245,7 +245,7 @@
                                                             <p class="font-medium">{{ $jadwal->matkul->name }}</p>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="flex items-center p-3 bg-gray-50 rounded-lg">
                                                         <div class="p-2 rounded-lg bg-gray-200 text-gray-700 mr-3">
                                                             <i class="fas fa-chalkboard-teacher"></i>
@@ -255,7 +255,7 @@
                                                             <p class="font-medium">{{ $jadwal->dosen->dsn_name }}</p>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="flex items-center p-3 bg-gray-50 rounded-lg">
                                                         <div class="p-2 rounded-lg bg-gray-200 text-gray-700 mr-3">
                                                             <i class="fas fa-door-open"></i>
@@ -265,7 +265,7 @@
                                                             <p class="font-medium">{{ $jadwal->ruang->name }}</p>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="flex items-center p-3 bg-gray-50 rounded-lg">
                                                         <div class="p-2 rounded-lg bg-gray-200 text-gray-700 mr-3">
                                                             <i class="fas fa-clock"></i>
@@ -276,19 +276,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="mt-4 flex items-center p-3 bg-gray-50 rounded-lg">
                                                     <div class="p-2 rounded-lg bg-gray-200 text-gray-700 mr-3">
                                                         <i class="fas fa-list-ol"></i>
                                                     </div>
-                                                    <div>
-                                                        <p class="text-sm text-gray-500">Pertemuan</p>
-                                                        <p class="font-medium">{{ $jadwal->pert_id }}</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Attendance Form -->
                                         @if(isset($result['mahasiswa_data']) && $result['similarity'] >= 0.5)
                                             <div class="mb-6">
@@ -299,7 +295,7 @@
                                                         </div>
                                                         <h3 class="text-xl font-semibold text-gray-800">Form Absensi</h3>
                                                     </div>
-                                                    
+
                                                     <form action="{{ route('absen.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="author_id" value="{{ $result['mahasiswa_data']['id'] }}">
@@ -307,19 +303,19 @@
                                                         <input type="hidden" name="absen_date" value="{{ now()->format('Y-m-d') }}">
                                                         <input type="hidden" name="absen_time" value="{{ now()->format('H:i:s') }}">
                                                         <input type="hidden" name="days_id" value="{{ now()->dayOfWeekIso }}">
-                                                        
+
                                                         <div class="mb-4">
                                                             <label for="absen_type" class="block text-sm font-medium text-gray-700 mb-2">
                                                                 <i class="fas fa-tasks mr-1"></i> Pilih Jenis Absen:
                                                             </label>
-                                                            <select name="absen_type" id="absen_type" required 
+                                                            <select name="absen_type" id="absen_type" required
                                                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
                                                                 <option value="H">Hadir</option>
                                                                 <option value="S">Sakit</option>
                                                                 <option value="I">Izin</option>
                                                             </select>
                                                         </div>
-                                                        
+
                                                         <button type="submit" class="w-full px-6 py-3 btn-primary text-white rounded-lg font-medium">
                                                             <i class="fas fa-check-circle mr-2"></i>Absen Sekarang
                                                         </button>
@@ -363,7 +359,7 @@
                                 <p class="text-gray-500">Sistem tidak dapat menemukan kecocokan wajah yang memadai.</p>
                             </div>
                         @endif
-                        
+
                         <div class="mt-6 text-center">
                             <a href="" class="inline-flex items-center px-6 py-2 btn-secondary text-gray-700 rounded-lg font-medium">
                                 <i class="fas fa-arrow-left mr-2"></i>Kembali ke Beranda
