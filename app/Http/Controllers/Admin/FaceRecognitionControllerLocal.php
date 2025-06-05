@@ -88,8 +88,6 @@ class FaceRecognitionController extends Controller
 
         try {
             $foto = $request->file('foto');
-            $fotoContents = file_get_contents($foto->getRealPath());
-            $base64 = base64_encode($fotoContents);
 
             // Simpan foto untuk digunakan nanti dalam absensi
             $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
@@ -105,18 +103,27 @@ class FaceRecognitionController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($foto->getRealPath());
             $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
+
+            // Buka file sebagai stream untuk dikirim ke API
+            $fileStream = fopen($foto->getRealPath(), 'r');
+
             // Dapatkan embedding dari API FastAPI
             $client = new Client();
             $response = $client->post(env('FACE_API_URL'), [
                 'multipart' => [
                     [
                         'name' => 'file',
-                        'contents' => $foto,
-                        'filename' => $request->file('foto')->getClientOriginalName(),
+                        'contents' => $fileStream, // Gunakan stream file
+                        'filename' => $foto->getClientOriginalName(),
                     ],
                 ],
                 'timeout' => 10,
             ]);
+
+            // Tutup stream setelah digunakan
+            if (is_resource($fileStream)) {
+                fclose($fileStream);
+            }
 
             $data = json_decode($response->getBody(), true);
             $inputEmbedding = $data['embedding'] ?? null;
@@ -140,7 +147,7 @@ class FaceRecognitionController extends Controller
                     $highestSimilarity = $similarity;
                     $bestMatch = [
                         'mahasiswa' => $mhs->mhs_name,
-                        'similarity' => $similarity,
+                        'similarity' => $similarity, // Perbaikan typo dari 'similarity' ke 'similarity'
                         'status' => $similarity >= 0.5 ? '✅ Cocok' : '❌ Tidak Cocok',
                         'mahasiswa_data' => [
                             'id' => $mhs->id,
@@ -158,19 +165,42 @@ class FaceRecognitionController extends Controller
                 return back()->with('error', '❌ Tidak ada mahasiswa dengan wajah yang cocok.');
             }
 
-            // Cari jadwal kuliah hari ini untuk kelas mahasiswa
+            // Simpan hanya 1 data ke session
             $now = Carbon::now();
             $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
             $waktuDatang = $now->format('H:i:s');
+            $userId = $bestMatch['mahasiswa'] ?? null;
             $jadwalHariIni = null;
-            if ($bestMatch['mahasiswa_data']['kelas'] !== 'Tidak ada kelas') {
-                $jadwalHariIni = JadwalKuliah::whereHas('kelas', function ($query) use ($bestMatch) {
-                    $query->where('name', $bestMatch['mahasiswa_data']['kelas']);
-                })
-                    ->where('days_id', $hariIni)
-                    ->where('start', '<=', $waktuDatang)
-                    ->where('ended', '>=', $waktuDatang)
-                    ->first();
+            $mahasiswaData = null;
+
+            if ($userId) {
+                // Cari data mahasiswa berdasarkan nama
+                $mahasiswaData = Mahasiswa::where('mhs_name', $userId)->first();
+                if ($mahasiswaData) {
+                    // Tambahkan data mahasiswa ke hasil pengenalan wajah
+                    $bestMatch['mahasiswa_data'] = [
+                        'id' => $mahasiswaData->id,
+                        'nim' => $mahasiswaData->mhs_nim,
+                        'name' => $mahasiswaData->mhs_name,
+                        'kelas' => $mahasiswaData->kelas->count() > 0 ? $mahasiswaData->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
+                        'program_studi' => $mahasiswaData->kelas->count() > 0 && $mahasiswaData->kelas->first()->pstudi ? $mahasiswaData->kelas->first()->pstudi->name : 'Tidak ada prodi',
+                        'status' => $mahasiswaData->mhs_stat
+                    ];
+
+                    // Cari jadwal kuliah hari ini untuk kelas mahasiswa
+                    // Ambil kelas pertama yang terkait dengan mahasiswa
+                    $kelas = $mahasiswaData->kelas()->first();
+                    $kelasId = $kelas ? $kelas->id : null;
+
+                    $jadwalHariIni = null;
+                    if ($kelasId) {
+                        $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
+                            ->where('days_id', $hariIni)
+                            ->where('start', '<=', $waktuDatang)
+                            ->where('ended', '>=', $waktuDatang)
+                            ->first();
+                    }
+                }
             }
 
             // Simpan hasil ke session
