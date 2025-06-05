@@ -9,9 +9,8 @@ use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class FaceRecognitionController extends Controller
@@ -48,34 +47,35 @@ class FaceRecognitionController extends Controller
         ]);
 
         try {
-            // Konversi foto ke base64
-            $base64 = base64_encode(file_get_contents($request->file('foto')));
+            $foto = fopen($request->file('foto')->getRealPath(), 'r');
 
-            // Panggil API Face++ untuk mendeteksi wajah
+            // Kirim ke API FastAPI /embedding
             $client = new Client();
-            $res = $client->post('https://api-us.faceplusplus.com/facepp/v3/detect', [
-                'form_params' => [
-                    'api_key' => env('FACE_API_KEY'),
-                    'api_secret' => env('FACE_API_SECRET'),
-                    'image_base64' => $base64,
-                ]
+            $response = $client->post(env('FACE_API_URL'), [
+                'multipart' => [
+                    [
+                        'name' => 'file',
+                        'contents' => $foto,
+                        'filename' => $request->file('foto')->getClientOriginalName(),
+                    ],
+                ],
+                'timeout' => 10,
             ]);
 
-            $data = json_decode($res->getBody(), true);
-            $faceToken = $data['faces'][0]['face_token'] ?? null;
+            $data = json_decode($response->getBody(), true);
+            $embedding = $data['embedding'] ?? null;
 
-            if (!$faceToken) {
-                return back()->with('error', '❌ Wajah tidak terdeteksi. Gunakan foto yang jelas.');
+            if (!$embedding) {
+                return back()->with('error', '❌ Gagal mendapatkan embedding wajah.');
             }
 
-            // Simpan face_token ke mahasiswa
             $mhs = Mahasiswa::find($request->mahasiswas_id);
-            $mhs->face_token = $faceToken;
+            $mhs->face_embedding = json_encode($embedding);
             $mhs->save();
 
-            return back()->with('success', "✅ Face token tersimpan untuk {$mhs->mhs_name}.");
+            return back()->with('success', "✅ Embedding wajah tersimpan untuk {$mhs->mhs_name}.");
         } catch (\Exception $e) {
-            return back()->with('error', '⚠️ Gagal menghubungi Face++: ' . $e->getMessage());
+            return back()->with('error', '⚠️ Gagal menghubungi API Face Recognition: ' . $e->getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ class FaceRecognitionController extends Controller
             $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
             $fotoPath = 'presensi/' . $fotoName;
             $destinationPath = storage_path('app/public/images/presensi');
-            
+
             // Pastikan direktori ada
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
@@ -105,80 +105,75 @@ class FaceRecognitionController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($foto->getRealPath());
             $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
-
+            // Dapatkan embedding dari API FastAPI
             $client = new Client();
-            $res = $client->post('https://api-us.faceplusplus.com/facepp/v3/detect', [
-                'form_params' => [
-                    'api_key' => env('FACE_API_KEY'),
-                    'api_secret' => env('FACE_API_SECRET'),
-                    'image_base64' => $base64,
+            $response = $client->post(env('FACE_API_URL'), [
+                'multipart' => [
+                    [
+                        'name' => 'file',
+                        'contents' => $foto,
+                        'filename' => $request->file('foto')->getClientOriginalName(),
+                    ],
                 ],
                 'timeout' => 10,
             ]);
 
-            $data = json_decode($res->getBody(), true);
-            $inputToken = $data['faces'][0]['face_token'] ?? null;
+            $data = json_decode($response->getBody(), true);
+            $inputEmbedding = $data['embedding'] ?? null;
 
-            if (!$inputToken) {
-                return back()->with('error', '❌ Wajah tidak terdeteksi. Pastikan wajah terlihat jelas.');
+            if (!$inputEmbedding) {
+                return back()->with('error', '❌ Wajah tidak terdeteksi atau gagal mendapat embedding.');
             }
 
-            $users = Mahasiswa::whereNotNull('face_token')->get();
+            $mahasiswas = Mahasiswa::whereNotNull('face_embedding')->get();
+
             $highestSimilarity = 0;
             $bestMatch = null;
 
-            foreach ($users as $user) {
-                $comparisonResult = $this->compareFaces($user, $inputToken);
+            foreach ($mahasiswas as $mhs) {
+                $storedEmbedding = json_decode($mhs->face_embedding, true);
+                if (!$storedEmbedding) continue;
 
-                if ($comparisonResult['similarity'] > $highestSimilarity) {
-                    $highestSimilarity = $comparisonResult['similarity'];
+                $similarity = $this->cosineSimilarity($storedEmbedding, $inputEmbedding);
+
+                if ($similarity > $highestSimilarity) {
+                    $highestSimilarity = $similarity;
                     $bestMatch = [
-                        'mahasiswa' => $user->mhs_name,
-                        'similarity' => $comparisonResult['similarity'],
-                        'status' => $comparisonResult['status'],
+                        'mahasiswa' => $mhs->mhs_name,
+                        'similarity' => $similarity,
+                        'status' => $similarity >= 0.5 ? '✅ Cocok' : '❌ Tidak Cocok',
+                        'mahasiswa_data' => [
+                            'id' => $mhs->id,
+                            'nim' => $mhs->mhs_nim,
+                            'name' => $mhs->mhs_name,
+                            'kelas' => $mhs->kelas->count() > 0 ? $mhs->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
+                            'program_studi' => $mhs->kelas->count() > 0 && $mhs->kelas->first()->pstudi ? $mhs->kelas->first()->pstudi->name : 'Tidak ada prodi',
+                            'status' => $mhs->mhs_stat,
+                        ],
                     ];
                 }
             }
 
-            // Simpan hanya 1 data ke session
+            if (!$bestMatch) {
+                return back()->with('error', '❌ Tidak ada mahasiswa dengan wajah yang cocok.');
+            }
+
+            // Cari jadwal kuliah hari ini untuk kelas mahasiswa
             $now = Carbon::now();
             $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
             $waktuDatang = $now->format('H:i:s');
-            $userId = $bestMatch['mahasiswa'] ?? null;
             $jadwalHariIni = null;
-            $mahasiswaData = null;
-
-            if ($userId) {
-                // Cari data mahasiswa berdasarkan nama
-                $mahasiswaData = Mahasiswa::where('mhs_name', $userId)->first();
-                if ($mahasiswaData) {
-                    // Tambahkan data mahasiswa ke hasil pengenalan wajah
-                    $bestMatch['mahasiswa_data'] = [
-                        'id' => $mahasiswaData->id,
-                        'nim' => $mahasiswaData->mhs_nim,
-                        'name' => $mahasiswaData->mhs_name,
-                        'kelas' => $mahasiswaData->kelas->count() > 0 ? $mahasiswaData->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
-                        'program_studi' => $mahasiswaData->kelas->count() > 0 && $mahasiswaData->kelas->first()->pstudi ? $mahasiswaData->kelas->first()->pstudi->name : 'Tidak ada prodi',
-                        'status' => $mahasiswaData->mhs_stat
-                    ];
-
-                    // Cari jadwal kuliah hari ini untuk kelas mahasiswa
-                    // Ambil kelas pertama yang terkait dengan mahasiswa
-                    $kelas = $mahasiswaData->kelas()->first();
-                    $kelasId = $kelas ? $kelas->id : null;
-
-                    $jadwalHariIni = null;
-                    if ($kelasId) {
-                        $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
-                            ->where('days_id', $hariIni)
-                            ->where('start', '<=', $waktuDatang)
-                            ->where('ended', '>=', $waktuDatang)
-                            ->first();
-                    }
-                }
+            if ($bestMatch['mahasiswa_data']['kelas'] !== 'Tidak ada kelas') {
+                $jadwalHariIni = JadwalKuliah::whereHas('kelas', function ($query) use ($bestMatch) {
+                    $query->where('name', $bestMatch['mahasiswa_data']['kelas']);
+                })
+                    ->where('days_id', $hariIni)
+                    ->where('start', '<=', $waktuDatang)
+                    ->where('ended', '>=', $waktuDatang)
+                    ->first();
             }
 
-            // Simpan path foto ke session untuk digunakan saat menyimpan absensi
+            // Simpan hasil ke session
             Session::put('face_image_path', $fotoPath);
             Session::put('face_results', [$bestMatch]);
             Session::put('jadwal_hari_ini', $jadwalHariIni);
@@ -190,32 +185,21 @@ class FaceRecognitionController extends Controller
     }
 
     // Fungsi untuk membandingkan wajah
-    private function compareFaces($user, $inputToken)
+    private function cosineSimilarity(array $vec1, array $vec2): float
     {
-        try {
-            $client = new Client();
-            $res = $client->post('https://api-us.faceplusplus.com/facepp/v3/compare', [
-                'form_params' => [
-                    'api_key' => env('FACE_API_KEY'),
-                    'api_secret' => env('FACE_API_SECRET'),
-                    'face_token1' => $user->face_token,
-                    'face_token2' => $inputToken,
-                ]
-            ]);
+        $dot = 0.0;
+        $normA = 0.0;
+        $normB = 0.0;
+        $length = count($vec1);
 
-            $data = json_decode($res->getBody(), true);
-            $similarity = $data['confidence'] ?? 0;
-
-            return [
-                'similarity' => $similarity,
-                'status' => $similarity >= 80 ? '✅ Cocok' : '❌ Tidak Cocok',
-            ];
-        } catch (\Exception $e) {
-            // Handle error for comparison
-            return [
-                'similarity' => 0,
-                'status' => '⚠️ Error membandingkan wajah',
-            ];
+        for ($i = 0; $i < $length; $i++) {
+            $dot += $vec1[$i] * $vec2[$i];
+            $normA += $vec1[$i] * $vec1[$i];
+            $normB += $vec2[$i] * $vec2[$i];
         }
+
+        if ($normA == 0 || $normB == 0) return 0;
+
+        return $dot / (sqrt($normA) * sqrt($normB));
     }
 }

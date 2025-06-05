@@ -106,7 +106,7 @@
         });
     });
 </script>
-@section('custom-js')
+@push('scripts')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
@@ -157,4 +157,4 @@
                 });
         });
     </script>
-@endsection
+@endpush

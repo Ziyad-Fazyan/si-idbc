@@ -33,7 +33,6 @@ Route::get('/dev', function () {
 
 // ROOT ROUTE
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/attendance/{kelasId}', [DashboardController::class, 'getAttendanceAjax']);
 
 // AUTHENTICATION ROUTES
 Route::middleware(['guest'])->group(function () {

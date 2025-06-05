@@ -9,7 +9,9 @@ use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class FaceRecognitionController extends Controller
 {
@@ -85,8 +87,24 @@ class FaceRecognitionController extends Controller
         ]);
 
         try {
-            $foto = fopen($request->file('foto')->getRealPath(), 'r');
+            $foto = $request->file('foto');
+            $fotoContents = file_get_contents($foto->getRealPath());
+            $base64 = base64_encode($fotoContents);
 
+            // Simpan foto untuk digunakan nanti dalam absensi
+            $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
+            $fotoPath = 'presensi/' . $fotoName;
+            $destinationPath = storage_path('app/public/images/presensi');
+
+            // Pastikan direktori ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Kompres dan simpan gambar
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($foto->getRealPath());
+            $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
             // Dapatkan embedding dari API FastAPI
             $client = new Client();
             $response = $client->post(env('FACE_API_URL'), [
@@ -156,6 +174,7 @@ class FaceRecognitionController extends Controller
             }
 
             // Simpan hasil ke session
+            Session::put('face_image_path', $fotoPath);
             Session::put('face_results', [$bestMatch]);
             Session::put('jadwal_hari_ini', $jadwalHariIni);
 

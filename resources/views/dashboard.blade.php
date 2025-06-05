@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIPENDEKAR - Sistem Pendidikan Kader</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -199,7 +201,7 @@
                         </form>
 
                         <!-- Attendance List -->
-                        <div class="flex-1 overflow-y-auto pr-1 mb-3">
+                        <div id ="attendanceContainer" class="flex-1 overflow-y-auto pr-1 mb-3">
                             <h4 class="text-sm font-semibold text-slate-800 mb-2 sticky top-0 z-10 py-1">Today's
                                 Attendance</h4>
                             @forelse($detailAbsensi as $absen)
@@ -249,7 +251,7 @@
 
                         <!-- Summary Stats -->
                         <div class="mt-auto pt-3 border-t border-slate-100">
-                            <div class="grid grid-cols-4 gap-2">
+                            <div id="summaryContainer" class="grid grid-cols-4 gap-2">
                                 <div class="text-center p-2 bg-blue-50 rounded-lg">
                                     <div class="text-xl font-bold text-blue-600">{{ $totalMahasiswa }}</div>
                                     <div class="text-xs text-slate-500 mt-1">Total</div>
@@ -277,7 +279,7 @@
                 <!-- Main Video/Content Area -->
                 <div
                     class="bg-blue-500/10 backdrop-blur-md border border-blue-400/20 rounded-xl shadow-lg hover:shadow-blue-500/15 hover:-translate-y-0.5 transition-all duration-300 h-full">
-                    <div
+                    <div id="featuredContainer"
                         class="bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl h-full flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-blue-700/20"></div>
 
@@ -326,7 +328,7 @@
                                 <h3 class="font-semibold text-sm text-slate-800">PERFORMANCE STATS</h3>
                             </div>
 
-                            <div class="space-y-3">
+                            <div id="performanceStats" class="space-y-3">
                                 @forelse($kelasPerformance as $index => $performance)
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
@@ -447,7 +449,7 @@
                 <!-- Student of the Week -->
                 <div
                     class="bg-white backdrop-blur-md border border-blue-400/20 rounded-xl shadow-lg hover:shadow-blue-500/15 hover:-translate-y-0.5 transition-all duration-300">
-                    <div class="bg-white/98 rounded-xl p-4 text-center text-slate-900 shadow-md">
+                    <div id="studentOfWeek" class="bg-white/98 rounded-xl p-4 text-center text-slate-900 shadow-md">
                         <div class="mb-3">
                             <i class="fas fa-crown text-xl text-blue-500 mb-2"></i>
                             <h3 class="font-semibold text-sm text-slate-800">STUDENT OF THE WEEK</h3>
@@ -496,7 +498,7 @@
                             <h3 class="font-semibold text-sm text-slate-800">LIVE ACTIVITY</h3>
                         </div>
 
-                        <div class="flex-1 flex flex-col justify-between">
+                        <div id="liveActivity" class="flex-1 flex flex-col justify-between">
                             @if ($activeSession)
                                 <div class="text-center mb-3">
                                     <div class="text-xl font-semibold text-blue-600 mb-1">{{ $activeSession->start }}
@@ -560,25 +562,25 @@
 
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('id-ID', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
 
-            const dateString = now.toLocaleDateString('id-ID', {
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`; // manual pakai titik dua
+
+            const options = {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
-            });
+            };
+            const dateString = now.toLocaleDateString('id-ID', options);
 
             document.getElementById('live-clock').textContent = timeString;
             document.getElementById('current-date').textContent = dateString;
         }
 
-        // Initialize clock and update every second
+        // Mulai clock
         updateClock();
         setInterval(updateClock, 1000);
 
@@ -617,5 +619,7 @@
             });
         });
     </script>
+    @include('dashboard-ajax')
 </body>
+
 </html>

@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 
 class DashboardController extends Controller
 {
@@ -30,6 +31,9 @@ class DashboardController extends Controller
         // Get filter parameters
         $kelasId = $request->input('kelas_id');
         $gender = $request->input('gender');
+        
+        // Return JSON if AJAX request
+        $isAjax = $request->ajax();
 
         // Get current date
         $today = Carbon::now();
@@ -94,7 +98,7 @@ class DashboardController extends Controller
                     'gender' => $absensi->mahasiswa->mhs_gend ?? '-',
                     'status' => $absensi->getRawOriginal('absen_type') ?? 'Unknown',
                     'waktu' => Carbon::parse($absensi->created_at)->format('H:i'),
-                    'matkul' => $absensi->jadkul->matkul->makul_name ?? 'Unknown',
+                    'matkul' => $absensi->jadkul->matkul->name ?? 'Unknown',
                     'image' => $absensi->image ?? null,
                 ];
             });
@@ -157,6 +161,27 @@ class DashboardController extends Controller
             }])
             ->orderBy('attendance_count', 'desc')
             ->first();
+            
+        // Get multiple students of the week for slider
+        $studentsOfWeek = Mahasiswa::with(['kelas'])
+            ->whereHas('kelas')
+            ->withCount(['absensiMahasiswa as attendance_count' => function ($query) {
+                $query->where('absen_type', 'H')
+                    ->whereDate('absen_date', '>=', Carbon::now()->subDays(7));
+            }])
+            ->orderBy('attendance_count', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($student) {
+                return [
+                    'id' => $student->id,
+                    'mhs_name' => $student->mhs_name,
+                    'mhs_nim' => $student->mhs_nim,
+                    'mhs_image' => $student->mhs_image,
+                    'kelas_name' => $student->kelas->first() ? $student->kelas->first()->name : null,
+                    'attendance_count' => $student->attendance_count
+                ];
+            });
 
         // Get current active session and upcoming sessions
         $now = Carbon::now();
@@ -168,6 +193,22 @@ class DashboardController extends Controller
             ->where('start', '<=', $currentTime)
             ->where('ended', '>=', $currentTime)
             ->first();
+            
+        // Get multiple active sessions for slider
+        $activeSessions = JadwalKuliah::with(['matkul', 'dosen'])
+            ->where('days_id', $dayOfWeekIso)
+            ->where(function($query) use ($currentTime) {
+                $query->where('start', '<=', $currentTime)
+                      ->where('ended', '>=', $currentTime);
+            })
+            ->orWhere(function($query) use ($currentTime, $dayOfWeekIso) {
+                $query->where('days_id', $dayOfWeekIso)
+                      ->where('start', '<=', Carbon::parse($currentTime)->addHours(1))
+                      ->where('start', '>=', $currentTime);
+            })
+            ->orderBy('start')
+            ->take(3)
+            ->get();
 
         // Find upcoming sessions
         $upcomingSessions = JadwalKuliah::with(['matkul', 'dosen'])
@@ -177,7 +218,7 @@ class DashboardController extends Controller
             ->take(2)
             ->get();
 
-        return view('dashboard', compact(
+        $data = compact(
             'totalMahasiswa',
             'hadir',
             'tidakHadir',
@@ -190,8 +231,16 @@ class DashboardController extends Controller
             'featuredCourse',
             'kelasPerformance',
             'studentOfWeek',
+            'studentsOfWeek',
             'activeSession',
+            'activeSessions',
             'upcomingSessions'
-        ));
+        );
+        
+        if ($isAjax) {
+            return response()->json($data);
+        }
+        
+        return view('dashboard', $data);
     }
 }
