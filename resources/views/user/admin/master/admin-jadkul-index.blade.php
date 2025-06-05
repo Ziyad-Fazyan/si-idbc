@@ -71,11 +71,9 @@
                                     <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->kelas->code }}</td>
                                     <td class="px-4 py-3 text-center text-sm text-gray-500">
                                         {{ $item->matkul->name }} <br>
-                                        {{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}
                                     </td>
                                     <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->dosen->dsn_name }}
                                     </td>
-                                    <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->meth_id }}</td>
                                     <td class="px-4 py-3 text-center text-sm text-gray-500">
                                         {{ $item->days_id }} <br> - <br>
                                         {{ \Carbon\Carbon::parse($item->date)->format('d M Y') }}
@@ -127,7 +125,7 @@
                     @csrf
                     <div class="border-b border-gray-200 p-4 flex justify-between items-center">
                         <h4 class="text-lg font-semibold text-gray-800">Edit Jadwal Perkuliahan -
-                            {{ $item->matkul->name . ' ' . $item->pert_id }}</h4>
+                            {{ $item->matkul->name }}</h4>
                         <div class="flex space-x-2">
                             <button type="submit"
                                 class="inline-flex items-center justify-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
@@ -163,74 +161,6 @@
                                     @endforeach
                                 </select>
                                 @error('makul_id')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
-                                <label for="pert_id" class="block text-sm font-medium text-gray-700">Pertemuan</label>
-                                <select name="pert_id" id="pert_id"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    readonly>
-                                    <option value="" selected>Pilih Pertemuan</option>
-                                    <option value="1" {{ $item->raw_pert_id == 1 ? 'selected' : '' }}>Pertemuan 1
-                                    </option>
-                                    <option value="2" {{ $item->raw_pert_id == 2 ? 'selected' : '' }}>Pertemuan 2
-                                    </option>
-                                    <option value="3" {{ $item->raw_pert_id == 3 ? 'selected' : '' }}>Pertemuan 3
-                                    </option>
-                                    <option value="4" {{ $item->raw_pert_id == 4 ? 'selected' : '' }}>Pertemuan 4
-                                    </option>
-                                    <option value="5" {{ $item->raw_pert_id == 5 ? 'selected' : '' }}>Pertemuan 5
-                                    </option>
-                                    <option value="6" {{ $item->raw_pert_id == 6 ? 'selected' : '' }}>Pertemuan 6
-                                    </option>
-                                    <option value="7" {{ $item->raw_pert_id == 7 ? 'selected' : '' }}>Pertemuan 7
-                                    </option>
-                                    <option value="8" {{ $item->raw_pert_id == 8 ? 'selected' : '' }}>Pertemuan 8
-                                    </option>
-                                    <option value="9" {{ $item->raw_pert_id == 9 ? 'selected' : '' }}>Pertemuan 9
-                                    </option>
-                                    <option value="10" {{ $item->raw_pert_id == 10 ? 'selected' : '' }}>Pertemuan 10
-                                    </option>
-                                    <option value="11" {{ $item->raw_pert_id == 11 ? 'selected' : '' }}>Pertemuan 11
-                                    </option>
-                                    <option value="12" {{ $item->raw_pert_id == 12 ? 'selected' : '' }}>Pertemuan 12
-                                    </option>
-                                    <option value="13" {{ $item->raw_pert_id == 13 ? 'selected' : '' }}>Pertemuan 13
-                                    </option>
-                                    <option value="14" {{ $item->raw_pert_id == 14 ? 'selected' : '' }}>Pertemuan 14
-                                    </option>
-                                    <option value="15" {{ $item->raw_pert_id == 15 ? 'selected' : '' }}>Pertemuan 15
-                                    </option>
-                                    <option value="16" {{ $item->raw_pert_id == 16 ? 'selected' : '' }}>Pertemuan 16
-                                    </option>
-                                </select>
-                                @error('pert_id')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
-                                <label for="meth_id" class="block text-sm font-medium text-gray-700">Metode
-                                    Perkuliahan</label>
-                                <select name="meth_id" id="meth_id"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]">
-                                    <option value="" selected>Pilih Metode Perkuliahan</option>
-                                    <option value="0" {{ $item->raw_meth_id == 0 ? 'selected' : '' }}>Tatap Muka
-                                    </option>
-                                    <option value="1" {{ $item->raw_meth_id == 1 ? 'selected' : '' }}>Teleconference
-                                    </option>
-                                </select>
-                                @error('meth_id')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
-                                <label for="bsks" class="block text-sm font-medium text-gray-700">Bebas SKS Hari
-                                    Ini</label>
-                                <input type="number" min="1" max="8" name="bsks" id="bsks"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    value="{{ $item->bsks }}">
-                                @error('bsks')
                                     <small class="text-red-500">{{ $message }}</small>
                                 @enderror
                             </div>

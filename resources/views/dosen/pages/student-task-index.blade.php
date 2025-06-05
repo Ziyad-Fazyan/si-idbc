@@ -50,7 +50,6 @@
                                             <td class="py-3 px-6">
                                                 <div class="flex flex-col">
                                                     <span>{{ $item->jadkul->matkul->name }}</span>
-                                                    <span class="text-xs text-gray-500">{{ $item->jadkul->pert_id }}</span>
                                                 </div>
                                             </td>
                                             <td class="py-3 px-6 text-center">{{ $item->jadkul->kelas->name }}</td>

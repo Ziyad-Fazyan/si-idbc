@@ -6,13 +6,13 @@
     Data Jadwal Kuliah
 @endsection
 @section('submenu')
-    Daftar Absensi {{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}
+    Daftar Absensi {{ $jadkul->matkul->name }}
 @endsection
 @section('urlmenu')
     #
 @endsection
 @section('subdesc')
-    Halaman untuk melihat Absensi Mahasiswa pada Mata Kuliah {{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}
+    Halaman untuk melihat Absensi Mahasiswa pada Mata Kuliah {{ $jadkul->matkul->name }}
 @endsection
 @section('content')
     <section class="p-4">
@@ -145,7 +145,7 @@
                         @csrf
                         <div class="flex items-center justify-between p-4 border-b border-gray-200">
                             <h4 class="text-lg font-semibold text-gray-800">Cetak Data Absensi -
-                                {{ $jadkul->matkul->name . ' - ' . $jadkul->pert_id }}</h4>
+                                {{ $jadkul->matkul->name }}</h4>
                             <button type="button"
                                 class="inline-flex items-center justify-center px-3 py-2 border border-[#FF6B35] text-[#FF6B35] rounded-md hover:bg-[#FF6B35] hover:text-white transition-colors duration-300"
                                 data-bs-dismiss="modal">

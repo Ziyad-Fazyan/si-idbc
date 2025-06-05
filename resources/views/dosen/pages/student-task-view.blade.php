@@ -64,7 +64,6 @@
                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">
                                         {{ $item->task->jadkul->matkul->name }} <br>
-                                        <span class="text-gray-500">{{ $item->task->jadkul->pert_id }}</span>
                                     </td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->task->title }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->student->mhs_name }}</td>

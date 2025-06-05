@@ -129,19 +129,6 @@
                     <td style="text-align: left; border: none;">{{ $jadkul->days_id }}</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none;">Pertemuan</td>
-                    <td style="border: none;">:</td>
-                    <td style="text-align: left; border: none;">{{ $jadkul->pert_id }}</td>
-                    <td style="border: none;"></td>
-                    <td style="border: none;"></td>
-                    <td style="border: none;"></td>
-                    <td style="border: none;"></td>
-                    <td style="text-align: left; border: none;">Tanggal</td>
-                    <td style="border: none;">:</td>
-                    <td style="text-align: left; border: none;">
-                        {{ \Carbon\Carbon::parse($jadkul->date)->format('d M Y') }}</td>
-                </tr>
-                <tr>
                     <td style="text-align: left; border: none;">Kelas</td>
                     <td style="border: none;">:</td>
                     <td style="text-align: left; border: none;">{{ $jadkul->kelas->name }}</td>

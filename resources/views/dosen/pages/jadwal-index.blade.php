@@ -61,13 +61,10 @@
                                             {{ $item->kelas->code }}</td>
                                         <td class="px-3 py-4 text-sm text-center text-[#2E2E2E]">
                                             <div>{{ $item->matkul->name }}</div>
-                                            <div class="text-[#3B3B3B] text-xs">
-                                                {{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}</div>
                                         </td>
                                         <td class="px-3 py-4 text-sm text-center text-[#2E2E2E]">
                                             {{ $item->dosen->dsn_name }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-[#2E2E2E]">
-                                            {{ $item->meth_id }}</td>
                                         <td class="px-3 py-4 text-sm text-center text-[#2E2E2E]">
                                             <div>{{ $item->ruang->gedung->name }}</div>
                                             <div class="text-[#3B3B3B] text-xs">
@@ -124,7 +121,6 @@
                                         <div class="text-xs font-medium uppercase text-[#3B3B3B]">Mata Kuliah</div>
                                         <div class="font-medium">{{ $item->matkul->name }}</div>
                                         <div class="text-xs text-[#3B3B3B]">
-                                            {{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}</div>
                                     </div>
 
                                     <div>
@@ -134,7 +130,6 @@
 
                                     <div>
                                         <div class="text-xs font-medium uppercase text-[#3B3B3B]">Metode Perkuliahan</div>
-                                        <div>{{ $item->meth_id }}</div>
                                     </div>
 
                                     <div>

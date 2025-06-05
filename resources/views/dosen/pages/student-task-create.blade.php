@@ -56,7 +56,7 @@
                                     <option value="" selected>Pilih Jadwal Kuliah</option>
                                     @foreach ($jadkul as $item)
                                         <option value="{{ $item->id }}">
-                                            {{ $item->kelas->name . ' - ' . $item->matkul->name . ' - ' . $item->pert_id }}
+                                            {{ $item->kelas->name . ' - ' . $item->matkul->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -149,7 +149,6 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">
                                         {{ $item->jadkul->matkul->name }} <br>
-                                        <span class="text-xs text-[#3B3B3B]">{{ $item->jadkul->pert_id }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">
                                         {{ $item->jadkul->kelas->name }}</td>

@@ -43,42 +43,6 @@ class JadwalKuliah extends Model
         return isset($methids[$value]) ? $methids[$value] : 'Unknown';
     }
 
-    public function getRawMethIdAttribute()
-    {
-        return $this->attributes['meth_id'];
-    }
-
-    // ATTRIBUTES ID PERTEMUAN
-    public function getPertIdAttribute($value)
-    {
-        $pertids = [
-            1 => 'Pertemuan 1',
-            2 => 'Pertemuan 2',
-            3 => 'Pertemuan 3',
-            4 => 'Pertemuan 4',
-            5 => 'Pertemuan 5',
-            6 => 'Pertemuan 6',
-            7 => 'Pertemuan 7',
-            8 => 'Pertemuan 8',
-            9 => 'Pertemuan 9',
-            10 => 'Pertemuan 10',
-            11 => 'Pertemuan 11',
-            12 => 'Pertemuan 12',
-            13 => 'Pertemuan 13',
-            14 => 'Pertemuan 14',
-            15 => 'Pertemuan 15',
-            15 => 'Pertemuan 15',
-            16 => 'Pertemuan 16',
-        ];
-
-        return isset($pertids[$value]) ? $pertids[$value] : 'Unknown';
-    }
-
-    public function getRawPertIdAttribute()
-    {
-        return $this->attributes['pert_id'];
-    }
-
     public function matkul()
     {
         return $this->belongsTo(MataKuliah::class, 'makul_id',);

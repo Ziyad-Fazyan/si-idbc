@@ -29,7 +29,7 @@
                     <!-- Card Header -->
                     <div class="bg-[#0C6E71] px-6 py-4 flex justify-between items-center">
                         <h2 class="text-xl font-semibold text-white">
-                            @yield('submenu') - {{ $task->jadkul->matkul->name . ' - ' . $task->jadkul->pert_id }}
+                            @yield('submenu') - {{ $task->jadkul->matkul->name }}
                         </h2>
                         <div class="flex space-x-2">
                             <button type="submit"
@@ -66,7 +66,7 @@
                                 @foreach ($jadkul as $item)
                                     <option value="{{ $item->id }}"
                                         {{ $item->id == $task->jadkul_id ? 'selected' : '' }}>
-                                        {{ $item->kelas->name . ' - ' . $item->matkul->name . ' - ' . $item->pert_id }}
+                                        {{ $item->kelas->name . ' - ' . $item->matkul->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -159,7 +159,6 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">
                                         {{ $item->jadkul->matkul->name }}<br>
-                                        <span class="text-gray-500">{{ $item->jadkul->pert_id }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">
                                         {{ $item->jadkul->kelas->name }}</td>

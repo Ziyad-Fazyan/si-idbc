@@ -140,12 +140,9 @@
                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->kelas->code }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">
-                                        {{ $item->matkul->name }} <br>
-                                        <span
-                                            class="text-gray-500">{{ $item->pert_id . ' - ' . $item->bsks . ' SKS' }}</span>
+                                        {{ $item->matkul->name }}
                                     </td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->dosen->dsn_name }}</td>
-                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->meth_id }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">
                                         {{ $item->ruang->gedung->name }}<br>
                                         <span
@@ -203,7 +200,7 @@
                             <div class="sm:flex sm:items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <h3 class="text-lg leading-6 font-medium text-[#2E2E2E] mb-4">
-                                        FeedBack - {{ $item->matkul->name . ' P-' . $item->raw_pert_id }}
+                                        FeedBack - {{ $item->matkul->name }}
                                     </h3>
 
                                     <div class="mt-2 space-y-4">

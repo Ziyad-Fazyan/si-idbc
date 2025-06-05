@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Pages\Core;
 
-use PDF;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Ruang;
@@ -18,6 +17,7 @@ use App\Models\TahunAkademik;
 use App\Models\AbsensiMahasiswa;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Barryvdh\DomPDF\PDF;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class JadwalKuliahController extends Controller
@@ -87,7 +87,7 @@ class JadwalKuliahController extends Controller
     public function cetakAbsen(Request $request, $code)
     {
 
-        // Dapatkan data absensi mahasiswa berdasarkan kode kelas yang dipilih 
+        // Dapatkan data absensi mahasiswa berdasarkan kode kelas yang dipilih
         // $data['jadwal'] = JadwalKuliah::where('code', $code)->first();
         $data['web'] = webSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
@@ -102,37 +102,28 @@ class JadwalKuliahController extends Controller
         })->get();
 
         // return view('base.cetak.cetak-data-absensi', $data);
-        $pdf = PDF::loadView('base.cetak.cetak-data-absensi', $data);
+        // $pdf = PDF::loadView('base.cetak.cetak-data-absensi', $data);
 
-        return $pdf->download('Daftar-Absen-' . $data['jadkul']->matkul->name . '-' . $data['jadkul']->pert_id . '-' . $request->kode_kelas . '.pdf');
+        // return $pdf->download('Daftar-Absen-' . $data['jadkul']->matkul->name . '-' . $request->kode_kelas . '.pdf');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'bsks' => 'required|string|max:255',
             'makul_id' => 'required',
             'kelas_id' => 'required',
             'dosen_id' => 'required',
             'ruang_id' => 'required',
-            'pert_id' => 'required',
-            'meth_id' => 'required',
             'days_id' => 'required',
             'start' => 'required',
             'ended' => 'required',
-            'bsks' => 'required',
-            'date' => 'required',
         ]);
 
         $jadkul = new JadwalKuliah;
         $jadkul->code = Str::random(6);
-        $jadkul->bsks = $request->bsks;
-        $jadkul->date = $request->date;
         $jadkul->start = $request->start;
         $jadkul->ended = $request->ended;
         $jadkul->days_id = $request->days_id;
-        $jadkul->meth_id = $request->meth_id;
-        $jadkul->pert_id = $request->pert_id;
         $jadkul->ruang_id = $request->ruang_id;
         $jadkul->dosen_id = $request->dosen_id;
         $jadkul->kelas_id = $request->kelas_id;
@@ -146,28 +137,19 @@ class JadwalKuliahController extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'bsks' => 'required|string|max:255',
             'makul_id' => 'required',
             'kelas_id' => 'required',
             'dosen_id' => 'required',
             'ruang_id' => 'required',
-            'pert_id' => 'required',
-            'meth_id' => 'required',
             'days_id' => 'required',
             'start' => 'required',
             'ended' => 'required',
-            'bsks' => 'required',
-            'date' => 'required',
         ]);
 
         $jadkul = JadwalKuliah::where('code', $code)->first();
-        $jadkul->bsks = $request->bsks;
-        $jadkul->date = $request->date;
         $jadkul->start = $request->start;
         $jadkul->ended = $request->ended;
         $jadkul->days_id = $request->days_id;
-        $jadkul->meth_id = $request->meth_id;
-        $jadkul->pert_id = $request->pert_id;
         $jadkul->ruang_id = $request->ruang_id;
         $jadkul->dosen_id = $request->dosen_id;
         $jadkul->kelas_id = $request->kelas_id;
