@@ -12,10 +12,10 @@
     </div>
 
     <div class="card-body" id="filterBody">
-        <form method="GET" action="{{ route('admin.commodities.index') }}" id="filterForm">
+        <form method="GET" action="{{ route($prefix . 'inventory.barang-index') }}" id="filterForm">
             <div class="row g-3">
                 <!-- Search -->
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Pencarian</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -23,12 +23,12 @@
                                class="form-control"
                                name="search"
                                value="{{ request('search') }}"
-                               placeholder="Nama, Kode, Brand, Material...">
+                               placeholder="Nama, Kode...">
                     </div>
                 </div>
 
                 <!-- Location Filter -->
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Lokasi</label>
                     <select class="form-select" name="commodity_location_id">
                         <option value="">Semua Lokasi</option>
@@ -42,7 +42,7 @@
                 </div>
 
                 <!-- Acquisition Filter -->
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Cara Akuisisi</label>
                     <select class="form-select" name="commodity_acquisition_id">
                         <option value="">Semua Akuisisi</option>
@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- Condition Filter -->
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Kondisi</label>
                     <select class="form-select" name="condition">
                         <option value="">Semua Kondisi</option>
@@ -69,139 +69,51 @@
                     </select>
                 </div>
 
-                <!-- Brand Filter -->
-                <div class="col-md-6 col-lg-4">
-                    <label class="form-label">Brand</label>
-                    <select class="form-select" name="brand">
-                        <option value="">Semua Brand</option>
-                        @foreach($filterOptions['brands'] as $brand)
-                            <option value="{{ $brand }}"
-                                    {{ request('brand') == $brand ? 'selected' : '' }}>
-                                {{ $brand }}
+                <!-- Year Range -->
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Dari Tahun</label>
+                    <select class="form-select" name="year_from">
+                        <option value="">Semua Tahun</option>
+                        @foreach($filterOptions['years'] as $year)
+                            <option value="{{ $year }}"
+                                    {{ request('year_from') == $year ? 'selected' : '' }}>
+                                {{ $year }}
                             </option>
                         @endforeach
                     </select>
                 </div>
 
-                <!-- Material Filter -->
-                <div class="col-md-6 col-lg-4">
-                    <label class="form-label">Material</label>
-                    <select class="form-select" name="material">
-                        <option value="">Semua Material</option>
-                        @foreach($filterOptions['materials'] as $material)
-                            <option value="{{ $material }}"
-                                    {{ request('material') == $material ? 'selected' : '' }}>
-                                {{ $material }}
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Sampai Tahun</label>
+                    <select class="form-select" name="year_to">
+                        <option value="">Semua Tahun</option>
+                        @foreach($filterOptions['years'] as $year)
+                            <option value="{{ $year }}"
+                                    {{ request('year_to') == $year ? 'selected' : '' }}>
+                                {{ $year }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-            </div>
 
-            <!-- Advanced Filters (Collapsible) -->
-            <div class="mt-3">
-                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="collapse" data-bs-target="#advancedFilters">
-                    <i class="fas fa-cog me-1"></i>Filter Lanjutan
-                </button>
-            </div>
+                <!-- Sort Options -->
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Urutkan Berdasarkan</label>
+                    <select class="form-select" name="sort_by">
+                        <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>Tanggal Input</option>
+                        <option value="name" {{ request('sort_by') == 'name' ? 'selected' : '' }}>Nama</option>
+                        <option value="item_code" {{ request('sort_by') == 'item_code' ? 'selected' : '' }}>Kode Item</option>
+                        <option value="year_of_purchase" {{ request('sort_by') == 'year_of_purchase' ? 'selected' : '' }}>Tahun Beli</option>
+                        <option value="condition" {{ request('sort_by') == 'condition' ? 'selected' : '' }}>Kondisi</option>
+                    </select>
+                </div>
 
-            <div class="collapse mt-3" id="advancedFilters">
-                <div class="row g-3">
-                    <!-- Year Range -->
-                    <div class="col-md-6">
-                        <label class="form-label">Tahun Pembelian</label>
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <select class="form-select form-select-sm" name="year_from">
-                                    <option value="">Dari Tahun</option>
-                                    @foreach($filterOptions['years'] as $year)
-                                        <option value="{{ $year }}"
-                                                {{ request('year_from') == $year ? 'selected' : '' }}>
-                                            {{ $year }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select form-select-sm" name="year_to">
-                                    <option value="">Sampai Tahun</option>
-                                    @foreach($filterOptions['years'] as $year)
-                                        <option value="{{ $year }}"
-                                                {{ request('year_to') == $year ? 'selected' : '' }}>
-                                            {{ $year }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Price Range -->
-                    <div class="col-md-6">
-                        <label class="form-label">Range Harga</label>
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <input type="number"
-                                       class="form-control form-control-sm"
-                                       name="price_from"
-                                       value="{{ request('price_from') }}"
-                                       placeholder="Harga Min">
-                            </div>
-                            <div class="col-6">
-                                <input type="number"
-                                       class="form-control form-control-sm"
-                                       name="price_to"
-                                       value="{{ request('price_to') }}"
-                                       placeholder="Harga Max">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quantity Range -->
-                    <div class="col-md-6">
-                        <label class="form-label">Range Kuantitas</label>
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <input type="number"
-                                       class="form-control form-control-sm"
-                                       name="quantity_from"
-                                       value="{{ request('quantity_from') }}"
-                                       placeholder="Qty Min">
-                            </div>
-                            <div class="col-6">
-                                <input type="number"
-                                       class="form-control form-control-sm"
-                                       name="quantity_to"
-                                       value="{{ request('quantity_to') }}"
-                                       placeholder="Qty Max">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sort Options -->
-                    <div class="col-md-6">
-                        <label class="form-label">Urutkan Berdasarkan</label>
-                        <div class="row g-2">
-                            <div class="col-8">
-                                <select class="form-select form-select-sm" name="sort_by">
-                                    <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>Tanggal Input</option>
-                                    <option value="name" {{ request('sort_by') == 'name' ? 'selected' : '' }}>Nama</option>
-                                    <option value="item_code" {{ request('sort_by') == 'item_code' ? 'selected' : '' }}>Kode Item</option>
-                                    <option value="brand" {{ request('sort_by') == 'brand' ? 'selected' : '' }}>Brand</option>
-                                    <option value="year_of_purchase" {{ request('sort_by') == 'year_of_purchase' ? 'selected' : '' }}>Tahun Beli</option>
-                                    <option value="price" {{ request('sort_by') == 'price' ? 'selected' : '' }}>Harga</option>
-                                    <option value="quantity" {{ request('sort_by') == 'quantity' ? 'selected' : '' }}>Kuantitas</option>
-                                    <option value="condition" {{ request('sort_by') == 'condition' ? 'selected' : '' }}>Kondisi</option>
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <select class="form-select form-select-sm" name="sort_order">
-                                    <option value="desc" {{ request('sort_order') == 'desc' ? 'selected' : '' }}>Turun</option>
-                                    <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>Naik</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Urutan</label>
+                    <select class="form-select" name="sort_order">
+                        <option value="desc" {{ request('sort_order') == 'desc' ? 'selected' : '' }}>Turun</option>
+                        <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>Naik</option>
+                    </select>
                 </div>
             </div>
 

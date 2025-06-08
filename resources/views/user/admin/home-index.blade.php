@@ -232,7 +232,7 @@
             </a>
 
             <!-- Room Card -->
-            <a href="{{ route('web-admin.inventory.lokasi-index') }}" class="group">
+            <a href="{{ route('web-admin.inventory.ruang-index') }}" class="group">
                 <div
                     class="card bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group-hover:border-[#FF6B35]">
                     <div
