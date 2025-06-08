@@ -25,7 +25,7 @@
                             Informasi Mata Kuliah
                         </h1>
                         <div class="mt-2 md:mt-0 flex space-x-2">
-                            <a href="{{ route('dosen.akademik.nilai-detail', $matkul->id) }}"
+                            <a href="{{ route('dosen.akademik.nilai-mata-kuliah-detail', $matkul->code) }}"
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-[#2E2E2E] bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0C6E71]">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />

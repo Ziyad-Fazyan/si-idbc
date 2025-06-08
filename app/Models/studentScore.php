@@ -11,9 +11,9 @@ class studentScore extends Model
 
     protected $guarded = [];
 
-    public function task()
+    public function studentTask()
     {
-        return $this->belongsTo(studentTask::class, 'stask_id',);
+        return $this->belongsTo(studentTask::class, 'stask_id');
     }
 
     public function student()
@@ -23,6 +23,6 @@ class studentScore extends Model
 
     public function dosen()
     {
-        return $this->belongsTo(Dosen::class, 'author_id',);
+        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 }

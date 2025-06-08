@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isActive
+class IsActive
 {
     /**
      * Handle an incoming request.

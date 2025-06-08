@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('stask_id');
             $table->integer('student_id');
+            $table->foreignId('dosen_id')->nullable();
             $table->integer('score',)->nullable();
             $table->longText('desc');
             $table->string('file_1')->nullable();
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('file_8')->nullable();
             $table->string('status')->default('Terkumpul');        // Status tugas: Terkumpul, Sudah dinilai
             $table->string('comment')->nullable();                 // Komentar dosen
-            $table->integer('code')->unique();                      // PRIVATE CODE
+            $table->string('code', 6);
             $table->timestamps();
         });
     }
