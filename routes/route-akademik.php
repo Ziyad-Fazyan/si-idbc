@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\WorkersController;
+use App\Http\Controllers\Admin\Pages\MahasiswaHealthController;
 use App\Http\Controllers\Services\Convert\ExportController;
 use App\Http\Controllers\Services\Convert\ImportController;
 use App\Http\Controllers\Admin\Pages\Core\{
@@ -44,6 +45,13 @@ Route::group([
             Route::get('/export-users', [ExportController::class, 'exportUsers'])->name('services.convert.export-users');
             Route::post('/import-users', [ImportController::class, 'importUsers'])->name('services.convert.import-users');
             Route::post('/import-student', [ImportController::class, 'importStudent'])->name('services.convert.import-student');
+        });
+
+        // Mahasiswa Health Routes
+        Route::prefix('data-kesehatan-mahasiswa')->name('mahasiswa-health.')->group(function () {
+            Route::get('/', [MahasiswaHealthController::class, 'index'])->name('index');
+            Route::get('/{code}/edit', [MahasiswaHealthController::class, 'edit'])->name('edit');
+            Route::patch('/{code}/update', [MahasiswaHealthController::class, 'update'])->name('update');
         });
 
         // MENU KHUSUS DATA MASTER

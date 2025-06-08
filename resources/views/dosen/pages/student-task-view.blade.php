@@ -65,9 +65,9 @@
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">{{ ++$key }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">
-                                        {{ $item->task->jadkul->matkul->name }} <br>
+                                        {{ $item->studentTask->jadkul->matkul->nama_mk }} <br>
                                     </td>
-                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->task->title }}</td>
+                                    <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->studentTask->title }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->student->mhs_name }}</td>
                                     <td class="px-4 py-4 text-sm font-medium">
                                         @if(isset($item->status))

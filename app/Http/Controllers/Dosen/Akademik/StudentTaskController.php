@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\JadwalKuliah;
 use App\Models\studentScore;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,9 @@ class StudentTaskController extends Controller
         $data['jadkul'] = JadwalKuliah::all();
         $data['stask'] = studentTask::latest()->paginate(5);
         $data['task'] = studentTask::where('code', $code)->first();
-        $data['score'] = studentScore::where('stask_id', $data['task']->id)->get();
+        $data['score'] = studentScore::where('stask_id', $data['task']->id)
+            ->with(['studentTask.jadkul.matkul', 'student'])
+            ->get();
 
         // dd($data['score']);
 
@@ -49,7 +52,9 @@ class StudentTaskController extends Controller
     {
         $data['web'] = webSettings::where('id', 1)->first();
         $data['stask'] = studentTask::latest()->paginate(5);
-        $data['score'] = studentScore::where('code', $code)->first();
+        $data['score'] = studentScore::where('code', $code)
+            ->with(['studentTask.jadkul.matkul', 'student.kelas'])
+            ->first();
 
         // dd($data['score']);
 
@@ -185,5 +190,57 @@ class StudentTaskController extends Controller
 
         Alert::success('success', 'Data berhasil dihapus');
         return back();
+    }
+
+    public function download($code, $fileNumber)
+    {
+        try {
+            $score = studentScore::where('code', $code)->firstOrFail();
+            $fileKey = 'file_' . $fileNumber;
+            
+            if (empty($score->{$fileKey})) {
+                Log::error('File download failed - empty file key: ' . $fileKey . ' for score code: ' . $code);
+                Alert::error('Error', 'File tidak ditemukan.');
+                return back();
+            }
+
+            // Log the stored file path from database
+            Log::info('Stored file path: ' . $score->{$fileKey});
+
+            // Fix path handling to use correct directory separators
+            $filePath = str_replace('/', DIRECTORY_SEPARATOR, storage_path('app/public/' . $score->{$fileKey}));
+            
+            // Log the constructed file path
+            Log::info('Attempting to download file: ' . $filePath);
+            
+            if (!file_exists($filePath)) {
+                // Log the attempted file path and storage path for debugging
+                Log::error('File download failed - file not found: ' . $filePath);
+                Log::error('Storage path base: ' . storage_path('app/public'));
+                Alert::error('Error', 'File tidak ditemukan di server.');
+                return back();
+            }
+
+            // Log file size and permissions
+            Log::info('File exists, size: ' . filesize($filePath));
+            Log::info('File permissions: ' . substr(sprintf('%o', fileperms($filePath)), -4));
+
+            $extension = pathinfo($score->{$fileKey}, PATHINFO_EXTENSION);
+            $fileName = $score->student->mhs_name . '_tugas_' . $fileNumber . '.' . $extension;
+
+            // Add force download header and specify file size for better download handling
+            $headers = [
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Content-Length' => filesize($filePath)
+            ];
+
+            return response()->download($filePath, $fileName, $headers);
+        } catch (\Exception $e) {
+            Log::error('File download error: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            Alert::error('Error', 'Terjadi kesalahan saat mengunduh file: ' . $e->getMessage());
+            return back();
+        }
     }
 }

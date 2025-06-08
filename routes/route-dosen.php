@@ -58,6 +58,7 @@ Route::group([
         Route::patch('/update/{code}', [StudentTaskController::class, 'update'])->name('update');
         Route::patch('/update/{code}/score', [StudentTaskController::class, 'updateScore'])->name('update-score');
         Route::delete('/delete/{code}', [StudentTaskController::class, 'destroy'])->name('destroy');
+        Route::get('/download/{code}/{fileNumber}', [StudentTaskController::class, 'download'])->name('download');
     });
 
     // =====================

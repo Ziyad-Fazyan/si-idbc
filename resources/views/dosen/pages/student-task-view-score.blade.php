@@ -6,10 +6,10 @@
     Data Tugas Kuliah Mahasiswa
 @endsection
 @section('submenu')
-    Tugas {{ $score->task->jadkul->matkul->name }} 
+    Tugas {{ $score->studentTask->jadkul->matkul->nama_mk }} 
 @endsection
 @section('urlmenu')
-    {{ route('dosen.akademik.stask-view', $score->task->code) }}
+    {{ route('dosen.akademik.stask-view', $score->studentTask->code) }}
 @endsection
 @section('subdesc')
     Halaman untuk melihat detail Tugas Kuliah Mahasiswa
@@ -66,7 +66,7 @@
                             <label for="mhs_class" class="block text-sm font-medium text-[#2E2E2E] mb-1">Nama Kelas</label>
                             <input type="text" readonly id="mhs_class" name="mhs_class"
                                 class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
-                                value="@forelse($score->student->kelas as $kelas){{ $kelas->name }}@if(!$loop->last), @endif@empty Tidak ada kelas @endforelse">
+                                value="{{ implode(', ', $score->student->kelas->pluck('name')->toArray()) ?: 'Tidak ada kelas' }}">
                             @error('mhs_class')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -133,7 +133,7 @@
                     <div class="flex flex-wrap gap-2">
                         @for ($i = 1; $i <= 8; $i++)
                             @if (!empty($score->{'file_' . $i}))
-                                <a href="{{ asset('storage/uploads/' . $score->{'file_' . $i}) }}" download
+                                <a href="{{ route('dosen.akademik.stask-download', ['code' => $score->code, 'fileNumber' => $i]) }}"
                                     class="inline-flex items-center px-3 py-1 bg-[#0C6E71] text-white rounded-md hover:bg-[#0A5D60] transition-colors">
                                     <i class="fa-solid fa-download mr-1"></i>
                                     Lampiran {{ $i }}

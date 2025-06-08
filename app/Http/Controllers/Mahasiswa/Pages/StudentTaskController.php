@@ -60,7 +60,6 @@ class StudentTaskController extends Controller
 
         $stask = studentTask::where('code', $code)->first();
         $user = Auth::guard('mahasiswa')->user();
-
         $task = new studentScore;
 
         for ($i = 1; $i <= 8; $i++) {
@@ -68,20 +67,23 @@ class StudentTaskController extends Controller
 
             if ($request->hasFile($fileKey)) {
                 $file = $request->file($fileKey);
-                $filename = time() . '-part-' . $i . '.' . $file->getClientOriginalExtension(); // Menggunakan ekstensi file asli
-                $path = $file->storeAs('public/uploads/tugas', $filename); // Menyimpan file ke dalam direktori public/uploads/tugas
-                $task->{'file_' . $i} = 'tugas/' . $filename; // Menyimpan path relatif dari file ke dalam properti dinamis $task
+                $filename = time() . '-part-' . $i . '.' . $file->getClientOriginalExtension();
+                
+                // Use DIRECTORY_SEPARATOR for consistent path handling
+                $relativePath = 'uploads' . DIRECTORY_SEPARATOR . 'tugas' . DIRECTORY_SEPARATOR . $filename;
+                $path = $file->storeAs('public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'tugas', $filename);
+                
+                // Store path with forward slashes for consistency in database
+                $task->{$fileKey} = str_replace('\\', '/', $relativePath);
             }
-            // Setelah menangani file, atur nilai-nilai lainnya
-            $task->stask_id = $stask->id;  // Pastikan variabel $stask telah didefinisikan sebelumnya
-            $task->desc = $request->desc;
-            $task->status = 'Terkumpul'; // Set status tugas menjadi Terkumpul
-            $task->code = Str::of(mt_rand(100000, 999999))->limit(6, '');
-            $task->student_id = $user->id;
-
-            // Simpan $task untuk setiap iterasi
-            $task->save();
         }
+
+        $task->stask_id = $stask->id;
+        $task->desc = $request->desc;
+        $task->status = 'Terkumpul';
+        $task->code = Str::of(mt_rand(100000, 999999))->limit(6, '');
+        $task->student_id = $user->id;
+        $task->save();
 
         // $khs = HasilStudi::where('student_id', $user->id)->where('smt_id', $user->taka->raw_semester)->first();
         // // dd($khs->count())

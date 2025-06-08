@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Pages\Core\KurikulumController;
 use App\Http\Controllers\Admin\Pages\Core\MataKuliahController;
 use App\Http\Controllers\Admin\Pages\Finance\BalanceController;
 use App\Http\Controllers\Admin\Pages\Inventory\RuangController;
+use App\Http\Controllers\Admin\Pages\MahasiswaHealthController;
 use App\Http\Controllers\Admin\Pages\Finance\ApprovalController;
 use App\Http\Controllers\Admin\Pages\Inventory\GedungController;
 use App\Http\Controllers\Admin\Pages\Core\JadwalKuliahController;
@@ -17,11 +18,11 @@ use App\Http\Controllers\Admin\Pages\Core\ProgramStudiController;
 use App\Http\Controllers\Admin\Pages\Core\ProgramKuliahController;
 use App\Http\Controllers\Admin\Pages\Core\TahunAkademikController;
 use App\Http\Controllers\Admin\Pages\Finance\PembayaranController;
+use App\Http\Controllers\Admin\Pages\Inventory\CommodityController;
 use App\Http\Controllers\Admin\Pages\Finance\TicketSupportController;
 use App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController;
-use App\Http\Controllers\Admin\Pages\Inventory\CommodityAcquisitionController;
-use App\Http\Controllers\Admin\Pages\Inventory\CommodityController;
 use App\Http\Controllers\Admin\Pages\Inventory\CommodityLocationController;
+use App\Http\Controllers\Admin\Pages\Inventory\CommodityAcquisitionController;
 
 // WEB ADMINISTRATOR ROUTES
 Route::group([
@@ -76,6 +77,13 @@ Route::group([
                 Route::patch('/{code}/update', [WorkersController::class, 'updateStudent'])->name('update');
                 Route::delete('/{code}/destroy', [WorkersController::class, 'destroyStudent'])->name('destroy');
             });
+        });
+
+         // Mahasiswa Health Routes
+        Route::prefix('data-kesehatan-mahasiswa')->name('mahasiswa-health.')->group(function () {
+            Route::get('/', [MahasiswaHealthController::class, 'index'])->name('index');
+            Route::get('/{code}/edit', [MahasiswaHealthController::class, 'edit'])->name('edit');
+            Route::patch('/{code}/update', [MahasiswaHealthController::class, 'update'])->name('update');
         });
 
         // MASTER DATA ROUTES
