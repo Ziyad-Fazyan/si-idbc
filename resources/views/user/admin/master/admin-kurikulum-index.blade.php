@@ -19,235 +19,91 @@
 @endsection
 @section('content')
     <section class="w-full p-4">
-        <div class="flex flex-col lg:flex-row gap-4">
-            <!-- Form Tambah Kurikulum -->
-            <div class="w-full lg:w-1/3">
-                <form action="{{ route($prefix . 'master.kurikulum-store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                        <div class="flex items-center justify-between p-4 border-b border-gray-200">
-                            <h5 class="text-lg font-semibold text-gray-800">@yield('submenu0')</h5>
-                            <button type="submit"
-                                class="inline-flex items-center justify-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </div>
-                        <div class="p-4 space-y-4">
-                            <div class="space-y-2">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nama Kurikulum</label>
-                                <input type="text"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    name="name" id="name" placeholder="Inputkan nama kurikulum...">
-                                @error('name')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
-                                <label for="code" class="block text-sm font-medium text-gray-700">Kode Kurikulum ( 3
-                                    Huruf Kapital )</label>
-                                <input type="text"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    name="code" id="code" placeholder="Inputkan kode kurikulum..." maxlength="3"
-                                    uppercase onkeydown="return /[a-zA-Z0-9]/i.test(event.key)">
-                                @error('code')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="space-y-2">
-                                    <label for="year_start" class="block text-sm font-medium text-gray-700">Pilih Tahun
-                                        Mulai Berlaku</label>
-                                    <input type="number"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                        name="year_start" id="year_start" min="2010" max="2100" maxlength="4"
-                                        value="{{ \Carbon\Carbon::now()->format('Y') }}"
-                                        placeholder="Inputkan tahun mulai...">
-                                    @error('year_start')
-                                        <small class="text-red-500">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="space-y-2">
-                                    <label for="year_ended" class="block text-sm font-medium text-gray-700">Pilih Tahun
-                                        Akhir Berlaku</label>
-                                    <input type="number"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                        name="year_ended" id="year_ended" min="2010" max="2100" maxlength="4"
-                                        value="{{ \Carbon\Carbon::now()->format('Y') }}"
-                                        placeholder="Inputkan tahun akhir...">
-                                    @error('year_ended')
-                                        <small class="text-red-500">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <label for="desc" class="block text-sm font-medium text-gray-700">Deskripsi
-                                    Kurikulum</label>
-                                <textarea name="desc"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    id="desc" rows="5">Inputkan deskripsi kurikulum</textarea>
-                                @error('desc')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </form>
+        {{-- Container utama untuk seluruh konten --}}
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+            {{-- Header Panel dengan judul dan tombol aksi --}}
+            <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                <h5 class="text-lg font-semibold text-gray-800">@yield('submenu')</h5>
+                <div>
+                    {{-- Tombol Tambah Data Kurikulum, menggunakan x-data dan open-modal dari Alpine.js --}}
+                    <button type="button" x-data @click="$dispatch('open-modal', {name: 'create-kurikulum'})"
+                        class="inline-flex items-center justify-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300"
+                        aria-label="Tambah data kurikulum baru"> {{-- Perbaiki aria-label --}}
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Tabel Daftar Kurikulum -->
-            <div class="w-full lg:w-2/3">
-                <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                    <div class="p-4 border-b border-gray-200">
-                        <h5 class="text-lg font-semibold text-gray-800">@yield('submenu')</h5>
-                    </div>
-                    <div class="p-4">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200" id="table1">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            #</th>
-                                        <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Nama Kurikulum</th>
-                                        <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Kode Kurikulum</th>
-                                        <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Periode Aktif</th>
-                                        <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($kurikulum as $key => $item)
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="px-4 py-3 text-center text-sm text-gray-500">{{ ++$key }}</td>
-                                            <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->name }}</td>
-                                            <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->code }}
-                                            </td>
-                                            <td class="px-4 py-3 text-center text-sm text-gray-500">
-                                                {{ $item->year_start . ' - ' . $item->year_ended }}</td>
-                                            <td class="px-4 py-3 text-center text-sm text-gray-500">
-                                                <div class="flex justify-center items-center space-x-2">
-                                                    <button type="button"
-                                                        class="inline-flex items-center justify-center p-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300"
-                                                        onclick="openModal('updateKurikulum{{ $item->code }}')">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <a href="{{ route($prefix . 'master.kurikulum-view', $item->id) }}"
-                                                        class="inline-flex items-center justify-center p-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300">
-                                                        <i class="fa-solid fa-eye"></i>
-                                                    </a>
-                                                    <form id="delete-form-{{ $item->code }}"
-                                                        action="{{ route($prefix . 'master.kurikulum-destroy', $item->code) }}"
-                                                        method="POST" class="inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                            class="inline-flex items-center justify-center p-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300"
-                                                            onclick="deleteData('{{ $item->code }}')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            {{-- Isi Tabel Daftar Kurikulum --}}
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200" id="table1">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    #</th>
+                                <th
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Nama Kurikulum</th>
+                                <th
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Kode Kurikulum</th>
+                                <th
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Periode Aktif</th>
+                                <th
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($kurikulum as $key => $item)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 text-center text-sm text-gray-500">{{ ++$key }}</td>
+                                    <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->name }}</td>
+                                    <td class="px-4 py-3 text-center text-sm text-gray-500">{{ $item->code }}
+                                    </td>
+                                    <td class="px-4 py-3 text-center text-sm text-gray-500">
+                                        {{ $item->year_start . ' - ' . $item->year_ended }}</td>
+                                    <td class="px-4 py-3 text-center text-sm text-gray-500">
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <button type="button"
+                                                class="inline-flex items-center justify-center p-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300"
+                                                onclick="openModal('updateKurikulum{{ $item->code }}')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <a href="{{ route($prefix . 'master.kurikulum-view', $item->id) }}"
+                                                class="inline-flex items-center justify-center p-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <form id="delete-form-{{ $item->code }}"
+                                                action="{{ route($prefix . 'master.kurikulum-destroy', $item->code) }}"
+                                                method="POST" class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    class="inline-flex items-center justify-center p-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300"
+                                                    onclick="deleteData('{{ $item->code }}')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-    </section>
-
-    <!-- Modal Edit Kurikulum -->
-    @foreach ($kurikulum as $item)
-        <div id="updateKurikulum{{ $item->code }}"
-            class="fixed inset-0 z-50 hidden overflow-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                <form action="{{ route($prefix . 'master.kurikulum-update', $item->code) }}" method="POST"
-                    enctype="multipart/form-data">
-                    @method('patch')
-                    @csrf
-                    <div class="border-b border-gray-200 p-4 flex justify-between items-center">
-                        <h4 class="text-lg font-semibold text-gray-800">Edit Kurikulum - {{ $item->name }}</h4>
-                        <div class="flex space-x-2">
-                            <button type="submit"
-                                class="inline-flex items-center justify-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                            <button type="button"
-                                class="inline-flex items-center justify-center px-3 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300"
-                                onclick="closeModal('updateKurikulum{{ $item->code }}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-4 space-y-4">
-                        <div class="space-y-2">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Kurikulum</label>
-                            <input type="text"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                name="name" id="name" placeholder="Inputkan nama kurikulum..."
-                                value="{{ $item->name }}">
-                            @error('name')
-                                <small class="text-red-500">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="space-y-2">
-                            <label for="code" class="block text-sm font-medium text-gray-700">Kode Kurikulum ( 3 Huruf
-                                Kapital )</label>
-                            <input type="text"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                name="code" id="code" placeholder="Inputkan kode kurikulum..." maxlength="3"
-                                uppercase onkeydown="return /[a-zA-Z0-9]/i.test(event.key)" value="{{ $item->code }}">
-                            @error('code')
-                                <small class="text-red-500">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                                <label for="year_start" class="block text-sm font-medium text-gray-700">Pilih Tahun Mulai
-                                    Berlaku</label>
-                                <input type="number"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    name="year_start" id="year_start" min="2010" max="2100" maxlength="4"
-                                    value="{{ $item->year_start }}" placeholder="Inputkan tahun mulai...">
-                                @error('year_start')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="space-y-2">
-                                <label for="year_ended" class="block text-sm font-medium text-gray-700">Pilih Tahun Akhir
-                                    Berlaku</label>
-                                <input type="number"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    name="year_ended" id="year_ended" min="2010" max="2100" maxlength="4"
-                                    value="{{ $item->year_ended }}" placeholder="Inputkan tahun akhir...">
-                                @error('year_ended')
-                                    <small class="text-red-500">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label for="desc" class="block text-sm font-medium text-gray-700">Deskripsi
-                                Kurikulum</label>
-                            <textarea name="desc"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                id="desc" rows="5">{{ $item->desc == null ? 'Inputkan deskripsi kurikulum' : $item->desc }}</textarea>
-                            @error('desc')
-                                <small class="text-red-500">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
-    @endforeach
+    </section>
+
+    @include('user.admin.master.modal.kurikulum-edit')
+
+    <x-modal name="create-kurikulum">
+        @include('user.admin.master.modal.kurikulum-create')
+    </x-modal>
 @endsection
 
 @push('scripts')
