@@ -58,32 +58,52 @@ class StudentTaskController extends Controller
             // Add similar messages for other files if needed
         ]);
 
-        $stask = studentTask::where('code', $code)->first();
-        $user = Auth::guard('mahasiswa')->user();
-        $task = new studentScore;
+        try {
+            $stask = studentTask::where('code', $code)->first();
+            $user = Auth::guard('mahasiswa')->user();
+            $task = new studentScore;
 
-        for ($i = 1; $i <= 8; $i++) {
-            $fileKey = 'file_' . $i;
+            for ($i = 1; $i <= 8; $i++) {
+                $fileKey = 'file_' . $i;
 
-            if ($request->hasFile($fileKey)) {
-                $file = $request->file($fileKey);
-                $filename = time() . '-part-' . $i . '.' . $file->getClientOriginalExtension();
-                
-                // Use DIRECTORY_SEPARATOR for consistent path handling
-                $relativePath = 'uploads' . DIRECTORY_SEPARATOR . 'tugas' . DIRECTORY_SEPARATOR . $filename;
-                $path = $file->storeAs('public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'tugas', $filename);
-                
-                // Store path with forward slashes for consistency in database
-                $task->{$fileKey} = str_replace('\\', '/', $relativePath);
+                if ($request->hasFile($fileKey)) {
+                    $file = $request->file($fileKey);
+                    
+                    if (!$file->isValid()) {
+                        throw new \Exception('File upload failed for ' . $fileKey);
+                    }
+
+                    $filename = time() . '-part-' . $i . '-' . $user->id . '.' . $file->getClientOriginalExtension();
+                    
+                    // Create directory if it doesn't exist
+                    $storage_path = storage_path('app/public/tugas');
+                    if (!file_exists($storage_path)) {
+                        mkdir($storage_path, 0755, true);
+                    }
+                    
+                    // Store file directly using move
+                    if ($file->move($storage_path, $filename)) {
+                        $task->{$fileKey} = 'tugas/' . $filename;
+                    } else {
+                        throw new \Exception('Failed to move uploaded file ' . $fileKey);
+                    }
+                }
             }
-        }
 
-        $task->stask_id = $stask->id;
-        $task->desc = $request->desc;
-        $task->status = 'Terkumpul';
-        $task->code = Str::of(mt_rand(100000, 999999))->limit(6, '');
-        $task->student_id = $user->id;
-        $task->save();
+            $task->stask_id = $stask->id;
+            $task->desc = $request->desc;
+            $task->status = 'Terkumpul';
+            $task->code = Str::of(mt_rand(100000, 999999))->limit(6, '');
+            $task->student_id = $user->id;
+            $task->save();
+
+            Alert::success('Sukses', 'Tugas berhasil disimpan');
+            return redirect()->route('mahasiswa.akademik.tugas-index');
+            
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Gagal menyimpan tugas: ' . $e->getMessage());
+            return back();
+        }
 
         // $khs = HasilStudi::where('student_id', $user->id)->where('smt_id', $user->taka->raw_semester)->first();
         // // dd($khs->count())

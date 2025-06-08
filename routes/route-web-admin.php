@@ -21,7 +21,6 @@ use App\Http\Controllers\Admin\Pages\Finance\PembayaranController;
 use App\Http\Controllers\Admin\Pages\Inventory\CommodityController;
 use App\Http\Controllers\Admin\Pages\Finance\TicketSupportController;
 use App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController;
-use App\Http\Controllers\Admin\Pages\Inventory\CommodityLocationController;
 use App\Http\Controllers\Admin\Pages\Inventory\CommodityAcquisitionController;
 
 // WEB ADMINISTRATOR ROUTES
