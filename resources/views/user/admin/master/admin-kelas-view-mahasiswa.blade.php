@@ -79,7 +79,7 @@
                                 <td class="px-4 py-3 text-sm text-gray-900 text-center">{{ $absen->count() }} /
                                     {{ $jadkul->count() }} Perkuliahan</td>
                                 <td class="px-4 py-3 text-sm text-gray-900 text-center">
-                                    {{ ($absen->count() / $jadkul->count()) * 100 }} %</td>
+                                    {{ $jadkul->count() > 0 ? number_format(($absen->count() / $jadkul->count()) * 100, 1) : 0 }} %</td>
                                 <td class="px-4 py-3 text-sm text-center">
                                     <button type="button" onclick="openModal('editMahasiswa{{ $item->code }}')"
                                         class="inline-flex items-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">

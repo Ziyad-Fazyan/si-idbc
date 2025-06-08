@@ -22,7 +22,7 @@
     @include('user.admin.master-inventory.commodities.partials.statistics-cards')
 
     <!-- Filter -->
-    {{-- @include('user.admin.master-inventory.commodities.partials.filter') --}}
+    @include('user.admin.master-inventory.commodities.partials.filter')
 
     <!-- Main Content -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -31,13 +31,8 @@
             <div class="mb-6">
                 <div class="flex flex-wrap gap-3">
                     <button type="button"
-                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200"
-                        aria-label="Import data dari Excel">
-                        <i class="fas fa-fw fa-upload mr-2"></i>
-                        Import Excel
-                    </button>
-
-                    <button type="button"
+                        x-data
+                        @click="$dispatch('open-modal', {name: 'export-barang'})"
                         class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors duration-200"
                         aria-label="Export data barang">
                         <i class="fas fa-fw fa-download mr-2"></i>
@@ -196,7 +191,7 @@
         </div>
     </div>
 
-    <x-modal name="create-barang" maxWidth="2xl">
+    <x-modal name="create-barang" maxWidth="4xl">
         @include('user.admin.master-inventory.commodities.modal.create')
     </x-modal>
 
@@ -206,6 +201,10 @@
 
     <x-modal name="edit-barang" maxWidth="4xl">
         @include('user.admin.master-inventory.commodities.modal.edit')
+    </x-modal>
+
+    <x-modal name="export-barang" maxWidth="md">
+        @include('user.admin.master-inventory.commodities.modal.export')
     </x-modal>
 
     @push('scripts')
@@ -224,7 +223,7 @@
                     // Update modal content
                     document.getElementById('show_item_code').textContent = data.item_code || '-';
                     document.getElementById('show_name').textContent = data.name || '-';
-                    document.getElementById('show_location').textContent = data.commodity_location?.name || '-';
+                    document.getElementById('show_location').textContent = data.ruang?.name || '-';
                     document.getElementById('show_material').textContent = data.material || '-';
                     document.getElementById('show_brand').textContent = data.brand || '-';
                     document.getElementById('show_year').textContent = data.year_of_purchase || '-';
