@@ -31,6 +31,13 @@
             <span>Kelola Tugas</span>
         </a>
     </li>
+    <li class="list-none sidebar-item {{ Route::is('dosen.akademik.nilai-*') ? 'active' : '' }}">
+        <a href="{{ route('dosen.akademik.nilai-index') }}"
+            class='sidebar-link flex items-center px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 {{ Route::is('dosen.akademik.nilai-*') ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}'>
+            <i class="fa-solid fa-list-check w-5 text-center mr-3"></i>
+            <span>Kelola Nilai</span>
+        </a>
+    </li>
 </div>
 
 <style>

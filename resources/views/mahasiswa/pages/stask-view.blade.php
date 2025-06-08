@@ -79,24 +79,78 @@
         </div>
 
         <!-- Task Submission Form -->
-        <form action="{{ route('mahasiswa.akademik.tugas-store', $stask->code) }}" method="post"
-            enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
-            @csrf
+        @php
+            $studentScore = App\Models\studentScore::where('stask_id', $stask->id)
+                ->where('student_id', Auth::guard('mahasiswa')->user()->id)
+                ->first();
+        @endphp
 
-            <div class="bg-[#0C6E71] px-6 py-4">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <h2 class="text-xl font-semibold text-white">
-                        Jawaban @yield('submenu')
-                    </h2>
-                    <button type="submit"
-                        class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>Kirim Jawaban</span>
-                    </button>
+        @if($studentScore)
+            <!-- Task Status Card -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+                <div class="bg-[#0C6E71] px-6 py-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 class="text-xl font-semibold text-white">
+                            Status Tugas @yield('submenu')
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Tugas</label>
+                            <div class="px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $studentScore->status == 'Sudah dinilai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                    {{ $studentScore->status }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nilai</label>
+                            <div class="px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                                {{ $studentScore->score !== null ? $studentScore->score : 'Belum dinilai' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($studentScore->comment)
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Komentar Dosen</label>
+                        <div class="px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                            {{ $studentScore->comment }}
+                        </div>
+                    </div>
+                    @endif
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Waktu Pengumpulan</label>
+                        <div class="px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                            {{ \Carbon\Carbon::parse($studentScore->created_at)->isoFormat('dddd, D MMMM Y, HH:mm') }} WIB
+                        </div>
+                    </div>
                 </div>
             </div>
+        @else
+            <form action="{{ route('mahasiswa.akademik.tugas-store', $stask->code) }}" method="post"
+                enctype="multipart/form-data" class="bg-white rounded-lg shadow-md overflow-hidden">
+                @csrf
 
-            <div class="p-6 space-y-4">
+                <div class="bg-[#0C6E71] px-6 py-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 class="text-xl font-semibold text-white">
+                            Jawaban @yield('submenu')
+                        </h2>
+                        <button type="submit"
+                            class="bg-[#FF6B35] hover:bg-[#E05D2E] text-white px-4 py-2 rounded-md flex items-center space-x-1 transition-colors">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Kirim Jawaban</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-4">
                 <!-- File Uploads -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- File 1 (Required) -->
@@ -180,6 +234,7 @@
                 </div>
             </div>
         </form>
+        @endif
     </section>
 @endsection
 
@@ -196,9 +251,7 @@
                     const label = event.target.nextElementSibling;
 
                     // You could add file preview functionality here if needed
-                    console.log(File selected: $ {
-                        fileName
-                    });
+                    console.log(`File selected: ${fileName}`);
                 });
             });
 
@@ -209,6 +262,4 @@
             }
         });
     </script>
-@endsection
-@section('custom-js')
 @endsection

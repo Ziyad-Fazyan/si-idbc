@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('nilai_ipk')->default(0);               // INDEX PRESTASI SEMENTARA
             $table->string('code')->unique();                      // PRIVATE CODE
             $table->unique(['student_id', 'smt_id']);               // STABLE UNIQUE
+            $table->boolean('is_locked')->default(false);        // LOCKED STATUS
             $table->timestamps();
         });
     }

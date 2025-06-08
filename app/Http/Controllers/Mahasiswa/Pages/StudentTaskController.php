@@ -75,6 +75,7 @@ class StudentTaskController extends Controller
             // Setelah menangani file, atur nilai-nilai lainnya
             $task->stask_id = $stask->id;  // Pastikan variabel $stask telah didefinisikan sebelumnya
             $task->desc = $request->desc;
+            $task->status = 'Terkumpul'; // Set status tugas menjadi Terkumpul
             $task->code = Str::of(mt_rand(100000, 999999))->limit(6, '');
             $task->student_id = $user->id;
 

@@ -97,6 +97,25 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        
+                        <!-- Status Tugas -->
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-[#2E2E2E] mb-1">Status Tugas</label>
+                            <input type="text" readonly id="status" name="status"
+                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-50 text-[#2E2E2E]"
+                                value="{{ $score->status ?? 'Terkumpul' }}">
+                        </div>
+                    </div>
+                    
+                    <!-- Comment Input -->
+                    <div class="mt-4">
+                        <label for="comment" class="block text-sm font-medium text-[#2E2E2E] mb-1">Komentar</label>
+                        <textarea id="comment" name="comment" rows="3" {{ $score->score == null ? '' : 'readonly' }}
+                            class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md text-[#2E2E2E] focus:ring-2 focus:ring-[#0C6E71] focus:border-transparent"
+                            placeholder="Masukkan komentar untuk tugas ini...">{{ $score->comment }}</textarea>
+                        @error('comment')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Answer Detail -->
