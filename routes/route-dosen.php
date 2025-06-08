@@ -6,6 +6,7 @@ use App\Http\Controllers\Dosen\HomeController;
 use App\Http\Controllers\Dosen\Akademik\JadwalAjarController;
 use App\Http\Controllers\Dosen\Akademik\StudentTaskController;
 use App\Http\Controllers\Services\Ajax\GraphicController;
+use App\Http\Controllers\Dosen\Akademik\NilaiMahasiswaController;
 
 // =======================
 // HAK AKSES UNTUK DOSEN
@@ -65,5 +66,16 @@ Route::group([
     Route::prefix('/services/ajax/graphic')->name('services.ajax.graphic.')->group(function () {
         Route::get('/{code}/kepuasan-mengajar', [GraphicController::class, 'getKepuasanMengajar'])->name('kepuasan-mengajar');
         Route::get('/kepuasan-mengajar/dosen', [GraphicController::class, 'getKepuasanMengajarDosen'])->name('kepuasan-mengajar-dosen');
+    });
+
+    // ============================
+    // DATA AKADEMIK - NILAI MAHASISWA
+    // ============================
+    Route::prefix('/data-akademik/nilai-mahasiswa')->name('akademik.nilai-')->group(function () {
+        Route::get('/', [NilaiMahasiswaController::class, 'index'])->name('index');
+        Route::get('/mata-kuliah/{id}', [NilaiMahasiswaController::class, 'mataKuliahDetail'])->name('mata-kuliah-detail');
+        Route::post('/simpan-nilai', [NilaiMahasiswaController::class, 'simpanNilai'])->name('simpan');
+        Route::post('/kunci-nilai/{id}', [NilaiMahasiswaController::class, 'kunciNilai'])->name('kunci');
+        Route::get('/rekap/{id}', [NilaiMahasiswaController::class, 'rekapNilai'])->name('rekap');
     });
 });

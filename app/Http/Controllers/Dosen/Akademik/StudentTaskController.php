@@ -138,8 +138,20 @@ class StudentTaskController extends Controller
 
     public function updateScore($code, Request $request)
     {
+        $request->validate([
+            'score' => 'required|numeric|min:0|max:10',
+            'comment' => 'nullable|string',
+        ], [
+            'score.required' => 'Nilai tugas wajib diisi.',
+            'score.numeric' => 'Nilai tugas harus berupa angka.',
+            'score.min' => 'Nilai tugas minimal 0.',
+            'score.max' => 'Nilai tugas maksimal 10.',
+        ]);
+
         $score = studentScore::where('code', $code)->first();
         $score->score = $request->score;
+        $score->comment = $request->comment;
+        $score->status = 'Sudah dinilai';
         $score->save();
 
         $user = Mahasiswa::where('id', $request->student_id)->first();
@@ -162,7 +174,7 @@ class StudentTaskController extends Controller
             $ukhs->save();
         }
 
-        Alert::success('success', 'Score berhasil diupdate');
+        Alert::success('success', 'Tugas berhasil dinilai');
         return back();
     }
 

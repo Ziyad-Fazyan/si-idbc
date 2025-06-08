@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('file_6')->nullable();
             $table->string('file_7')->nullable();
             $table->string('file_8')->nullable();
+            $table->string('status')->default('Terkumpul');        // Status tugas: Terkumpul, Sudah dinilai
+            $table->string('comment')->nullable();                 // Komentar dosen
             $table->integer('code')->unique();                      // PRIVATE CODE
             $table->timestamps();
         });

@@ -51,6 +51,8 @@
                                 <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
                                     Nama Mahasiswa</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
+                                    Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
                                     Score Tugas</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-[#3B3B3B] uppercase tracking-wider">
                                     Waktu Kirim</th>
@@ -67,6 +69,17 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->task->title }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->student->mhs_name }}</td>
+                                    <td class="px-4 py-4 text-sm font-medium">
+                                        @if(isset($item->status))
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $item->status == 'Sudah dinilai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                                {{ $item->status }}
+                                            </span>
+                                        @else
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                Terkumpul
+                                            </span>
+                                        @endif
+                                    </td>
                                     <td class="px-4 py-4 text-sm font-medium text-[#2E2E2E]">
                                         {{ $item->score != null ? $item->score : '-' }}
                                     </td>
