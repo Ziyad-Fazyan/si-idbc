@@ -157,6 +157,9 @@ Route::post('/services/convert/export-student', [ExportController::class, 'expor
 Route::post('/services/convert/export-users', [ExportController::class, 'exportUsers'])
     ->name('services.convert.export-users');
 
+Route::post('/services/convert/export-dosens', [ExportController::class, 'exportDosens'])
+    ->name('services.convert.export-dosens');
+
 Route::post('/services/convert/import-users', [ImportController::class, 'importUsers'])
     ->name('services.convert.import-users');
 
