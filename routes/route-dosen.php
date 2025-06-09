@@ -43,6 +43,8 @@ Route::group([
     Route::get('/data-akademik/jadwal/{code}/absen', [JadwalAjarController::class, 'viewAbsen'])->name('akademik.jadwal-view-absen');
     Route::get('/data-akademik/jadwal/{code}/feedback', [JadwalAjarController::class, 'viewFeedBack'])->name('akademik.jadwal-view-feedback');
     Route::patch('/data-akademik/jadwal/absen/{code}/update', [JadwalAjarController::class, 'updateAbsen'])->name('akademik.jadwal-absen-update');
+    Route::post('/data-akademik/jadwal/{code}/dosen-absen', [JadwalAjarController::class, 'dosenAbsen'])->name('akademik.jadwal.dosen-absen');
+    Route::post('/data-akademik/jadwal/absen-mahasiswa/store', [JadwalAjarController::class, 'storeOrUpdateAbsenMahasiswa'])->name('akademik.jadwal.absen-mahasiswa.store');
 
     // ============================
     // DATA AKADEMIK - KELOLA TUGAS
