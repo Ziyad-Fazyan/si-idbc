@@ -2,56 +2,39 @@
 
 namespace App\Http\Controllers\Services\Convert;
 
+use App\Exports\StudentExport;
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MahasiswaExportRequest;
+use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
-use App\Models\User;
 use App\Models\Mahasiswa;
+use App\Http\Requests\UsersExportRequest;
 use App\Models\Dosen;
 
 class ExportController extends Controller
 {
-    public function exportUsers()
+    public function exportUsers(UsersExportRequest $request)
     {
-        $users = User::all();
+        $filename = 'daftar-users-' . date('d-m-Y');
 
-        (new FastExcel($users))->export('export-users-' . uniqid() . '.csv', function ($user) {
-            return [
-                'Username' => $user->user,
-                'Email' => $user->email,
-                'Phone' => $user->phone,
-                'FullName' => $user->name,
-                'Gender' => $user->gend,
-                'Religion' => $user->raw_reli,
-                'BirthPlace' => $user->birth_place,
-                'BirthDate' => $user->birth_date,
-                'TypeUser' => $user->raw_type,
-                'Status' => $user->status,
-            ];
-        });
-
-        return (new FastExcel($users))->download('export-users-' . uniqid() . '.csv');
+        return match ($request->extension) {
+            'xlsx' => Excel::download(new UsersExport, $filename . '.xlsx', \Maatwebsite\Excel\Excel::XLSX),
+            'xls' => Excel::download(new UsersExport, $filename . '.xls', \Maatwebsite\Excel\Excel::XLS),
+            'csv' => Excel::download(new UsersExport, $filename . '.csv', \Maatwebsite\Excel\Excel::CSV),
+            'html' => Excel::download(new UsersExport, $filename . '.html', \Maatwebsite\Excel\Excel::HTML),
+        };
     }
 
-    public function exportStudent()
+    public function exportStudent(MahasiswaExportRequest $request)
     {
-        $users = Mahasiswa::all();
+        $filename = 'daftar-mahasiswa-' . date('d-m-Y');
 
-        (new FastExcel($users))->export('export-student-' . uniqid() . '.csv', function ($user) {
-            return [
-                'NIM' => $user->mhs_nim,
-                'Email' => $user->mhs_mail,
-                'Phone' => $user->mhs_phone,
-                'FullName' => $user->mhs_name,
-                'Gender' => $user->mhs_gend,
-                'Religion' => $user->raw_mhs_reli,
-                'BirthPlace' => $user->mhs_birthplace,
-                'BirthDate' => $user->mhs_birthdate,
-                'TypeUser' => $user->raw_mhs_stat,
-                'YearsID' => $user->years_id,
-                'ClassID' => $user->kelas()->exists() ? $user->kelas()->first()->id : 0,
-            ];
-        });
-
-        return (new FastExcel($users))->download('export-student-' . uniqid() . '.csv');
+        return match ($request->extension) {
+            'xlsx' => Excel::download(new StudentExport, $filename . '.xlsx', \Maatwebsite\Excel\Excel::XLSX),
+            'xls' => Excel::download(new StudentExport, $filename . '.xls', \Maatwebsite\Excel\Excel::XLS),
+            'csv' => Excel::download(new StudentExport, $filename . '.csv', \Maatwebsite\Excel\Excel::CSV),
+            'html' => Excel::download(new StudentExport, $filename . '.html', \Maatwebsite\Excel\Excel::HTML),
+        };
     }
 }

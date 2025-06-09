@@ -84,8 +84,8 @@ class CommodityController extends Controller
         }
 
         // Apply location filter
-        if ($request->has('commodity_location_id') && $request->commodity_location_id) {
-            $query->where('commodity_location_id', $request->commodity_location_id);
+        if ($request->has('ruang_id') && $request->ruang_id) {
+            $query->where('ruang_id', $request->ruang_id);
         }
 
         // Apply acquisition filter

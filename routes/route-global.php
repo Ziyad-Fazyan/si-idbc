@@ -148,10 +148,10 @@ Route::delete('/album/{code}/destroy', [GalleryController::class, 'destroy'])
 // ------------------------------
 // EXPORT IMPORT CORE
 // ------------------------------
-Route::get('/services/convert/export-student', [ExportController::class, 'exportStudent'])
+Route::post('/services/convert/export-student', [ExportController::class, 'exportStudent'])
     ->name('services.convert.export-student');
 
-Route::get('/services/convert/export-users', [ExportController::class, 'exportUsers'])
+Route::post('/services/convert/export-users', [ExportController::class, 'exportUsers'])
     ->name('services.convert.export-users');
 
 Route::post('/services/convert/import-users', [ImportController::class, 'importUsers'])

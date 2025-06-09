@@ -39,15 +39,12 @@
                             </svg>
                             Tambah Mahasiswa
                         </a>
-                        <a href="{{ route($prefix . 'services.convert.export-student') }}"
-                            class="inline-flex items-center px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                </path>
-                            </svg>
-                            Export Data
-                        </a>
+                        <button type="button" x-data @click="$dispatch('open-modal', {name: 'export-student'})"
+                            class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors duration-200"
+                            aria-label="Export data barang">
+                            <i class="fas fa-fw fa-download mr-2"></i>
+                            Export
+                        </button>
                         <button onclick="openImportModal()"
                             class="inline-flex items-center px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -307,6 +304,10 @@
         </div>
     </div>
 
+    <x-modal name="export-student">
+        @include('user.admin.pages.modal.export-student')
+    </x-modal>
+
     <!-- Loading Overlay -->
     <div id="loadingIndicator"
         class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
@@ -406,12 +407,36 @@
                 }
             });
 
-            // Add loading to form submissions
+            // Add loading to form submissions and handle their completion
             document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', function() {
                     showLoading();
                 });
+                
+                // Handle form submission completion
+                form.addEventListener('formdata', function() {
+                    const originalSubmit = form.submit;
+                    form.submit = function() {
+                        originalSubmit.call(form);
+                        setTimeout(hideLoading, 500); // Hide loading after a short delay
+                    };
+                });
             });
+
+            // Hide loading when page loads or when navigating back
+            window.addEventListener('load', hideLoading);
+            window.addEventListener('pageshow', hideLoading);
+            
+            // Hide loading after modal interactions
+            document.querySelectorAll('.modal, [x-data]').forEach(modal => {
+                modal.addEventListener('transitionend', () => {
+                    hideLoading();
+                });
+            });
+
+            // Listen for Alpine.js events
+            window.addEventListener('alpine:initialized', hideLoading);
+            document.addEventListener('modal-closed', hideLoading);
         });
     </script>
 @endsection
