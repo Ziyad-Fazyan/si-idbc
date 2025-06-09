@@ -175,8 +175,14 @@
                     <label for="author_class" class="block text-sm font-medium text-[#2E2E2E]">
                         Kelas Mahasiswa
                     </label>
+                    @php
+                        $kelasList = Auth::guard('mahasiswa')->user()->kelas;
+                        $kelasString = $kelasList && count($kelasList)
+                            ? $kelasList->pluck('name')->implode(', ')
+                            : 'Tidak ada kelas';
+                    @endphp
                     <input type="text" name="author_class" id="author_class"
-                        value="@forelse(Auth::guard('mahasiswa')->user()->kelas as $kelas){{ $kelas->name }}@if(!$loop->last), @endif@empty Tidak ada kelas @endforelse" readonly
+                        value="{{ $kelasString }}" readonly
                         class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71] bg-gray-50 text-[#2E2E2E]">
                     @error('author_class')
                         <p class="text-sm text-red-600">{{ $message }}</p>

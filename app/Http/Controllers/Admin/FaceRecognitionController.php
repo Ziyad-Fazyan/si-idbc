@@ -15,12 +15,26 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class FaceRecognitionController extends Controller
 {
+    protected $faceApiUrl;
+    protected $faceApiKey;
+
+    public function __construct()
+    {
+        $this->faceApiUrl = rtrim(env('FACE_API_URL'), '/') . '/';
+        $this->faceApiKey = env('FACE_API_KEY');
+        
+        if (empty($this->faceApiKey)) {
+            throw new \RuntimeException('FACE_API_KEY is not configured');
+        }
+    }
+
     // Halaman untuk upload foto dan memilih mahasiswa
     public function index()
     {
         $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
         return view('user.absen.pages.absen-wajah', compact('mahasiswas'));
     }
+
     public function daftar()
     {
         $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
@@ -43,193 +57,202 @@ class FaceRecognitionController extends Controller
     {
         $request->validate([
             'mahasiswas_id' => 'required|exists:mahasiswas,id',
-            'foto' => 'required|image|max:2048',
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         try {
-            $foto = fopen($request->file('foto')->getRealPath(), 'r');
+            $mhs = Mahasiswa::findOrFail($request->mahasiswas_id);
+            
+            // Persiapkan file untuk dikirim
+            $fileStream = fopen($request->file('foto')->getRealPath(), 'r');
+            
+            try {
+                $client = new Client([
+                    'timeout' => 15,
+                    'connect_timeout' => 10,
+                ]);
 
-            // Kirim ke API FastAPI /embedding
-            $client = new Client();
-            $response = $client->post(env('FACE_API_URL'), [
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'contents' => $foto,
-                        'filename' => $request->file('foto')->getClientOriginalName(),
+                $response = $client->post($this->faceApiUrl . 'api/register', [
+                    'headers' => [
+                        'x-api-key' => $this->faceApiKey
                     ],
-                ],
-                'timeout' => 10,
-            ]);
+                    'multipart' => [
+                        [
+                            'name' => 'image',
+                            'contents' => $fileStream,
+                            'filename' => $request->file('foto')->getClientOriginalName(),
+                        ],
+                    ],
+                ]);
 
-            $data = json_decode($response->getBody(), true);
-            $embedding = $data['embedding'] ?? null;
+                $data = json_decode($response->getBody(), true);
+                
+                if (empty($data['face_token'])) {
+                    throw new \Exception('Invalid response from face recognition API');
+                }
 
-            if (!$embedding) {
-                return back()->with('error', '❌ Gagal mendapatkan embedding wajah.');
+                $mhs->face_token = $data['face_token'];
+                $mhs->save();
+
+                return back()->with('success', "✅ Wajah terdaftar untuk {$mhs->mhs_name}");
+            } finally {
+                if (is_resource($fileStream)) {
+                    fclose($fileStream);
+                }
             }
-
-            $mhs = Mahasiswa::find($request->mahasiswas_id);
-            $mhs->face_embedding = json_encode($embedding);
-            $mhs->save();
-
-            return back()->with('success', "✅ Embedding wajah tersimpan untuk {$mhs->mhs_name}.");
         } catch (\Exception $e) {
-            return back()->with('error', '⚠️ Gagal menghubungi API Face Recognition: ' . $e->getMessage());
+            Log::error('Face registration failed: ' . $e->getMessage());
+            return back()->with('error', '⚠️ Gagal mendaftarkan wajah: ' . $e->getMessage());
         }
     }
 
-    // Cek wajah dari foto yang di-upload dan bandingkan dengan mahasiswa lain
+    // Cek wajah dari foto yang di-upload
     public function cekWajah(Request $request)
     {
         $request->validate([
-            'foto' => 'required|image|max:2048'
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         try {
-            $foto = $request->file('foto');
+            // Proses penyimpanan gambar
+            $fotoName = 'face_recognition_' . time() . '.' . $request->file('foto')->getClientOriginalExtension();
+            $fotoPath = $this->simpanGambar($request->file('foto'), $fotoName);
 
-            // Simpan foto untuk digunakan nanti dalam absensi
-            $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
-            $fotoPath = 'presensi/' . $fotoName;
-            $destinationPath = storage_path('app/public/images/presensi');
+            // Dapatkan semua mahasiswa yang sudah terdaftar
+            $mahasiswas = Mahasiswa::whereNotNull('face_token')->with('kelas.pstudi')->get();
 
-            // Pastikan direktori ada
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
-
-            // Kompres dan simpan gambar
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($foto->getRealPath());
-            $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
-
-            // Buka file sebagai stream untuk dikirim ke API
-            $fileStream = fopen($foto->getRealPath(), 'r');
-
-            // Dapatkan embedding dari API FastAPI
-            $client = new Client();
-            $response = $client->post(env('FACE_API_URL'), [
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'contents' => $fileStream, // Gunakan stream file
-                        'filename' => $foto->getClientOriginalName(),
-                    ],
-                ],
-                'timeout' => 10,
-            ]);
-
-            // Tutup stream setelah digunakan
-            if (is_resource($fileStream)) {
-                fclose($fileStream);
-            }
-
-            $data = json_decode($response->getBody(), true);
-            $inputEmbedding = $data['embedding'] ?? null;
-
-            if (!$inputEmbedding) {
-                return back()->with('error', '❌ Wajah tidak terdeteksi atau gagal mendapat embedding.');
-            }
-
-            $mahasiswas = Mahasiswa::whereNotNull('face_embedding')->get();
-
-            $highestSimilarity = 0;
             $bestMatch = null;
+            $highestSimilarity = 0.5; // Minimum threshold
 
             foreach ($mahasiswas as $mhs) {
-                $storedEmbedding = json_decode($mhs->face_embedding, true);
-                if (!$storedEmbedding) continue;
+                $verificationResult = $this->verifyFaceWithApi(
+                    $request->file('foto')->getRealPath(),
+                    $mhs->face_token,
+                    $request->file('foto')->getClientOriginalName()
+                );
 
-                $similarity = $this->cosineSimilarity($storedEmbedding, $inputEmbedding);
-
-                if ($similarity > $highestSimilarity) {
-                    $highestSimilarity = $similarity;
-                    $bestMatch = [
-                        'mahasiswa' => $mhs->mhs_name,
-                        'similarity' => $similarity, // Perbaikan typo dari 'similarity' ke 'similarity'
-                        'status' => $similarity >= 0.5 ? '✅ Cocok' : '❌ Tidak Cocok',
-                        'mahasiswa_data' => [
-                            'id' => $mhs->id,
-                            'nim' => $mhs->mhs_nim,
-                            'name' => $mhs->mhs_name,
-                            'kelas' => $mhs->kelas->count() > 0 ? $mhs->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
-                            'program_studi' => $mhs->kelas->count() > 0 && $mhs->kelas->first()->pstudi ? $mhs->kelas->first()->pstudi->name : 'Tidak ada prodi',
-                            'status' => $mhs->mhs_stat,
-                        ],
-                    ];
+                if ($verificationResult['matched'] && $verificationResult['similarity'] > $highestSimilarity) {
+                    $highestSimilarity = $verificationResult['similarity'];
+                    $bestMatch = $this->prepareMatchData($mhs, $verificationResult['similarity']);
                 }
             }
 
             if (!$bestMatch) {
-                return back()->with('error', '❌ Tidak ada mahasiswa dengan wajah yang cocok.');
+                return back()->with('error', '❌ Tidak ada mahasiswa dengan wajah yang cocok (similarity > 0.5)');
             }
 
-            // Simpan hanya 1 data ke session
-            $now = Carbon::now();
-            $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
-            $waktuDatang = $now->format('H:i:s');
-            $userId = $bestMatch['mahasiswa'] ?? null;
-            $jadwalHariIni = null;
-            $mahasiswaData = null;
-
-            if ($userId) {
-                // Cari data mahasiswa berdasarkan nama
-                $mahasiswaData = Mahasiswa::where('mhs_name', $userId)->first();
-                if ($mahasiswaData) {
-                    // Tambahkan data mahasiswa ke hasil pengenalan wajah
-                    $bestMatch['mahasiswa_data'] = [
-                        'id' => $mahasiswaData->id,
-                        'nim' => $mahasiswaData->mhs_nim,
-                        'name' => $mahasiswaData->mhs_name,
-                        'kelas' => $mahasiswaData->kelas->count() > 0 ? $mahasiswaData->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
-                        'program_studi' => $mahasiswaData->kelas->count() > 0 && $mahasiswaData->kelas->first()->pstudi ? $mahasiswaData->kelas->first()->pstudi->name : 'Tidak ada prodi',
-                        'status' => $mahasiswaData->mhs_stat
-                    ];
-
-                    // Cari jadwal kuliah hari ini untuk kelas mahasiswa
-                    // Ambil kelas pertama yang terkait dengan mahasiswa
-                    $kelas = $mahasiswaData->kelas()->first();
-                    $kelasId = $kelas ? $kelas->id : null;
-
-                    $jadwalHariIni = null;
-                    if ($kelasId) {
-                        $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
-                            ->where('days_id', $hariIni)
-                            ->where('start', '<=', $waktuDatang)
-                            ->where('ended', '>=', $waktuDatang)
-                            ->first();
-                    }
-                }
-            }
+            // Cek jadwal kuliah
+            $jadwalHariIni = $this->getJadwalHariIni($bestMatch['mahasiswa_data']['id']);
 
             // Simpan hasil ke session
-            Session::put('face_image_path', $fotoPath);
-            Session::put('face_results', [$bestMatch]);
-            Session::put('jadwal_hari_ini', $jadwalHariIni);
+            Session::put([
+                'face_image_path' => $fotoPath,
+                'face_results' => [$bestMatch],
+                'jadwal_hari_ini' => $jadwalHariIni
+            ]);
 
             return redirect()->route('absen.face-results');
         } catch (\Exception $e) {
+            Log::error('Face verification failed: ' . $e->getMessage());
             return back()->with('error', '⚠️ Gagal memproses wajah: ' . $e->getMessage());
         }
     }
 
-    // Fungsi untuk membandingkan wajah
-    private function cosineSimilarity(array $vec1, array $vec2): float
+    /**
+     * Simpan gambar yang diupload
+     */
+    protected function simpanGambar($file, $filename)
     {
-        $dot = 0.0;
-        $normA = 0.0;
-        $normB = 0.0;
-        $length = count($vec1);
-
-        for ($i = 0; $i < $length; $i++) {
-            $dot += $vec1[$i] * $vec2[$i];
-            $normA += $vec1[$i] * $vec1[$i];
-            $normB += $vec2[$i] * $vec2[$i];
+        $destinationPath = storage_path('app/public/images/presensi');
+        
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
         }
 
-        if ($normA == 0 || $normB == 0) return 0;
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file->getRealPath());
+        $image->scaleDown(height: 300);
+        $image->save($destinationPath . '/' . $filename);
 
-        return $dot / (sqrt($normA) * sqrt($normB));
+        return 'presensi/' . $filename;
+    }
+
+    /**
+     * Verifikasi wajah dengan API
+     */
+    protected function verifyFaceWithApi($imagePath, $faceToken, $originalFilename)
+    {
+        $fileStream = fopen($imagePath, 'r');
+        
+        try {
+            $client = new Client([
+                'timeout' => 15,
+                'connect_timeout' => 10,
+            ]);
+
+            $response = $client->post($this->faceApiUrl . 'api/verify', [
+                'headers' => [
+                    'x-api-key' => $this->faceApiKey
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'image',
+                        'contents' => $fileStream,
+                        'filename' => $originalFilename,
+                    ],
+                    [
+                        'name' => 'face_token',
+                        'contents' => $faceToken
+                    ]
+                ],
+            ]);
+
+            return json_decode($response->getBody(), true);
+        } finally {
+            if (is_resource($fileStream)) {
+                fclose($fileStream);
+            }
+        }
+    }
+
+    /**
+     * Siapkan data match untuk ditampilkan
+     */
+    protected function prepareMatchData($mhs, $similarity)
+    {
+        return [
+            'mahasiswa' => $mhs->mhs_name,
+            'similarity' => $similarity,
+            'status' => $similarity >= 0.5 ? '✅ Cocok' : '❌ Tidak Cocok',
+            'mahasiswa_data' => [
+                'id' => $mhs->id,
+                'nim' => $mhs->mhs_nim,
+                'name' => $mhs->mhs_name,
+                'kelas' => $mhs->kelas->count() > 0 ? $mhs->kelas->pluck('name')->implode(', ') : 'Tidak ada kelas',
+                'program_studi' => $mhs->kelas->count() > 0 && $mhs->kelas->first()->pstudi 
+                    ? $mhs->kelas->first()->pstudi->name 
+                    : 'Tidak ada prodi',
+                'status' => $mhs->mhs_stat,
+            ],
+        ];
+    }
+
+    /**
+     * Dapatkan jadwal hari ini untuk mahasiswa
+     */
+    protected function getJadwalHariIni($mahasiswaId)
+    {
+        $now = Carbon::now();
+        $mahasiswa = Mahasiswa::with('kelas')->find($mahasiswaId);
+
+        if (!$mahasiswa || $mahasiswa->kelas->isEmpty()) {
+            return null;
+        }
+
+        return JadwalKuliah::where('kelas_id', $mahasiswa->kelas->first()->id)
+            ->where('days_id', $now->dayOfWeekIso)
+            ->where('start', '<=', $now->format('H:i:s'))
+            ->where('ended', '>=', $now->format('H:i:s'))
+            ->first();
     }
 }

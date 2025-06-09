@@ -269,8 +269,8 @@ class HomeController extends Controller
 
         $user->mhs_name = $request->mhs_name;
         $user->mhs_nim = $request->mhs_nim;
-        $user->mhs_reli = $request->mhs_reli;
         $user->mhs_gend = $request->mhs_gend;
+        $user->mahasiswaDetails->mhs_reli = $request->mhs_reli;
         $user->save();
 
         // Update atau buat data detail mahasiswa

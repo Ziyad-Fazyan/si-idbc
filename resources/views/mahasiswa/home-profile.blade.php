@@ -139,7 +139,7 @@
                                                 <input type="text" name="years_id" id="years_id"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
                                                     readonly
-                                                    value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas->taka->year_start }}">
+                                                    value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas()->first()->taka->year_start }}">
                                                 @error('years_id')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -151,7 +151,7 @@
                                                 <input type="text" name="faku_id" id="faku_id"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
                                                     readonly
-                                                    value="{{ Auth::guard('mahasiswa')->user()->kelas->pstudi->fakultas->name }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->kelas()->first()->pstudi->fakultas->name }}">
                                                 @error('faku_id')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -179,7 +179,7 @@
                                                 <div
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100">
                                                     @foreach (Auth::guard('mahasiswa')->user()->kelas as $kelas)
-                                                        <div class="mb-1">{{ $kelas->code }} - {{ $kelas->name }}
+                                                        <div class="mb-1">{{ $kelas->code }} / {{ $kelas->name }}
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -240,22 +240,22 @@
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
                                                     <option value="">Pilih Agama</option>
                                                     <option value="1"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '1' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '1' ? 'selected' : '' }}>
                                                         Agama Islam</option>
                                                     <option value="2"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '2' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '2' ? 'selected' : '' }}>
                                                         Agama Kristen Protestan</option>
                                                     <option value="3"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '3' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '3' ? 'selected' : '' }}>
                                                         Agama Kriten Katholik</option>
                                                     <option value="4"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '4' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '4' ? 'selected' : '' }}>
                                                         Agama Hindu</option>
                                                     <option value="5"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '5' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '5' ? 'selected' : '' }}>
                                                         Agama Buddha</option>
                                                     <option value="6"
-                                                        {{ Auth::guard('mahasiswa')->user()->raw_mhs_reli === '6' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '6' ? 'selected' : '' }}>
                                                         Agama Konghuchu</option>
                                                 </select>
                                                 @error('mhs_reli')
