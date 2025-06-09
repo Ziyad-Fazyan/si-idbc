@@ -61,7 +61,7 @@ class Mahasiswa extends Authenticatable
     {
         return $this->hasOne(MahasiswaDetails::class);
     }
-    
+
     public function absensiMahasiswa()
     {
         return $this->hasMany(AbsensiMahasiswa::class, 'author_id');

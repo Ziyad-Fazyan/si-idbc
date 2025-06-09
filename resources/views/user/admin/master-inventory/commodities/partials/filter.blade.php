@@ -30,12 +30,12 @@
                 <!-- Location Filter -->
                 <div class="col-md-6 col-lg-3">
                     <label class="form-label">Lokasi</label>
-                    <select class="form-select" name="commodity_location_id">
+                    <select class="form-select" name="ruang_id">
                         <option value="">Semua Lokasi</option>
-                        @foreach($commodityLocations as $location)
-                            <option value="{{ $location->id }}"
-                                    {{ request('commodity_location_id') == $location->id ? 'selected' : '' }}>
-                                {{ $location->name }}
+                        @foreach($ruangs as $ruang)
+                            <option value="{{ $ruang->id }}"
+                                    {{ request('ruang_id') == $ruang->id ? 'selected' : '' }}>
+                                {{ $ruang->name }}
                             </option>
                         @endforeach
                     </select>
@@ -136,7 +136,7 @@
 </div>
 
 <!-- Filter Summary (if filters are active) -->
-@if(request()->anyFilled(['search', 'commodity_location_id', 'commodity_acquisition_id', 'condition', 'brand', 'material', 'year_from', 'year_to', 'price_from', 'price_to', 'quantity_from', 'quantity_to']))
+@if(request()->anyFilled(['search', 'ruang_id', 'commodity_acquisition_id', 'condition', 'brand', 'material', 'year_from', 'year_to', 'price_from', 'price_to', 'quantity_from', 'quantity_to']))
 <div class="alert alert-info">
     <div class="d-flex justify-content-between align-items-center">
         <div>
@@ -145,8 +145,8 @@
             @if(request('search'))
                 <span class="badge bg-primary me-1">Pencarian: {{ request('search') }}</span>
             @endif
-            @if(request('commodity_location_id'))
-                <span class="badge bg-success me-1">Lokasi: {{ $commodityLocations->find(request('commodity_location_id'))->name ?? '' }}</span>
+            @if(request('ruang_id'))
+                <span class="badge bg-success me-1">Lokasi: {{ $ruangs->find(request('ruang_id'))->name ?? '' }}</span>
             @endif
             @if(request('condition'))
                 <span class="badge bg-warning me-1">Kondisi: {{ $filterOptions['conditions'][request('condition')] ?? '' }}</span>
@@ -156,7 +156,7 @@
             @endif
             <!-- Add more active filter badges as needed -->
         </div>
-        <a href="{{ route('admin.commodities.index') }}" class="btn btn-sm btn-outline-secondary">
+        <a href="{{ route($prefix . 'inventory.barang-index') }}" class="btn btn-sm btn-outline-secondary">
             <i class="fas fa-times"></i>
         </a>
     </div>
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Auto submit form on filter change (optional)
     const filterForm = document.getElementById('filterForm');
-    const autoSubmitElements = filterForm.querySelectorAll('select[name="commodity_location_id"], select[name="commodity_acquisition_id"], select[name="condition"]');
+    const autoSubmitElements = filterForm.querySelectorAll('select[name="ruang_id"], select[name="commodity_acquisition_id"], select[name="condition"]');
 
     autoSubmitElements.forEach(element => {
         element.addEventListener('change', function() {
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(formData);
 
             // Create export URL with current filters
-            const exportUrl = '{{ route("admin.commodities.export") }}?' + params.toString();
+            const exportUrl = '{{ route($prefix . "inventory.barang-export") }}?' + params.toString();
             window.open(exportUrl, '_blank');
         });
     }
