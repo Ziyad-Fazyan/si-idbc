@@ -1,7 +1,19 @@
 @extends('base.base-dash-index')
-
-@section('title', 'Data Kesehatan Mahasiswa')
-
+@section('title')
+    Data Detail Mahasiswa
+@endsection
+@section('menu')
+    Data Detail Admin
+@endsection
+@section('submenu')
+    Tambah Data
+@endsection
+@section('urlmenu')
+    {{ route('web-admin.mahasiswa-health.index') }}
+@endsection
+@section('subdesc')
+    Halaman untuk menambah data detail mahasiswa baru
+@endsection
 @section('content')
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap -mx-4">
@@ -12,7 +24,7 @@
                             <li><a href="{{ route($prefix . 'home-index') }}"
                                     class="text-blue-600 hover:text-blue-800">Dashboard</a></li>
                             <li class="text-gray-500">/</li>
-                            <li class="text-gray-700">Data Kesehatan Mahasiswa</li>
+                            <li class="text-gray-700">Data Detail Mahasiswa</li>
                         </ol>
                         <h4 class="text-2xl font-semibold text-gray-900 mt-1">Data Kesehatan Mahasiswa</h4>
                     </div>

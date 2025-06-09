@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -85,18 +86,65 @@ class DocumentController extends Controller
     {
         $docs = docsResource::where('code', $code)->first();
 
-        // Hapus dokumen (path)
+        if (!$docs) {
+            Alert::error('Error', 'Document not found');
+            return back();
+        }
+
+        // Hapus cover image
         if ($docs->cover) {
-            File::delete('/app/public/' . $docs->cover); // hapus gambar lama
+            $coverPath = storage_path('app/public/' . $docs->cover);
+            if (File::exists($coverPath)) {
+                File::delete($coverPath);
+            }
         }
+
+        // Hapus document file
         if ($docs->path) {
-            File::delete('/app/public/' . $docs->path); // hapus gambar lama
+            $filePath = storage_path('app/public/' . $docs->path);
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
         }
+
         // Hapus entri dari database
         $docs->delete();
 
-        // Tampilkan pesan sukses
         Alert::success('Success', 'Data berhasil dihapus');
         return back();
+    }
+
+    public function download($code)
+    {
+        try {
+            $docs = docsResource::where('code', $code)->firstOrFail();
+
+            if (empty($docs->path)) {
+                Alert::error('Error', 'Document file not found');
+                return back();
+            }
+
+            $filePath = storage_path('app/public/' . $docs->path);
+
+            if (!File::exists($filePath)) {
+                Alert::error('Error', 'Document file not found on server');
+                return back();
+            }
+
+            $extension = pathinfo($docs->path, PATHINFO_EXTENSION);
+            $fileName = Str::slug($docs->name) . '.' . $extension;
+
+            return response()->download($filePath, $fileName, [
+                'Content-Type' => 'application/force-download',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Content-Length' => filesize($filePath),
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Sat, 01 Jan 1990 00:00:00 GMT'
+            ]);
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Failed to download document');
+            return back();
+        }
     }
 }

@@ -164,6 +164,7 @@
         $akademikActive =
             Route::is('web-admin.master.taka-*') ||
             Route::is('web-admin.master.fakultas-*') ||
+            Route::is('web-admin.mahasiswa-health*') ||
             Route::is('web-admin.master.pstudi-*');
     @endphp
     <li class="list-none mt-1">
@@ -193,6 +194,12 @@
                 <a href="{{ route('web-admin.master.pstudi-index') }}"
                     class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Program Studi</a>
+            </li>
+            <li
+                class="{{ Route::is('web-admin.mahasiswa-health*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.mahasiswa-health.index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
+                    Detail Mahasiswa</a>
             </li>
         </ul>
     </li>

@@ -12,7 +12,7 @@
     Tambah Dokumen
 @endsection
 @section('urlmenu')
-    #
+    {{ route($prefix . 'document-index') }}
 @endsection
 @section('subdesc')
     Halaman untuk mengelola Dokumen
@@ -36,40 +36,24 @@
                         <table class="min-w-full divide-y divide-gray-200" id="documents-table">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        #</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Cover Image</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Nama Document</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Path File</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Author</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Created At</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        Aksi</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">#</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Cover Image</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Nama Document</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Path File</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Author</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Created At</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($docs as $key => $item)
                                     <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                            {{ ++$key }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{{ ++$key }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <img src="{{ asset('storage/' . $item->cover) }}"
                                                 class="mx-auto h-12 w-auto object-cover rounded" alt="{{ $item->name }}">
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->name }}
-                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">
                                             {{ $item->link == null ? $item->path : $item->link }}
                                         </td>
@@ -108,72 +92,93 @@
     </section>
 
     <!-- Document View Modal -->
-    <div id="documentModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800" id="modalTitle">Document Details</h3>
-                <button onclick="closeDocumentModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-6 overflow-y-auto max-h-[70vh]" id="modalContent">
-                <div class="flex flex-col space-y-4">
-                    <div class="flex flex-col md:flex-row md:space-x-4">
-                        <div class="md:w-1/3 mb-4 md:mb-0">
-                            <img id="documentCover" src="" class="w-full h-auto rounded-lg" alt="Document Cover">
-                        </div>
-                        <div class="md:w-2/3">
-                            <div class="space-y-3">
-                                <div>
-                                    <h4 class="text-sm font-medium text-gray-500">NAMA DOKUMEN</h4>
-                                    <p id="documentName" class="text-base font-medium"></p>
+    <div id="documentModal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+        <div class="fixed inset-0 bg-black bg-opacity-50" data-modal-backdrop onclick="closeModal('documentModal')"></div>
+        <div class="fixed inset-0 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800" id="modalTitle">Document Details</h3>
+                        <button type="button" data-modal-close class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-y-auto max-h-[70vh]" id="modalContent">
+                        <div class="flex flex-col space-y-4">
+                            <div class="flex flex-col md:flex-row md:space-x-4">
+                                <div class="md:w-1/3 mb-4 md:mb-0">
+                                    <img id="documentCover" src="" class="w-full h-auto rounded-lg" alt="Document Cover">
                                 </div>
-                                <div>
-                                    <h4 class="text-sm font-medium text-gray-500">PATH FILE</h4>
-                                    <p id="documentPath" class="text-base"></p>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-medium text-gray-500">AUTHOR</h4>
-                                    <p id="documentAuthor" class="text-base"></p>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-medium text-gray-500">CREATED AT</h4>
-                                    <p id="documentCreated" class="text-base"></p>
+                                <div class="md:w-2/3">
+                                    <div class="space-y-3">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-500">NAMA DOKUMEN</h4>
+                                            <p id="documentName" class="text-base font-medium"></p>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-500">PATH FILE</h4>
+                                            <p id="documentPath" class="text-base"></p>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-500">AUTHOR</h4>
+                                            <p id="documentAuthor" class="text-base"></p>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-500">CREATED AT</h4>
+                                            <p id="documentCreated" class="text-base"></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-2">
+                        <button id="previewButton" style="display: none"
+                            class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                            <i class="fas fa-eye mr-2"></i> 
+                            Preview
+                        </button>
+                        <button id="downloadButton" style="display: none"
+                            class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
+                            <i class="fas fa-download mr-2"></i> 
+                            Download
+                        </button>
+                        <button data-modal-close
+                            class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+                            <i class="fas fa-times mr-2"></i>
+                            Close
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-200 flex justify-end">
-                <button onclick="closeDocumentModal()"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors">
-                    Close
-                </button>
             </div>
         </div>
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-800">Confirm Delete</h3>
-            </div>
-            <div class="p-6">
-                <p class="text-gray-700">Are you sure you want to delete document: <span id="deleteDocumentName"
-                        class="font-semibold"></span>?</p>
-                <p class="text-gray-500 text-sm mt-2">This action cannot be undone.</p>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                <button onclick="closeDeleteModal()"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                    Cancel
-                </button>
-                <button id="confirmDeleteButton"
-                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
-                    Delete
-                </button>
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+        <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+        <div class="fixed inset-0 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800">Confirm Delete</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700">Are you sure you want to delete document: <span id="deleteDocumentName"
+                                class="font-semibold"></span>?</p>
+                        <p class="text-gray-500 text-sm mt-2">This action cannot be undone.</p>
+                    </div>
+                    <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                        <button onclick="closeModal('deleteModal')"
+                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Cancel
+                        </button>
+                        <button id="confirmDeleteButton"
+                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -181,69 +186,108 @@
 
 @push('scripts')
     <script>
+        // Add modal management functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Add click handlers for modal close buttons
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize data table if needed
-            if (typeof DataTable !== 'undefined') {
-                new DataTable('#documents-table', {
+            // Handle data-modal-close buttons
+            document.querySelectorAll('[data-modal-close]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('[aria-modal]');
+                    if (modal) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+        });
+
+        function openDocumentModal(code) {
+            console.log('Opening modal for code:', code);
+
+            if (!code) {
+                console.error('No code provided');
+                return;
+            }
+
+            let docs = {!! json_encode($docs) !!};
+            console.log('Documents data:', docs);
+
+            // Find document with matching code
+            const document = docs.find(doc => String(doc.code) === String(code));
+            console.log('Found document:', document);
+
+            if (!document) {
+                console.error('Document not found for code:', code);
+                return;
+            }
+
+            try {
+                // Update modal content using jQuery
+                $('#modalTitle').text(document.name);
+                $('#documentName').text(document.name);
+                $('#documentPath').text(document.link || document.path);
+                $('#documentAuthor').text(document.author.name);
+                $('#documentCreated').text(document.created_at);
+                
+                const coverImg = $('#documentCover');
+                coverImg.attr('src', `/storage/${document.cover}`);
+                coverImg.attr('alt', document.name);
+
+                const downloadButton = $('#downloadButton');
+                const previewButton = $('#previewButton');
+                
+                // Reset buttons
+                downloadButton.hide();
+                previewButton.hide();
+
+                if (document.path) {
+                    downloadButton.show().off('click').on('click', function() {
+                        window.location.href = `{{ route($prefix . "document-download", "__CODE__") }}`.replace("__CODE__", document.code);
+                    });
+
+                    previewButton.show().off('click').on('click', function() {
+                        const extension = document.path.split('.').pop().toLowerCase();
+                        if (['pdf', 'jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+                            window.open(`/storage/${document.path}`, '_blank');
+                        } else {
+                            alert('Preview hanya tersedia untuk file PDF dan gambar.');
+                        }
+                    });
+                } else if (document.link) {
+                    previewButton.show().off('click').on('click', function() {
+                        window.open(document.link, '_blank');
+                    });
+                }
+
+                // Show modal
+                openModal('documentModal');
+            } catch (error) {
+                console.error('Error setting up modal:', error);
+            }
+        }
+
+        function confirmDelete(code, name) {
+            $('#deleteDocumentName').text(name);
+            $('#confirmDeleteButton').off('click').on('click', function() {
+                $(`#delete-form-${code}`).submit();
+            });
+            openModal('deleteModal');
+        }
+
+        // Initialize DataTable if available
+        $(document).ready(function() {
+            if (typeof $.fn.DataTable !== 'undefined') {
+                $('#documents-table').DataTable({
                     responsive: true
                 });
             }
         });
-
-        // Document Modal Functions
-        function openDocumentModal(code) {
-            // In a real implementation, you would fetch document details via AJAX
-            // This is a mock implementation for demonstration
-            const docs = @json($docs);
-            const document = docs.find(doc => doc.code === code);
-
-            if (document) {
-                document.getElementById('modalTitle').textContent = document.name;
-                document.getElementById('documentName').textContent = document.name;
-                document.getElementById('documentPath').textContent = document.link || document.path;
-                document.getElementById('documentAuthor').textContent = document.author.name;
-                document.getElementById('documentCreated').textContent = document.created_at;
-                document.getElementById('documentCover').src = `/storage/${document.cover}`;
-                document.getElementById('documentCover').alt = document.name;
-
-                document.getElementById('documentModal').classList.remove('hidden');
-            }
-        }
-
-        function closeDocumentModal() {
-            document.getElementById('documentModal').classList.add('hidden');
-        }
-
-        // Delete Modal Functions
-        function confirmDelete(code, name) {
-            document.getElementById('deleteDocumentName').textContent = name;
-            document.getElementById('confirmDeleteButton').onclick = function() {
-                document.getElementById(`delete-form-${code}`).submit();
-            };
-            document.getElementById('deleteModal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
-
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            const documentModal = document.getElementById('documentModal');
-            const deleteModal = document.getElementById('deleteModal');
-
-            if (event.target === documentModal) {
-                closeDocumentModal();
-            }
-
-            if (event.target === deleteModal) {
-                closeDeleteModal();
-            }
-        });
-
-        // Original delete function for compatibility
-        function deleteData(code) {
-            confirmDelete(code, document.querySelector(`#delete-form-${code}`).getAttribute('data-name'));
-        }
     </script>
 @endpush

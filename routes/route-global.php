@@ -79,6 +79,9 @@ Route::get('/document/create', [DocumentController::class, 'create'])
 Route::post('/document/create', [DocumentController::class, 'store'])
     ->name('document-store');
 
+Route::get('/document/{code}/download', [DocumentController::class, 'download'])
+    ->name('document-download');
+
 Route::delete('/document/{code}/destroy', [DocumentController::class, 'destroy'])
     ->name('document-destroy');
 

@@ -1,6 +1,19 @@
 @extends('base.base-dash-index')
-
-@section('title', 'Edit Data Kesehatan Mahasiswa')
+@section('title')
+    Edit Admin - {{ $student->mhs_name }}
+@endsection
+@section('menu')
+    Data Pengguna Student
+@endsection
+@section('submenu')
+    Edit {{ $student->mhs_name }}
+@endsection
+@section('urlmenu')
+    {{ route('web-admin.mahasiswa-health.index') }}
+@endsection
+@section('subdesc')
+    Halaman untuk mengedit data pengguna {{ $student->mhs_name }}
+@endsection
 
 @section('content')
     <div class="container mx-auto px-4 py-6">
@@ -13,11 +26,11 @@
                                     class="text-blue-600 hover:text-blue-800">Dashboard</a></li>
                             <li class="text-gray-500">/</li>
                             <li><a href="{{ route($prefix . 'mahasiswa-health.index') }}"
-                                    class="text-blue-600 hover:text-blue-800">Data Kesehatan Mahasiswa</a></li>
+                                    class="text-blue-600 hover:text-blue-800">Data Detail Mahasiswa</a></li>
                             <li class="text-gray-500">/</li>
                             <li class="text-gray-700">Edit Data</li>
                         </ol>
-                        <h4 class="text-2xl font-semibold text-gray-900 mt-1">Edit Data Kesehatan Mahasiswa</h4>
+                        <h4 class="text-2xl font-semibold text-gray-900 mt-1">Edit Data Detail Mahasiswa</h4>
                     </div>
                 </div>
             </div>
