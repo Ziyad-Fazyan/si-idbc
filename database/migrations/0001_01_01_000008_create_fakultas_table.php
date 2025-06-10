@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');     // Nama Fakultas
             $table->string('code')->unique();     // Kode Fakultas
-            $table->string('head_id');  // Kepala Fakultas
+            $table->foreignId('head_id')->constrained('dosens');
             $table->timestamps();
         });
     }

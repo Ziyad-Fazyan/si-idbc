@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('student_scores', function (Blueprint $table) {
             $table->id();
-            $table->integer('stask_id');
-            $table->integer('student_id');
-            $table->foreignId('dosen_id')->nullable();
+            $table->foreignId('stask_id')->constrained('student_tasks');
+            $table->foreignId('student_id')->constrained('mahasiswas');
+            $table->foreignId('dosen_id')->constrained('dosens')->nullable();
             $table->integer('score',)->nullable();
             $table->longText('desc');
             $table->string('file_1')->nullable();

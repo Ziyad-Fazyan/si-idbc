@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('jadwal_kuliahs', function (Blueprint $table) {
             $table->id();
-            $table->integer('makul_id');            // ID MATA KULIAH
-            $table->integer('kelas_id');            // ID KELAS
-            $table->integer('dosen_id');            // ID DOSEN
-            $table->integer('ruang_id');            // ID RUANGAN
+            $table->foreignId('makul_id')->constrained('mata_kuliahs');            // ID MATA KULIAH
+            $table->foreignId('kelas_id')->constrained('kelas');            // ID KELAS
+            $table->foreignId('dosen_id')->constrained('dosens');            // ID DOSEN
+            $table->foreignId('ruang_id')->constrained('ruangs');            // ID RUANGAN
             $table->integer('days_id');             // ID HARI
             $table->time('start');                  // WAKTU MULAI PERKULIAHAN
             $table->time('ended');                  // WAKTU SELESAI PERKULIAHAN

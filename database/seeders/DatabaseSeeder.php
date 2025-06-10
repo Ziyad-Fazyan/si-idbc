@@ -10,6 +10,7 @@ use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Database\Seeders\MahasiswaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $this->call([
+            UserSeeder::class,
+            DosenSeeder::class,
+            GalleryAlbumSeeder::class,
+            CommodityAcquisitionSeeder::class,
+        ]);
 
         // SEEDER KHUSUS DATA MASTER AKADEMIK
         \App\Models\Fakultas::create([
@@ -72,6 +80,11 @@ class DatabaseSeeder extends Seeder
             'semester'   => '2',
             'year_start' => '2025',
         ]);
+
+        $this->call([
+            MahasiswaSeeder::class,
+        ]);
+
         \App\Models\ProgramKuliah::create([
             'name'       => 'Gelombang 1',
             'code'       => 'G1RP-2025',
@@ -142,49 +155,6 @@ class DatabaseSeeder extends Seeder
             'taka_id'    => '1',
             'pstudi_id'  => '1',
         ]);
-        \App\Models\JadwalKuliah::create([
-            'makul_id'  => '1',
-            'kelas_id'  => '1',
-            'dosen_id'  => '1',
-            'ruang_id'  => '1',
-            'days_id'  => '1',
-            'code'  => Str::random(8),
-            'start'  => '01:00:00',
-            'ended'  => '23:00:00',
-
-        ]);
-        \App\Models\JadwalKuliah::create([
-            'makul_id'  => '1',
-            'kelas_id'  => '2',
-            'dosen_id'  => '1',
-            'ruang_id'  => '1',
-            'days_id'  => '1',
-            'code'  => Str::random(8),
-            'start'  => '01:00:00',
-            'ended'  => '23:00:00',
-
-        ]);
-        \App\Models\JadwalKuliah::create([
-            'makul_id'  => '1',
-            'kelas_id'  => '2',
-            'dosen_id'  => '1',
-            'ruang_id'  => '1',
-            'days_id'  => '1',
-            'code'  => Str::random(8),
-            'start'  => '01:00:00',
-            'ended'  => '23:00:00',
-
-        ]);
-        \App\Models\JadwalKuliah::create([
-            'makul_id'  => '1',
-            'kelas_id'  => '1',
-            'dosen_id'  => '1',
-            'ruang_id'  => '1',
-            'days_id'  => '1',
-            'code'  => Str::random(8),
-            'start'  => '01:00:00',
-            'ended'  => '23:00:00',
-        ]);
 
         \App\Models\Gedung::create([
             'name'       => 'Palestina Land',
@@ -230,20 +200,74 @@ class DatabaseSeeder extends Seeder
             'name'       => 'Kelas',
             'code'       => 'C-104',
         ]);
+
+        \App\Models\JadwalKuliah::create([
+            'makul_id'  => '1',
+            'kelas_id'  => '1',
+            'dosen_id'  => '1',
+            'ruang_id'  => '1',
+            'days_id'  => '1',
+            'code'  => Str::random(8),
+            'start'  => '01:00:00',
+            'ended'  => '23:00:00',
+
+        ]);
+        \App\Models\JadwalKuliah::create([
+            'makul_id'  => '1',
+            'kelas_id'  => '2',
+            'dosen_id'  => '1',
+            'ruang_id'  => '1',
+            'days_id'  => '1',
+            'code'  => Str::random(8),
+            'start'  => '01:00:00',
+            'ended'  => '23:00:00',
+
+        ]);
+        \App\Models\JadwalKuliah::create([
+            'makul_id'  => '1',
+            'kelas_id'  => '2',
+            'dosen_id'  => '1',
+            'ruang_id'  => '1',
+            'days_id'  => '1',
+            'code'  => Str::random(8),
+            'start'  => '01:00:00',
+            'ended'  => '23:00:00',
+
+        ]);
+        \App\Models\JadwalKuliah::create([
+            'makul_id'  => '1',
+            'kelas_id'  => '1',
+            'dosen_id'  => '1',
+            'ruang_id'  => '1',
+            'days_id'  => '1',
+            'code'  => Str::random(8),
+            'start'  => '01:00:00',
+            'ended'  => '23:00:00',
+        ]);
+
+        $this->call([
+            CommoditySeeder::class,
+        ]);
+
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
             'users_id'    => '1',
+            'proku_id'    => '1',
+            'prodi_id'    => '1',
             'name'    => 'Syahriah Bulan 1',
             'code'    => 'SPP-' . Str::random(8),
             'price'    => '1700000',
         ]);
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
+            'users_id'    => '1',
             'proku_id'    => '1',
+            'prodi_id'    => '1',
             'name'    => 'Syahriah Bulan 1',
             'code'    => 'SPP-' . Str::random(8),
             'price'    => '1700000',
         ]);
+
         // DEFAULT TUGAS SEEDER
         \App\Models\studentTask::create([
             'dosen_id'    => '1',
@@ -351,13 +375,6 @@ class DatabaseSeeder extends Seeder
             'social_fb' => 'https://facebook.com/ziyad-fazyan',
             'social_in' => 'https://id.linkedin.com/in/ziyad-fazyan-292a07303',
             'social_tw' => 'https://x.com/ziyad_fazyan',
-        ]);
-
-        $this->call([
-            GalleryAlbumSeeder::class,
-            UserSeeder::class,
-            CommodityAcquisitionSeeder::class,
-            CommoditySeeder::class,
         ]);
     }
 }

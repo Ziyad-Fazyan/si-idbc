@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('absensi_mahasiswas', function (Blueprint $table) {
             $table->id();
-            $table->string('jadkul_code');                 // KODE JADWAL KULIAH
-            $table->integer('author_id');                   // ID MAHASISWA
+            $table->foreignId('jadkul_code')->constrained('jadwal_kuliahs');                 // KODE JADWAL KULIAH
+            $table->foreignId('author_id')->constrained('mahasiswas');                   // ID MAHASISWA
             $table->string('image')->nullable();
             $table->string('absen_type')->default('A');      // TYPE ABSEN MAHASISWA => 1 = Hadir ; 2 = Izin ; 3 = Sakit ; 0 = Tidak Hadir
             $table->string('code')->unique();               // KODE ABSENSI

@@ -2,8 +2,9 @@
 
 namespace App\Models\FeedBack;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\JadwalKuliah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FBPerkuliahan extends Model
 {
@@ -13,6 +14,6 @@ class FBPerkuliahan extends Model
 
     public function jadkul()
     {
-        return $this->belongsTo(\App\Models\JadwalKuliah::class, 'fb_jakul_code', 'code');
+        return $this->belongsTo(JadwalKuliah::class, 'fb_jakul_code', 'code');
     }
 }

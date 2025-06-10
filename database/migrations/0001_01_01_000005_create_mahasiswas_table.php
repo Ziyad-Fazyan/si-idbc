@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
             // KONEK MODEL
-            $table->integer('taka_id')->default(0);
-            $table->integer('years_id')->default(0);
+            $table->foreignId('taka_id')->constrained('tahun_akademiks')->default(0);
+            $table->foreignId('years_id')->constrained('tahun_akademiks')->default(0);
             // DATA PRIBADI
             $table->integer('mhs_stat')->default(0);
             $table->string('mhs_nim')->unique()->nullable();
@@ -34,7 +34,8 @@ return new class extends Migration
             $table->string('verify_token')->nullable();
             $table->string('face_token')->nullable();
             $table->json('face_embedding')->nullable();
-            $table->timestamp('token_created_at')->nullable(); // new column
+            $table->timestamp('token_created_at')->nullable();
+
             $table->timestamps();
         });
     }

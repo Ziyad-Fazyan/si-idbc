@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('hasil_studis', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');                          // ID MAHASISWA
+            $table->foreignId('student_id')->constrained('mahasiswas');                          // ID MAHASISWA
             $table->integer('taka_id');                             // ID TAHUN AKADEMIK
             $table->integer('score_absen')->default(0);             // SCORE ABSEN
             $table->integer('score_tugas')->default(0);             // SCORE TUGAS
