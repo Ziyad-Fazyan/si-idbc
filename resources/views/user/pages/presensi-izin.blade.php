@@ -35,90 +35,8 @@
     <section class="py-4">
         <div class="w-full">
             <div class="w-full">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Card Hadir -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                        class="group transform transition-all duration-300 hover:-translate-y-1">
-                        <div class="bg-gradient-to-br from-[#0C6E71] to-[#0a5c5f] rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6 flex items-center space-x-4">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                    <i class="fa-solid fa-user-check text-2xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white text-opacity-80 text-sm">Hadir</p>
-                                    <p class="text-white text-2xl font-bold">{{ $hadir->count() }}</p>
-                                </div>
-                            </div>
-                            <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i
-                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                                Lihat detail
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Card Izin & Cuti -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                        class="group transform transition-all duration-300 hover:-translate-y-1">
-                        <div class="bg-gradient-to-br from-[#FF6B35] to-[#e05a2b] rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6 flex items-center space-x-4">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                    <i class="fa-solid fa-file-signature text-2xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white text-opacity-80 text-sm">Izin & Cuti</p>
-                                    <p class="text-white text-2xl font-bold">{{ $izin->count() }}</p>
-                                </div>
-                            </div>
-                            <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i
-                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                                Lihat detail
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Card Terlambat -->
-                    <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                        class="group transform transition-all duration-300 hover:-translate-y-1">
-                        <div class="bg-gradient-to-br from-[#FFC107] to-[#e0a800] rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6 flex items-center space-x-4">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                    <i class="fa-solid fa-clock text-2xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white text-opacity-80 text-sm">Terlambat</p>
-                                    <p class="text-white text-2xl font-bold">{{ $terlambat->count() }}</p>
-                                </div>
-                            </div>
-                            <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i
-                                    class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                                Lihat detail
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Card Total Absensi -->
-                    <div class="group transform transition-all duration-300 hover:-translate-y-1">
-                        <div class="bg-gradient-to-br from-[#6c757d] to-[#5a6268] rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6 flex items-center space-x-4">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                    <i class="fa-solid fa-chart-pie text-2xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white text-opacity-80 text-sm">Total Absensi</p>
-                                    <p class="text-white text-2xl font-bold">
-                                        {{ $hadir->count() + $izin->count() + $terlambat->count() }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                                <i class="fas fa-chart-line mr-1"></i> Statistik lengkap
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Statistics Cards -->
+                @include('user.pages.partials.statisticscard')
             </div>
 
             <div class="w-full mt-6">
@@ -214,8 +132,8 @@
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label for="absen_desc"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Keterangan Absen</label>
+                                    <label for="absen_desc" class="block text-sm font-medium text-gray-700 mb-1">Keterangan
+                                        Absen</label>
                                     <textarea name="absen_desc" id="dark"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71]"
                                         cols="10" rows="5" placeholder="Keterangan tambahan"></textarea>
@@ -317,92 +235,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="w-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card Hadir -->
-                <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                    class="group transform transition-all duration-300 hover:-translate-y-1">
-                    <div class="bg-gradient-to-br from-[#0C6E71] to-[#0a5c5f] rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 flex items-center space-x-4">
-                            <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                <i class="fa-solid fa-user-check text-2xl text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white text-opacity-80 text-sm">Hadir</p>
-                                <p class="text-white text-2xl font-bold">{{ $hadir->count() }}</p>
-                            </div>
-                        </div>
-                        <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                            <i
-                                class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                            Lihat detail
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Card Izin & Cuti -->
-                <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                    class="group transform transition-all duration-300 hover:-translate-y-1">
-                    <div class="bg-gradient-to-br from-[#FF6B35] to-[#e05a2b] rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 flex items-center space-x-4">
-                            <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                <i class="fa-solid fa-file-signature text-2xl text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white text-opacity-80 text-sm">Izin & Cuti</p>
-                                <p class="text-white text-2xl font-bold">{{ $izin->count() }}</p>
-                            </div>
-                        </div>
-                        <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                            <i
-                                class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                            Lihat detail
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Card Terlambat -->
-                <a href="{{ route($prefix . 'presensi.absen-harian') }}"
-                    class="group transform transition-all duration-300 hover:-translate-y-1">
-                    <div class="bg-gradient-to-br from-[#FFC107] to-[#e0a800] rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 flex items-center space-x-4">
-                            <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                <i class="fa-solid fa-clock text-2xl text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white text-opacity-80 text-sm">Terlambat</p>
-                                <p class="text-white text-2xl font-bold">{{ $terlambat->count() }}</p>
-                            </div>
-                        </div>
-                        <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                            <i
-                                class="fas fa-arrow-right mr-1 transform group-hover:translate-x-1 transition-transform"></i>
-                            Lihat detail
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Card Total Absensi -->
-                <div class="group transform transition-all duration-300 hover:-translate-y-1">
-                    <div class="bg-gradient-to-br from-[#6c757d] to-[#5a6268] rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 flex items-center space-x-4">
-                            <div class="p-3 bg-white bg-opacity-20 rounded-full">
-                                <i class="fa-solid fa-chart-pie text-2xl text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-white text-opacity-80 text-sm">Total Absensi</p>
-                                <p class="text-white text-2xl font-bold">
-                                    {{ $hadir->count() + $izin->count() + $terlambat->count() }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="px-6 py-2 bg-black bg-opacity-10 text-white text-xs">
-                            <i class="fas fa-chart-line mr-1"></i> Statistik lengkap
-                        </div>
                     </div>
                 </div>
             </div>
