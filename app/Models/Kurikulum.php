@@ -10,4 +10,9 @@ class Kurikulum extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function mataKuliahs()
+    {
+        return $this->hasMany(MataKuliah::class, 'kuri_id');
+    }
 }

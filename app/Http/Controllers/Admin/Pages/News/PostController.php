@@ -10,6 +10,7 @@ use App\Models\newsCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Settings\webSettings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -93,6 +94,7 @@ class PostController extends Controller
             // Menyimpan nama file gambar ke database
             $post->image = "news/" . $name;
         }
+        $post->author_id = Auth::user()->id;
         $post->name = $request->name;
         $post->slug = SlugHelper::generate($request->name);
         $post->code = Str::random(6);
@@ -154,6 +156,7 @@ class PostController extends Controller
             // Menyimpan nama file gambar ke database
             $post->image = "news/" . $name;
         }
+        $post->author_id = Auth::user()->id;
         $post->name = $request->name;
         $post->slug = SlugHelper::generate($request->name);
         $post->content = $request->content;
@@ -172,12 +175,17 @@ class PostController extends Controller
         $destinationPaths = storage_path('app/public/images/');
 
         $post = newsPost::where('slug', $slug)->first();
-        if ($post->image != 'default/default-profile.jpg') {
-            File::delete($destinationPaths . $post->image); // hapus gambar lama
-        }
+        if ($post) {
+            if ($post->image != 'default/default-profile.jpg') {
+                File::delete($destinationPaths . $post->image); // hapus gambar lama
+            }
 
-        $post->delete();
-        Alert::success('Success', 'Post berhasil dihapus.');
-        return back();
+            $post->delete();
+            Alert::success('Success', 'Post berhasil dihapus.');
+            return back();
+        } else {
+            Alert::error('Error', 'Post not found.');
+            return back();
+        }
     }
 }

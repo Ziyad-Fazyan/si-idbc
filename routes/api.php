@@ -28,6 +28,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 });
 
+use App\Http\Controllers\Admin\Pages\Finance\BalanceController;
+
 // Rute untuk mahasiswa
 Route::prefix('mahasiswa')->group(function () {
     // Rute yang memerlukan autentikasi
@@ -39,3 +41,6 @@ Route::prefix('mahasiswa')->group(function () {
         Route::post('/jadkul-absen', [AbsensiController::class, 'jadkulAbsenStore']);
     });
 });
+
+// API route for fetching Balance data by code for edit modal
+Route::get('/finance/keuangan/{code}', [BalanceController::class, 'show']);

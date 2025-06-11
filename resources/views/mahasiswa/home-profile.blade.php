@@ -133,14 +133,14 @@
                                             </div>
 
                                             <div>
-                                                <label for="years_id"
+                                                <label for="year_id"
                                                     class="block text-sm font-medium text-[#2E2E2E] mb-1">Tahun
                                                     Masuk</label>
-                                                <input type="text" name="years_id" id="years_id"
+                                                <input type="text" name="year_id" id="year_id"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
                                                     readonly
                                                     value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas()->first()->taka->year_start }}">
-                                                @error('years_id')
+                                                @error('year_id')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
                                             </div>

@@ -38,4 +38,8 @@ class Ruang extends Model
     {
         return $this->hasMany(Commodity::class);
     }
+    public function jadwalKuliahs()
+    {
+        return $this->hasMany(JadwalKuliah::class, 'ruang_id');
+    }
 }

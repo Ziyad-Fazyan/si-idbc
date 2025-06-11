@@ -19,4 +19,14 @@ class ProgramKuliah extends Model
     {
         return $this->belongsTo(ProgramStudi::class, 'pstudi_id');
     }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'proku_id');
+    }
+
+    public function tagihanKuliahs()
+    {
+        return $this->hasMany(TagihanKuliah::class, 'proku_id');
+    }
 }

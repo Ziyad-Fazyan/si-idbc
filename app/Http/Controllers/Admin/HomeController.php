@@ -122,7 +122,7 @@ class HomeController extends Controller
         $user->gend = $request->gend; // New field
 
 
-        $user->update($request);
+        $user->save();
 
         // dd($user);
 

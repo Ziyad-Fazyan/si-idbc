@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('absensi_dosens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadkul_code')->constrained('jadwal_kuliahs');                 // KODE JADWAL KULIAH
+            $table->foreignId('jadkul_id')->constrained('jadwal_kuliahs');                   // ID DOSEN
             $table->foreignId('dosen_id')->constrained('dosens');                   // ID DOSEN
             $table->string('image')->nullable();           // BUKTI KEHADIRAN
             $table->string('absen_type')->default('H');    // TYPE ABSEN DOSEN => H = Hadir ; I = Izin ; S = Sakit

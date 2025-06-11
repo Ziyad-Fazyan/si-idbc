@@ -31,6 +31,6 @@ class AbsensiDosen extends Model
 
     public function jadkul() 
     {
-        return $this->belongsTo(JadwalKuliah::class, 'jadkul_code', 'code');
+        return $this->belongsTo(JadwalKuliah::class, 'jadkul_id');
     }
 }

@@ -15,4 +15,9 @@ class Fakultas extends Model
     {
         return $this->belongsTo(Dosen::class, 'head_id');
     }
+
+    public function programStudis()
+    {
+        return $this->hasMany(ProgramStudi::class, 'faku_id');
+    }
 }

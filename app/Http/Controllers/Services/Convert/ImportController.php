@@ -74,7 +74,7 @@ class ImportController extends Controller
                 'mhs_birthplace' => $line['BirthPlace'] == null ? null : $line['BirthPlace'],
                 'mhs_birthdate' => $line['BirthDate'] == null ? null : $line['BirthDate'],
                 'mhs_stat' => $line['TypeUser'],
-                'years_id' => $line['YearsID'],
+                'year_id' => $line['YearID'],
                 'mhs_code' => Str::random(6),
                 'mhs_user' => Str::random(6),
                 'password' => Hash::make($line['Phone']),

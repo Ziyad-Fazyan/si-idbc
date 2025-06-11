@@ -23,4 +23,8 @@ class TagihanKuliah extends Model
     {
         return $this->belongsTo(Mahasiswa::class, 'users_id');
     }
+    public function historyTagihans()
+    {
+        return $this->hasMany(HistoryTagihan::class, 'tagihan_code');
+    }
 }

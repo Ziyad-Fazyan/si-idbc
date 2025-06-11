@@ -3,10 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -91,5 +91,40 @@ class User extends Authenticatable
 
         // Jika tidak dimulai dengan "0", biarkan seperti itu
         return $value;
+    }
+
+    public function uAttendance()
+    {
+        return $this->hasMany(UAttendance::class, 'absen_user_id');
+    }
+
+    public function balances()
+    {
+        return $this->hasOne(Balance::class, 'author_id');
+    }
+
+    public function ticketSupports()
+    {
+        return $this->hasMany(TicketSupport::class, 'admin_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'auth_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(NewsPost::class, 'author_id');
+    }
+
+    public function albums()
+    {
+        return $this->hasMany(GalleryAlbum::class, 'author_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(DocsResource::class, 'author_id');
     }
 }
