@@ -44,66 +44,82 @@ class MataKuliahController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'pstudi_id' => 'required',
-            'kuri_id' => 'required',
-            'taka_id' => 'required',
-            'dosen_1' => 'required',
-            'dosen_2' => 'nullable',
-            'dosen_3' => 'nullable',
-            'requ_id' => 'nullable',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'code' => 'required|string|max:255',
+                'desc' => 'required|string',
+                'pstudi_id' => 'required',
+                'kuri_id' => 'required',
+                'taka_id' => 'required',
+                'dosen_1' => 'required',
+                'dosen_2' => 'nullable',
+                'dosen_3' => 'nullable',
+                'requ_id' => 'nullable',
+            ]);
 
-        $matkul = new MataKuliah;
-        $matkul->name = $request->name;
-        $matkul->code = $request->code;
-        $matkul->desc = $request->desc;
-        $matkul->pstudi_id = $request->pstudi_id;
-        $matkul->kuri_id = $request->kuri_id;
-        $matkul->taka_id = $request->taka_id;
-        $matkul->requ_id = $request->requ_id;
-        $matkul->dosen_1 = $request->dosen_1;
-        $matkul->dosen_2 = $request->dosen_2;
-        $matkul->dosen_3 = $request->dosen_3;
-        $matkul->save();
+            $matkul = new MataKuliah;
+            $matkul->name = $request->name;
+            $matkul->code = $request->code;
+            $matkul->desc = $request->desc;
+            $matkul->pstudi_id = $request->pstudi_id;
+            $matkul->kuri_id = $request->kuri_id;
+            $matkul->taka_id = $request->taka_id;
+            $matkul->requ_id = $request->requ_id;
+            $matkul->dosen_1 = $request->dosen_1;
+            $matkul->dosen_2 = $request->dosen_2;
+            $matkul->dosen_3 = $request->dosen_3;
+            $matkul->save();
 
-        Alert::success('success', 'Data telah berhasil disimpan');
-        return back();
+            Alert::success('success', 'Data telah berhasil disimpan');
+            return back();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Alert::error('Error', 'Data gagal disimpan. Silakan periksa kembali form isian Anda.');
+            return back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan saat menyimpan data');
+            return back()->withInput();
+        }
     }
 
     public function update(Request $request, $code)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'pstudi_id' => 'required',
-            'kuri_id' => 'required',
-            'taka_id' => 'required',
-            'dosen_1' => 'required',
-            'dosen_2' => 'nullable',
-            'dosen_3' => 'nullable',
-            'requ_id' => 'nullable',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'code' => 'required|string|max:255',
+                'desc' => 'required|string',
+                'pstudi_id' => 'required',
+                'kuri_id' => 'required',
+                'taka_id' => 'required',
+                'dosen_1' => 'required',
+                'dosen_2' => 'nullable',
+                'dosen_3' => 'nullable',
+                'requ_id' => 'nullable',
+            ]);
 
-        $matkul = MataKuliah::where('code', $code)->first();
-        $matkul->name = $request->name;
-        $matkul->code = $request->code;
-        $matkul->desc = $request->desc;
-        $matkul->pstudi_id = $request->pstudi_id;
-        $matkul->kuri_id = $request->kuri_id;
-        $matkul->taka_id = $request->taka_id;
-        $matkul->requ_id = $request->requ_id;
-        $matkul->dosen_1 = $request->dosen_1;
-        $matkul->dosen_2 = $request->dosen_2;
-        $matkul->dosen_3 = $request->dosen_3;
-        $matkul->save();
+            $matkul = MataKuliah::where('code', $code)->first();
+            $matkul->name = $request->name;
+            $matkul->code = $request->code;
+            $matkul->desc = $request->desc;
+            $matkul->pstudi_id = $request->pstudi_id;
+            $matkul->kuri_id = $request->kuri_id;
+            $matkul->taka_id = $request->taka_id;
+            $matkul->requ_id = $request->requ_id;
+            $matkul->dosen_1 = $request->dosen_1;
+            $matkul->dosen_2 = $request->dosen_2;
+            $matkul->dosen_3 = $request->dosen_3;
+            $matkul->save();
 
-        Alert::success('success', 'Data telah berhasil diupdate');
-        return back();
+            Alert::success('success', 'Data telah berhasil diupdate');
+            return back();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Alert::error('Error', 'Data gagal diupdate. Silakan periksa kembali form isian Anda.');
+            return back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan saat mengupdate data');
+            return back()->withInput();
+        }
     }
 
     public function destroy(Request $request, $code)

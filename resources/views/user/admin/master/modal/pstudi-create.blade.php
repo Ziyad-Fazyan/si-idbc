@@ -1,4 +1,3 @@
-<x-modal name="createPstudi" :show="false" maxWidth="lg" persistent="false">
     <form action="{{ route($prefix . 'master.pstudi-store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="border-b border-gray-200 p-4 flex justify-between items-center">
@@ -10,7 +9,7 @@
                 </button>
                 <button type="button"
                     class="inline-flex items-center justify-center px-3 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300"
-                    x-on:click="$dispatch('close-modal', {name: 'createPstudi'})">
+                    x-data @click="$dispatch('close-modal', {name: 'create-pstudi'})">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -83,4 +82,3 @@
             </div>
         </div>
     </form>
-</x-modal>

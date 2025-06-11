@@ -132,7 +132,7 @@
                                     Kuliah</label>
                                 <input type="text" name="name" id="name"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    value="{{ $item->name }}">
+                                    value="{{ $item->name }}" required>
                                 @error('name')
                                     <small class="text-red-500">{{ $message }}</small>
                                 @enderror
@@ -142,8 +142,18 @@
                                     Kuliah</label>
                                 <input type="text" name="code" id="code"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
-                                    value="{{ $item->code }}">
+                                    value="{{ $item->code }}" required>
                                 @error('code')
+                                    <small class="text-red-500">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="space-y-2 col-span-2">
+                                <label for="desc" class="block text-sm font-medium text-gray-700">Deskripsi Mata Kuliah
+                                </label>
+                                <textarea name="desc" id="desc" rows="3"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C6E71] focus:border-[#0C6E71]"
+                                    required>{{ $item->desc }}</textarea>
+                                @error('desc')
                                     <small class="text-red-500">{{ $message }}</small>
                                 @enderror
                             </div>
