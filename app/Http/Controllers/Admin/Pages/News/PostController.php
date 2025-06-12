@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Pages\News;
 
-use App\Models\newsPost;
-use App\Helpers\roleTrait;
+use App\Models\NewsPost;
+use App\Helpers\RoleTrait;
 use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
-use App\Models\newsCategory;
+use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -18,13 +18,13 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class PostController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
-        $data['posts'] = newsPost::latest()->get();
+        $data['posts'] = NewsPost::latest()->get();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.pages.news-posts-index', $data);
@@ -32,9 +32,9 @@ class PostController extends Controller
 
     public function view($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
-        $data['post'] = newsPost::where('code', $code)->first();
-        $data['category'] = newsCategory::all();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['post'] = NewsPost::where('code', $code)->first();
+        $data['category'] = NewsCategory::all();
 
         $data['prefix'] = $this->setPrefix();
 
@@ -43,10 +43,10 @@ class PostController extends Controller
 
     public function create()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
-        $data['posts'] = newsPost::all();
-        $data['category'] = newsCategory::all();
+        $data['posts'] = NewsPost::all();
+        $data['category'] = NewsCategory::all();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.pages.news-posts-create', $data);
@@ -75,7 +75,7 @@ class PostController extends Controller
             ]
         );
 
-        $post = new newsPost;
+        $post = new NewsPost;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -131,7 +131,7 @@ class PostController extends Controller
             ]
         );
 
-        $post = newsPost::where('code', $code)->first();
+        $post = NewsPost::where('code', $code)->first();
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -174,7 +174,7 @@ class PostController extends Controller
     {
         $destinationPaths = storage_path('app/public/images/');
 
-        $post = newsPost::where('slug', $slug)->first();
+        $post = NewsPost::where('slug', $slug)->first();
         if ($post) {
             if ($post->image != 'default/default-profile.jpg') {
                 File::delete($destinationPaths . $post->image); // hapus gambar lama

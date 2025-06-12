@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -32,7 +32,7 @@ class ErrorController extends Controller
 
     public function ErrorVerify()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['title'] = "ESEC - ESchool Ecosystem";
         $data['menu'] = "Error Verify";
@@ -46,7 +46,7 @@ class ErrorController extends Controller
     {
 
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['title'] = "ESEC - ESchool Ecosystem";
         $data['menu'] = "Error Authorization";
         $data['submenu'] = "You are not authorized to access this page";

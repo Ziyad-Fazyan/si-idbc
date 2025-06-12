@@ -32,7 +32,7 @@
                                     <i class="fa-solid fa-person-circle-question text-4xl"></i>
                                 </span>
                                 <span class="text-gray-800 text-base">
-                                    {{ App\Models\uAttendance::where('absen_approve', 1)->count() }}<br>
+                                    {{ App\Models\UAttendance::where('absen_approve', 1)->count() }}<br>
                                     Approval Absen
                                 </span>
                             </div>
@@ -47,7 +47,7 @@
                                     <i class="fa-solid fa-person-circle-check text-4xl"></i>
                                 </span>
                                 <span class="text-gray-800 text-base">
-                                    {{ App\Models\uAttendance::where('absen_approve', 2)->count() }}<br>
+                                    {{ App\Models\UAttendance::where('absen_approve', 2)->count() }}<br>
                                     Approved Absen
                                 </span>
                             </div>
@@ -62,7 +62,7 @@
                                     <i class="fa-solid fa-person-circle-xmark text-4xl"></i>
                                 </span>
                                 <span class="text-gray-800 text-base">
-                                    {{ App\Models\uAttendance::where('absen_approve', 3)->count() }}<br>
+                                    {{ App\Models\UAttendance::where('absen_approve', 3)->count() }}<br>
                                     Rejected Absen
                                 </span>
                             </div>

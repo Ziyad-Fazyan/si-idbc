@@ -9,7 +9,7 @@ use App\Models\ProgramKuliah;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
@@ -46,7 +46,7 @@ class PpdbController extends Controller
     public function store(Request $request) 
     { 
         $user = new Mahasiswa; 
-        $school_name = webSettings::find(1)->school_name;
+        $school_name = WebSettings::find(1)->school_name;
 
         $request->validate([ 
             'mhs_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8196', 
@@ -120,7 +120,7 @@ class PpdbController extends Controller
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['title'] = " - Form Pendaftaran Lengkap";
         $data['menu'] = "Form Pendaftaran Lengkap";

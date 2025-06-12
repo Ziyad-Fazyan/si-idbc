@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Admin\Pages\Core;
 
 use App\Models\Dosen;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Kurikulum;
 use App\Models\MataKuliah;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MataKuliahController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kuri'] = Kurikulum::all();
         $data['taka'] = TahunAkademik::all();
@@ -31,7 +31,7 @@ class MataKuliahController extends Controller
     }
     public function create()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kuri'] = Kurikulum::all();
         $data['taka'] = TahunAkademik::all();

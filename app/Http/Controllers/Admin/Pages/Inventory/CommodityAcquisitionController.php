@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Admin\Pages\Inventory;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommodityAcquisitionRequest;
 use App\Http\Requests\UpdateCommodityAcquisitionRequest;
 use App\Models\CommodityAcquisition;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CommodityAcquisitionController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $web = webSettings::where('id', 1)->first();
+        $web = WebSettings::where('id', 1)->first();
         $prefix = $this->setPrefix();
         $commodityAcquisitions = CommodityAcquisition::orderBy('name', 'ASC')->get();
 

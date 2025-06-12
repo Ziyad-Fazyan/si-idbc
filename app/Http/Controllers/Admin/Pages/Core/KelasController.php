@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin\Pages\Core;
 
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Mahasiswa;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\ProgramKuliah;
 use App\Models\TahunAkademik;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class KelasController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kelas'] = Kelas::all();
         $data['taka'] = TahunAkademik::all();
@@ -32,7 +32,7 @@ class KelasController extends Controller
     }
     public function viewMahasiswa($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $class = Kelas::where('code', $code)->first();
         $data['kelas'] = Kelas::where('code', $code)->first();
@@ -48,7 +48,7 @@ class KelasController extends Controller
     }
     public function cetakMahasiswa($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $class = Kelas::where('code', $code)->first();
         $data['kelas'] = Kelas::where('code', $code)->first();

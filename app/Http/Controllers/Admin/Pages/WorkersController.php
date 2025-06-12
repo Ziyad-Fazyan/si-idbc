@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin\Pages;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManager;
@@ -19,13 +19,13 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class WorkersController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     // KHUSUS KELOLA DATA ROLE ADMIN
     public function indexAdmin()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['admin'] = User::where('type', 0)->get();
 
         return view('user.admin.pages.workers-admin-index', $data);
@@ -34,14 +34,14 @@ class WorkersController extends Controller
     {
         $data['admin'] = User::where('type', 0)->get();
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         return view('user.admin.pages.workers-admin-create', $data);
     }
     public function editAdmin(Request $request, $code)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['admin'] = User::where('type', 0)->where('code', $code)->first();
 
         return view('user.admin.pages.workers-admin-edit', $data);
@@ -229,7 +229,7 @@ class WorkersController extends Controller
     public function indexWorkers()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->get();
         // dd($data['admin']->count());
 
@@ -238,7 +238,7 @@ class WorkersController extends Controller
     public function createWorkers()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->get();
 
         return view('user.admin.pages.workers-staff-create', $data);
@@ -246,7 +246,7 @@ class WorkersController extends Controller
     public function editWorkers(Request $request, $code)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['admin'] = User::whereIn('type', [1, 2, 3, 4, 5, 6])->where('code', $code)->first();
 
         return view('user.admin.pages.workers-staff-edit', $data);
@@ -434,7 +434,7 @@ class WorkersController extends Controller
     public function indexLecture()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['dosen'] = Dosen::all();
 
         return view('user.admin.pages.workers-lecture-index', $data);
@@ -442,7 +442,7 @@ class WorkersController extends Controller
     public function createLecture()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['dosen'] = Dosen::all();
 
         return view('user.admin.pages.workers-lecture-create', $data);
@@ -450,7 +450,7 @@ class WorkersController extends Controller
     public function editLecture(Request $request, $code)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['dosen'] = Dosen::where('dsn_code', $code)->first();
 
         return view('user.admin.pages.workers-lecture-edit', $data);
@@ -633,7 +633,7 @@ class WorkersController extends Controller
     public function indexStudent()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['student'] = Mahasiswa::all();
 
         return view('user.admin.pages.workers-student-index', $data);
@@ -641,7 +641,7 @@ class WorkersController extends Controller
     public function createStudent()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['kelas'] = Kelas::all();
         $data['student'] = Mahasiswa::all();
 
@@ -650,7 +650,7 @@ class WorkersController extends Controller
     public function editStudent(Request $request, $code)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['kelas'] = Kelas::all();
         $data['student'] = Mahasiswa::where('mhs_code', $code)->first();
 

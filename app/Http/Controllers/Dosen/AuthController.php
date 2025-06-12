@@ -7,7 +7,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +27,7 @@ class AuthController extends Controller
             return redirect()->route('mahasiswa.home-index');
         }
         
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['title'] = "Login Dosen - " . $data['web']->school_name;
         $data['menu'] = "Halaman Login Dosen";
         $data['submenu'] = "SignIn to continue";
@@ -85,7 +85,7 @@ class AuthController extends Controller
 
     public function AuthForgotPage()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['title'] = "Reset Password Dosen - " . $data['web']->school_name;
         $data['menu'] = "Halaman Reset Password Dosen";
         $data['submenu'] = "SignIn to continue";
@@ -123,7 +123,7 @@ class AuthController extends Controller
 
     public function AuthResetPage($token)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['title'] = "Reset Password Dosen - " . $data['web']->school_name;
         $data['menu'] = 'Beranda';
         $data['submenu'] = 'Reset Password';

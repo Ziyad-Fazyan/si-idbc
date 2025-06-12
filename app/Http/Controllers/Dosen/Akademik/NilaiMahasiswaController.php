@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Dosen\Akademik;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use App\Models\HasilStudi;
-use App\Models\studentTask;
+use App\Models\StudentTask;
 use Illuminate\Support\Str;
 use App\Models\JadwalKuliah;
-use App\Models\studentScore;
+use App\Models\StudentScore;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -26,7 +26,7 @@ class NilaiMahasiswaController extends Controller
     public function index()
     {
         try {
-            $data['web'] = webSettings::where('id', 1)->first();
+            $data['web'] = WebSettings::where('id', 1)->first();
             $dosenId = Auth::guard('dosen')->user()->id;
             $currentTakaId = $this->getCurrentTahunAkademik();
 
@@ -126,7 +126,7 @@ class NilaiMahasiswaController extends Controller
             return 'Belum ada jadwal';
         }
 
-        $countTugas = studentTask::where('jadkul_id', $jadkulId->id)->count();
+        $countTugas = StudentTask::where('jadkul_id', $jadkulId->id)->count();
 
         if ($countTugas == 0) {
             return 'Belum ada tugas';
@@ -157,10 +157,10 @@ class NilaiMahasiswaController extends Controller
             return 'Sebagian dikunci';
         } else {
             // Cek apakah semua mahasiswa sudah dinilai
-            $tugasIds = studentTask::where('jadkul_id', $jadkulId->id)->pluck('id')->toArray();
+            $tugasIds = StudentTask::where('jadkul_id', $jadkulId->id)->pluck('id')->toArray();
             $totalNilaiSeharusnya = count($mahasiswaIds) * count($tugasIds);
 
-            $countNilai = studentScore::whereIn('student_id', $mahasiswaIds)
+            $countNilai = StudentScore::whereIn('student_id', $mahasiswaIds)
                 ->whereIn('stask_id', $tugasIds)
                 ->whereNotNull('score')
                 ->count();
@@ -203,7 +203,7 @@ class NilaiMahasiswaController extends Controller
     public function mataKuliahDetail($id)
     {
         try {
-            $data['web'] = webSettings::where('id', 1)->first();
+            $data['web'] = WebSettings::where('id', 1)->first();
             $dosenId = Auth::guard('dosen')->user()->id;
 
             // Ambil data mata kuliah
@@ -239,7 +239,7 @@ class NilaiMahasiswaController extends Controller
             })->orderBy('mhs_name', 'asc')->get();
 
             // Ambil daftar tugas untuk mata kuliah ini
-            $data['tugas'] = studentTask::where('jadkul_id', $jadkul->id)
+            $data['tugas'] = StudentTask::where('jadkul_id', $jadkul->id)
                 ->orderBy('exp_date', 'asc')
                 ->orderBy('exp_time', 'asc')
                 ->get();
@@ -255,7 +255,7 @@ class NilaiMahasiswaController extends Controller
                 $totalTugas = count($data['tugas']);
 
                 foreach ($data['tugas'] as $tugas) {
-                    $nilai = studentScore::where('student_id', $mahasiswa->id)
+                    $nilai = StudentScore::where('student_id', $mahasiswa->id)
                         ->where('stask_id', $tugas->id)
                         ->first();
 
@@ -381,13 +381,13 @@ class NilaiMahasiswaController extends Controller
                     $totalNilai++;
 
                     // Validasi tugas
-                    $tugas = studentTask::find($tugasId);
+                    $tugas = StudentTask::find($tugasId);
                     if (!$tugas || $tugas->jadkul_id != $jadkul->id) {
                         continue; // Lewati jika tugas tidak valid
                     }
 
                     // Cek apakah nilai sudah ada
-                    $score = studentScore::where('student_id', $mahasiswaId)
+                    $score = StudentScore::where('student_id', $mahasiswaId)
                         ->where('stask_id', $tugasId)
                         ->first();
 
@@ -402,7 +402,7 @@ class NilaiMahasiswaController extends Controller
                         $score->save();
                     } else {
                         // Buat nilai baru
-                        $score = new studentScore();
+                        $score = new StudentScore();
                         $score->student_id = $mahasiswaId;
                         $score->stask_id = $tugasId;
                         $score->dosen_id = $dosenId;
@@ -538,7 +538,7 @@ class NilaiMahasiswaController extends Controller
     public function rekapNilai($id)
     {
         try {
-            $data['web'] = webSettings::where('id', 1)->first();
+            $data['web'] = WebSettings::where('id', 1)->first();
             $dosenId = Auth::guard('dosen')->user()->id;
 
             // Ambil data mata kuliah
@@ -574,7 +574,7 @@ class NilaiMahasiswaController extends Controller
             })->orderBy('mhs_name', 'asc')->get();
 
             // Ambil daftar tugas untuk mata kuliah ini
-            $data['tugas'] = studentTask::where('jadkul_id', $jadkul->id)
+            $data['tugas'] = StudentTask::where('jadkul_id', $jadkul->id)
                 ->orderBy('exp_date', 'asc')
                 ->orderBy('exp_time', 'asc')
                 ->get();
@@ -597,7 +597,7 @@ class NilaiMahasiswaController extends Controller
                 $jumlahTugasDinilai = 0;
 
                 foreach ($data['tugas'] as $tugas) {
-                    $nilai = studentScore::where('student_id', $mahasiswa->id)
+                    $nilai = StudentScore::where('student_id', $mahasiswa->id)
                         ->where('stask_id', $tugas->id)
                         ->first();
 
@@ -687,7 +687,7 @@ class NilaiMahasiswaController extends Controller
         $takaId = $mahasiswa->taka_id;
 
         // Ambil semua nilai tugas mahasiswa
-        $nilaiTugas = studentScore::whereHas('studentTask', function ($query) {
+        $nilaiTugas = StudentScore::whereHas('studentTask', function ($query) {
             $query->whereNotNull('jadkul_id');
         })->where('student_id', $mahasiswaId)->get();
 
@@ -739,7 +739,7 @@ class NilaiMahasiswaController extends Controller
     private function cekSemuaNilaiTerisi($jadkulId)
     {
         // Ambil semua tugas untuk jadwal kuliah ini
-        $tasks = studentTask::where('jadkul_id', $jadkulId)->get();
+        $tasks = StudentTask::where('jadkul_id', $jadkulId)->get();
         if ($tasks->isEmpty()) {
             return [
                 'status' => false,
@@ -774,7 +774,7 @@ class NilaiMahasiswaController extends Controller
         $belumDinilai = [];
         foreach ($mahasiswas as $mahasiswa) {
             foreach ($tasks as $task) {
-                $score = studentScore::where('student_id', $mahasiswa->id)
+                $score = StudentScore::where('student_id', $mahasiswa->id)
                     ->where('stask_id', $task->id)
                     ->first();
 

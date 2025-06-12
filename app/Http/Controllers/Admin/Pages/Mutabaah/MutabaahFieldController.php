@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin\Pages\Mutabaah;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Models\MutabaahField;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 
 class MutabaahFieldController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['fields'] = MutabaahField::all();
         $data['prefix'] = $this->setPrefix();
         return view('user.musyrif.fields.index', $data);
@@ -22,7 +22,7 @@ class MutabaahFieldController extends Controller
 
     public function create()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.musyrif.fields.create', $data);

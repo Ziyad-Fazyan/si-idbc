@@ -6,8 +6,8 @@ use App\Exports\CommoditiesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Commodity;
 use App\Models\CommodityAcquisition;
-use App\Models\Settings\webSettings;
-use App\Helpers\roleTrait;
+use App\Models\Settings\WebSettings;
+use App\Helpers\RoleTrait;
 use App\Http\Requests\CommodityExportRequest;
 use App\Http\Requests\StoreCommodityRequest;
 use App\Http\Requests\UpdateCommodityRequest;
@@ -19,14 +19,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CommodityController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $web = webSettings::where('id', 1)->first();
+        $web = WebSettings::where('id', 1)->first();
         $prefix = $this->setPrefix();
 
         // Base query with relationships

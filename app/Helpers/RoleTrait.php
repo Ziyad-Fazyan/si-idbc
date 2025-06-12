@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-trait roleTrait
+trait RoleTrait
 {
     private function setPrefix()
     {

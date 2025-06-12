@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class SlugHelper
 {
-    public static function generate(string $name, string $modelClass = \App\Models\newsCategory::class, string $column = 'slug', ?int $id = null): string
+    public static function generate(string $name, string $modelClass = \App\Models\NewsCategory::class, string $column = 'slug', ?int $id = null): string
     {
         $slug = Str::slug($name);
         $original = $slug;

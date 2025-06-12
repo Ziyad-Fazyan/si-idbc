@@ -21,7 +21,7 @@ use App\Models\AbsensiMahasiswa;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +35,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('mahasiswa')->user();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         // Mengambil kelas pertama dari relasi many-to-many
         $kelas = $user->kelas()->first();
@@ -76,7 +76,7 @@ class HomeController extends Controller
     public function profile()
     {
 
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         return view('mahasiswa.home-profile', $data);
     }
@@ -93,7 +93,7 @@ class HomeController extends Controller
         $data['jadkul'] = JadwalKuliah::whereIn('kelas_id', $kelasIds)->get();
         $data['ruang'] = Ruang::all();
         $data['kelas'] = Kelas::all();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
 
         return view('mahasiswa.pages.mhs-jadkul-index', $data);
@@ -111,7 +111,7 @@ class HomeController extends Controller
         // dd($timeStart);
         if ($checkAbsen === 0) {
             if ($checkDate !== 0) {
-                $data['web'] = webSettings::where('id', 1)->first();
+                $data['web'] = WebSettings::where('id', 1)->first();
                 $data['kuri'] = Kurikulum::all();
                 $data['taka'] = TahunAkademik::all();
                 // $data['dosen'] = MataKuliah::where('dosen');
@@ -380,7 +380,7 @@ class HomeController extends Controller
     {
         $user = Auth::guard('mahasiswa')->user();
         // Mencari tagihan berdasarkan `users_id`
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)->orwhere(
             'proku_id',
             $user->kelas->first()?->proku?->id
@@ -397,7 +397,7 @@ class HomeController extends Controller
     {
         // Mencari tagihan berdasarkan `users_id`
         $user = Auth::guard('mahasiswa')->user();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $checkData = HistoryTagihan::where('tagihan_code', $code)->where('users_id', $user->id)->where('stat', 1)->first();
         if ($checkData !== null) {
 

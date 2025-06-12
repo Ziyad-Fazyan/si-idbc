@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin\Pages\Finance;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TicketSupport;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TicketSupportController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
@@ -28,7 +28,7 @@ class TicketSupportController extends Controller
             $data['ticket'] = TicketSupport::whereNotNull('code')->where('dept_id', $userId)->latest()->get();
         }
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         return view('user.finance.pages.support-ticket-index', $data);
     }
@@ -38,7 +38,7 @@ class TicketSupportController extends Controller
         $data['ticket'] = TicketSupport::where('code', $code)->first();
         $data['support'] = TicketSupport::where('codr', $code)->latest()->get();
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         // dd($checkStatus);
         $checkStatus = TicketSupport::where('code', $code)->first();

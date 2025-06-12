@@ -6,13 +6,13 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Balance;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Mahasiswa;
-use App\Models\uAttendance;
+use App\Models\UAttendance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -22,13 +22,13 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class HomeController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
 
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['balIncome'] = Balance::where('type', 1)->sum('value');
         $data['balExpense'] = Balance::where('type', 2)->sum('value');
         $data['balPending'] = Balance::where('type', 0)->sum('value');
@@ -42,7 +42,7 @@ class HomeController extends Controller
     {
 
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
 
         return view('user.home-profile', $data);
@@ -179,15 +179,15 @@ class HomeController extends Controller
         $user = Auth::user();
         $data['prefix'] = $this->setPrefix();
 
-        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $user->id)
+        $data['terlambat'] = UAttendance::where('absen_user_id', $user->id)
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         // dd($data['prefix']);
         return view('user.home-presensi', $data);
@@ -197,7 +197,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $selectedDate = $request->input('absen_date'); // Ambil tanggal yang dipilih dari permintaan
         // Gunakan tanggal yang dipilih untuk mengambil data presensi
-        $data = uAttendance::where('absen_user_id', $user->id)
+        $data = UAttendance::where('absen_user_id', $user->id)
             ->whereDate('absen_date', $selectedDate)
             ->first(); // Menggunakan first() karena Anda mengharapkan satu hasil
 
@@ -214,12 +214,12 @@ class HomeController extends Controller
         $user = Auth::user();
         $data['prefix'] = $this->setPrefix();
 
-        $data['absen'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['hadir'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
+        $data['absen'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $user->id)->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $user->id)
+        $data['terlambat'] = UAttendance::where('absen_user_id', $user->id)
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
@@ -243,7 +243,7 @@ class HomeController extends Controller
         $absenDate = Carbon::parse($request->absen_date)->toDateString();
 
         // Periksa apakah sudah ada presensi untuk tanggal yang sama
-        $existingAbsen = uAttendance::where('absen_user_id', $user->id)
+        $existingAbsen = UAttendance::where('absen_user_id', $user->id)
             ->whereDate('absen_date', $absenDate)
             ->where('absen_type', $request->absen_type)
             ->first();
@@ -253,7 +253,7 @@ class HomeController extends Controller
             return back();
         }
 
-        $absen = new uAttendance;
+        $absen = new UAttendance;
         $absen->absen_user_id = $user->id;
         $absen->absen_type = $request->absen_type;
         $absen->absen_date = $request->absen_date;
@@ -301,7 +301,7 @@ class HomeController extends Controller
         $absenDate = Carbon::parse($request->absen_date)->toDateString();
 
         // Periksa apakah sudah ada presensi untuk tanggal yang sama
-        $existingAbsen = uAttendance::where('absen_user_id', $user->id)
+        $existingAbsen = UAttendance::where('absen_user_id', $user->id)
             ->whereDate('absen_date', $absenDate)
             ->where('absen_type', $request->absen_type)
             ->first();
@@ -311,7 +311,7 @@ class HomeController extends Controller
             return back();
         }
 
-        $absen = new uAttendance;
+        $absen = new UAttendance;
         $absen->absen_user_id = $user->id;
         $absen->absen_type = $request->absen_type;
         $absen->absen_date = $request->absen_date;

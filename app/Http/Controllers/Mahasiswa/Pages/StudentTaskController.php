@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Mahasiswa\Pages;
 
-use App\Models\studentTask;
+use App\Models\StudentTask;
 use Illuminate\Support\Str;
-use App\Models\studentScore;
+use App\Models\StudentScore;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -16,7 +16,7 @@ class StudentTaskController extends Controller
     public function index()
     {
         $user = Auth::guard('mahasiswa')->user();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['stask'] = StudentTask::whereHas('jadkul', function ($query) use ($user) {
             $query->whereIn('kelas_id', $user->kelas()->pluck('kelas.id'));
         })->get();
@@ -28,8 +28,8 @@ class StudentTaskController extends Controller
     {
 
         $data['stask'] = StudentTask::where('code', $code)->first();
-        $data['web'] = webSettings::where('id', 1)->first();
-        $score = studentScore::where('stask_id', $data['stask']->id)->where('student_id', Auth::guard('mahasiswa')->user()->id)->get();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $score = StudentScore::where('stask_id', $data['stask']->id)->where('student_id', Auth::guard('mahasiswa')->user()->id)->get();
         if ($score->count() == 1) {
             Alert::error('Error', 'Kamu sudah mengumpulkan tugas ini.');
             return back();
@@ -59,9 +59,9 @@ class StudentTaskController extends Controller
         ]);
 
         try {
-            $stask = studentTask::where('code', $code)->first();
+            $stask = StudentTask::where('code', $code)->first();
             $user = Auth::guard('mahasiswa')->user();
-            $task = new studentScore;
+            $task = new StudentScore;
 
             for ($i = 1; $i <= 8; $i++) {
                 $fileKey = 'file_' . $i;

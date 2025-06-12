@@ -4,27 +4,27 @@ namespace App\Http\Controllers\Admin\Pages;
 
 use App\Models\Mahasiswa;
 use App\Models\MahasiswaDetails;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MahasiswaHealthController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['students'] = Mahasiswa::with('mahasiswaDetails')->get();
 
         return view('user.admin.pages.mahasiswa-health.index', $data);
     }    public function edit($code)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['student'] = Mahasiswa::with('mahasiswaDetails')->where('mhs_code', $code)->first();
 
         if (!$data['student']) {

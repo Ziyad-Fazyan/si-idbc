@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dosen;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +20,7 @@ class HomeController extends Controller
     {
 
         $dosenId = Auth::guard('dosen')->user()->id;
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['feedback'] = FBPerkuliahan::whereHas('jadkul', function ($query) use ($dosenId) {
             $query->where('dosen_id', $dosenId);
         })->get();
@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function profile()
     {
 
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         return view('dosen.home-profile', $data);
     }
 

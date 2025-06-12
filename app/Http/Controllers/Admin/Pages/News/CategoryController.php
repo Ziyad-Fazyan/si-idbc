@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Admin\Pages\News;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
-use App\Models\newsCategory;
+use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
-        $data['category'] = newsCategory::all();
+        $data['category'] = NewsCategory::all();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.pages.news-category-index', $data);
@@ -38,7 +38,7 @@ class CategoryController extends Controller
             ]
         );
 
-        $category = new newsCategory;
+        $category = new NewsCategory;
         $category->name = $request->name;
         $category->code = Str::random(6);
         $category->slug = SlugHelper::generate($request->name);
@@ -62,7 +62,7 @@ class CategoryController extends Controller
             ]
         );
 
-        $category = newsCategory::where('code', $code)->first();
+        $category = NewsCategory::where('code', $code)->first();
         $category->name = $request->name;
         // $category->code = Str::random(6);
         $category->slug = SlugHelper::generate($request->name);
@@ -75,7 +75,7 @@ class CategoryController extends Controller
 
     public function destroy(Request $request, $code)
     {
-        $category = newsCategory::where('code', $code)->first();
+        $category = NewsCategory::where('code', $code)->first();
         $category->delete();
 
         Alert::success('success', 'Data berhasil dihapus');

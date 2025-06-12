@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Pages\Publikasi;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\GalleryAlbum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -16,12 +16,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class GalleryController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['album'] = GalleryAlbum::latest()->paginate(24);
 
         return view('user.pages.publikasi.gallery-index', $data);
@@ -30,7 +30,7 @@ class GalleryController extends Controller
     public function search(Request $request)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $search = $request->input('search');
         $album = GalleryAlbum::where('name', 'like', "%$search%")->paginate(24);
 
@@ -40,14 +40,14 @@ class GalleryController extends Controller
     public function create()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         return view('user.pages.publikasi.gallery-create', $data);
     }
     public function show($slug)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['album'] = GalleryAlbum::where('slug', $slug)->first();
 
         return view('user.pages.publikasi.gallery-show', $data);
@@ -55,7 +55,7 @@ class GalleryController extends Controller
     public function edit($slug)
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['album'] = GalleryAlbum::where('slug', $slug)->first();
 
         return view('user.pages.publikasi.gallery-edit', $data);

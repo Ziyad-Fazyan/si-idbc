@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Core;
 
 use GuzzleHttp\Client;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Artisan;
@@ -15,12 +15,12 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class WebSettingController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         // Fetch branches from GitHub
         $client = new Client();
@@ -210,7 +210,7 @@ class WebSettingController extends Controller
             // 'social_tw' => 'required',
             // 'social_in' => 'required',
         ]);
-        $web = webSettings::where('id', 1)->first();
+        $web = WebSettings::where('id', 1)->first();
 
         if ($request->hasFile('school_logo')) {
             $image = $request->file('school_logo');

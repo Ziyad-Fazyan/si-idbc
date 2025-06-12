@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Admin\Pages\Mutabaah;
 
 use App\Models\Mutabaah;
 use App\Models\Mahasiswa;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Models\MutabaahField;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 
 class MutabaahController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['mutabaahs'] = Mutabaah::with('mahasiswa')->orderBy('tanggal', 'desc')->get();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['mahasiswa'] = Mahasiswa::orderBy('mhs_name')->get();
 
@@ -27,7 +27,7 @@ class MutabaahController extends Controller
     public function create()
     {
         $data['fields'] = MutabaahField::all();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['mahasiswas'] = Mahasiswa::where('mhs_stat', 1)->orderBy('mhs_name')->get();
         return view('user.musyrif.create', $data);

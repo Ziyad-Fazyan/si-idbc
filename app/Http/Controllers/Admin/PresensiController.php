@@ -2,51 +2,51 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\roleTrait;
-use App\Models\uAttendance;
+use App\Helpers\RoleTrait;
+use App\Models\UAttendance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PresensiController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function absenHarian()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         $data['userid'] = Auth::user()->id;
         $data['today'] = date('Y-m-d');
-        $data['hadir'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $data['userid'])
+        $data['terlambat'] = UAttendance::where('absen_user_id', $data['userid'])
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
-        $data['absen'] = uAttendance::where('absen_user_id', $data['userid'])->latest()->get();
+        $data['absen'] = UAttendance::where('absen_user_id', $data['userid'])->latest()->get();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.pages.presensi-index', $data);
     }
     public function absenIzinCuti()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['userid'] = Auth::user()->id;
         $data['today'] = date('Y-m-d');
-        $data['hadir'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $data['userid'])
+        $data['terlambat'] = UAttendance::where('absen_user_id', $data['userid'])
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
-        $data['absen'] = uAttendance::where('absen_user_id', $data['userid'])->latest()->get();
+        $data['absen'] = UAttendance::where('absen_user_id', $data['userid'])->latest()->get();
         $data['prefix'] = $this->setPrefix();
 
         return view('user.pages.presensi-izin', $data);
@@ -54,16 +54,16 @@ class PresensiController extends Controller
 
     public function absenView($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         $data['userid'] = Auth::user()->id;
         $data['today'] = date('Y-m-d');
         $data['prefix'] = $this->setPrefix();
-        $data['hadir'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $data['userid'])
+        $data['terlambat'] = UAttendance::where('absen_user_id', $data['userid'])
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
@@ -84,18 +84,18 @@ class PresensiController extends Controller
 
     public function presensiList()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         $data['userid'] = Auth::user()->id;
         $data['today'] = date('Y-m-d');
-        $data['absen'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['absen'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
         $data['prefix'] = $this->setPrefix();
 
-        $data['hadir'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $data['userid'])
+        $data['terlambat'] = UAttendance::where('absen_user_id', $data['userid'])
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
@@ -105,16 +105,16 @@ class PresensiController extends Controller
     }
     public function presensiView($date)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         $data['userid'] = Auth::user()->id;
         $data['today'] = date('Y-m-d');
         $data['prefix'] = $this->setPrefix();
-        $data['hadir'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
-        $data['izin'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
-        $data['sakit'] = uAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
+        $data['hadir'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [0, 1, 4, 5])->get();
+        $data['izin'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2, 3, 6, 7])->get();
+        $data['sakit'] = UAttendance::where('absen_user_id', $data['userid'])->whereIn('absen_type', [2])->get();
         // Filter data untuk terlambat (waktu masuk lebih dari jam 8 pagi)
-        $data['terlambat'] = uAttendance::where('absen_user_id', $data['userid'])
+        $data['terlambat'] = UAttendance::where('absen_user_id', $data['userid'])
             ->whereIn('absen_type', [0, 1, 5])
             ->whereTime('absen_time_in', '>', '08:00:00')
             ->get();
@@ -140,7 +140,7 @@ class PresensiController extends Controller
 
     public function absenPulang(Request $request)
     {
-        $absen = uAttendance::where('absen_user_id', $request->absen_user_id)->where('absen_date', $request->absen_date)->first();
+        $absen = UAttendance::where('absen_user_id', $request->absen_user_id)->where('absen_date', $request->absen_date)->first();
 
         $absen->absen_time_out = $request->absen_time_out;
         $absen->absen_desc = $request->absen_desc;

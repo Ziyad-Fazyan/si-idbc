@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Dosen\Akademik;
 
 use App\Models\Mahasiswa;
 use App\Models\HasilStudi;
-use App\Models\studentTask;
+use App\Models\StudentTask;
 use Illuminate\Support\Str;
 use App\Models\JadwalKuliah;
-use App\Models\studentScore;
+use App\Models\StudentScore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -19,28 +19,28 @@ class StudentTaskController extends Controller
 {
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::all();
-        $data['stask'] = studentTask::all();
+        $data['stask'] = StudentTask::all();
 
         return view('dosen.pages.student-task-index', $data);
     }
 
     public function create()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::all();
-        $data['stask'] = studentTask::latest()->paginate(5);
+        $data['stask'] = StudentTask::latest()->paginate(5);
 
         return view('dosen.pages.student-task-create', $data);
     }
     public function view($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::all();
-        $data['stask'] = studentTask::latest()->paginate(5);
-        $data['task'] = studentTask::where('code', $code)->first();
-        $data['score'] = studentScore::where('stask_id', $data['task']->id)
+        $data['stask'] = StudentTask::latest()->paginate(5);
+        $data['task'] = StudentTask::where('code', $code)->first();
+        $data['score'] = StudentScore::where('stask_id', $data['task']->id)
             ->with(['studentTask.jadkul.matkul', 'student'])
             ->get();
 
@@ -50,9 +50,9 @@ class StudentTaskController extends Controller
     }
     public function viewDetail($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
-        $data['stask'] = studentTask::latest()->paginate(5);
-        $data['score'] = studentScore::where('code', $code)
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['stask'] = StudentTask::latest()->paginate(5);
+        $data['score'] = StudentScore::where('code', $code)
             ->with(['studentTask.jadkul.matkul', 'student.kelas'])
             ->first();
 
@@ -62,10 +62,10 @@ class StudentTaskController extends Controller
     }
     public function edit($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::all();
-        $data['stask'] = studentTask::latest()->paginate(5);
-        $data['task'] = studentTask::where('code', $code)->first();
+        $data['stask'] = StudentTask::latest()->paginate(5);
+        $data['task'] = StudentTask::where('code', $code)->first();
 
         return view('dosen.pages.student-task-edit', $data);
     }
@@ -90,13 +90,13 @@ class StudentTaskController extends Controller
         );
         
         // Cek apakah sudah ada tugas dengan jadkul_id yang sama
-        $existingTask = studentTask::where('jadkul_id', $request->jadkul_id)->first();
+        $existingTask = StudentTask::where('jadkul_id', $request->jadkul_id)->first();
         if ($existingTask) {
             Alert::error('Error', 'Tugas untuk jadwal kuliah ini sudah ada. Silakan edit tugas yang sudah ada atau pilih jadwal kuliah lain.');
             return back()->withInput();
         }
         
-        $stask = new studentTask;
+        $stask = new StudentTask;
         $stask->dosen_id = Auth::guard('dosen')->user()->id;
         $stask->code = Str::random(6);
         $stask->jadkul_id = $request->jadkul_id;
@@ -128,7 +128,7 @@ class StudentTaskController extends Controller
                 'detail_task' => 'Detail tugas kuliah wajib diisi.',
             ]
         );
-        $stask = studentTask::where('code', $code)->first();
+        $stask = StudentTask::where('code', $code)->first();
         $stask->dosen_id = Auth::guard('dosen')->user()->id;
         $stask->jadkul_id = $request->jadkul_id;
         $stask->exp_date = $request->exp_date;
@@ -153,7 +153,7 @@ class StudentTaskController extends Controller
             'score.max' => 'Nilai tugas maksimal 10.',
         ]);
 
-        $score = studentScore::where('code', $code)->first();
+        $score = StudentScore::where('code', $code)->first();
         $score->score = $request->score;
         $score->comment = $request->comment;
         $score->status = 'Sudah dinilai';
@@ -185,7 +185,7 @@ class StudentTaskController extends Controller
 
     public function destroy($code)
     {
-        $stask = studentTask::where('code', $code)->first();
+        $stask = StudentTask::where('code', $code)->first();
         $stask->delete();
 
         Alert::success('success', 'Data berhasil dihapus');
@@ -195,7 +195,7 @@ class StudentTaskController extends Controller
     public function download($code, $fileNumber)
     {
         try {
-            $score = studentScore::where('code', $code)->firstOrFail();
+            $score = StudentScore::where('code', $code)->firstOrFail();
             $fileKey = 'file_' . $fileNumber;
             
             if (empty($score->{$fileKey})) {

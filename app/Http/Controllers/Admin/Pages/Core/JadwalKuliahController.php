@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Pages\Core;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Ruang;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Kurikulum;
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
@@ -16,17 +16,17 @@ use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
 use App\Models\AbsensiMahasiswa;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Barryvdh\DomPDF\PDF;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class JadwalKuliahController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kuri'] = Kurikulum::all();
         $data['taka'] = TahunAkademik::all();
@@ -43,7 +43,7 @@ class JadwalKuliahController extends Controller
 
     public function create()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kuri'] = Kurikulum::all();
         $data['taka'] = TahunAkademik::all();
@@ -59,7 +59,7 @@ class JadwalKuliahController extends Controller
 
     public function viewAbsen($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['kuri'] = Kurikulum::all();
         $data['taka'] = TahunAkademik::all();
@@ -89,7 +89,7 @@ class JadwalKuliahController extends Controller
 
         // Dapatkan data absensi mahasiswa berdasarkan kode kelas yang dipilih
         // $data['jadwal'] = JadwalKuliah::where('code', $code)->first();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
         $data['absen'] = AbsensiMahasiswa::whereHas('jadkul', function ($query) use ($request) {
             $query->whereHas('kelas', function ($q) use ($request) {

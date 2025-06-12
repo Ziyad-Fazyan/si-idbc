@@ -269,7 +269,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // DEFAULT TUGAS SEEDER
-        \App\Models\studentTask::create([
+        \App\Models\StudentTask::create([
             'dosen_id'    => '1',
             'jadkul_id'    => '1',
             'code'    => Str::random(8),
@@ -278,7 +278,7 @@ class DatabaseSeeder extends Seeder
             'exp_date'  => Carbon::now()->addDays(7),
             'exp_time'  => Carbon::now()->addHours(12),
         ]);
-        \App\Models\studentTask::create([
+        \App\Models\StudentTask::create([
             'dosen_id'    => '1',
             'jadkul_id'    => '2',
             'code'    => Str::random(8),
@@ -287,7 +287,7 @@ class DatabaseSeeder extends Seeder
             'exp_date'  => Carbon::now()->addDays(7),
             'exp_time'  => Carbon::now()->addHours(12),
         ]);
-        \App\Models\studentTask::create([
+        \App\Models\StudentTask::create([
             'dosen_id'    => '1',
             'jadkul_id'    => '3',
             'code'    => Str::random(8),
@@ -296,7 +296,7 @@ class DatabaseSeeder extends Seeder
             'exp_date'  => Carbon::now()->addDays(7),
             'exp_time'  => Carbon::now()->addHours(12),
         ]);
-        \App\Models\studentTask::create([
+        \App\Models\StudentTask::create([
             'dosen_id'    => '1',
             'jadkul_id'    => '4',
             'code'    => Str::random(8),
@@ -331,7 +331,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            \App\Models\newsCategory::create([
+            \App\Models\NewsCategory::create([
                 'name' => $category['name'],
                 'code' => Str::random(6),
                 'slug' => Str::slug($category['name']),
@@ -339,7 +339,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        \App\Models\newsPost::create([
+        \App\Models\NewsPost::create([
             'category_id'    => '1',
             'author_id'    => '1',
             'name'    => 'Sample Post First',
@@ -351,7 +351,7 @@ class DatabaseSeeder extends Seeder
             'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, omnis quibusdam aliquam at nemo repellat nam ad adipisci itaque alias eveniet consequuntur molestiae cupiditate dolores, id magni autem vero quam, suscipit nulla facere molestias ipsum? Adipisci, animi natus. Modi, veniam doloribus assumenda in dolorem exercitationem quaerat tempora non temporibus magni earum voluptatibus autem quibusdam tempore voluptas aperiam, consequuntur alias fuga laudantium sed harum distinctio repudiandae facere omnis. Sint sunt dignissimos fugit velit voluptatibus adipisci esse minima explicabo. Nisi est architecto quasi suscipit amet quaerat nulla dolore illo quis inventore, error iusto nostrum eaque nemo, atque odio quas esse aut aperiam!',
         ]);
 
-        \App\Models\newsPost::create([
+        \App\Models\NewsPost::create([
             'category_id'    => '2',
             'author_id'    => '1',
             'name'    => 'Sample Post Second',
@@ -363,7 +363,7 @@ class DatabaseSeeder extends Seeder
             'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, omnis quibusdam aliquam at nemo repellat nam ad adipisci itaque alias eveniet consequuntur molestiae cupiditate dolores, id magni autem vero quam, suscipit nulla facere molestias ipsum? Adipisci, animi natus. Modi, veniam doloribus assumenda in dolorem exercitationem quaerat tempora non temporibus magni earum voluptatibus autem quibusdam tempore voluptas aperiam, consequuntur alias fuga laudantium sed harum distinctio repudiandae facere omnis. Sint sunt dignissimos fugit velit voluptatibus adipisci esse minima explicabo. Nisi est architecto quasi suscipit amet quaerat nulla dolore illo quis inventore, error iusto nostrum eaque nemo, atque odio quas esse aut aperiam!',
         ]);
 
-        \App\Models\Settings\webSettings::create([
+        \App\Models\Settings\WebSettings::create([
             'school_apps' => 'si-idbc v1.0 ',
             'school_name' => 'IDBC',
             'school_head' => 'Ust. Junadi Alfan',

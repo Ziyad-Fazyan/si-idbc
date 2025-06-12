@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Pages\Publikasi;
 
-use App\Helpers\roleTrait;
-use App\Models\docsResource;
+use App\Helpers\RoleTrait;
+use App\Models\DocsResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -15,21 +15,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DocumentController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
-        $data['docs'] = docsResource::orderBy('created_at', 'desc')->get();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['docs'] = DocsResource::orderBy('created_at', 'desc')->get();
 
         return view('user.pages.publikasi.document-index', $data);
     }
     public function create()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
-        $data['docs'] = docsResource::latest();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['docs'] = DocsResource::latest();
 
         return view('user.pages.publikasi.document-create', $data);
     }
@@ -84,7 +84,7 @@ class DocumentController extends Controller
 
     public function destroy(Request $request, $code)
     {
-        $docs = docsResource::where('code', $code)->first();
+        $docs = DocsResource::where('code', $code)->first();
 
         if (!$docs) {
             Alert::error('Error', 'Document not found');
@@ -117,7 +117,7 @@ class DocumentController extends Controller
     public function download($code)
     {
         try {
-            $docs = docsResource::where('code', $code)->firstOrFail();
+            $docs = DocsResource::where('code', $code)->firstOrFail();
 
             if (empty($docs->path)) {
                 Alert::error('Error', 'Document file not found');

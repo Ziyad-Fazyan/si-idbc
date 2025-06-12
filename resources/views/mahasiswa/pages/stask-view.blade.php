@@ -80,7 +80,7 @@
 
         <!-- Task Submission Form -->
         @php
-            $studentScore = App\Models\studentScore::where('stask_id', $stask->id)
+            $studentScore = App\Models\StudentScore::where('stask_id', $stask->id)
                 ->where('student_id', Auth::guard('mahasiswa')->user()->id)
                 ->first();
         @endphp

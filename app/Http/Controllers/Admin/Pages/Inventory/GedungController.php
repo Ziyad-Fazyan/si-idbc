@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin\Pages\Inventory;
 
 use App\Models\Gedung;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class GedungController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['gedung'] = Gedung::all();
         $data['gedung'] = Gedung::paginate(10);

@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Core;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Helpers\SlugHelper;
 use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class NotifyController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['notify'] = Notification::all();
 
         return view('user.admin.system.notify-index', $data);

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\AbsensiMahasiswa;
 use App\Models\AbsensiDosen;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FeedBack\FBPerkuliahan;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -19,7 +19,7 @@ class JadwalAjarController extends Controller
 {
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $dosenId = Auth::guard('dosen')->user();
         $data['jadkul'] = JadwalKuliah::with(['matkul', 'dosen', 'kelas', 'ruang'])
             ->where('dosen_id', $dosenId->id)
@@ -30,7 +30,7 @@ class JadwalAjarController extends Controller
     }
     public function viewAbsen($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $dosenId = Auth::guard('dosen')->user();
         $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
         if (!$data['jadkul']) {
@@ -53,7 +53,7 @@ class JadwalAjarController extends Controller
     }
     public function viewFeedBack($code)
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['feedback'] = FBPerkuliahan::where('fb_jakul_code', $code)->get();
         $data['code'] = $code;
 

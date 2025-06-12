@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Admin\Pages\Finance;
 
 use App\Models\Balance;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BalanceController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index()
     {
 
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['prefix'] = $this->setPrefix();
         $data['balance'] = Balance::all();
         $data['balIncome'] = Balance::where('type', 1)->sum('value');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Finance;
 
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use App\Models\ProgramStudi;
@@ -11,13 +11,13 @@ use App\Models\ProgramKuliah;
 use App\Models\TagihanKuliah;
 use App\Models\HistoryTagihan;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class GenerateTagihanController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index(Request $request)
     {
@@ -26,7 +26,7 @@ class GenerateTagihanController extends Controller
         })->with('tagihan')->get()->sum(function ($history) {
             return $history->tagihan->price;
         });
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $data['tagihan'] = TagihanKuliah::all();
         $data['history'] = HistoryTagihan::all();
         $data['mahasiswa'] = Mahasiswa::all();
@@ -51,7 +51,7 @@ class GenerateTagihanController extends Controller
         $data['prodi'] = ProgramStudi::all();
         $data['proku'] = ProgramKuliah::all();
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         return view('user.finance.pages.tagihan-create', $data);
     }

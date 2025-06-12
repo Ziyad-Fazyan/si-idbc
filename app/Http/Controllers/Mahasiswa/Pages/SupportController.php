@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TicketSupport;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,7 +14,7 @@ class SupportController extends Controller
 {
     public function index()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $userId = Auth::guard('mahasiswa')->user()->id;
         $data['ticket'] = TicketSupport::whereNotNull('code')->where('users_id', $userId)->latest()->get();
 
@@ -23,7 +23,7 @@ class SupportController extends Controller
 
     public function open()
     {
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         $userId = Auth::guard('mahasiswa')->user()->id;
         $data['ticket'] = TicketSupport::whereNotNull('code')->where('users_id', $userId)->get();
 
@@ -33,7 +33,7 @@ class SupportController extends Controller
     public function create(Request $request, $dept)
     {
         $data['dept'] = $request->dept;
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
         // dd($request->dept);
         return view('mahasiswa.pages.support-ticket-create', $data);
     }
@@ -42,7 +42,7 @@ class SupportController extends Controller
         $data['ticket'] = TicketSupport::where('code', $code)->first();
         $initialSupport = TicketSupport::where('codr', $code)->latest()->get();
         $data['support'] = $initialSupport;
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
         $checkStatus = TicketSupport::where('code', $code)->first();
         if ($checkStatus->raw_stat_id === 2) {

@@ -107,7 +107,7 @@
                             <i class="fa-solid fa-person-circle-question"></i>
                         </span>
                         <span class="text-[#0C6E71] text-sm text-right">
-                            {{ \App\Models\uAttendance::where('absen_approve', 1)->count() }}<br>
+                            {{ \App\Models\UAttendance::where('absen_approve', 1)->count() }}<br>
                             Approval
                         </span>
                     </div>

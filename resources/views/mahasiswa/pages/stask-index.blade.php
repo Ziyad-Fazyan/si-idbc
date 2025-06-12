@@ -63,7 +63,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @php
-                                    $studentScore = App\Models\studentScore::where('stask_id', $item->id)
+                                    $studentScore = App\Models\StudentScore::where('stask_id', $item->id)
                                         ->where('student_id', Auth::guard('mahasiswa')->user()->id)
                                         ->first();
                                 @endphp

@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin\Pages\Finance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\TagihanKuliah;
 use App\Models\HistoryTagihan;
-use App\Models\Settings\webSettings;
+use App\Models\Settings\WebSettings;
 
 class PembayaranController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     public function index(Request $request)
     {
@@ -23,7 +23,7 @@ class PembayaranController extends Controller
         $data['tagihan'] = TagihanKuliah::all();
         $data['history'] = HistoryTagihan::where('stat', 1)->latest()->get();
         $data['prefix'] = $this->setPrefix();
-        $data['web'] = webSettings::where('id', 1)->first();
+        $data['web'] = WebSettings::where('id', 1)->first();
 
 
         return view('user.finance.pages.pembayaran-index', $data);
