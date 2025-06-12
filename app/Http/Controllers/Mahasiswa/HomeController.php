@@ -38,7 +38,7 @@ class HomeController extends Controller
         $data['web'] = WebSettings::where('id', 1)->first();
 
         // Mengambil kelas pertama dari relasi many-to-many
-        $kelas = $user->kelas()->first();
+        $kelas = $user->kelas->first();
 
         if ($kelas) {
             $data['tagihan'] = TagihanKuliah::where('users_id', $user->id)
@@ -103,7 +103,15 @@ class HomeController extends Controller
         $now = Carbon::now();
         $hariIni = $now->dayOfWeekIso; // Senin = 1, Minggu = 7
         $waktuDatang = $now->format('H:i:s');
-        $checkAbsen = AbsensiMahasiswa::where('jadkul_code', $code)->where('author_id', Auth::guard('mahasiswa')->user()->id)->count();
+        // Get jadkul id from code
+        $jadkul = JadwalKuliah::where('code', $code)->first();
+        if (!$jadkul) {
+            Alert::error('Error', 'Jadwal kuliah tidak ditemukan');
+            return back();
+        }
+        $jadkul_id = $jadkul->id;
+
+        $checkAbsen = AbsensiMahasiswa::where('jadkul_id', $jadkul_id)->where('author_id', Auth::guard('mahasiswa')->user()->id)->count();
         $checkDate = JadwalKuliah::where('code', $code)->where('days_id', $hariIni)
             ->where('start', '<=', $waktuDatang)
             ->where('ended', '>=', $waktuDatang)->count();
@@ -139,7 +147,7 @@ class HomeController extends Controller
     {
         $request->validate([
             'absen_type' => 'required|string',
-            'jadkul_code' => 'required|string',
+            'jadkul_id' => 'required|integer',
             'days_id' => 'required|integer',
             'absen_time' => 'required|string',
             'author_id' => 'required|integer',
@@ -147,7 +155,7 @@ class HomeController extends Controller
         ]);
 
         $timeStart = now()->format('H:i:s');
-        $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
+        $checkStart = JadwalKuliah::where('id', $request->jadkul_id)->first();
 
         if (!$checkStart) {
             Alert::error('Error', 'Jadwal kuliah tidak ditemukan.');
@@ -155,7 +163,14 @@ class HomeController extends Controller
         }
 
         // Cek sudah absen belum
-        $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
+        $jadkul = JadwalKuliah::where('id', $request->jadkul_id)->first();
+        if (!$jadkul) {
+            Alert::error('Error', 'Jadwal kuliah tidak ditemukan.');
+            return back();
+        }
+        $jadkul_id = $jadkul->id ?? null;
+
+        $sudahAbsen = AbsensiMahasiswa::where('jadkul_id', $jadkul_id)
             ->where('author_id', $request->author_id)
             ->where('absen_date', $request->absen_date)
             ->exists();
@@ -178,7 +193,7 @@ class HomeController extends Controller
         // Simpan data absen
         $absen = new AbsensiMahasiswa;
         $absen->author_id = $request->author_id;
-        $absen->jadkul_code = $request->jadkul_code;
+        $absen->jadkul_id = $jadkul_id;
         $absen->absen_date = $request->absen_date;
         $absen->absen_time = $request->absen_time;
         $absen->absen_type = $request->absen_type;

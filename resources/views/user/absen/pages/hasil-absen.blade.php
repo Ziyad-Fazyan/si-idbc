@@ -299,7 +299,7 @@
                                                     <form action="{{ route('absen.home-jadkul-absen-store') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="author_id" value="{{ $result['mahasiswa_data']['id'] }}">
-                                                        <input type="hidden" name="jadkul_code" value="{{ $jadwal->code }}">
+                                                        <input type="hidden" name="jadkul_id" value="{{ $jadwal->id }}">
                                                         <input type="hidden" name="absen_date" value="{{ now()->format('Y-m-d') }}">
                                                         <input type="hidden" name="absen_time" value="{{ now()->format('H:i:s') }}">
                                                         <input type="hidden" name="days_id" value="{{ now()->dayOfWeekIso }}">

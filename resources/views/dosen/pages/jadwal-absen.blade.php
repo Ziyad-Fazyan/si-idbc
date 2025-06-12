@@ -118,7 +118,7 @@
                 <div class="p-4 md:p-6">
                     <form action="{{ route('dosen.akademik.jadwal.absen-mahasiswa.store') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="jadkul_code" value="{{ $jadkul->code }}">
+                        <input type="hidden" name="jadkul_id" value="{{ $jadkul->id }}">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-[#E4E2DE]">

@@ -65,9 +65,14 @@ class JadwalKuliahController extends Controller
         $data['taka'] = TahunAkademik::all();
         $data['dosen'] = Dosen::all();
         $data['pstudi'] = ProgramStudi::all();
-        $data['absen'] = AbsensiMahasiswa::where('jadkul_code', $code)->get();
+        $jadkul = JadwalKuliah::where('code', $code)->first();
+        if (!$jadkul) {
+            Alert::error('Error', 'Jadwal kuliah tidak ditemukan');
+            return back();
+        }
+        $data['absen'] = AbsensiMahasiswa::where('jadkul_id', $jadkul->id)->get();
         $data['matkul'] = MataKuliah::all();
-        $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
+        $data['jadkul'] = $jadkul;
         $data['ruang'] = Ruang::all();
         $data['kelas'] = kelas::all();
 
@@ -91,11 +96,16 @@ class JadwalKuliahController extends Controller
         // $data['jadwal'] = JadwalKuliah::where('code', $code)->first();
         $data['web'] = WebSettings::where('id', 1)->first();
         $data['jadkul'] = JadwalKuliah::where('code', $code)->first();
+        $jadkul = JadwalKuliah::where('code', $code)->first();
+        if (!$jadkul) {
+            Alert::error('Error', 'Jadwal kuliah tidak ditemukan');
+            return back();
+        }
         $data['absen'] = AbsensiMahasiswa::whereHas('jadkul', function ($query) use ($request) {
             $query->whereHas('kelas', function ($q) use ($request) {
                 $q->where('code', $request->kode_kelas);
             });
-        })->where('jadkul_code', $code)->get();
+        })->where('jadkul_id', $jadkul->id)->get();
 
         $data['student'] = Mahasiswa::whereHas('kelas', function ($q) use ($request) {
             $q->where('code', $request->kode_kelas);

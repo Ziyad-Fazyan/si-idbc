@@ -42,10 +42,10 @@ class JadwalAjarController extends Controller
         $data['student'] = Mahasiswa::whereHas('kelas', function ($q) use ($data) {
             $q->where('kelas.id', $data['jadkul']->kelas_id);
         })->get();
-        $data['absen'] = AbsensiMahasiswa::where('jadkul_code', $code)->get();
+        $data['absen'] = AbsensiMahasiswa::where('jadkul_id', $data['jadkul']->id)->get();
 
         // Get lecturer's attendance for this session
-        $data['dosen_absen'] = AbsensiDosen::where('jadkul_code', $code)
+        $data['dosen_absen'] = AbsensiDosen::where('jadkul_id', $data['jadkul']->id)
             ->whereDate('created_at', now()->toDateString())
             ->first();
 
@@ -74,19 +74,19 @@ class JadwalAjarController extends Controller
     public function storeOrUpdateAbsenMahasiswa(Request $request)
     {
         $request->validate([
-            'jadkul_code' => 'required|string',
+            'jadkul_id' => 'required|integer',
             'absen_type' => 'required|array',
             'absen_desc' => 'nullable|array',
         ]);
 
-        $jadkul_code = $request->jadkul_code;
+        $jadkul_id = $request->jadkul_id;
         $absen_types = $request->absen_type;
         $absen_descs = $request->absen_desc ?? [];
 
         foreach ($absen_types as $mahasiswa_id => $absen_type) {
             $absen_desc = isset($absen_descs[$mahasiswa_id]) ? $absen_descs[$mahasiswa_id] : null;
 
-            $absen = AbsensiMahasiswa::where('jadkul_code', $jadkul_code)
+            $absen = AbsensiMahasiswa::where('jadkul_id', $jadkul_id)
                 ->where('author_id', $mahasiswa_id)
                 ->first();
 
@@ -98,7 +98,7 @@ class JadwalAjarController extends Controller
                 $absen->save();
             } else {
                 $absen = new AbsensiMahasiswa();
-                $absen->jadkul_code = $jadkul_code;
+                $absen->jadkul_id = $jadkul_id;
                 $absen->author_id = $mahasiswa_id;
                 $absen->absen_type = $absen_type;
                 $absen->absen_desc = $absen_desc;
@@ -127,7 +127,7 @@ class JadwalAjarController extends Controller
             }
 
             // Check if lecturer already attended today
-            $existingAbsen = AbsensiDosen::where('jadkul_code', $code)
+            $existingAbsen = AbsensiDosen::where('jadkul_id', $jadkul->id)
                 ->whereDate('created_at', now()->toDateString())
                 ->first();
 
@@ -138,7 +138,7 @@ class JadwalAjarController extends Controller
 
             $dosen = Auth::guard('dosen')->user();
             $absensi = new AbsensiDosen;
-            $absensi->jadkul_code = $code;
+            $absensi->jadkul_id = $jadkul->id;
             $absensi->dosen_id = $dosen->id;
             $absensi->absen_type = $request->absen_type;
             $absensi->mata_kuliah = $jadkul->matkul->name;
