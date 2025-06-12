@@ -38,7 +38,7 @@ class FaceRecognitionController extends Controller
 
             // Send to FastAPI /embedding endpoint
             $client = new Client();
-            $response = $client->post('http://127.0.0.1:5000/embedding', [
+            $response = $client->post(env('FACE_API_URL'), [
                 'multipart' => [
                     [
                         'name' => 'file',
@@ -108,7 +108,7 @@ class FaceRecognitionController extends Controller
             // Get embedding from FastAPI
             $fileStream = fopen($foto->getRealPath(), 'r');
             $client = new Client();
-            $response = $client->post('http://127.0.0.1:5000/embedding', [
+            $response = $client->post(env('FACE_API_URL'), [
                 'multipart' => [
                     [
                         'name' => 'file',
