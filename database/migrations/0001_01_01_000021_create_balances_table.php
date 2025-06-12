@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('balances', function (Blueprint $table) {
             $table->id();
-            $table->integer('author_id')->default(0);
+            $table->foreignId('author_id')->constrained('users')->default(0);
             $table->integer('type')->default(0);
             $table->string('value');
             $table->string('code');

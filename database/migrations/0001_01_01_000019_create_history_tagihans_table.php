@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('history_tagihans', function (Blueprint $table) {
             $table->id();
-            $table->integer('users_id');            // USERS ID
+            $table->foreignId('users_id')->constrained('mahasiswas');            // USERS ID
+            $table->foreignId('tagihan_code')->constrained('tagihan_kuliahs');         // KODE TAGIHAN
             $table->integer('stat')->default(0);    // STATUS PEMBAYARAN
-            $table->string('tagihan_code');         // KODE TAGIHAN
             $table->string('desc');                 // DESKRIPSI TAMBAHAN
             $table->string('code')->unique();       // KODE PEMBAYARAN
             $table->string('snap_token')->nullable();       // KODE PEMBAYARAN

@@ -59,4 +59,19 @@ class JadwalKuliah extends Model
     {
         return $this->belongsTo(Ruang::class, 'ruang_id');
     }
+    
+    public function absensiMahasiswas()
+    {
+        return $this->hasMany(AbsensiMahasiswa::class, 'jadkul_id');
+    }
+    
+    public function absensiDosens()
+    {
+        return $this->hasMany(AbsensiDosen::class, 'jadkul_id');
+    }
+
+    public function studentTasks()
+    {
+        return $this->hasMany(StudentTask::class, 'jadkul_id');
+    }
 }

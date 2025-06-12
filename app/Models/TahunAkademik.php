@@ -33,4 +33,24 @@ class TahunAkademik extends Model
     {
         return $this->attributes['semester'];
     }
+
+    public function mahasiswas()
+    {
+        return $this->hasMany(Mahasiswa::class, 'taka_id');
+    }
+
+    public function programKuliahs()
+    {
+        return $this->hasMany(ProgramKuliah::class, 'taka_id');
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'taka_id');
+    }
+
+    public function mataKuliahs()
+    {
+        return $this->hasMany(MataKuliah::class, 'taka_id');
+    }
 }

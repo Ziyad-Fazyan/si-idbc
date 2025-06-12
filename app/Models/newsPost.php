@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class newsPost extends Model
+class NewsPost extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class newsPost extends Model
 
     public function category()
     {
-        return $this->belongsTo(newsCategory::class, 'category_id');
+        return $this->belongsTo(NewsCategory::class, 'category_id');
     }
 
     public function author()

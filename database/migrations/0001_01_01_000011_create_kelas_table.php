@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->integer('taka_id');                 // Tahun Akademik
-            $table->integer('pstudi_id');               // Program Studi
-            $table->integer('proku_id')->nullable();    // Program Kuliah
-            $table->integer('dosen_id')->nullable();    // Wali Kelas 
+            $table->foreignId('taka_id')->constrained('tahun_akademiks');  // Tahun Akademik ID
+            $table->foreignId('pstudi_id')->constrained('program_studis'); // Program Studi
+            $table->foreignId('proku_id')->constrained('program_kuliahs'); // Program Studi
+            $table->foreignId('dosen_id')->constrained('dosens'); // Program Studi
             $table->integer('capacity')->nullable();    // Kapasitas Mahasiswa 
             $table->string('name');                     // Nama Kelas
             $table->string('code')->unique();           // Kode Kelas => Jurusan-Tahun-Proku-Semester(A-Z)

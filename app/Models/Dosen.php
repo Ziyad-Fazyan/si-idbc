@@ -26,4 +26,49 @@ class Dosen extends Authenticatable
     {
         return $this->attributes['dsn_stat'];
     }
+
+    public function programStudis()
+    {
+        return $this->hasMany(ProgramStudi::class, 'head_id');
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'dosen_id');
+    }
+
+    public function mataKuliahs()
+    {
+        return $this->hasMany(MataKuliah::class, 'dosen_1');
+    }
+
+    public function mataKuliahs2()
+    {
+        return $this->hasMany(MataKuliah::class, 'dosen_2');
+    }
+
+    public function mataKuliahs3()
+    {
+        return $this->hasMany(MataKuliah::class, 'dosen_3');
+    }
+
+    public function jadwalKuliahs()
+    {
+        return $this->hasMany(JadwalKuliah::class, 'dosen_id');
+    }
+
+    public function absensiDosens()
+    {
+        return $this->hasMany(AbsensiDosen::class, 'dosen_id');
+    }
+
+    public function studentTasks()
+    {
+        return $this->hasMany(StudentTask::class, 'dosen_id');
+    }
+
+    public function studentScores()
+    {
+        return $this->hasMany(StudentScore::class, 'dosen_id');
+    }
 }

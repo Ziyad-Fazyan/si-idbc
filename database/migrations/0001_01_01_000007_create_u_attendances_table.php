@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('u_attendances', function (Blueprint $table) {
             $table->id();
-            $table->integer('absen_user_id');
+            $table->foreignId('absen_user_id')->constrained('users');
             $table->tinyInteger('absen_approve')->default('0');
             // 0 => Auto Approve  , 1 => Pending      , 2 => Accepted           , 3 => Declined
             $table->tinyInteger('absen_type');

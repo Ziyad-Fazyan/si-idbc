@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('auth_id');                                  // AUTHOR ID
+            $table->foreignId('auth_id')->constrained('users');                                  // AUTHOR ID
             $table->integer('send_to');                                  // SEND TO => 0 = FOR ALL ; 1 = FOR STAFF ; 2 = FOR LECTURE ; 3 = FOR STUDENT
             $table->integer('dept_id')->nullable();                      // DEPT ID => FOR STAFF ONLY
             $table->integer('user_id')->nullable();                      // USER ID => FOR STAFF ONLY

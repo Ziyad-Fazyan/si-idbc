@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('program_kuliahs', function (Blueprint $table) {
             $table->id();
-            $table->integer('taka_id');  // Tahun Akademik ID
-            $table->integer('pstudi_id'); // Program Studi
+            $table->foreignId('taka_id')->constrained('tahun_akademiks');  // Tahun Akademik ID
+            $table->foreignId('pstudi_id')->constrained('program_studis'); // Program Studi
             $table->string('name');      // Nama Program Kuliah ex: Regular Pagi
             $table->string('code')->unique();      // Kode Program Kuliah ex: Gelombang-Singkatan-Taka => G1-RP-2023
             $table->string('wave');      // Gelombang Program Kuliah ex: Gelombang I, Gelombang II

@@ -14,6 +14,6 @@ class GalleryAlbum extends Model
     // Relationship with author (assuming 'author_id' points to a User model)
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id', 'id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 }

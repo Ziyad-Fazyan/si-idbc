@@ -156,14 +156,14 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="years_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                            <label for="year_id" class="block text-sm font-medium text-gray-700 mb-2">
                                                 Tahun Masuk
                                             </label>
-                                            <input type="text" name="years_id" id="years_id"
+                                            <input type="text" name="year_id" id="year_id"
                                                 value="Angkatan {{ $student->kelas->first() ? $student->kelas->first()->taka->year_start : 'Tidak ada' }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 sm:text-sm"
                                                 readonly>
-                                            @error('years_id')
+                                            @error('year_id')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>

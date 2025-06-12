@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('absensi_mahasiswas', function (Blueprint $table) {
-            $table->id();
-            $table->string('jadkul_code');                 // KODE JADWAL KULIAH
-            $table->integer('author_id');                   // ID MAHASISWA
+            $table->id();                                           // ID Kurikulum
+            $table->foreignId('jadkul_id')->constrained('jadwal_kuliahs');                 
+            $table->foreignId('author_id')->constrained('mahasiswas');                   // ID MAHASISWA
             $table->string('image')->nullable();
             $table->string('absen_type')->default('A');      // TYPE ABSEN MAHASISWA => 1 = Hadir ; 2 = Izin ; 3 = Sakit ; 0 = Tidak Hadir
             $table->string('code')->unique();               // KODE ABSENSI

@@ -51,19 +51,49 @@ class Mahasiswa extends Authenticatable
     {
         return $this->belongsToMany(Kelas::class, 'kelas_mahasiswa');
     }
+    
+    public function mahasiswaDetails()
+    {
+        return $this->hasOne(MahasiswaDetails::class);
+    }
 
     public function taka()
     {
         return $this->belongsTo(TahunAkademik::class, 'taka_id');
     }
 
-    public function mahasiswaDetails()
+    public function year()
     {
-        return $this->hasOne(MahasiswaDetails::class);
+        return $this->belongsTo(TahunAkademik::class, 'year_id');
     }
 
-    public function absensiMahasiswa()
+    public function absensiMahasiswas()
     {
         return $this->hasMany(AbsensiMahasiswa::class, 'author_id');
+    }
+
+    public function tagihanKuliahs()
+    {
+        return $this->hasMany(TagihanKuliah::class, 'users_id');
+    }
+
+    public function ticketSupports()
+    {
+        return $this->hasMany(TicketSupport::class, 'users_id');
+    }
+
+    public function studentScores()
+    {
+        return $this->hasMany(StudentScore::class, 'student_id');
+    }
+
+    public function hasilStudis()
+    {
+        return $this->hasMany(HasilStudi::class, 'student_id');
+    }
+
+    public function mutabaahs()
+    {
+        return $this->hasMany(Mutabaah::class, 'author_id');
     }
 }

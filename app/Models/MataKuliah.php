@@ -39,4 +39,9 @@ class MataKuliah extends Model
     {
         return $this->belongsTo(Dosen::class, 'dosen_3');
     }
+
+    public function jadwalKuliahs()
+    {
+        return $this->hasMany(JadwalKuliah::class, 'makul_id');
+    }
 }

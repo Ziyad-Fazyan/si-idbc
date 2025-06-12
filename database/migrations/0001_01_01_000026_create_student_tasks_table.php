@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('docs_resources', function (Blueprint $table) {
+        Schema::create('student_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('author_id');
-            $table->string('cover');
-            $table->string('name');
+            $table->foreignId('dosen_id')->constrained('dosens');
+            $table->foreignId('jadkul_id')->constrained('jadwal_kuliahs');
             $table->string('code');
-            $table->string('link')->nullable();
-            $table->string('path')->nullable();
+            $table->string('title');
+            $table->longText('detail_task');
+            $table->date('exp_date');
+            $table->time('exp_time');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('docs_resources');
+        Schema::dropIfExists('student_tasks');
     }
 };

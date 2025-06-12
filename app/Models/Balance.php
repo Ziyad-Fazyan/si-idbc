@@ -43,7 +43,7 @@ class Balance extends Model
     public function getValueAttribute($value)
     {
         // Hapus aksesor ini jika Anda ingin mengakses nilai asli tanpa format tambahan
-        return 'Rp. ' . number_format($value, 0, ',', '.');
+        return 'Rp. ' . number_format((float)$value, 0, ',', '.');
     }
     public function getRawValueAttribute()
     {

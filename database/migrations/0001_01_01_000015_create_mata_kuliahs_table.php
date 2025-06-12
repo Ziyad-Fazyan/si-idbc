@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('mata_kuliahs', function (Blueprint $table) {
             $table->id();
-            $table->integer('kuri_id');                 // ID Kurikulum
-            $table->integer('taka_id');                 // ID Tahun Akademik
-            $table->integer('requ_id')->nullable();     // ID Persyaratan Mata Kuliah
-            $table->integer('pstudi_id');               // ID Program Studi
-            $table->integer('dosen_1');                 // Dosen Utama
-            $table->integer('dosen_2')->nullable();     // Dosen Cadangan 1
-            $table->integer('dosen_3')->nullable();     // Dosen Cadangan 2
+            $table->foreignId('kuri_id')->constrained('kurikulums');                 // ID Kurikulum
+            $table->foreignId('taka_id')->constrained('tahun_akademiks');                 // ID Tahun Akademik
+            $table->foreignId('pstudi_id')->constrained('program_studis');               // ID Program Studi
+            $table->foreignId('dosen_1')->constrained('dosens');                 // Dosen Utama
+            $table->foreignId('dosen_2')->nullable()->constrained('dosens');     // Dosen Cadangan 1
+            $table->foreignId('dosen_3')->nullable()->constrained('dosens');     // Dosen Cadangan 2
             $table->string('name');                     // Nama Mata Kuliah
             $table->string('code')->unique();           // Kode Mata Kuliah
             $table->longText('desc');                   // Deskripsi Mata Kuliah

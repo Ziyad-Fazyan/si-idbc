@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class studentTask extends Model
+class StudentTask extends Model
 {
     use HasFactory;
 
@@ -19,5 +19,10 @@ class studentTask extends Model
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'dosen_id',);
+    }
+
+    public function studentScores()
+    {
+        return $this->hasMany(StudentScore::class, 'stask_id');
     }
 }
