@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\AbsensiController;
 use App\Http\Controllers\Api\FaceRecognitionController;
+use App\Http\Controllers\Admin\Pages\Finance\BalanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,6 @@ Route::prefix('admin')->group(function () {
     
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 });
-
-use App\Http\Controllers\Admin\Pages\Finance\BalanceController;
 
 // Rute untuk mahasiswa
 Route::prefix('mahasiswa')->group(function () {

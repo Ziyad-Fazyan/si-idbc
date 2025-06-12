@@ -13,7 +13,7 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Drivers\Gd\Driver;
 
-class FaceRecognitionController extends Controller
+class tesFaceRecognitionController extends Controller
 {
     public function uploadFoto(Request $request)
     {

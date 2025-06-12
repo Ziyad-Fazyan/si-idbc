@@ -2,54 +2,72 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
+use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use App\Models\AbsensiMahasiswa;
-use App\Models\JadwalKuliah;
-use App\Models\Mahasiswa;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class AbsensiController extends Controller
 {
     /**
      * Melakukan absensi dengan kamera wajah
      */
-    public function jadkulAbsenStore(Request $request)
+    public function JadkulAbsenStore(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'absen_type' => 'required|string',
             'jadkul_code' => 'required|string',
-            'absen_date' => 'required|date',
+            'days_id' => 'required|integer',
             'absen_time' => 'required|string',
             'author_id' => 'required|integer',
+            'absen_date' => 'required|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $timeNow = now()->format('H:i:s');
-        $jadwal = JadwalKuliah::where('code', $request->jadkul_code)->first();
+        $timeStart = now()->format('H:i:s');
+        $checkStart = JadwalKuliah::where('code', $request->jadkul_code)->first();
 
-        if (!$jadwal) {
-            return response()->json(['error' => 'Jadwal kuliah tidak ditemukan.'], 404);
+        if (!$checkStart) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Jadwal kuliah tidak ditemukan.',
+            ], 404);
         }
 
-        // Cek sudah absen belum
+        // Cek apakah sudah absen
         $sudahAbsen = AbsensiMahasiswa::where('jadkul_code', $request->jadkul_code)
             ->where('author_id', $request->author_id)
             ->where('absen_date', $request->absen_date)
             ->exists();
 
         if ($sudahAbsen) {
-            return response()->json(['error' => 'Mahasiswa sudah absen untuk matakuliah ini.'], 409);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Mahasiswa sudah absen untuk matakuliah ini.',
+            ], 409);
         }
 
-        if ($timeNow >= $jadwal->ended) {
-            return response()->json(['error' => 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.'], 403);
+        if ($timeStart >= $checkStart->ended) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Waktu perkuliahan telah selesai. Tidak bisa melakukan absensi.',
+            ], 403);
         }
 
-        if ($timeNow < $jadwal->start) {
-            return response()->json(['error' => 'Waktu absen belum dimulai. Silakan coba nanti.'], 403);
+        if ($timeStart < $checkStart->start) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Waktu absen belum dimulai. Silakan coba nanti.',
+            ], 403);
         }
 
         // Simpan data absen
@@ -60,9 +78,30 @@ class AbsensiController extends Controller
         $absen->absen_time = $request->absen_time;
         $absen->absen_type = $request->absen_type;
         $absen->code = uniqid();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = 'presensi-' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = storage_path('app/public/images/presensi');
+
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true, true);
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($image->getRealPath());
+            $image->scaleDown(height: 300)->save($destinationPath . '/' . $name);
+
+            $absen->image = "presensi/" . $name;
+        } elseif (Session::has('face_image_path')) {
+            $absen->image = Session::get('face_image_path');
+            Session::forget('face_image_path');
+        }
+
         $absen->save();
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Absensi berhasil dicatat.',
             'data' => $absen,
         ], 201);
