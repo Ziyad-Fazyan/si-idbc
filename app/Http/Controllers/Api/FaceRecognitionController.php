@@ -90,20 +90,20 @@ class FaceRecognitionController extends Controller
         try {
             $foto = $request->file('foto');
 
-            // Save the photo for attendance record
-            $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
-            $fotoPath = 'presensi/' . $fotoName;
-            $destinationPath = storage_path('app/public/images/presensi');
+            // // Save the photo for attendance record
+            // $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
+            // $fotoPath = 'presensi/' . $fotoName;
+            // $destinationPath = storage_path('app/public/images/presensi');
 
-            // Ensure directory exists
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
+            // // Ensure directory exists
+            // if (!file_exists($destinationPath)) {
+            //     mkdir($destinationPath, 0755, true);
+            // }
 
-            // Compress and save image
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($foto->getRealPath());
-            $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
+            // // Compress and save image
+            // $manager = new ImageManager(new Driver());
+            // $image = $manager->read($foto->getRealPath());
+            // $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
 
             // Get embedding from FastAPI
             $fileStream = fopen($foto->getRealPath(), 'r');
@@ -188,7 +188,7 @@ class FaceRecognitionController extends Controller
                 'data' => [
                     'face_match' => $bestMatch,
                     'schedule' => $jadwalHariIni,
-                    'image_path' => Storage::url('public/images/presensi/' . $fotoName),
+                    // 'image_path' => Storage::url('public/images/presensi/' . $fotoName),
                     'timestamp' => $now->toDateTimeString()
                 ]
             ]);

@@ -32,13 +32,13 @@ Route::prefix('admin')->group(function () {
 // Rute untuk mahasiswa
 Route::prefix('mahasiswa')->group(function () {
     // Rute yang memerlukan autentikasi
-    Route::middleware('auth:sanctum')->group(function () {
+    // Route::middleware('auth:sanctum')->group(function () {
         // Absensi wajah
         Route::post('/upload-foto', [FaceRecognitionController::class, 'uploadFoto']);
         Route::post('/cek-wajah', [FaceRecognitionController::class, 'cekWajah']);
         Route::get('/hasil-absen', [FaceRecognitionController::class, 'hasilAbsen']);
         Route::post('/jadkul-absen', [AbsensiController::class, 'jadkulAbsenStore']);
-    });
+    // });
 });
 
 // API route for fetching Balance data by code for edit modal
