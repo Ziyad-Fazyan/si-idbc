@@ -11,6 +11,12 @@ class GalleryAlbum extends Model
 
     protected $guarded = [];
 
+    // Get author name with fallback for deleted users
+    public function getAuthorNameAttribute()
+    {
+        return $this->author ? $this->author->name : 'Unknown Author';
+    }
+
     // Relationship with author (assuming 'author_id' points to a User model)
     public function author()
     {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('gallery_albums', function (Blueprint $table) {
             $table->id();
             // $table->integer('photos_id');               // GALLERY PHOTOS ID
-            $table->foreignId('author_id')->constrained('users');               // ID AUTHOR
+            $table->foreignId('author_id')->nullable()->constrained('users')->nullOnDelete();               // ID AUTHOR
             $table->string('name');                     // ALBUM NAME
             $table->string('slug');                     // ALBUM SLUG
             $table->string('desc');                     // DESC ALBUM

@@ -12,136 +12,174 @@
     {{ route($prefix . 'publish.album-index') }}
 @endsection
 @section('content')
-    <section class="section">
+    <section class="p-4">
         <form action="{{ route($prefix . 'publish.album-store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <div class="row">
-                <div class="col-lg-4 col-12">
-                    <div class="card">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="card-title">Album Cover</h5>
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full lg:w-1/3 px-4 mb-6">
+                    <div class="bg-white shadow-md rounded-lg">
+                        <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                            <h5 class="text-lg font-semibold">Album Cover</h5>
                             <div>
-                                <button type="submit" class="btn btn-primary"><i
-                                        class="fa-solid fa-paper-plane"></i></button>
+                                <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                                    <i class="fa-solid fa-paper-plane mr-2"></i>Kirim
+                                </button>
                             </div>
                         </div>
-                        <div class="card-body row">
-                            <div class="form-group col-lg-12 col-12">
-                                <img src="{{ asset('storage/images/gallery/album-a.jpg') }}" class="card-img-top"
-                                    alt="">
-                                <label for="cover">Image Cover</label>
-                                <input type="file" class="form-control" name="cover" id="cover">
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <img src="{{ asset('storage/images/gallery/album-a.jpg') }}"
+                                    class="w-full h-auto object-cover rounded-md mb-2" alt="Album Cover">
+                                <label for="cover" class="block text-gray-700 text-sm font-bold mb-2">Image Cover</label>
+                                <input type="file"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="cover" id="cover">
                                 @error('cover')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-red-500 text-xs italic">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group col-lg-12 col-12">
-                                <label for="name">Nama Album Foto</label>
-                                <input type="text" class="form-control" name="name" id="name"
-                                    placeholder="Inputkan nama album foto...">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama Album
+                                    Foto</label>
+                                <input type="text"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="name" id="name" placeholder="Inputkan nama album foto...">
                                 @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-red-500 text-xs italic">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group col-lg-12 col-12">
-                                <label for="desc">Deskripsi Album</label>
-                                <textarea class="form-control" name="desc" id="desc" placeholder="Inputkan deskripsi..." cols="30"
-                                    rows="10"></textarea>
+                            <div class="mb-4">
+                                <label for="desc" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi
+                                    Album</label>
+                                <textarea
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-none"
+                                    name="desc" id="desc" placeholder="Inputkan deskripsi..."></textarea>
                                 @error('desc')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-red-500 text-xs italic">{{ $message }}</small>
                                 @enderror
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Details Album</h5>
+                <div class="w-full lg:w-2/3 px-4 mb-6">
+                    <div class="bg-white shadow-md rounded-lg">
+                        <div class="p-4 border-b border-gray-200">
+                            <h5 class="text-lg font-semibold">Details Album</h5>
                         </div>
-                        <div class="card-body row">
-                            <div class="form-group col-lg-12 col-12">
-                                <div class="position-relative">
-                                    <img id="preview_1" class="card-img-top mt-2 img-fluid" src="#" alt="Preview"
-                                        style="display: none; align-items: center; max-width: 700px;">
-                                </div>
-                                <label for="file_1">Gallery Images 1</label>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <input type="file" name="file_1" id="file_1" class="form-control"
-                                        accept="image/*" onchange="previewImage(this, 'preview_1')">
-                                    <button type="button" style="margin-left: 5px" id="add_more"
-                                        class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="button" style="margin-left: 5px" id="remove" class="btn btn-danger"><i
-                                            class="fa-solid fa-minus"></i></button>
-                                </div>
-                                @error('file_1')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            @for ($i = 2; $i <= 20; $i++)
-                                <div class="form-group col-lg-6 col-12" id="file_{{ $i }}_div"
-                                    style="display: none;">
-                                    <div class="position-relative">
-
-                                        <img id="preview_{{ $i }}" class="card-img-top mt-2 img-fluid"
-                                            src="#" alt="Preview" style="display: none; max-width: 400px;">
+                        <div class="p-4">
+                            <div id="gallery-images-container">
+                                <div class="mb-4" id="file_1_div">
+                                    <div class="relative mb-2">
+                                        <img id="preview_1" class="w-full h-auto object-cover rounded-md" src="#"
+                                            alt="Preview" style="display: none;">
                                     </div>
-                                    <label for="file_{{ $i }}">Gallery Images {{ $i }}</label>
-                                    <input type="file" class="form-control" name="file_{{ $i }}"
-                                        id="file_{{ $i }}" accept="image/*"
-                                        onchange="previewImage(this, 'preview_{{ $i }}')">
-                                    @error('file_' . $i)
-                                        <small class="text-danger">{{ $message }}</small>
+                                    <label for="file_1" class="block text-gray-700 text-sm font-bold mb-2">Gallery Images
+                                        1</label>
+                                    <div class="flex items-center">
+                                        <input type="file" name="file_1" id="file_1"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            accept="image/*" onchange="previewImage(this, 'preview_1')">
+                                        <button type="button"
+                                            class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                                            id="add_more"><i class="fa-solid fa-plus"></i></button>
+                                        <button type="button"
+                                            class="ml-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                                            id="remove_last"><i class="fa-solid fa-minus"></i></button>
+                                    </div>
+                                    @error('file_1')
+                                        <small class="text-red-500 text-xs italic">{{ $message }}</small>
                                     @enderror
                                 </div>
-                            @endfor
-                            <div id="warning" class="text-danger" style="display: none;">Maksimal 20 Foto.</div>
-
+                                @for ($i = 2; $i <= 20; $i++)
+                                    <div class="mb-4" id="file_{{ $i }}_div" style="display: none;">
+                                        <div class="relative mb-2">
+                                            <img id="preview_{{ $i }}"
+                                                class="w-full h-auto object-cover rounded-md" src="#" alt="Preview"
+                                                style="display: none;">
+                                        </div>
+                                        <label for="file_{{ $i }}"
+                                            class="block text-gray-700 text-sm font-bold mb-2">Gallery Images
+                                            {{ $i }}</label>
+                                        <input type="file"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            name="file_{{ $i }}" id="file_{{ $i }}" accept="image/*"
+                                            onchange="previewImage(this, 'preview_{{ $i }}')">
+                                        @error('file_' . $i)
+                                            <small class="text-red-500 text-xs italic">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                @endfor
+                            </div>
+                            <div id="warning" class="text-red-500 text-sm italic mt-2" style="display: none;">Maksimal 20
+                                Foto.</div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </section>
-@endsection
-@section('custom-js')
-    <script>
-        $(document).ready(function() {
-            var currentAttachment = 2;
-            $('#add_more').click(function() {
-                if (currentAttachment <= 20) {
-                    $('#file_' + currentAttachment + '_div').show();
-                    currentAttachment++;
-                }
-                if (currentAttachment > 20) {
-                    $('#warning').show();
-                }
-            });
-            $('#remove').click(function() {
-                if (currentAttachment > 2) {
-                    currentAttachment--;
-                    $('#file_' + currentAttachment + '_div').hide();
-                    if (currentAttachment <= 20) {
-                        $('#warning').hide();
-                    }
-                }
-            });
-        });
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let currentAttachment = 1; // Start from 1 as the first input is always visible
+                const maxAttachments = 20;
+                const galleryContainer = document.getElementById('gallery-images-container');
+                const addMoreBtn = document.getElementById('add_more');
+                const removeLastBtn = document.getElementById('remove_last');
+                const warningMessage = document.getElementById('warning');
 
-        function previewImage(input, imgId) {
-            const preview = document.getElementById(imgId);
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
+                addMoreBtn.addEventListener('click', function() {
+                    if (currentAttachment < maxAttachments) {
+                        currentAttachment++;
+                        const nextFileInputDiv = document.getElementById('file_' + currentAttachment + '_div');
+                        if (nextFileInputDiv) {
+                            nextFileInputDiv.style.display = 'block';
+                        }
+                        if (currentAttachment === maxAttachments) {
+                            warningMessage.style.display = 'block';
+                        }
+                    }
+                });
+
+                removeLastBtn.addEventListener('click', function() {
+                    if (currentAttachment > 1) { // Ensure at least one input remains
+                        const currentFileInputDiv = document.getElementById('file_' + currentAttachment +
+                            '_div');
+                        if (currentFileInputDiv) {
+                            // Clear the file input and hide the preview
+                            const fileInput = currentFileInputDiv.querySelector('input[type="file"]');
+                            if (fileInput) {
+                                fileInput.value = ''; // Clear the selected file
+                            }
+                            const previewImg = currentFileInputDiv.querySelector('img');
+                            if (previewImg) {
+                                previewImg.src = '#';
+                                previewImg.style.display = 'none';
+                            }
+                            currentFileInputDiv.style.display = 'none';
+                        }
+                        currentAttachment--;
+                        warningMessage.style.display = 'none'; // Hide warning if inputs are removed
+                    }
+                });
+            });
+
+            function previewImage(input, imgId) {
+                const preview = document.getElementById(imgId);
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.src = '#';
+                    preview.style.display = 'none';
                 }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.src = '#';
-                preview.style.display = 'none';
             }
-        }
-    </script>
+        </script>
+    @endpush
 @endsection
