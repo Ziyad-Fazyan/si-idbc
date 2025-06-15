@@ -141,7 +141,7 @@
                 </div>
 
                 <!-- Hidden Fields -->
-                <input type="hidden" name="jadkul_code" id="jadkul_code" value="{{ $jadkul->code }}">
+                <input type="hidden" name="jadkul_id" id="jadkul_id" value="{{ $jadkul->id }}">
                 <input type="hidden" name="author_id" id="author_id" value="{{ Auth::guard('mahasiswa')->user()->id }}">
 
                 <!-- Absen Mata Kuliah -->
