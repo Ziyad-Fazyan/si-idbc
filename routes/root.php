@@ -15,6 +15,9 @@ Route::get('/album-foto/search', [HomeController::class, 'gallerySearch'])->name
 Route::get('/album-foto/show/{slug}', [HomeController::class, 'galleryShow'])->name('root.gallery-show');
 Route::get('/admission/{slug}', [HomeController::class, 'prodiIndex'])->name('root.home-prodi');
 Route::get('/program-kuliah/{code}', [HomeController::class, 'prokuIndex'])->name('root.home-proku');
+Route::get('/visi-misi', function () {
+    return view('root.visi-misi'); // Sesuai path folder kamu
+})->name('visi-misi');
 
 // FORMULIR PPDB
 Route::prefix('ppdb')->name('ppdb.')->group(function () {
