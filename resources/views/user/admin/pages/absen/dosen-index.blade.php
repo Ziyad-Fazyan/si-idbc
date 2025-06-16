@@ -1,6 +1,20 @@
 @extends('base.base-dash-index')
 
-@section('title', 'Kelola Absensi Dosen')
+@section('title')
+    Kelola Absensi Dosen
+@endsection
+@section('menu')
+    Absensi Dosen
+@endsection
+@section('submenu')
+    Kelola Data
+@endsection
+@section('urlmenu')
+    {{ route('web-admin.absensi.dosen.index') }}
+@endsection
+@section('subdesc')
+    Halaman untuk mengelola data absensi dosen
+@endsection
 
 @section('content')
 <div class="p-6">
@@ -38,7 +52,7 @@
                 <h4 class="text-lg font-semibold text-gray-800">Filter Absensi Dosen</h4>
             </div>
             <div class="p-4">
-                <form action="{{ route($prefix . 'dosen.index') }}" method="GET">
+                <form action="{{ route($prefix . 'absensi.dosen.index') }}" method="GET">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label for="dosen_id" class="block text-sm font-medium text-gray-700 mb-1">Dosen</label>
@@ -79,7 +93,7 @@
                             <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <i class="fas fa-filter mr-1"></i> Filter
                             </button>
-                            <a href="{{ route($prefix . 'dosen.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                            <a href="{{ route($prefix . 'absensi.dosen.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                                 <i class="fas fa-sync-alt mr-1"></i> Reset
                             </a>
                         </div>
@@ -129,7 +143,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->absen_time }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route($prefix . 'dosen.show', $item->id) }}" class="text-blue-600 hover:text-blue-900">
+                                        <a href="{{ route($prefix . 'absensi.dosen.show', $item->id) }}" class="text-blue-600 hover:text-blue-900">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <button type="button" class="text-red-600 hover:text-red-900" data-modal-toggle="deleteModal{{ $item->id }}">
@@ -154,7 +168,7 @@
                                                 </div>
                                                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
                                                     <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10" data-modal-toggle="deleteModal{{ $item->id }}">Batal</button>
-                                                    <form action="{{ route($prefix . 'dosen.destroy', $item->id) }}" method="POST">
+                                                    <form action="{{ route($prefix . 'absensi.dosen.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Hapus</button>

@@ -159,6 +159,39 @@
         </ul>
     </li>
 
+    <!-- Dropdown Menu -->
+    @php
+        $absensiActive = Str::startsWith(request()->path(), 'web-admin/absensi');
+    @endphp
+
+    <li class="list-none">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $absensiActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-absensi">
+            <div class="flex items-center">
+                <i class="fa-solid fa-clipboard-check w-5 text-center mr-3"></i>
+                <span>Data Absensi</span>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+
+        <ul id="dropdown-absensi" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $absensiActive ? '' : 'hidden' }}">
+            <li
+                class="{{ Route::is('web-admin.absensi.dosen*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.absensi.dosen.index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">
+                    Absensi Dosen
+                </a>
+            </li>
+            <li
+                class="{{ Route::is('web-admin.absensi.mahasiswa*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route('web-admin.absensi.mahasiswa.index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">
+                    Absensi Mahasiswa
+                </a>
+            </li>
+        </ul>
+    </li>
+
     <!-- Academic Data Dropdown -->
     @php
         $akademikActive =

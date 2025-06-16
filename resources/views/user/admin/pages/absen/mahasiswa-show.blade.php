@@ -1,6 +1,20 @@
 @extends('base.base-dash-index')
 
-@section('title', 'Detail Absensi Mahasiswa')
+@section('title')
+    Detail Absensi Mahasiswa
+@endsection
+@section('menu')
+    Absensi Mahasiswa
+@endsection
+@section('submenu')
+    Detail Data
+@endsection
+@section('urlmenu')
+    {{ route('web-admin.absensi.mahasiswa.index') }}
+@endsection
+@section('subdesc')
+    Halaman untuk melihat detail data absensi mahasiswa
+@endsection
 
 @section('content')
 <div class="p-6">
@@ -22,7 +36,7 @@
                             <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
-                            <a href="{{ route($prefix . 'mahasiswa.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">Absensi Mahasiswa</a>
+                            <a href="{{ route($prefix . 'absensi.mahasiswa.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">Absensi Mahasiswa</a>
                         </div>
                     </li>
                     <li aria-current="page">
@@ -42,7 +56,7 @@
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h4 class="text-lg font-semibold">Informasi Absensi</h4>
-                <a href="{{ route($prefix . 'mahasiswa.index') }}" class="flex items-center text-sm bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition">
+                <a href="{{ route($prefix . 'absensi.mahasiswa.index') }}" class="flex items-center text-sm bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition">
                     <i class="bi bi-arrow-left mr-2"></i> Kembali
                 </a>
             </div>
@@ -130,7 +144,7 @@
                 <h4 class="text-lg font-semibold">Update Status Absensi</h4>
             </div>
             <div class="p-6">
-                <form action="{{ route($prefix . 'mahasiswa.update-status', $absensi->id) }}" method="POST">
+                <form action="{{ route($prefix . 'absensi.mahasiswa.update-status', $absensi->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

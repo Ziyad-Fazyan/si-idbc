@@ -1,6 +1,20 @@
 @extends('base.base-dash-index')
 
-@section('title', 'Detail Absensi Dosen')
+@section('title')
+    Detail Absensi Dosen
+@endsection
+@section('menu')
+    Absensi Dosen
+@endsection
+@section('submenu')
+    Detail Data
+@endsection
+@section('urlmenu')
+    {{ route('web-admin.absensi.dosen.index') }}
+@endsection
+@section('subdesc')
+    Halaman untuk melihat detail data absensi dosen
+@endsection
 
 @section('content')
     <div class="p-6">
@@ -26,7 +40,7 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2" d="m1 9 4-4-4-4" />
                                     </svg>
-                                    <a href="{{ route($prefix . 'dosen.index') }}"
+                                    <a href="{{ route($prefix . 'absensi.dosen.index') }}"
                                         class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">Absensi
                                         Dosen</a>
                                 </div>
@@ -51,7 +65,7 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="flex justify-between items-center p-4 border-b border-gray-200">
                     <h4 class="text-lg font-semibold text-gray-800">Informasi Absensi</h4>
-                    <a href="{{ route($prefix . 'dosen.index') }}"
+                    <a href="{{ route($prefix . 'absensi.dosen.index') }}"
                         class="flex items-center px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
                         <i class="fas fa-arrow-left mr-2"></i> Kembali
                     </a>
@@ -145,7 +159,7 @@
                     <h4 class="text-lg font-semibold text-gray-800">Update Status Absensi</h4>
                 </div>
                 <div class="p-6">
-                    <form action="{{ route($prefix . 'dosen.update-status', $absensi->id) }}" method="POST">
+                    <form action="{{ route($prefix . 'absensi.dosen.update-status', $absensi->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
