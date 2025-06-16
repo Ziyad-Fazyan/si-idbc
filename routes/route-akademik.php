@@ -39,6 +39,22 @@ Route::group([
             Route::delete('/{code}/destroy', [WorkersController::class, 'destroyStudent'])->name('workers.student-destroy');
         });
 
+        Route::prefix('absensi')->name('absensi.')->group(function () {
+            Route::prefix('dosen')->name('dosen.')->group(function () {
+                Route::get('/', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'indexDosen'])->name('index');
+                Route::get('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'showDosen'])->name('show');
+                Route::put('/{id}/update-status', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'updateStatusDosen'])->name('update-status');
+                Route::delete('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'destroyDosen'])->name('destroy');
+            });
+
+            Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+                Route::get('/', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'indexMahasiswa'])->name('index');
+                Route::get('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'showMahasiswa'])->name('show');
+                Route::put('/{id}/update-status', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'updateStatusMahasiswa'])->name('update-status');
+                Route::delete('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'destroyMahasiswa'])->name('destroy');
+            });
+        });
+
         // SERVICE CONVERT EXPORT - IMPORT
         Route::prefix('services/convert')->group(function() {
             Route::get('/export-student', [ExportController::class, 'exportStudent'])->name('services.convert.export-student');

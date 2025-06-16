@@ -78,11 +78,27 @@ Route::group([
             });
         });
 
-         // Mahasiswa Health Routes
+        // Mahasiswa Health Routes
         Route::prefix('data-kesehatan-mahasiswa')->name('mahasiswa-health.')->group(function () {
             Route::get('/', [MahasiswaHealthController::class, 'index'])->name('index');
             Route::get('/{code}/edit', [MahasiswaHealthController::class, 'edit'])->name('edit');
             Route::patch('/{code}/update', [MahasiswaHealthController::class, 'update'])->name('update');
+        });
+
+        Route::prefix('absensi')->name('absensi.')->group(function () {
+            Route::prefix('dosen')->name('dosen.')->group(function () {
+                Route::get('/', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'indexDosen'])->name('index');
+                Route::get('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'showDosen'])->name('show');
+                Route::put('/{id}/update-status', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'updateStatusDosen'])->name('update-status');
+                Route::delete('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'destroyDosen'])->name('destroy');
+            });
+
+            Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+                Route::get('/', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'indexMahasiswa'])->name('index');
+                Route::get('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'showMahasiswa'])->name('show');
+                Route::put('/{id}/update-status', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'updateStatusMahasiswa'])->name('update-status');
+                Route::delete('/{id}', [App\Http\Controllers\Admin\AbsensiAdminController::class, 'destroyMahasiswa'])->name('destroy');
+            });
         });
 
         // MASTER DATA ROUTES
