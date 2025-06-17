@@ -18,6 +18,7 @@ Route::group([
 
         // MUTABA'AH
         Route::resource('mutabaah', MutabaahController::class);
+        Route::delete('mutabaah/{mutabaah}', [MutabaahController::class, 'delete'])->name('mutabaah.delete');
         Route::resource('mutabaah-fields', MutabaahFieldController::class);
     });
 });

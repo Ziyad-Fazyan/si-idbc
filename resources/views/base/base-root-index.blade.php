@@ -245,9 +245,9 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('root.home-advice') }}"
+                                    <a href="{{ route('ppdb.form') }}"
                                        class="px-4 py-3 flex items-center text-sm font-medium hover:bg-teal-50 hover:text-teal-800 transition rounded-md
-                                              {{ request()->routeIs('root.home-advice') ? 'text-teal-800 bg-teal-50' : 'text-gray-700' }}">
+                                              {{ request()->routeIs('ppdb.form') ? 'text-teal-800 bg-teal-50' : 'text-gray-700' }}">
                                         <i class="fas fa-envelope-open-text mr-2"></i> Pendaftaran
                                     </a>
                                 </li>
@@ -409,7 +409,7 @@
 <!-- Floating Buttons Container -->
 <div class="fixed bottom-3 right-8 z-50 flex gap-4">
     <!-- Register Button -->
-    <a href="{{ route('root.home-advice') }}" title="Pendaftaran Mahasiswa Baru"
+    <a href="{{ route('ppdb.form') }}" title="Pendaftaran Mahasiswa Baru"
         class="bg-blue-500 hover:bg-blue-600 rounded-full p-4 shadow-lg transition-transform transform hover:scale-110 flex items-center justify-center" style="width: 200px; height: 50px;">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 576 512" fill="currentColor">
             <path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>
