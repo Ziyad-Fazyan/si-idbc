@@ -15,50 +15,59 @@
     Halaman untuk membuka ticket support
 @endsection
 @section('custom-css')
+    <!-- Custom CSS section for additional styles if needed -->
 @endsection
 @section('content')
-    <section class="min-h-screen bg-[#F3EFEA] py-8 px-4 sm:px-6 lg:px-8">
+    <!-- Main container with consistent padding -->
+    <div class="container mx-auto px-4 py-6">
+        <!-- Ticket creation form -->
         <form action="{{ route('mahasiswa.support.ticket-store') }}" method="POST" enctype="multipart/form-data"
             class="max-w-4xl mx-auto">
             @csrf
 
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <!-- Card Header -->
-                <div class="bg-[#0C6E71] px-6 py-4 border-b border-[#E4E2DE]">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-semibold text-white">
+            <!-- Form card with shadow and rounded corners -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <!-- Card header with border and background -->
+                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                            <!-- Ticket icon for consistency -->
+                            <i class="fas fa-ticket-alt text-blue-600 mr-2"></i>
                             @yield('menu')
                         </h2>
-                        <a href="@yield('urlmenu')" class="text-white hover:text-[#FF6B35] transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        <!-- Back button with icon -->
+                        <a href="@yield('urlmenu')"
+                            class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors mt-2 sm:mt-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
+                            Kembali
                         </a>
                     </div>
                 </div>
 
-                <!-- Card Body -->
+                <!-- Form body with spacing -->
                 <div class="p-6 space-y-6">
-                    <!-- Form Grid -->
+                    <!-- Grid layout for form inputs -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Nama Mahasiswa -->
+                        <!-- Student name input -->
                         <div class="space-y-2">
-                            <label for="mhs_name" class="block text-sm font-medium text-[#2E2E2E]">Nama Mahasiswa</label>
+                            <label for="mhs_name" class="block text-sm font-medium text-gray-800">Nama Mahasiswa</label>
                             <input type="text" name="mhs_name" id="mhs_name"
-                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]"
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
                                 value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}" readonly>
                             @error('mhs_name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <!-- Departement -->
+                        <!-- Department select -->
                         <div class="space-y-2">
-                            <label for="dept_id" class="block text-sm font-medium text-[#2E2E2E]">Pilih Departement</label>
+                            <label for="dept_id" class="block text-sm font-medium text-gray-800">Pilih Departement</label>
                             <select name="dept_id" id="dept_id"
-                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                                 <option value="">Pilih Departement Tujuan</option>
                                 <option value="1" {{ $dept == 1 ? 'selected' : '' }}>Departement Finance</option>
                                 <option value="2" {{ $dept == 2 ? 'selected' : '' }}>Departement Absen</option>
@@ -72,11 +81,11 @@
                             @enderror
                         </div>
 
-                        <!-- Prioritas -->
+                        <!-- Priority level select -->
                         <div class="space-y-2">
-                            <label for="prio_id" class="block text-sm font-medium text-[#2E2E2E]">Level Prioritas</label>
+                            <label for="prio_id" class="block text-sm font-medium text-gray-800">Level Prioritas</label>
                             <select name="prio_id" id="prio_id"
-                                class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                                class="w-full px-3 py-2 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                                 <option value="">Pilih Prioritas</option>
                                 <option value="0">Rendah</option>
                                 <option value="1">Medium</option>
@@ -89,31 +98,31 @@
                         </div>
                     </div>
 
-                    <!-- Subject -->
+                    <!-- Subject input -->
                     <div class="space-y-2">
-                        <label for="subject" class="block text-sm font-medium text-[#2E2E2E]">Subject</label>
+                        <label for="subject" class="block text-sm font-medium text-gray-800">Subject</label>
                         <input type="text" name="subject" id="subject" required
-                            class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]"
+                            class="w-full px-3 py-2 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
                             placeholder="Inputkan subject ticket...">
                         @error('subject')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <!-- Message -->
+                    <!-- Message textarea -->
                     <div class="space-y-2">
-                        <label for="message" class="block text-sm font-medium text-[#2E2E2E]">Message</label>
+                        <label for="message" class="block text-sm font-medium text-gray-800">Message</label>
                         <textarea name="message" id="summernote" cols="30" rows="10"
-                            class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35] min-h-[200px]"></textarea>
+                            class="w-full px-3 py-2 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 min-h-[200px]"></textarea>
                         @error('message')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <!-- Submit Button -->
+                    <!-- Submit button container -->
                     <div class="flex justify-end">
                         <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#FF6B35] hover:bg-[#E05D2E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B35] transition-colors">
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -125,53 +134,37 @@
                 </div>
             </div>
         </form>
-    </section>
+    </div>
 
+    <!-- JavaScript for priority level color coding -->
     <script>
-        // Simple JavaScript for enhanced interactivity
         document.addEventListener('DOMContentLoaded', function() {
-            // Add focus styles programmatically
-            const inputs = document.querySelectorAll('input, select, textarea');
-
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.classList.add('ring-2', 'ring-[#FF6B35]', 'ring-opacity-50');
-                });
-
-                input.addEventListener('blur', function() {
-                    this.parentElement.classList.remove('ring-2', 'ring-[#FF6B35]',
-                        'ring-opacity-50');
-                });
-            });
-
-            // Priority level color coding
             const prioritySelect = document.getElementById('prio_id');
             if (prioritySelect) {
                 prioritySelect.addEventListener('change', function() {
                     const selectedOption = this.options[this.selectedIndex];
-                    // Remove any existing color classes
                     this.classList.remove('border-red-300', 'border-yellow-300', 'border-green-300',
                         'border-orange-500');
+                    this.classList.add('border-gray-200');
 
-                    // Add appropriate color based on priority
                     switch (selectedOption.value) {
-                        case '0': // Low
-                            this.classList.add('border-green-300');
+                        case '0':
+                            this.classList.add('border-green-400');
                             break;
-                        case '1': // Medium
-                            this.classList.add('border-yellow-300');
+                        case '1':
+                            this.classList.add('border-yellow-400');
                             break;
-                        case '2': // High
+                        case '2':
                             this.classList.add('border-orange-500');
                             break;
-                        case '3': // Urgent
-                            this.classList.add('border-red-300');
+                        case '3':
+                            this.classList.add('border-red-500');
                             break;
                     }
                 });
+
+                prioritySelect.dispatchEvent(new Event('change'));
             }
         });
     </script>
-@endsection
-@section('custom-js')
 @endsection

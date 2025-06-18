@@ -14,17 +14,18 @@
     Halaman untuk melihat daftar ticket support
 @endsection
 @section('content')
+    <!-- Main section container -->
     <section class="min-h-screen bg-[#F3EFEA] p-4 md:p-6">
         <div class="max-w-7xl mx-auto">
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                <!-- Card Header -->
+                <!-- Card header -->
                 <div class="bg-[#0C6E71] px-6 py-4 border-b border-[#E4E2DE]">
                     <h1 class="text-2xl font-semibold text-white">Daftar Ticket Support</h1>
                 </div>
 
-                <!-- Card Body -->
+                <!-- Card body -->
                 <div class="p-6 bg-white">
-                    <!-- Table (Placeholder - akan diisi dengan data) -->
+                    <!-- Table container -->
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-[#E4E2DE]">
                             <thead class="bg-[#F3EFEA]">
@@ -44,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-[#E4E2DE]">
-                                <!-- Placeholder row -->
+                                <!-- Example data row -->
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">#12345</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-[#2E2E2E]">Masalah login</td>
@@ -60,7 +61,7 @@
                         </table>
                     </div>
 
-                    <!-- Pagination (Placeholder) -->
+                    <!-- Pagination controls -->
                     <div class="mt-6 flex items-center justify-between">
                         <div class="text-sm text-[#3B3B3B]">
                             Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">10</span> dari
@@ -80,21 +81,19 @@
         </div>
     </section>
 
-    <!-- JavaScript untuk interaktivitas -->
+    <!-- JavaScript for interactivity -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Contoh interaksi: toggle detail ticket
+            // Example interaction: toggle ticket detail
             document.querySelectorAll('[data-toggle="ticket-detail"]').forEach(button => {
                 button.addEventListener('click', function() {
                     const ticketId = this.getAttribute('data-ticket-id');
-                    // Implementasi logika untuk menampilkan detail ticket
-                    console.log(Menampilkan detail ticket $ {
-                        ticketId
-                    });
+                    // Logic to show ticket detail
+                    console.log(`Menampilkan detail ticket ${ticketId}`);
                 });
             });
 
-            // Tambahkan interaksi lainnya sesuai kebutuhan
+            // Add other interactions as needed
         });
     </script>
 @endsection
