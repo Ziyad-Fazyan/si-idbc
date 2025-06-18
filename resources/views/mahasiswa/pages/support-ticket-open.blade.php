@@ -24,7 +24,6 @@
                             <i class="fas fa-ticket-alt text-blue-600 mr-2"></i>
                             @yield('menu')
                         </h2>
-                        <p class="mt-1 text-sm text-gray-500">@yield('subdesc')</p>
                     </div>
                 </div>
             </div>

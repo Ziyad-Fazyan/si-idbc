@@ -15,7 +15,7 @@
     Halaman untuk mengubah profile pengguna
 @endsection
 @section('content')
-    <section class="min-h-screen bg-[#F3EFEA] py-8 px-4 sm:px-6">
+    <section class="min-h-screen py-8 px-4 sm:px-6">
         <div class="max-w-6xl mx-auto">
             <h1 class="text-2xl font-bold text-[#2E2E2E] mb-6">Profile Mahasiswa</h1>
 
@@ -115,7 +115,8 @@
                                                     Lengkap</label>
                                                 <input type="text" name="mhs_name" id="mhs_name"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
-                                                    readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_name }}">
+                                                    readonly
+                                                    value="{{ Auth::guard('mahasiswa')->user()->mhs_name ?? '-' }}">
                                                 @error('mhs_name')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -126,7 +127,7 @@
                                                     class="block text-sm font-medium text-[#2E2E2E] mb-1">Nomor NIM</label>
                                                 <input type="text" name="mhs_nim" id="mhs_nim"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
-                                                    readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_nim }}">
+                                                    readonly value="{{ Auth::guard('mahasiswa')->user()->mhs_nim ?? '-' }}">
                                                 @error('mhs_nim')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -139,7 +140,7 @@
                                                 <input type="text" name="year_id" id="year_id"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
                                                     readonly
-                                                    value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas()->first()->taka->year_start }}">
+                                                    value="Angkatan {{ Auth::guard('mahasiswa')->user()->kelas()->first()?->taka?->year_start ?? '-' }}">
                                                 @error('year_id')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -151,7 +152,7 @@
                                                 <input type="text" name="faku_id" id="faku_id"
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100"
                                                     readonly
-                                                    value="{{ Auth::guard('mahasiswa')->user()->kelas()->first()->pstudi->fakultas->name }}">
+                                                    value="{{ Auth::guard('mahasiswa')->user()->kelas()->first()->pstudi->fakultas->name ?? '-' }}">
                                                 @error('faku_id')
                                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                                 @enderror
@@ -167,7 +168,7 @@
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100">
                                                     @foreach (Auth::guard('mahasiswa')->user()->kelas as $kelas)
                                                         <div class="mb-1">
-                                                            {{ $kelas->pstudi->name . ' - ' . $kelas->taka->semester }}
+                                                            {{ ($kelas->pstudi->name ?? '-') . ' - ' . ($kelas->taka->semester ?? '-') }}
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -179,7 +180,8 @@
                                                 <div
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md bg-gray-100">
                                                     @foreach (Auth::guard('mahasiswa')->user()->kelas as $kelas)
-                                                        <div class="mb-1">{{ $kelas->code }} / {{ $kelas->name }}
+                                                        <div class="mb-1">{{ $kelas->code ?? '-' }} /
+                                                            {{ $kelas->name ?? '-' }}
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -240,22 +242,22 @@
                                                     class="w-full px-3 py-2 border border-[#E4E2DE] rounded-md">
                                                     <option value="">Pilih Agama</option>
                                                     <option value="1"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '1' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '1' ? 'selected' : '' }}>
                                                         Agama Islam</option>
                                                     <option value="2"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '2' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '2' ? 'selected' : '' }}>
                                                         Agama Kristen Protestan</option>
                                                     <option value="3"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '3' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '3' ? 'selected' : '' }}>
                                                         Agama Kriten Katholik</option>
                                                     <option value="4"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '4' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '4' ? 'selected' : '' }}>
                                                         Agama Hindu</option>
                                                     <option value="5"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '5' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '5' ? 'selected' : '' }}>
                                                         Agama Buddha</option>
                                                     <option value="6"
-                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails->raw_mhs_reli === '6' ? 'selected' : '' }}>
+                                                        {{ Auth::guard('mahasiswa')->user()->mahasiswaDetails?->raw_mhs_reli === '6' ? 'selected' : '' }}>
                                                         Agama Konghuchu</option>
                                                 </select>
                                                 @error('mhs_reli')
@@ -556,90 +558,91 @@
         </div>
     </section>
 
-    <!-- JavaScript for Tab Functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tab functionality
-            const tabs = document.querySelectorAll('[data-tabs-target]');
-            const tabContents = document.querySelectorAll('[role="tabpanel"]');
+    @push('scripts')
+        <!-- JavaScript for Tab Functionality -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Tab functionality
+                const tabs = document.querySelectorAll('[data-tabs-target]');
+                const tabContents = document.querySelectorAll('[role="tabpanel"]');
 
-            // Show first tab by default
-            if (tabs.length > 0 && tabContents.length > 0) {
-                document.querySelector(tabs[0].getAttribute('data-tabs-target')).classList.remove('hidden');
-                tabs[0].classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
-                tabs[0].classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
+                // Show first tab by default
+                if (tabs.length > 0 && tabContents.length > 0) {
+                    document.querySelector(tabs[0].getAttribute('data-tabs-target')).classList.remove('hidden');
+                    tabs[0].classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+                    tabs[0].classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
 
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        const target = document.querySelector(tab.getAttribute('data-tabs-target'));
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const target = document.querySelector(tab.getAttribute('data-tabs-target'));
 
-                        // Hide all tab contents
-                        tabContents.forEach(content => {
-                            content.classList.add('hidden');
+                            // Hide all tab contents
+                            tabContents.forEach(content => {
+                                content.classList.add('hidden');
+                            });
+
+                            // Remove active styles from all tabs
+                            tabs.forEach(t => {
+                                t.classList.remove('border-[#FF6B35]', 'text-[#FF6B35]');
+                                t.classList.add('hover:text-[#2E2E2E]',
+                                    'hover:border-[#E4E2DE]');
+                            });
+
+                            // Show selected tab content
+                            target.classList.remove('hidden');
+
+                            // Add active styles to selected tab
+                            tab.classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+                            tab.classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
                         });
+                    });
+                }
 
-                        // Remove active styles from all tabs
-                        tabs.forEach(t => {
-                            t.classList.remove('border-[#FF6B35]', 'text-[#FF6B35]');
-                            t.classList.add('hover:text-[#2E2E2E]',
-                                'hover:border-[#E4E2DE]');
-                        });
+                // Toggle password visibility
+                document.querySelectorAll('.toggle-password').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-target');
+                        const input = document.getElementById(targetId);
+                        const icon = this.querySelector('i');
 
-                        // Show selected tab content
-                        target.classList.remove('hidden');
-
-                        // Add active styles to selected tab
-                        tab.classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
-                        tab.classList.remove('hover:text-[#2E2E2E]', 'hover:border-[#E4E2DE]');
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            icon.classList.remove('fa-eye');
+                            icon.classList.add('fa-eye-slash');
+                        } else {
+                            input.type = 'password';
+                            icon.classList.remove('fa-eye-slash');
+                            icon.classList.add('fa-eye');
+                        }
                     });
                 });
-            }
+            });
+        </script>
 
-            // Toggle password visibility
-            document.querySelectorAll('.toggle-password').forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetId = this.getAttribute('data-target');
-                    const input = document.getElementById(targetId);
-                    const icon = this.querySelector('i');
-
-                    if (input.type === 'password') {
-                        input.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
+        <script>
+            document.getElementById("mhs_image").onchange = function(event) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var output = document.querySelector('.card-img-top');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            };
+        </script>
+        <script>
+            const showPasswordButtons = document.querySelectorAll('.btn-outline-danger');
+            showPasswordButtons.forEach((btn, index) => {
+                const passwordInput = btn.previousElementSibling;
+                btn.addEventListener('click', () => {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text'; // Show password
+                        btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; // Change icon to eye-slash
                     } else {
-                        input.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
+                        passwordInput.type = 'password'; // Hide password
+                        btn.innerHTML = '<i class="fa-solid fa-eye"></i>'; // Change icon back to eye
                     }
                 });
             });
-        });
-    </script>
-@endsection
-@section('custom-js')
-    <script>
-        document.getElementById("mhs_image").onchange = function(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.querySelector('.card-img-top');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        };
-    </script>
-    <script>
-        const showPasswordButtons = document.querySelectorAll('.btn-outline-danger');
-        showPasswordButtons.forEach((btn, index) => {
-            const passwordInput = btn.previousElementSibling;
-            btn.addEventListener('click', () => {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text'; // Show password
-                    btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; // Change icon to eye-slash
-                } else {
-                    passwordInput.type = 'password'; // Hide password
-                    btn.innerHTML = '<i class="fa-solid fa-eye"></i>'; // Change icon back to eye
-                }
-            });
-        });
-    </script>
+        </script>
+    @endpush
 @endsection
