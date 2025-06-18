@@ -24,7 +24,7 @@ class JadwalAjarController extends Controller
         $data['jadkul'] = JadwalKuliah::with(['matkul', 'dosen', 'kelas', 'ruang'])
             ->where('dosen_id', $dosenId->id)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('dosen.pages.jadwal-index', $data);
     }

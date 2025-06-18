@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function saveImageProfile(Request $request)
     {
         $request->validate([
-            'dsn_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
+            'dsn_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8192',
         ]);
 
         $user = Auth::guard('dosen')->user();
@@ -48,6 +48,11 @@ class HomeController extends Controller
             $name = 'profile-' . $user->dsn_code . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = storage_path('app/public/images/profile/dosen');
             $destinationPaths = storage_path('app/public/images');
+
+            // Ensure the destination directory exists
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
 
             // Compress image
             $manager = new ImageManager(new Driver());

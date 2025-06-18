@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <section class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6">
+    <section class="min-h-screen py-4 px-2 sm:px-3">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-between mb-8">
                 <div>
@@ -155,7 +155,7 @@
                         <!-- Tab Content -->
                         <div>
                             <!-- Personal Tab -->
-                            <div id="personal" class="tab-content p-6">
+                            <div id="personal" class="tab-content tab-pane p-6" role="tabpanel" aria-labelledby="personal-tab">
                                 <form action="{{ route('dosen.home-profile-save-data') }}" method="POST" id="personalDataForm">
                                     @method('PATCH')
                                     @csrf
@@ -277,7 +277,7 @@
                             </div>
 
                             <!-- Contact Tab -->
-                            <div class="hidden p-6" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="tab-content tab-pane hidden p-6" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <form action="{{ route('dosen.home-profile-save-kontak') }}" method="POST">
                                     @method('PATCH')
                                     @csrf
@@ -331,7 +331,7 @@
                             </div>
 
                             <!-- Security Tab -->
-                            <div class="hidden p-6" id="security" role="tabpanel" aria-labelledby="security-tab">
+                            <div class="tab-content tab-pane hidden p-6" id="security" role="tabpanel" aria-labelledby="security-tab">
                                 <form action="{{ route('dosen.home-profile-save-password') }}" method="POST">
                                     @method('PATCH')
                                     @csrf
@@ -444,13 +444,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Tab functionality
             const tabs = document.querySelectorAll('[data-tabs-target]');
-            const tabContents = document.querySelectorAll('[role="tabpanel"]');
+            const tabContents = document.querySelectorAll('.tab-content');
 
             // Function to switch tabs
             function switchTab(tab) {
+                console.log('Switching to tab:', tab.id);
                 // Hide all tab contents
                 tabContents.forEach(content => {
+                    console.log('Hiding tab content:', content.id, 'Current classes:', content.className);
+                    console.log('Computed display before hide:', window.getComputedStyle(content).display);
                     content.classList.add('hidden');
+                    content.style.display = 'none'; // Explicitly hide
+                    console.log('Computed display after hide:', window.getComputedStyle(content).display);
                 });
 
                 // Remove active styles from all tabs
@@ -460,8 +465,17 @@
                 });
 
                 // Show selected tab content
-                const target = document.querySelector(tab.getAttribute('data-tabs-target'));
+                const targetSelector = tab.getAttribute('data-tabs-target');
+                console.log('Target selector:', targetSelector);
+                const target = document.querySelector(targetSelector);
+                if (!target) {
+                    console.error('Tab content not found for selector:', targetSelector);
+                    return;
+                }
+                console.log('Computed display before show:', window.getComputedStyle(target).display);
                 target.classList.remove('hidden');
+                target.style.display = 'block'; // Explicitly show
+                console.log('Computed display after show:', window.getComputedStyle(target).display);
 
                 // Add active styles to selected tab
                 tab.classList.add('border-[#0C6E71]', 'text-[#0C6E71]');
