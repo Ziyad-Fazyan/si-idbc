@@ -123,10 +123,10 @@
         var financeOptions = {
             series: [{
                 name: 'Pendapatan',
-                data: [31000, 40000, 28000, 51000, 42000, 82000, 56000]
+                data: @json($financeIncome)
             }, {
                 name: 'Pengeluaran',
-                data: [11000, 32000, 45000, 32000, 34000, 52000, 41000]
+                data: @json($financeExpense)
             }],
             chart: {
                 height: 250,
@@ -143,7 +143,7 @@
             },
             xaxis: {
                 type: 'category',
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]
+                categories: @json($financeMonths)
             },
             tooltip: {
                 x: {

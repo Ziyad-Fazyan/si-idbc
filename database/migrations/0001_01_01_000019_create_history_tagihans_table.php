@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('history_tagihans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained('mahasiswas');            // USERS ID
-            $table->foreignId('tagihan_code')->constrained('tagihan_kuliahs');         // KODE TAGIHAN
+            $table->string('tagihan_code');         // KODE TAGIHAN
             $table->integer('stat')->default(0);    // STATUS PEMBAYARAN
             $table->string('desc');                 // DESKRIPSI TAMBAHAN
             $table->string('code')->unique();       // KODE PEMBAYARAN

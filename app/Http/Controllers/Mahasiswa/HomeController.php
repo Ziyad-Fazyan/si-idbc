@@ -492,7 +492,7 @@ class HomeController extends Controller
         $balance->type = 1;
         $balance->desc = 'Reff pembayaran mahasiswa #' . $code;
         $balance->code = uniqid();
-        // $balance->author_id = Auth::user()->id;
+        $balance->author_id = Auth::guard('mahasiswa')->user()->id;
 
         $balance->save();
 

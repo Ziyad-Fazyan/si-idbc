@@ -26,13 +26,37 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $data['prefix'] = $this->setPrefix();
         $data['web'] = WebSettings::where('id', 1)->first();
+
+        // Total balances
         $data['balIncome'] = Balance::where('type', 1)->sum('value');
         $data['balExpense'] = Balance::where('type', 2)->sum('value');
         $data['balPending'] = Balance::where('type', 0)->sum('value');
         $data['balSekarang'] = $data['balIncome'] - $data['balExpense'];
+
+        // Prepare monthly income and expense data for the last 7 months
+        $months = [];
+        $incomeData = [];
+        $expenseData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $months[] = $month->format('M');
+            $incomeSum = Balance::where('type', 1)
+                ->whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->sum('value');
+            $expenseSum = Balance::where('type', 2)
+                ->whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->sum('value');
+            $incomeData[] = $incomeSum;
+            $expenseData[] = $expenseSum;
+        }
+
+        $data['financeMonths'] = $months;
+        $data['financeIncome'] = $incomeData;
+        $data['financeExpense'] = $expenseData;
 
         return view('user.home-index', $data);
     }
