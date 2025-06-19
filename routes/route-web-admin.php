@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Core\NotifyController;
+use App\Http\Controllers\Mahasiswa\HomeController as MahasiswaHomeController;
 use App\Http\Controllers\Core\WebSettingController;
 use App\Http\Controllers\Admin\Pages\WorkersController;
+use App\Http\Controllers\Admin\FaceRecognitionController;
 use App\Http\Controllers\Admin\Pages\Core\KelasController;
 use App\Http\Controllers\Admin\Pages\Core\FakultasController;
 use App\Http\Controllers\Admin\Pages\Core\KurikulumController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Admin\Pages\Inventory\CommodityController;
 use App\Http\Controllers\Admin\Pages\Finance\TicketSupportController;
 use App\Http\Controllers\Admin\Pages\Finance\GenerateTagihanController;
 use App\Http\Controllers\Admin\Pages\Inventory\CommodityAcquisitionController;
+use App\Models\Mahasiswa;
 
 // WEB ADMINISTRATOR ROUTES
 Route::group([
@@ -34,6 +37,14 @@ Route::group([
 
     // ACTIVE USER ROUTES
     Route::middleware(['is-active:1'])->group(function () {
+
+        // PRIVATE FUNCTION => ABSEN WAJAH
+        Route::get('/daftar-wajah', [FaceRecognitionController::class, 'daftar'])->name('daftar-wajah-index');
+        Route::get('/absen-wajah', [FaceRecognitionController::class, 'index'])->name('absen-wajah-index');
+        Route::post('/absen-wajah', [FaceRecognitionController::class, 'uploadFoto'])->name('absen-wajah');
+        Route::post('/absen-wajah/cek', [FaceRecognitionController::class, 'cekWajah'])->name('absen-wajah-cek');
+        Route::get('/hasil-absen', [FaceRecognitionController::class, 'hasilAbsen'])->name('face-results');
+        Route::post('/jadwal-kuliah/store/absen',[MahasiswaHomeController::class, 'jadkulAbsenStore'])->name('home-jadkul-absen-store');
 
         // WORKERS ROUTES
         Route::prefix('workers')->name('workers.')->group(function () {

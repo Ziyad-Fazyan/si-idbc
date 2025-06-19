@@ -161,6 +161,39 @@
 
     <!-- Dropdown Menu -->
     @php
+        $absensiActive = Route::is($prefix . 'daftar-wajah-index') || Route::is($prefix . 'absen-wajah-index');
+    @endphp
+
+    <li class="list-none">
+        <div class="dropdown-toggle flex items-center justify-between px-4 py-3 text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200 cursor-pointer {{ $absensiActive ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}"
+            data-target="dropdown-absensi-face">
+            <div class="flex items-center">
+                <i class="fa-solid fa-users-viewfinder w-5 text-center mr-3"></i>
+                <span>Absensi Wajah</span>
+            </div>
+            <i class="fa-solid fa-chevron-down transition-transform duration-200"></i>
+        </div>
+
+        <ul id="dropdown-absensi-face" class="dropdown-menu pl-12 mt-1 space-y-1 {{ $absensiActive ? '' : 'hidden' }}">
+            <li
+                class="{{ Route::is($prefix . 'daftar-wajah-index') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route($prefix . 'daftar-wajah-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">
+                    Daftar Wajah
+                </a>
+            </li>
+            <li
+                class="{{ Route::is($prefix . 'absen-wajah-index') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route($prefix . 'absen-wajah-index') }}"
+                    class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">
+                    Absen Wajah
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Dropdown Menu -->
+    @php
         $absensiActive = Str::startsWith(request()->path(), 'web-admin/absensi');
     @endphp
 
