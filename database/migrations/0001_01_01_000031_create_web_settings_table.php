@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('social_in');      // LINKEDIN KAMPUS
             $table->string('social_tw');      // TWITTER / X KAMPUS
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

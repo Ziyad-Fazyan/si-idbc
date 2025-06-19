@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained('mahasiswas')->onDelete('cascade');
             $table->date('tanggal');
             $table->json('data'); // data mutabaah disimpan dalam JSON
+            $table->softDeletes();
             $table->timestamps();
         });
     }

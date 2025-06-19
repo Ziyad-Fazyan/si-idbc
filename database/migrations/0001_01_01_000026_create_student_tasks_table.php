@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('detail_task');
             $table->date('exp_date');
             $table->time('exp_time');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

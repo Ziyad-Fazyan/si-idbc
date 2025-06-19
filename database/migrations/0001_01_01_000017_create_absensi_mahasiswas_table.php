@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('absen_date');                     // TANGGAL ABSEN
             $table->time('absen_time');                     // WAKTU ABSEN
             $table->text('absen_desc')->nullable();         // NOTED ABSEN
+            $table->softDeletes();
             $table->timestamps();
         });
     }

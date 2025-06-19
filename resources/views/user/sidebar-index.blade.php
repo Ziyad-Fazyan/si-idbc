@@ -17,8 +17,8 @@
     </a>
 </li>
 
-<li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Rutinitas</li>
-<li
+{{-- <li class="list-none text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3 tracking-wider">Menu Rutinitas</li> --}}
+{{-- <li
     class="list-none {{ Route::is($prefix . 'presensi.absen-harian', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
     <a href="{{ route($prefix . 'presensi.absen-harian') }}"
         class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
@@ -33,7 +33,7 @@
         <i class="fa-solid fa-calendar-xmark w-5 text-center mr-3"></i>
         <span>Absen Izin & Cuti</span>
     </a>
-</li>
+</li> --}}
 <li
     class="list-none {{ Route::is($prefix . 'support.ticket-index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
     <a href="{{ route($prefix . 'support.ticket-index') }}"

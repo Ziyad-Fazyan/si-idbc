@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('mhs_goldar', 3)->nullable(); // misal: A, B, O, AB
             $table->float('mhs_tinggi_badan')->nullable(); // cm
             $table->float('mhs_berat_badan')->nullable(); // kg
+            $table->softDeletes();
             $table->timestamps();
         });
     }

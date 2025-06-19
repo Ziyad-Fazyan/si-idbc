@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('value');
             $table->string('code');
             $table->string('desc');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

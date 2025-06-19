@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('start');                  // WAKTU MULAI PERKULIAHAN
             $table->time('ended');                  // WAKTU SELESAI PERKULIAHAN
             $table->string('code')->unique();       // CODE JADWAL KULIAH
+            $table->softDeletes();
             $table->timestamps();
         });
     }

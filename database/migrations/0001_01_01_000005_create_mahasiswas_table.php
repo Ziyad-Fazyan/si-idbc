@@ -36,6 +36,7 @@ return new class extends Migration
             $table->json('face_embedding')->nullable();
             $table->timestamp('token_created_at')->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

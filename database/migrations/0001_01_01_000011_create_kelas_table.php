@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('capacity')->nullable();    // Kapasitas Mahasiswa 
             $table->string('name');                     // Nama Kelas
             $table->string('code')->unique();           // Kode Kelas => Jurusan-Tahun-Proku-Semester(A-Z)
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('content');                        // ISI KONTEN
             $table->string('keywords');                         // KEYWORDS
             $table->string('metadesc');                         // META DESKRIPSI
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->longText('absen_desc')->nullable();
             $table->string('absen_proof')->nullable();
             $table->string('absen_code')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

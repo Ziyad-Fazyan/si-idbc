@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('fb_code')->unique();          // Kode FeedBack
             $table->enum('fb_score', ['Tidak Puas', 'Cukup Puas', 'Sangat Puas']);
             $table->text('fb_reason');                    // Alasan Dari Rating
+            $table->softDeletes();
             $table->timestamps();
         });
     }

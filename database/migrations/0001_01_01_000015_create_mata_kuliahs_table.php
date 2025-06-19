@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('name');                     // Nama Mata Kuliah
             $table->string('code')->unique();           // Kode Mata Kuliah
             $table->longText('desc');                   // Deskripsi Mata Kuliah
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique();      // Slug Program Studi
             $table->string('title')->nullable();     // Gelar Program Studi
             $table->string('level')->nullable();     // Jenjang Program Studi
+            $table->softDeletes();
             $table->timestamps();
         });
     }

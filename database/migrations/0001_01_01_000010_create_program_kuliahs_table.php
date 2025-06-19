@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('wave');      // Gelombang Program Kuliah ex: Gelombang I, Gelombang II
             $table->date('wave_start')->nullable();     // Tanggal Mulai Gelombang
             $table->date('wave_ended')->nullable();     // Tanggal Akhir Gelombang
+            $table->softDeletes();
             $table->timestamps();
         });
 

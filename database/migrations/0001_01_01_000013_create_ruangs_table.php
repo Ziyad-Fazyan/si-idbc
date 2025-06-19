@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('floor');           // LANTAI RUANGAN
             $table->string('name');             // NAMA RUANGAN
             $table->string('code')->unique();   // CODE RUANGAN
+            $table->softDeletes();
             $table->timestamps();
         });
     }

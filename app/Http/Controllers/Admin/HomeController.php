@@ -58,6 +58,14 @@ class HomeController extends Controller
         $data['financeIncome'] = $incomeData;
         $data['financeExpense'] = $expenseData;
 
+        // Add gender counts for charts
+        $data['male'] = Mahasiswa::where('mhs_gend', 'L')->count();
+        $data['female'] = Mahasiswa::where('mhs_gend', 'P')->count();
+        $data['dmale'] = Dosen::where('dsn_gend', 'L')->count();
+        $data['dfemale'] = Dosen::where('dsn_gend', 'P')->count();
+        $data['umale'] = User::where('gend', 'L')->count();
+        $data['ufemale'] = User::where('gend', 'P')->count();
+
         return view('user.home-index', $data);
     }
 

@@ -118,11 +118,11 @@
                             </li>
                             <li class="flex items-center justify-between py-2">
                                 <span class="text-sm text-gray-600">Total Mahasiswa</span>
-                                <span class="text-sm font-medium text-gray-800 bg-gray-100 px-2 py-1 rounded">{{ \App\Models\User::where('type', '7')->count() }}</span>
+                                <span class="text-sm font-medium text-gray-800 bg-gray-100 px-2 py-1 rounded">{{ \App\Models\Mahasiswa::where('mhs_stat', '1')->count() }}</span>
                             </li>
                             <li class="flex items-center justify-between py-2">
                                 <span class="text-sm text-gray-600">Total Dosen</span>
-                                <span class="text-sm font-medium text-gray-800 bg-gray-100 px-2 py-1 rounded">{{ \App\Models\User::where('type', '8')->count() }}</span>
+                                <span class="text-sm font-medium text-gray-800 bg-gray-100 px-2 py-1 rounded">{{ \App\Models\Dosen::where('dsn_stat', '1')->count() }}</span>
                             </li>
                         </ul>
                     </div>
@@ -135,9 +135,9 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
-        // Gender Charts
+        // Initialize charts with data passed from backend
         var genderMhsOptions = {
-            series: [65, 35], // Example data for male/female students
+            series: [{{ $male }}, {{ $female }}],
             chart: {
                 type: 'donut',
                 height: 200
@@ -161,7 +161,7 @@
         };
 
         var genderDsnOptions = {
-            series: [70, 30], // Example data for male/female lecturers
+            series: [{{ $dmale }}, {{ $dfemale }}],
             chart: {
                 type: 'donut',
                 height: 200
@@ -185,7 +185,7 @@
         };
 
         var genderStaffOptions = {
-            series: [40, 60], // Example data for male/female staff
+            series: [{{ $umale }}, {{ $ufemale }}],
             chart: {
                 type: 'donut',
                 height: 200
@@ -216,13 +216,5 @@
 
         var genderStaffChart = new ApexCharts(document.querySelector("#genderStaffChart"), genderStaffOptions);
         genderStaffChart.render();
-
-        // Time Frame Selector
-        document.getElementById('statsTimeFrame').addEventListener('change', function() {
-            // Here you would typically make an AJAX request to get new data
-            // For demo purposes, we'll just show an alert
-            alert('Changing time frame to: ' + this.value);
-            // In a real implementation, you would update the charts with new data
-        });
     </script>
 @endpush

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('attach_4')->nullable();         // ATTACHMENT 4
             $table->string('attach_5')->nullable();         // ATTACHMENT 5
             $table->string('attach_6')->nullable();         // ATTACHMENT 6
+            $table->softDeletes();
             $table->timestamps();
         });
     }

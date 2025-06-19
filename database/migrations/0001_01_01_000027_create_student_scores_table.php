@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('status')->default('Terkumpul');        // Status tugas: Terkumpul, Sudah dinilai
             $table->string('comment')->nullable();                 // Komentar dosen
             $table->string('code', 6);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

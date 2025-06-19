@@ -29,6 +29,7 @@ return new class extends Migration
             $table->longText('desc');                                      // DESCRIPTION NOTIFICATION
             $table->string('code')->unique();                            // CODE NOTIFICATION
             $table->boolean('read')->default(false);              // MARK AS READ
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('verify_token')->nullable();
             $table->timestamp('token_created_at')->nullable(); // new column
 
+            $table->softDeletes();
             $table->timestamps();
         });
 

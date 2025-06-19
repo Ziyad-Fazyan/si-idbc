@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('absen_desc')->nullable();        // KETERANGAN ABSEN
             $table->string('mata_kuliah');                 // NAMA MATA KULIAH
             $table->text('deskripsi_materi');              // DESKRIPSI MATERI YANG DIAJARKAN
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('locate')->default(0);              # 0 = FRONT MENU; 1 = GLOBAL MENU; 2 = USER MENU; 
             $table->integer('target')->default(0);              # 0 = FRONT MENU; 1 = GLOBAL MENU; 2 = USER MENU; 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

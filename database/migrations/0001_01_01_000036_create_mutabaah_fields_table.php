@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('label');
             $table->string('field_type'); // contoh: boolean, text, integer
             $table->json('options')->nullable(); // kalau ada pilihan opsional
+            $table->softDeletes();
             $table->timestamps();
         });
     }

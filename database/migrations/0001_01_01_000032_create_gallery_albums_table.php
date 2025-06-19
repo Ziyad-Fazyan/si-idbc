@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('file_18')->nullable();         // FILENAME
             $table->string('file_19')->nullable();         // FILENAME
             $table->string('file_20')->nullable();         // FILENAME
+            $table->softDeletes();
             $table->timestamps();
         });
     }

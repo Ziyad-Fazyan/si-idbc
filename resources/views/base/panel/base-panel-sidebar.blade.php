@@ -69,8 +69,18 @@
         @if (Auth::user()->raw_type === 0)
             <div class="py-1 mt-2">
                 <div class="text-xs font-semibold uppercase text-gray-500 mt-5 mb-2 ml-3">PENGATURAN</div>
-                <div class="{{ Route::is($prefix . 'system.setting-index', request()->path()) ? 'bg-green-50 border-l-4 border-green-600 font-semibold text-green-700' : '' }}">
-                    <a href="{{ route($prefix . 'system.setting-index') }}" class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-4 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+                <div
+                    class="{{ Route::is($prefix . 'trash.*') ? 'bg-green-50 border-l-4 border-green-600 font-semibold text-green-700' : '' }}">
+                    <a href="{{ route($prefix . 'trash.index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-4 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+                        <i class="fa-solid fa-gear w-5 text-center mr-3"></i>
+                        <span>Trash Management</span>
+                    </a>
+                </div>
+                <div
+                    class="{{ Route::is($prefix . 'system.setting-index', request()->path()) ? 'bg-green-50 border-l-4 border-green-600 font-semibold text-green-700' : '' }}">
+                    <a href="{{ route($prefix . 'system.setting-index') }}"
+                        class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-4 hover:border-green-600 hover:text-green-700 transition-all duration-200">
                         <i class="fa-solid fa-gear w-5 text-center mr-3"></i>
                         <span>Pengaturan Web</span>
                     </a>

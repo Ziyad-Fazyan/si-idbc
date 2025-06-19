@@ -25,6 +25,7 @@ return new class extends Migration
             $table->bigInteger('price');
             $table->bigInteger('price_per_item');
             $table->longText('note')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

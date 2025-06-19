@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');                     // NAMA TAGIHAN
             $table->string('code')->unique();           // CODE TAGIHAN
             $table->string('price');                    // PRICE TAGIHAN
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('desc');                 // DESKRIPSI TAMBAHAN
             $table->string('code')->unique();       // KODE PEMBAYARAN
             $table->string('snap_token')->nullable();       // KODE PEMBAYARAN
+            $table->softDeletes();
             $table->timestamps();
         });
     }

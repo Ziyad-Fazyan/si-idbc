@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('semester');
             $table->year('year_start');
             $table->integer('is_active')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
