@@ -10,213 +10,331 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 
-class FaceRecognitionController extends Controller
+class FaceRecognitionApiController extends Controller
 {
-    // Get list of students for face registration
-    public function getStudents()
+    protected $faceApiUrl;
+    protected $faceApiKey;
+
+    public function __construct()
     {
-        $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
-        return response()->json([
-            'success' => true,
-            'data' => $mahasiswas
-        ]);
+        $this->faceApiUrl = rtrim(env('FACE_API_URL'), '/') . '/';
+        $this->faceApiKey = env('FACE_API_KEY');
+        
+        if (empty($this->faceApiKey)) {
+            throw new \RuntimeException('FACE_API_KEY is not configured');
+        }
     }
 
-    // Upload face photo and save embedding
-    public function uploadFoto(Request $request)
+    /**
+     * @OA\Get(
+     *     path="/api/face-recognition/mahasiswa",
+     *     tags={"Face Recognition"},
+     *     summary="Get list of registered students",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of students",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Mahasiswa")
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function getStudents()
     {
-        $request->validate([
-            'mahasiswas_id' => 'required|exists:mahasiswas,id',
-            'foto' => 'required|image|max:2048',
-        ]);
-
         try {
-            $foto = fopen($request->file('foto')->getRealPath(), 'r');
-
-            // Send to FastAPI /embedding endpoint
-            $client = new Client();
-            $response = $client->post(env('FACE_API_URL'), [
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'contents' => $foto,
-                        'filename' => $request->file('foto')->getClientOriginalName(),
-                    ],
-                ],
-                'timeout' => 10,
-            ]);
-
-            $data = json_decode($response->getBody(), true);
-            $embedding = $data['embedding'] ?? null;
-
-            if (!$embedding) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Failed to get face embedding'
-                ], 400);
-            }
-
-            $mhs = Mahasiswa::find($request->mahasiswas_id);
-            $mhs->face_embedding = json_encode($embedding);
-            $mhs->save();
+            $mahasiswas = Mahasiswa::whereNotNull('face_token')
+                ->orderBy('mhs_name')
+                ->get();
 
             return response()->json([
                 'success' => true,
-                'message' => "Face embedding saved for {$mhs->mhs_name}",
-                'data' => [
-                    'mahasiswa_id' => $mhs->id,
-                    'name' => $mhs->mhs_name
-                ]
+                'data' => $mahasiswas
             ]);
-
         } catch (\Exception $e) {
+            Log::error('Failed to get student list: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to process face recognition: ' . $e->getMessage()
+                'message' => 'Failed to retrieve student list'
             ], 500);
         }
     }
 
-    // Check face against registered students
-    public function cekWajah(Request $request)
+    /**
+     * @OA\Post(
+     *     path="/api/face-recognition/register",
+     *     tags={"Face Recognition"},
+     *     summary="Register student face",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"mahasiswa_id", "foto"},
+     *                 @OA\Property(
+     *                     property="mahasiswa_id",
+     *                     type="integer",
+     *                     description="Student ID"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="foto",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Face image file"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Face registered successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Face registered successfully"),
+     *             @OA\Property(property="face_token", type="string", example="abc123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error or invalid request"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
+    public function uploadFoto(Request $request)
     {
         $request->validate([
-            'foto' => 'required|image|max:2048'
+            'mahasiswa_id' => 'required|exists:mahasiswas,id',
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         try {
-            $foto = $request->file('foto');
+            $mhs = Mahasiswa::findOrFail($request->mahasiswa_id);
+            
+            $fileStream = fopen($request->file('foto')->getRealPath(), 'r');
+            
+            try {
+                $client = new Client([
+                    'timeout' => 15,
+                    'connect_timeout' => 10,
+                ]);
 
-            // // Save the photo for attendance record
-            // $fotoName = 'face_recognition_' . time() . '.' . $foto->getClientOriginalExtension();
-            // $fotoPath = 'presensi/' . $fotoName;
-            // $destinationPath = storage_path('app/public/images/presensi');
-
-            // // Ensure directory exists
-            // if (!file_exists($destinationPath)) {
-            //     mkdir($destinationPath, 0755, true);
-            // }
-
-            // // Compress and save image
-            // $manager = new ImageManager(new Driver());
-            // $image = $manager->read($foto->getRealPath());
-            // $image->scaleDown(height: 300)->save($destinationPath . '/' . $fotoName);
-
-            // Get embedding from FastAPI
-            $fileStream = fopen($foto->getRealPath(), 'r');
-            $client = new Client();
-            $response = $client->post(env('FACE_API_URL'), [
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'contents' => $fileStream,
-                        'filename' => $foto->getClientOriginalName(),
+                $response = $client->post($this->faceApiUrl . 'api/register', [
+                    'headers' => [
+                        'x-api-key' => $this->faceApiKey
                     ],
-                ],
-                'timeout' => 10,
-            ]);
+                    'multipart' => [
+                        [
+                            'name' => 'image',
+                            'contents' => $fileStream,
+                            'filename' => $request->file('foto')->getClientOriginalName(),
+                        ],
+                    ],
+                ]);
 
-            if (is_resource($fileStream)) {
-                fclose($fileStream);
-            }
+                $data = json_decode($response->getBody(), true);
+                
+                if (empty($data['face_token'])) {
+                    throw new \Exception('Invalid response from face recognition API');
+                }
 
-            $data = json_decode($response->getBody(), true);
-            $inputEmbedding = $data['embedding'] ?? null;
+                $mhs->face_token = $data['face_token'];
+                $mhs->save();
 
-            if (!$inputEmbedding) {
                 return response()->json([
-                    'success' => false,
-                    'message' => 'No face detected or failed to get embedding'
-                ], 400);
+                    'success' => true,
+                    'message' => "Face registered for {$mhs->mhs_name}",
+                    'face_token' => $data['face_token']
+                ]);
+            } finally {
+                if (is_resource($fileStream)) {
+                    fclose($fileStream);
+                }
             }
+        } catch (\Exception $e) {
+            Log::error('Face registration failed: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to register face: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
-            $mahasiswas = Mahasiswa::whereNotNull('face_embedding')->get();
+    /**
+     * @OA\Post(
+     *     path="/api/face-recognition/verify",
+     *     tags={"Face Recognition"},
+     *     summary="Verify student face",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"foto"},
+     *                 @OA\Property(
+     *                     property="foto",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Face image file to verify"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Face verification result",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="match_found", type="boolean", example=true),
+     *             @OA\Property(property="similarity", type="number", format="float", example=0.85),
+     *             @OA\Property(property="mahasiswa", ref="#/components/schemas/Mahasiswa"),
+     *             @OA\Property(property="jadwal_hari_ini", ref="#/components/schemas/JadwalKuliah")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error or no match found"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error"
+     *     )
+     * )
+     */
+    public function cekWajah(Request $request)
+    {
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
 
-            $highestSimilarity = 0;
+        try {
+            // Process and save image
+            $fotoName = 'face_recognition_' . time() . '.' . $request->file('foto')->getClientOriginalExtension();
+            $fotoPath = $this->simpanGambar($request->file('foto'), $fotoName);
+
+            // Get all registered students
+            $mahasiswas = Mahasiswa::whereNotNull('face_token')->with('kelas.pstudi')->get();
+
             $bestMatch = null;
+            $highestSimilarity = 0.5; // Minimum threshold
 
             foreach ($mahasiswas as $mhs) {
-                $storedEmbedding = json_decode($mhs->face_embedding, true);
-                if (!$storedEmbedding) continue;
+                $verificationResult = $this->verifyFaceWithApi(
+                    $request->file('foto')->getRealPath(),
+                    $mhs->face_token,
+                    $request->file('foto')->getClientOriginalName()
+                );
 
-                $similarity = $this->cosineSimilarity($storedEmbedding, $inputEmbedding);
-
-                if ($similarity > $highestSimilarity) {
-                    $highestSimilarity = $similarity;
-                    $bestMatch = [
-                        'mahasiswa_id' => $mhs->id,
-                        'name' => $mhs->mhs_name,
-                        'nim' => $mhs->mhs_nim,
-                        'similarity' => $similarity,
-                        'match' => $similarity >= 0.5,
-                        'kelas' => $mhs->kelas->count() > 0 ? $mhs->kelas->pluck('name')->implode(', ') : 'No class',
-                        'program_studi' => $mhs->kelas->count() > 0 && $mhs->kelas->first()->pstudi ? $mhs->kelas->first()->pstudi->name : 'No program study',
-                        'status' => $mhs->mhs_stat,
-                    ];
+                if ($verificationResult['matched'] && $verificationResult['similarity'] > $highestSimilarity) {
+                    $highestSimilarity = $verificationResult['similarity'];
+                    $bestMatch = $mhs;
                 }
             }
 
             if (!$bestMatch) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No matching student found'
-                ], 404);
+                    'message' => 'No matching student found (similarity > 0.5 required)'
+                ], 400);
             }
 
-            // Check schedule
-            $now = Carbon::now();
-            $hariIni = $now->dayOfWeekIso;
-            $waktuDatang = $now->format('H:i:s');
-            
-            $jadwalHariIni = null;
-            $kelas = $mhs->kelas()->first();
-            $kelasId = $kelas ? $kelas->id : null;
-
-            if ($kelasId) {
-                $jadwalHariIni = JadwalKuliah::where('kelas_id', $kelasId)
-                    ->where('days_id', $hariIni)
-                    ->where('start', '<=', $waktuDatang)
-                    ->where('ended', '>=', $waktuDatang)
-                    ->first();
-            }
+            // Check today's schedule
+            $jadwalHariIni = $this->getJadwalHariIni($bestMatch->id);
 
             return response()->json([
                 'success' => true,
-                'data' => [
-                    'face_match' => $bestMatch,
-                    'schedule' => $jadwalHariIni,
-                    // 'image_path' => Storage::url('public/images/presensi/' . $fotoName),
-                    'timestamp' => $now->toDateTimeString()
-                ]
+                'match_found' => true,
+                'similarity' => $highestSimilarity,
+                'mahasiswa' => $bestMatch,
+                'jadwal_hari_ini' => $jadwalHariIni,
+                'image_path' => $fotoPath
             ]);
-
         } catch (\Exception $e) {
+            Log::error('Face verification failed: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to process face: ' . $e->getMessage()
+                'message' => 'Failed to verify face: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    // Cosine similarity calculation
-    private function cosineSimilarity(array $vec1, array $vec2): float
+    // Helper methods (same as original controller)
+    protected function simpanGambar($file, $filename)
     {
-        $dot = 0.0;
-        $normA = 0.0;
-        $normB = 0.0;
-        $length = count($vec1);
-
-        for ($i = 0; $i < $length; $i++) {
-            $dot += $vec1[$i] * $vec2[$i];
-            $normA += $vec1[$i] * $vec1[$i];
-            $normB += $vec2[$i] * $vec2[$i];
+        $destinationPath = storage_path('app/public/images/presensi');
+        
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
         }
 
-        if ($normA == 0 || $normB == 0) return 0;
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file->getRealPath());
+        $image->scaleDown(height: 300);
+        $image->save($destinationPath . '/' . $filename);
 
-        return $dot / (sqrt($normA) * sqrt($normB));
+        return 'presensi/' . $filename;
+    }
+
+    protected function verifyFaceWithApi($imagePath, $faceToken, $originalFilename)
+    {
+        $fileStream = fopen($imagePath, 'r');
+        
+        try {
+            $client = new Client([
+                'timeout' => 15,
+                'connect_timeout' => 10,
+            ]);
+
+            $response = $client->post($this->faceApiUrl . 'api/verify', [
+                'headers' => [
+                    'x-api-key' => $this->faceApiKey
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'image',
+                        'contents' => $fileStream,
+                        'filename' => $originalFilename,
+                    ],
+                    [
+                        'name' => 'face_token',
+                        'contents' => $faceToken
+                    ]
+                ],
+            ]);
+
+            return json_decode($response->getBody(), true);
+        } finally {
+            if (is_resource($fileStream)) {
+                fclose($fileStream);
+            }
+        }
+    }
+
+    protected function getJadwalHariIni($mahasiswaId)
+    {
+        $now = Carbon::now();
+        $mahasiswa = Mahasiswa::with('kelas')->find($mahasiswaId);
+
+        if (!$mahasiswa || $mahasiswa->kelas->isEmpty()) {
+            return null;
+        }
+
+        return JadwalKuliah::where('kelas_id', $mahasiswa->kelas->first()->id)
+            ->where('days_id', $now->dayOfWeekIso)
+            ->where('start', '<=', $now->format('H:i:s'))
+            ->where('ended', '>=', $now->format('H:i:s'))
+            ->first();
     }
 }
