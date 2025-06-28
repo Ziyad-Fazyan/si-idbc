@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Mahasiswa;
+use App\Helpers\RoleTrait;
 use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Settings\WebSettings;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class FaceRecognitionController extends Controller
 {
+    use RoleTrait;
+
     protected $faceApiUrl;
     protected $faceApiKey;
 
@@ -31,25 +35,33 @@ class FaceRecognitionController extends Controller
     // Halaman untuk upload foto dan memilih mahasiswa
     public function index()
     {
-        $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
-        return view('user.absen.pages.absen-wajah', compact('mahasiswas'));
+        $data['web'] = WebSettings::where('id', 1)->first();        
+        $data['prefix'] = $this->setPrefix();
+
+        $data['mahasiswas'] = Mahasiswa::orderBy('mhs_name')->get();
+        return view('user.absen.pages.absen-wajah', $data);
     }
 
     public function daftar()
     {
-        $mahasiswas = Mahasiswa::orderBy('mhs_name')->get();
-        return view('user.absen.pages.daftar-wajah', compact('mahasiswas'));
+        $data['web'] = WebSettings::where('id', 1)->first();        
+        $data['prefix'] = $this->setPrefix();
+
+        $data['mahasiswas'] = Mahasiswa::orderBy('mhs_name')->get();
+        return view('user.absen.pages.daftar-wajah', $data);
     }
 
     public function hasilAbsen()
     {
-        $results = Session::get('face_results', []);
+        $data['web'] = WebSettings::where('id', 1)->first();        
+        $data['prefix'] = $this->setPrefix();
+        $data['results'] = Session::get('face_results', []);
 
-        if (empty($results)) {
+        if (empty($data['results'])) {
             return redirect()->route('upload.wajah')->with('error', '⚠️ Tidak ada hasil yang ditemukan.');
         }
 
-        return view('user.absen.pages.hasil-absen', compact('results'));
+        return view('user.absen.pages.hasil-absen', $data);
     }
 
     // Simpan face_token setelah upload foto
@@ -151,7 +163,8 @@ class FaceRecognitionController extends Controller
                 'jadwal_hari_ini' => $jadwalHariIni
             ]);
 
-            return redirect()->route('absen.face-results');
+            $prefix = $this->setPrefix();
+            return redirect()->route($prefix .'face-results');
         } catch (\Exception $e) {
             Log::error('Face verification failed: ' . $e->getMessage());
             return back()->with('error', '⚠️ Gagal memproses wajah: ' . $e->getMessage());

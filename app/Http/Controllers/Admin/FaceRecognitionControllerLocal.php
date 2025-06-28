@@ -13,7 +13,7 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Drivers\Gd\Driver;
 
-class FaceRecognitionController extends Controller
+class FaceRecognitionControllerLocal extends Controller
 {
     // Halaman untuk upload foto dan memilih mahasiswa
     public function index()

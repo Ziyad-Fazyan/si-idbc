@@ -24,11 +24,6 @@
                         @yield('menu')
                     </h2>
                     <div class="flex space-x-2">
-                        <a href="{{ route('dosen.akademik.stask-create') }}"
-                            class="bg-[#FF6B35] hover:bg-orange-600 text-white px-3 py-2 rounded-md flex items-center transition-colors">
-                            <i class="fa-solid fa-plus mr-2"></i>
-                            <span class="hidden sm:inline">Tambah</span>
-                        </a>
                         <a href="@yield('urlmenu')"
                             class="bg-white hover:bg-gray-100 text-[#2E2E2E] px-3 py-2 rounded-md flex items-center transition-colors">
                             <i class="fa-solid fa-backward mr-2"></i>
@@ -70,12 +65,14 @@
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->studentTask->title }}</td>
                                     <td class="px-4 py-4 text-sm text-[#2E2E2E]">{{ $item->student->mhs_name }}</td>
                                     <td class="px-4 py-4 text-sm font-medium">
-                                        @if(isset($item->status))
-                                            <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $item->status == 'Sudah dinilai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        @if (isset($item->status))
+                                            <span
+                                                class="px-2 py-1 text-xs font-semibold rounded-full {{ $item->status == 'Sudah dinilai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                                 {{ $item->status }}
                                             </span>
                                         @else
-                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            <span
+                                                class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                                 Terkumpul
                                             </span>
                                         @endif
