@@ -15,9 +15,23 @@ Route::get('/album-foto/search', [HomeController::class, 'gallerySearch'])->name
 Route::get('/album-foto/show/{slug}', [HomeController::class, 'galleryShow'])->name('root.gallery-show');
 Route::get('/admission/{slug}', [HomeController::class, 'prodiIndex'])->name('root.home-prodi');
 Route::get('/program-kuliah/{code}', [HomeController::class, 'prokuIndex'])->name('root.home-proku');
-Route::get('/visi-misi', function () {
-    return view('root.visi-misi'); // Sesuai path folder kamu
-})->name('visi-misi');
+
+// KURIKULUM ROUTE
+Route::get('/kurikulum', function () {
+    return view('root.pages.kurikulum-index');
+})->name('root.kurikulum-index');
+// TENTANG KAMI ROUTE
+Route::get('/tentang-kami', function () {
+    return view('root.pages.tentang-kami');
+})->name('root.tentang-kami');
+//KOMPETENSI ROUTE DESIGN
+Route::get('/kompetensi-design', function () {
+    return view('root.pages.kompetensi-design');
+})->name('root.kompetensi-design');
+//KOMPETENSI ROUTE PROGRAMMER
+Route::get('/kompetensi-prog', function () {
+    return view('root.pages.kompetensi-prog');
+})->name('root.kompetensi-prog');
 
 // FORMULIR PPDB
 Route::prefix('ppdb')->name('ppdb.')->group(function () {
