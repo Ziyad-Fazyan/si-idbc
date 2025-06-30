@@ -266,22 +266,28 @@
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                                 <option value="">Pilih Agama</option>
                                                 <option value="1"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '1' ? 'selected' : '' }}>Agama Islam
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '1' ? 'selected' : '' }}>
+                                                    Agama Islam
                                                 </option>
                                                 <option value="2"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '2' ? 'selected' : '' }}>Agama Kristen
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '2' ? 'selected' : '' }}>
+                                                    Agama Kristen
                                                     Protestan</option>
                                                 <option value="3"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '3' ? 'selected' : '' }}>Agama Kriten
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '3' ? 'selected' : '' }}>
+                                                    Agama Kriten
                                                     Katholik</option>
                                                 <option value="4"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '4' ? 'selected' : '' }}>Agama Hindu
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '4' ? 'selected' : '' }}>
+                                                    Agama Hindu
                                                 </option>
                                                 <option value="5"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '5' ? 'selected' : '' }}>Agama Buddha
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '5' ? 'selected' : '' }}>
+                                                    Agama Buddha
                                                 </option>
                                                 <option value="6"
-                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '6' ? 'selected' : '' }}>Agama Konghuchu
+                                                    {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_reli === '6' ? 'selected' : '' }}>
+                                                    Agama Konghuchu
                                                 </option>
                                             </select>
                                             @error('mhs_reli')
@@ -296,13 +302,14 @@
                                     x-transition:enter="transition ease-out duration-200"
                                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        <!-- Phone and Email -->
                                         <div class="form-group">
-                                            <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nomor HandPhone
-                                            </label>
-                                            <input type="teks" name="mhs_phone" id="mhs_phone"
+                                            <label for="mhs_phone"
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nomor
+                                                HandPhone</label>
+                                            <input type="text" name="mhs_phone" id="mhs_phone"
                                                 value="{{ $student->mhs_phone }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon">
                                             @error('mhs_phone')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -310,9 +317,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="mhs_mail" class="block text-sm font-medium text-gray-700 mb-2">
-                                                Alamat Email
-                                            </label>
+                                            <label for="mhs_mail"
+                                                class="block text-sm font-medium text-gray-700 mb-2">Alamat Email</label>
                                             <input type="email" name="mhs_mail" id="mhs_mail"
                                                 value="{{ $student->mhs_mail }}"
                                                 class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 sm:text-sm"
@@ -322,14 +328,13 @@
                                             @enderror
                                         </div>
 
+                                        <!-- Father's Information -->
                                         <div class="form-group">
                                             <label for="mhs_parent_father"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nama Ayah
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nama Ayah</label>
                                             <input type="text" name="mhs_parent_father" id="mhs_parent_father"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_father : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama ayah">
                                             @error('mhs_parent_father')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -338,27 +343,25 @@
 
                                         <div class="form-group">
                                             <label for="mhs_parent_father_phone"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nomor Telepon Ayah
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon
+                                                Ayah</label>
                                             <input type="tel" name="mhs_parent_father_phone"
                                                 id="mhs_parent_father_phone"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_father_phone : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon ayah">
                                             @error('mhs_parent_father_phone')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
 
+                                        <!-- Mother's Information -->
                                         <div class="form-group">
                                             <label for="mhs_parent_mother"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nama Ibu
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nama Ibu</label>
                                             <input type="text" name="mhs_parent_mother" id="mhs_parent_mother"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_mother : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama ibu">
                                             @error('mhs_parent_mother')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -367,27 +370,26 @@
 
                                         <div class="form-group">
                                             <label for="mhs_parent_mother_phone"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nomor Telepon Ibu
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon
+                                                Ibu</label>
                                             <input type="tel" name="mhs_parent_mother_phone"
                                                 id="mhs_parent_mother_phone"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_parent_mother_phone : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon ibu">
                                             @error('mhs_parent_mother_phone')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
 
+                                        <!-- Guardian's Information -->
                                         <div class="form-group">
                                             <label for="mhs_wali_name"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nama Wali Mahasiswa
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nama Wali
+                                                Mahasiswa</label>
                                             <input type="text" name="mhs_wali_name" id="mhs_wali_name"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_wali_name : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nama wali">
                                             @error('mhs_wali_name')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -396,85 +398,131 @@
 
                                         <div class="form-group">
                                             <label for="mhs_wali_phone"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Nomor Telepon Wali
-                                            </label>
+                                                class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon
+                                                Wali</label>
                                             <input type="tel" name="mhs_wali_phone" id="mhs_wali_phone"
                                                 value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_wali_phone : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                                 placeholder="Masukkan nomor telepon wali">
                                             @error('mhs_wali_phone')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
 
-                                        <div class="form-group lg:col-span-2">
-                                            <label for="mhs_addr_domisili"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Alamat Lengkap Domisili / Tempat Tinggal
-                                            </label>
-                                            <textarea cols="15" rows="4" name="mhs_addr_domisili" id="mhs_addr_domisili"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan alamat lengkap">{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_domisili : '' }}</textarea>
-                                            @error('mhs_addr_domisili')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                        <!-- Address Section - Improved -->
+                                        <div
+                                            class="lg:col-span-2 space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                            <h3 class="text-lg font-medium text-gray-900 mb-2">Alamat Domisili</h3>
 
-                                        <div class="form-group">
-                                            <label for="mhs_addr_kelurahan"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Kelurahan
-                                            </label>
-                                            <input type="text" name="mhs_addr_kelurahan" id="mhs_addr_kelurahan"
-                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kelurahan : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan kelurahan">
-                                            @error('mhs_addr_kelurahan')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <!-- Province -->
+                                                <div class="form-group">
+                                                    <label for="provinsi"
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Provinsi <span
+                                                            class="text-red-500">*</span></label>
+                                                    <select id="provinsi" name="mhs_addr_provinsi" required
+                                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('provinsi') border-red-500 @enderror">
+                                                        <option value="">Pilih Provinsi</option>
+                                                        @foreach ($provinces ?? [] as $province)
+                                                            <option value="{{ $province->id }}"
+                                                                {{ $student->mahasiswaDetails && $student->mahasiswaDetails->mhs_addr_provinsi == $province->id ? 'selected' : '' }}>
+                                                                {{ $province->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" id="provinsi_name"
+                                                        name="mhs_addr_provinsi_name" value="{{ old('provinsi_name') }}">
+                                                    @error('provinsi')
+                                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="mhs_addr_kecamatan"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Kecamatan
-                                            </label>
-                                            <input type="text" name="mhs_addr_kecamatan" id="mhs_addr_kecamatan"
-                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kecamatan : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan kecamatan">
-                                            @error('mhs_addr_kecamatan')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                                <!-- City -->
+                                                <div class="form-group">
+                                                    <label for="kabupaten"
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota
+                                                        <span class="text-red-500">*</span></label>
+                                                    <select id="kabupaten" name="mhs_addr_kota" required
+                                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('kabupaten') border-red-500 @enderror">
+                                                        <option value="">Pilih Kabupaten/Kota</option>
+                                                        @if (old('kabupaten') && $cities)
+                                                            @foreach ($cities as $city)
+                                                                <option value="{{ $city->id }}"
+                                                                    {{ old('kabupaten') == $city->id ? 'selected' : '' }}>
+                                                                    {{ $city->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <input type="hidden" id="kabupaten_name" name="mhs_addr_kota_name"
+                                                        value="{{ old('kabupaten_name') }}">
+                                                    @error('kabupaten')
+                                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="mhs_addr_kota"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Kota
-                                            </label>
-                                            <input type="text" name="mhs_addr_kota" id="mhs_addr_kota"
-                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_kota : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan kota">
-                                            @error('mhs_addr_kota')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                                <!-- District -->
+                                                <div class="form-group">
+                                                    <label for="kecamatan"
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Kecamatan
+                                                        <span class="text-red-500">*</span></label>
+                                                    <select id="kecamatan" name="mhs_addr_kecamatan" required
+                                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('kecamatan') border-red-500 @enderror">
+                                                        <option value="">Pilih Kecamatan</option>
+                                                        @if (old('kecamatan') && $districts)
+                                                            @foreach ($districts as $district)
+                                                                <option value="{{ $district->id }}"
+                                                                    {{ old('kecamatan') == $district->id ? 'selected' : '' }}>
+                                                                    {{ $district->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <input type="hidden" id="kecamatan_name"
+                                                        name="mhs_addr_kecamatan_name"
+                                                        value="{{ old('kecamatan_name') }}">
+                                                    @error('kecamatan')
+                                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="mhs_addr_provinsi"
-                                                class="block text-sm font-medium text-gray-700 mb-2">
-                                                Provinsi
-                                            </label>
-                                            <input type="text" name="mhs_addr_provinsi" id="mhs_addr_provinsi"
-                                                value="{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_provinsi : '' }}"
-                                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                                placeholder="Masukkan provinsi">
-                                            @error('mhs_addr_provinsi')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
+                                                <!-- Village -->
+                                                <div class="form-group">
+                                                    <label for="kelurahan"
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Kelurahan/Desa</label>
+                                                    <select id="kelurahan" name="mhs_addr_kelurahan"
+                                                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('kelurahan') border-red-500 @enderror">
+                                                        <option value="">Pilih Kelurahan/Desa</option>
+                                                        @if (old('kelurahan') && $villages)
+                                                            @foreach ($villages as $village)
+                                                                <option value="{{ $village->id }}"
+                                                                    {{ old('kelurahan') == $village->id ? 'selected' : '' }}>
+                                                                    {{ $village->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <input type="hidden" id="kelurahan_name"
+                                                        name="mhs_addr_kelurahan_name"
+                                                        value="{{ old('kelurahan_name') }}">
+                                                    @error('kelurahan')
+                                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <!-- Full Address -->
+                                            <div class="form-group">
+                                                <label for="mhs_addr_domisili"
+                                                    class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap
+                                                    Domisili <span class="text-red-500">*</span></label>
+                                                <textarea name="mhs_addr_domisili" id="mhs_addr_domisili" rows="3"
+                                                    class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                                    placeholder="Masukkan alamat lengkap" required>{{ $student->mahasiswaDetails ? $student->mahasiswaDetails->mhs_addr_domisili : '' }}</textarea>
+                                                @error('mhs_addr_domisili')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -683,6 +731,26 @@
             @if (session('error'))
                 alert('{{ session('error') }}');
             @endif
+
+            // Initialize cascading address dropdowns
+            if (window.initAlamatDropdown) {
+                window.initAlamatDropdown({
+                    provinsiId: 'provinsi',
+                    kabupatenId: 'kabupaten',
+                    kecamatanId: 'kecamatan',
+                    kelurahanId: 'kelurahan',
+                    provinsiNameId: 'provinsi_name',
+                    kabupatenNameId: 'kabupaten_name',
+                    kecamatanNameId: 'kecamatan_name',
+                    kelurahanNameId: 'kelurahan_name',
+                    old: {
+                        provinsi: "{{ old('provinsi') }}",
+                        kabupaten: "{{ old('kabupaten') }}",
+                        kecamatan: "{{ old('kecamatan') }}",
+                        kelurahan: "{{ old('kelurahan') }}"
+                    }
+                });
+            }
         });
     </script>
 @endpush

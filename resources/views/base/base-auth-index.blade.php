@@ -59,34 +59,36 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-2">
                     <a href="{{ route('admin.auth-signin-page') }}"
-                       class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                        class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
                               {{ Request::is('admin*') ? 'bg-[#0C6E71] text-white' : 'text-gray-700 hover:bg-gray-100' }}">
                         Admin
                     </a>
 
                     <a href="{{ route('mahasiswa.auth-signin-page') }}"
-                       class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                        class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
                               {{ Request::is('mahasiswa*') ? 'bg-[#0C6E71] text-white' : 'text-gray-700 hover:bg-gray-100' }}">
                         Siswa
                     </a>
 
                     <a href="{{ route('dosen.auth-signin-page') }}"
-                       class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                        class="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200
                               {{ Request::is('dosen*') ? 'bg-[#0C6E71] text-white' : 'text-gray-700 hover:bg-gray-100' }}">
                         Guru
                     </a>
 
                     <a href="/"
-                       class="ml-4 px-4 py-2 rounded-md text-sm font-medium bg-[#FF6B35] text-white hover:bg-[#caa16e] transition-colors duration-200">
+                        class="ml-4 px-4 py-2 rounded-md text-sm font-medium bg-[#FF6B35] text-white hover:bg-[#caa16e] transition-colors duration-200">
                         Beranda
                     </a>
                 </nav>
 
                 <!-- Mobile menu button -->
-                <button type="button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-                        id="menuBtn" aria-label="Toggle menu">
+                <button type="button"
+                    class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none" id="menuBtn"
+                    aria-label="Toggle menu">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
@@ -95,25 +97,25 @@
             <div class="md:hidden transition-all duration-300 ease-out max-h-0 overflow-hidden" id="mobileMenu">
                 <div class="pt-2 pb-4 space-y-1 border-t border-gray-200 mt-2">
                     <a href="{{ route('admin.auth-signin-page') }}"
-                       class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
+                        class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
                               {{ Request::is('admin*') ? 'bg-gray-100 text-[#0C6E71]' : 'text-gray-700 hover:bg-gray-100' }}">
                         Portal Admin
                     </a>
 
                     <a href="{{ route('mahasiswa.auth-signin-page') }}"
-                       class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
+                        class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
                               {{ Request::is('mahasiswa*') ? 'bg-gray-100 text-[#0C6E71]' : 'text-gray-700 hover:bg-gray-100' }}">
                         Portal Siswa
                     </a>
 
                     <a href="{{ route('dosen.auth-signin-page') }}"
-                       class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
+                        class="block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200
                               {{ Request::is('dosen*') ? 'bg-gray-100 text-[#0C6E71]' : 'text-gray-700 hover:bg-gray-100' }}">
                         Portal Guru
                     </a>
 
                     <a href="/"
-                       class="block px-4 py-2 mt-2 text-sm font-medium rounded-md bg-gray-100 text-[#0C6E71]">
+                        class="block px-4 py-2 mt-2 text-sm font-medium rounded-md bg-gray-100 text-[#0C6E71]">
                         Kembali ke Beranda
                     </a>
                 </div>
@@ -122,19 +124,19 @@
     </header>
 
     <script>
-    // Simple mobile menu toggle
-    document.getElementById('menuBtn').addEventListener('click', function() {
-        const menu = document.getElementById('mobileMenu');
-        const isOpen = menu.classList.contains('max-h-0');
+        // Simple mobile menu toggle
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            const isOpen = menu.classList.contains('max-h-0');
 
-        if (isOpen) {
-            menu.classList.remove('max-h-0');
-            menu.classList.add('max-h-screen', 'py-2');
-        } else {
-            menu.classList.add('max-h-0');
-            menu.classList.remove('max-h-screen', 'py-2');
-        }
-    });
+            if (isOpen) {
+                menu.classList.remove('max-h-0');
+                menu.classList.add('max-h-screen', 'py-2');
+            } else {
+                menu.classList.add('max-h-0');
+                menu.classList.remove('max-h-screen', 'py-2');
+            }
+        });
     </script>
 
 

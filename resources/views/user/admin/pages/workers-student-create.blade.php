@@ -198,6 +198,7 @@
                         <!-- Tab Data Kontak -->
                         <div class="tab-pane hidden" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Phone and Email -->
                                 <div class="mb-4">
                                     <label for="mhs_phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor
                                         HandPhone</label>
@@ -220,6 +221,8 @@
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
+
+                                <!-- Father's Information -->
                                 <div class="mb-4">
                                     <label for="mhs_parent_father"
                                         class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah</label>
@@ -243,6 +246,8 @@
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
+
+                                <!-- Mother's Information -->
                                 <div class="mb-4">
                                     <label for="mhs_parent_mother"
                                         class="block text-sm font-medium text-gray-700 mb-1">Nama Ibu</label>
@@ -266,6 +271,8 @@
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
+
+                                <!-- Guardian's Information -->
                                 <div class="mb-4">
                                     <label for="mhs_wali_name" class="block text-sm font-medium text-gray-700 mb-1">Nama
                                         Wali Mahasiswa</label>
@@ -288,60 +295,118 @@
                                         <small class="text-red-500 text-xs">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="mb-4 md:col-span-2">
-                                    <label for="mhs_addr_domisili"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili /
-                                        Tempat Tinggal</label>
-                                    <textarea name="mhs_addr_domisili" id="mhs_addr_domisili" rows="4"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                        placeholder="Alamat lengkap domisili / tempat tinggal..." required>{{ old('mhs_addr_domisili') }}</textarea>
-                                    @error('mhs_addr_domisili')
-                                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-4">
-                                    <label for="mhs_addr_kelurahan"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
-                                    <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                        name="mhs_addr_kelurahan" id="mhs_addr_kelurahan" placeholder="Nama kelurahan..."
-                                        value="{{ old('mhs_addr_kelurahan') }}" required>
-                                    @error('mhs_addr_kelurahan')
-                                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-4">
-                                    <label for="mhs_addr_kecamatan"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                                    <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                        name="mhs_addr_kecamatan" id="mhs_addr_kecamatan" placeholder="Nama kecamatan..."
-                                        value="{{ old('mhs_addr_kecamatan') }}" required>
-                                    @error('mhs_addr_kecamatan')
-                                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-4">
-                                    <label for="mhs_addr_kota"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
-                                    <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                        name="mhs_addr_kota" id="mhs_addr_kota" placeholder="Nama kota..."
-                                        value="{{ old('mhs_addr_kota') }}" required>
-                                    @error('mhs_addr_kota')
-                                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-4">
-                                    <label for="mhs_addr_provinsi"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
-                                    <input type="text"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
-                                        name="mhs_addr_provinsi" id="mhs_addr_provinsi" placeholder="Nama provinsi..."
-                                        value="{{ old('mhs_addr_provinsi') }}" required>
-                                    @error('mhs_addr_provinsi')
-                                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                                    @enderror
+
+                                <!-- Address Section - Improved -->
+                                <div class="md:col-span-2 space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                    <h3 class="text-lg font-medium text-gray-900 mb-2">Alamat Domisili</h3>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Province -->
+                                        <div>
+                                            <label for="provinsi"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Provinsi <span
+                                                    class="text-red-500">*</span></label>
+                                            <select id="provinsi" name="mhs_addr_provinsi" required
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71] @error('provinsi') border-red-500 @enderror">
+                                                <option value="">Pilih Provinsi</option>
+                                                @foreach ($provinces ?? [] as $province)
+                                                    <option value="{{ $province->id }}"
+                                                        {{ old('provinsi') == $province->id ? 'selected' : '' }}>
+                                                        {{ $province->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="provinsi_name" name="mhs_addr_provinsi_name"
+                                                value="{{ old('provinsi_name') }}">
+                                            @error('provinsi')
+                                                <small class="text-red-500 text-xs">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+
+                                        <!-- City -->
+                                        <div>
+                                            <label for="kabupaten"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota <span
+                                                    class="text-red-500">*</span></label>
+                                            <select id="kabupaten" name="mhs_addr_kota" required
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71] @error('kabupaten') border-red-500 @enderror">
+                                                <option value="">Pilih Kabupaten/Kota</option>
+                                                @if (old('kabupaten') && $cities)
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->id }}"
+                                                            {{ old('kabupaten') == $city->id ? 'selected' : '' }}>
+                                                            {{ $city->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <input type="hidden" id="kabupaten_name" name="mhs_addr_kota_name"
+                                                value="{{ old('kabupaten_name') }}">
+                                            @error('kabupaten')
+                                                <small class="text-red-500 text-xs">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+
+                                        <!-- District -->
+                                        <div>
+                                            <label for="kecamatan"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Kecamatan <span
+                                                    class="text-red-500">*</span></label>
+                                            <select id="kecamatan" name="mhs_addr_kecamatan" required
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71] @error('kecamatan') border-red-500 @enderror">
+                                                <option value="">Pilih Kecamatan</option>
+                                                @if (old('kecamatan') && $districts)
+                                                    @foreach ($districts as $district)
+                                                        <option value="{{ $district->id }}"
+                                                            {{ old('kecamatan') == $district->id ? 'selected' : '' }}>
+                                                            {{ $district->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <input type="hidden" id="kecamatan_name" name="mhs_addr_kecamatan_name"
+                                                value="{{ old('kecamatan_name') }}">
+                                            @error('kecamatan')
+                                                <small class="text-red-500 text-xs">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Village -->
+                                        <div>
+                                            <label for="kelurahan"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Kelurahan/Desa</label>
+                                            <select id="kelurahan" name="mhs_addr_kelurahan"
+                                                class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71] @error('kelurahan') border-red-500 @enderror">
+                                                <option value="">Pilih Kelurahan/Desa</option>
+                                                @if (old('kelurahan') && $villages)
+                                                    @foreach ($villages as $village)
+                                                        <option value="{{ $village->id }}"
+                                                            {{ old('kelurahan') == $village->id ? 'selected' : '' }}>
+                                                            {{ $village->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <input type="hidden" id="kelurahan_name" name="mhs_addr_kelurahan_name"
+                                                value="{{ old('kelurahan_name') }}">
+                                            @error('kelurahan')
+                                                <small class="text-red-500 text-xs">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Full Address -->
+                                    <div>
+                                        <label for="mhs_addr_domisili"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap Domisili /
+                                            Tempat Tinggal <span class="text-red-500">*</span></label>
+                                        <textarea name="mhs_addr_domisili" id="mhs_addr_domisili" rows="3"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#0C6E71]"
+                                            placeholder="Alamat lengkap domisili / tempat tinggal..." required>{{ old('mhs_addr_domisili') }}</textarea>
+                                        @error('mhs_addr_domisili')
+                                            <small class="text-red-500 text-xs">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex justify-between mt-6">
@@ -536,6 +601,26 @@
                     }
                 });
             });
+
+            // Initialize cascading address dropdowns
+            if (window.initAlamatDropdown) {
+                window.initAlamatDropdown({
+                    provinsiId: 'provinsi',
+                    kabupatenId: 'kabupaten',
+                    kecamatanId: 'kecamatan',
+                    kelurahanId: 'kelurahan',
+                    provinsiNameId: 'provinsi_name',
+                    kabupatenNameId: 'kabupaten_name',
+                    kecamatanNameId: 'kecamatan_name',
+                    kelurahanNameId: 'kelurahan_name',
+                    old: {
+                        provinsi: "{{ old('provinsi') }}",
+                        kabupaten: "{{ old('kabupaten') }}",
+                        kecamatan: "{{ old('kecamatan') }}",
+                        kelurahan: "{{ old('kelurahan') }}"
+                    }
+                });
+            }
         });
     </script>
 @endpush

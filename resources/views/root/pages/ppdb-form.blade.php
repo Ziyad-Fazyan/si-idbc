@@ -406,169 +406,27 @@
 
 @push('scripts')
     <script>
+        // Tab navigation
         document.addEventListener('DOMContentLoaded', function() {
-            // Base URL API Wilayah Indonesia
-            const API_BASE_URL = 'https://www.emsifa.com/api-wilayah-indonesia/api';
-
-            // Element Select
-            const provinsiSelect = document.getElementById('provinsi');
-            const kabupatenSelect = document.getElementById('kabupaten');
-            const kecamatanSelect = document.getElementById('kecamatan');
-            const kelurahanSelect = document.getElementById('kelurahan');
-
-            // Fungsi untuk memuat data wilayah dan mengupdate hidden input dengan nama wilayah
-            const loadWilayah = async (url, selectElement, placeholder, hiddenInputId = null) => {
-                try {
-                    selectElement.disabled = true;
-                    selectElement.innerHTML = `<option value="">Memuat ${placeholder}...</option>`;
-
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('Gagal memuat data');
-
-                    const data = await response.json();
-
-                    selectElement.innerHTML = `<option value="">Pilih ${placeholder}</option>`;
-                    data.forEach(item => {
-                        const option = new Option(item.name, item.id);
-                        // Simpan nama wilayah sebagai data attribute
-                        option.dataset.name = item.name;
-                        selectElement.add(option);
-                    });
-
-                    // Set nilai old jika ada (setelah validasi gagal)
-                    const oldValue = selectElement.dataset.old;
-                    if (oldValue) {
-                        selectElement.value = oldValue;
-                        // Update hidden input jika ada nilai old
-                        if (hiddenInputId) {
-                            const selectedOption = selectElement.options[selectElement.selectedIndex];
-                            document.getElementById(hiddenInputId).value = selectedOption.dataset.name ||
-                            '';
-                        }
-                    }
-
-                    selectElement.disabled = false;
-                    return true;
-                } catch (error) {
-                    console.error('Error:', error);
-                    selectElement.innerHTML = `<option value="">Gagal memuat ${placeholder}</option>`;
-                    selectElement.disabled = false;
-                    return false;
-                }
-            };
-
-            // Fungsi untuk update hidden input dengan nama wilayah yang dipilih
-            const updateHiddenInput = (selectElement, hiddenInputId) => {
-                const selectedOption = selectElement.options[selectElement.selectedIndex];
-                document.getElementById(hiddenInputId).value = selectedOption.dataset.name || '';
-            };
-
-            // Set nilai old untuk form validation
-            if (provinsiSelect) {
-                provinsiSelect.dataset.old = "{{ old('provinsi') }}";
-                kabupatenSelect.dataset.old = "{{ old('kabupaten') }}";
-                kecamatanSelect.dataset.old = "{{ old('kecamatan') }}";
-                kelurahanSelect.dataset.old = "{{ old('kelurahan') }}";
-            }
-
-            // Inisialisasi: Muat provinsi pertama kali
-            loadWilayah(`${API_BASE_URL}/provinces.json`, provinsiSelect, 'Provinsi', 'provinsi_name')
-                .then(success => {
-                    if (success && provinsiSelect.dataset.old) {
-                        // Jika ada provinsi yang dipilih sebelumnya, muat kabupaten
-                        loadWilayah(`${API_BASE_URL}/regencies/${provinsiSelect.dataset.old}.json`,
-                                kabupatenSelect, 'Kabupaten/Kota', 'kabupaten_name')
-                            .then(success => {
-                                if (success && kabupatenSelect.dataset.old) {
-                                    // Jika ada kabupaten yang dipilih sebelumnya, muat kecamatan
-                                    loadWilayah(
-                                            `${API_BASE_URL}/districts/${kabupatenSelect.dataset.old}.json`,
-                                            kecamatanSelect, 'Kecamatan', 'kecamatan_name')
-                                        .then(success => {
-                                            if (success && kecamatanSelect.dataset.old) {
-                                                // Jika ada kecamatan yang dipilih sebelumnya, muat kelurahan
-                                                loadWilayah(
-                                                    `${API_BASE_URL}/villages/${kecamatanSelect.dataset.old}.json`,
-                                                    kelurahanSelect, 'Kelurahan/Desa',
-                                                    'kelurahan_name');
-                                            }
-                                        });
-                                }
-                            });
+            // Initialize cascading address dropdowns
+            if (window.initAlamatDropdown) {
+                window.initAlamatDropdown({
+                    provinsiId: 'provinsi',
+                    kabupatenId: 'kabupaten',
+                    kecamatanId: 'kecamatan',
+                    kelurahanId: 'kelurahan',
+                    provinsiNameId: 'provinsi_name',
+                    kabupatenNameId: 'kabupaten_name',
+                    kecamatanNameId: 'kecamatan_name',
+                    kelurahanNameId: 'kelurahan_name',
+                    old: {
+                        provinsi: "{{ old('provinsi') }}",
+                        kabupaten: "{{ old('kabupaten') }}",
+                        kecamatan: "{{ old('kecamatan') }}",
+                        kelurahan: "{{ old('kelurahan') }}"
                     }
                 });
-
-            // Event listener untuk provinsi
-            provinsiSelect.addEventListener('change', function() {
-                const provinsiId = this.value;
-                kabupatenSelect.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
-                kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
-                kelurahanSelect.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
-
-                // Reset hidden inputs
-                document.getElementById('kabupaten_name').value = '';
-                document.getElementById('kecamatan_name').value = '';
-                document.getElementById('kelurahan_name').value = '';
-
-                // Update provinsi_name hidden input
-                updateHiddenInput(provinsiSelect, 'provinsi_name');
-
-                if (provinsiId) {
-                    loadWilayah(`${API_BASE_URL}/regencies/${provinsiId}.json`,
-                        kabupatenSelect, 'Kabupaten/Kota', 'kabupaten_name');
-                } else {
-                    kabupatenSelect.disabled = true;
-                    kecamatanSelect.disabled = true;
-                    kelurahanSelect.disabled = true;
-                }
-            });
-
-            // Event listener untuk kabupaten
-            kabupatenSelect.addEventListener('change', function() {
-                const kabupatenId = this.value;
-                kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
-                kelurahanSelect.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
-
-                // Reset hidden inputs
-                document.getElementById('kecamatan_name').value = '';
-                document.getElementById('kelurahan_name').value = '';
-
-                // Update kabupaten_name hidden input
-                updateHiddenInput(kabupatenSelect, 'kabupaten_name');
-
-                if (kabupatenId) {
-                    loadWilayah(`${API_BASE_URL}/districts/${kabupatenId}.json`,
-                        kecamatanSelect, 'Kecamatan', 'kecamatan_name');
-                } else {
-                    kecamatanSelect.disabled = true;
-                    kelurahanSelect.disabled = true;
-                }
-            });
-
-            // Event listener untuk kecamatan
-            kecamatanSelect.addEventListener('change', function() {
-                const kecamatanId = this.value;
-                kelurahanSelect.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
-
-                // Reset hidden input
-                document.getElementById('kelurahan_name').value = '';
-
-                // Update kecamatan_name hidden input
-                updateHiddenInput(kecamatanSelect, 'kecamatan_name');
-
-                if (kecamatanId) {
-                    loadWilayah(`${API_BASE_URL}/villages/${kecamatanId}.json`,
-                        kelurahanSelect, 'Kelurahan/Desa', 'kelurahan_name');
-                } else {
-                    kelurahanSelect.disabled = true;
-                }
-            });
-
-            // Event listener untuk kelurahan
-            kelurahanSelect.addEventListener('change', function() {
-                // Update kelurahan_name hidden input
-                updateHiddenInput(kelurahanSelect, 'kelurahan_name');
-            });
+            }
         });
     </script>
 @endpush
