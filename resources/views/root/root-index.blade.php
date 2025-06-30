@@ -26,18 +26,14 @@
             border-radius: 2px;
         }
         .hover-scale {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .hover-scale:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
         }
         .competence-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .competence-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            will-change: transform, opacity;
         }
         .video-container {
             position: relative;
@@ -46,6 +42,7 @@
             overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            will-change: transform, opacity;
         }
         .video-container iframe {
             position: absolute;
@@ -55,48 +52,67 @@
             height: 100%;
             border: 0;
         }
+        section {
+            will-change: transform, opacity;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Animation classes */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Scroll direction detection */
+        body {
+            --scroll-direction: 0;
+        }
     </style>
 
     <!-- Hero Slider -->
     <section class="relative h-screen overflow-hidden mt-0 lg:mt-0 custom-hero-slider">
-        <button onclick="prevSlide()" class="custom-slider-prev absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-50 transition-all duration-300 text-white text-2xl">
+        <button onclick="prevSlide()" class="custom-slider-prev absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-50 transition-all duration-300 text-white text-2xl hover:scale-110">
             &#10094; </button>
-        <button onclick="nextSlide()" class="custom-slider-next absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-50 transition-all duration-300 text-white text-2xl">
+        <button onclick="nextSlide()" class="custom-slider-next absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-50 transition-all duration-300 text-white text-2xl hover:scale-110">
             &#10095; </button>
 
-        <!-- untuk mengubah gambar -->
-            <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-1"
+        <!-- Slide 1 -->
+        <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-1"
             style="background-image: url('{{ asset('storage/images/gallery/album-c.png') }}');">
-            <!-- mulai dari url -->
-             
             <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm">
+            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
                 <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Selamat Datang di IDBC</h1>
                 <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Mencetak generasi pemimpin masa depan melalui pendidikan berkualitas dan pengembangan karakter berbasis teknologi</p>
                 <a href="#pendaftaran" class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Daftar Sekarang</a>
             </div>
         </div>
 
-        <!-- untuk mengubah gambar -->
+        <!-- Slide 2 -->
         <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-2"
             style="background-image: url('{{ asset('storage/images/gallery/album-a.png') }}');">
-           <!-- mulai dari url -->
-
             <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm">
+            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
                 <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Pendidikan Berbasis Teknologi</h1>
                 <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Kurikulum inovatif yang dirancang untuk memenuhi tantangan global dengan fasilitas pendidikan terbaik</p>
                 <a href="#fakultas" class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Lihat Program Studi</a>
             </div>
         </div>
 
-        <!-- untuk mengubah gambar -->
+        <!-- Slide 3 -->
         <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-3"
             style="background-image: url('{{ asset('storage/images/gallery/album-b .png') }}');">
-            <!-- mulai dari url -->
-
             <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm">
+            <div class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
                 <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Kampus Modern & Nyaman</h1>
                 <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Lingkungan kampus yang asri dilengkapi fasilitas modern untuk pengembangan diri</p>
                 <a href="#fasilitas" class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Lihat Fasilitas</a>
@@ -104,59 +120,77 @@
         </div>
 
         <div class="custom-slider-nav absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white"></div>
-            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300"></div>
-            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300"></div>
+            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125"></div>
+            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125"></div>
+            <div class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125"></div>
         </div>
     </section>
 
     <script>
+        // Track scroll direction
+        let lastScrollPosition = window.pageYOffset;
+        document.addEventListener('scroll', function() {
+            const currentScrollPosition = window.pageYOffset;
+            document.body.style.setProperty('--scroll-direction', currentScrollPosition > lastScrollPosition ? 1 : -1);
+            lastScrollPosition = currentScrollPosition;
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
+            // Hero Slider Logic
             const slides = document.querySelectorAll('.custom-hero-slide');
             const dots = document.querySelectorAll('.custom-slider-dot');
             let currentSlide = 0;
             let slideInterval;
 
-            window.showSlide = function(index) {
+            function showSlide(index) {
                 slides.forEach((slide, i) => {
                     if (i === index) {
-                        slide.classList.add('active');
-                        slide.classList.remove('translate-x-full');
-                        slide.classList.remove('-translate-x-full');
-                        slide.classList.add('opacity-100');
-                    } else if (i < index) {
-                        slide.classList.remove('active');
-                        slide.classList.add('-translate-x-full');
-                        slide.classList.remove('translate-x-full');
-                        slide.classList.remove('opacity-100');
+                        slide.style.transform = 'translateX(0)';
+                        slide.style.opacity = '1';
+                        slide.style.zIndex = '10';
+                        slide.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1s ease';
+                        
+                        // Animate content
+                        const content = slide.querySelector('div');
+                        if (content) {
+                            content.style.transition = 'all 0.8s ease 0.3s';
+                            content.style.opacity = '0';
+                            content.style.transform = 'translateY(20px)';
+                            
+                            // Trigger reflow to restart animation
+                            void content.offsetWidth;
+                            
+                            content.style.opacity = '1';
+                            content.style.transform = 'translateY(0)';
+                        }
                     } else {
-                        slide.classList.remove('active');
-                        slide.classList.add('translate-x-full');
-                        slide.classList.remove('-translate-x-full');
-                        slide.classList.remove('opacity-100');
+                        slide.style.transform = i < index ? 'translateX(-100%)' : 'translateX(100%)';
+                        slide.style.opacity = '0';
+                        slide.style.zIndex = '0';
+                        slide.style.transition = 'transform 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1s ease';
                     }
                 });
 
                 dots.forEach((dot, i) => {
                     if (i === index) {
-                        dot.classList.add('active');
-                        dot.classList.add('bg-white');
-                        dot.classList.add('scale-125');
+                        dot.classList.add('active', 'bg-white', 'scale-125');
+                        dot.style.transform = 'scale(1.5)';
+                        dot.style.backgroundColor = 'white';
                     } else {
-                        dot.classList.remove('active');
-                        dot.classList.remove('bg-white');
-                        dot.classList.remove('scale-125');
+                        dot.classList.remove('active', 'bg-white', 'scale-125');
+                        dot.style.transform = 'scale(1)';
+                        dot.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
                     }
                 });
             }
 
-            window.nextSlide = function() {
+            function nextSlide() {
                 currentSlide = (currentSlide + 1) % slides.length;
                 showSlide(currentSlide);
                 resetSlider();
             }
 
-            window.prevSlide = function() {
+            function prevSlide() {
                 currentSlide = (currentSlide - 1 + slides.length) % slides.length;
                 showSlide(currentSlide);
                 resetSlider();
@@ -181,73 +215,155 @@
 
             showSlide(currentSlide);
             startSlider();
-        });
-    </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const slides = document.querySelectorAll('.custom-hero-slide');
-            const dots = document.querySelectorAll('.custom-slider-dot');
-            let currentSlide = 0;
-            let slideInterval;
+            document.querySelector('.custom-slider-prev').addEventListener('click', prevSlide);
+            document.querySelector('.custom-slider-next').addEventListener('click', nextSlide);
 
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    if (i === index) {
-                        slide.classList.add('active');
-                        slide.classList.remove('translate-x-full');
-                        slide.classList.remove('-translate-x-full');
-                        slide.classList.add('opacity-100');
-                    } else if (i < index) {
-                        slide.classList.remove('active');
-                        slide.classList.add('-translate-x-full');
-                        slide.classList.remove('translate-x-full');
-                        slide.classList.remove('opacity-100');
+            // Enhanced Section Animations with direction awareness
+            const animatedElements = document.querySelectorAll('section, .competence-card, .hover-scale, .video-container, .grid > div');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Get scroll direction from CSS variable
+                        const scrollDirection = parseInt(getComputedStyle(document.body).getPropertyValue('--scroll-direction'));
+                        
+                        // Different animations based on element type and scroll direction
+                        if (entry.target.classList.contains('competence-card')) {
+                            entry.target.style.transform = 'scale(1)';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        } 
+                        else if (entry.target.classList.contains('hover-scale')) {
+                            entry.target.style.transform = 'translateY(0)';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transition = 'transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease';
+                        }
+                        else if (entry.target.classList.contains('video-container')) {
+                            entry.target.style.transform = 'scale(1)';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+                        }
+                        else {
+                            // Direction-aware animation for sections
+                            const translateY = scrollDirection > 0 ? '30px' : '-30px';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            entry.target.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                            
+                            // Animate child elements with staggered delays
+                            const children = entry.target.querySelectorAll('h2, h3, p, img, a, div');
+                            children.forEach((child, index) => {
+                                child.style.opacity = '0';
+                                child.style.transform = `translateY(${translateY})`;
+                                child.style.transition = 'all 0.6s ease ' + (index * 0.1) + 's';
+                                
+                                // Trigger reflow to restart animation
+                                void child.offsetWidth;
+                                
+                                child.style.opacity = '1';
+                                child.style.transform = 'translateY(0)';
+                            });
+                        }
                     } else {
-                        slide.classList.remove('active');
-                        slide.classList.add('translate-x-full');
-                        slide.classList.remove('-translate-x-full');
-                        slide.classList.remove('opacity-100');
+                        // Reset animation when element leaves viewport
+                        const scrollDirection = parseInt(getComputedStyle(document.body).getPropertyValue('--scroll-direction'));
+                        const translateY = scrollDirection > 0 ? '30px' : '-30px';
+                        
+                        if (!entry.target.classList.contains('custom-hero-slide')) {
+                            entry.target.style.opacity = '0';
+                            
+                            if (entry.target.classList.contains('competence-card')) {
+                                entry.target.style.transform = 'scale(0.95)';
+                            } 
+                            else if (entry.target.classList.contains('hover-scale')) {
+                                entry.target.style.transform = `translateY(${translateY})`;
+                            }
+                            else if (entry.target.classList.contains('video-container')) {
+                                entry.target.style.transform = 'scale(0.98)';
+                            }
+                            else {
+                                entry.target.style.transform = `translateY(${translateY})`;
+                            }
+                        }
                     }
                 });
+            }, observerOptions);
 
-                dots.forEach((dot, i) => {
-                    if (i === index) {
-                        dot.classList.add('active');
-                        dot.classList.add('bg-white');
-                        dot.classList.add('scale-125');
-                    } else {
-                        dot.classList.remove('active');
-                        dot.classList.remove('bg-white');
-                        dot.classList.remove('scale-125');
+            animatedElements.forEach(element => {
+                // Set initial state for animation
+                if (!element.classList.contains('custom-hero-slide')) {
+                    element.style.opacity = '0';
+                    
+                    if (element.classList.contains('competence-card')) {
+                        element.style.transform = 'scale(0.95)';
+                    } 
+                    else if (element.classList.contains('hover-scale')) {
+                        element.style.transform = 'translateY(30px)';
                     }
+                    else if (element.classList.contains('video-container')) {
+                        element.style.transform = 'scale(0.98)';
+                    }
+                    else {
+                        element.style.transform = 'translateY(30px)';
+                    }
+                    
+                    observer.observe(element);
+                }
+            });
+
+            // Hover effects for cards
+            const cards = document.querySelectorAll('.hover-scale');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                    card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
                 });
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            }
-
-            function startSlider() {
-                slideInterval = setInterval(nextSlide, 5000);
-            }
-
-            function resetSlider() {
-                clearInterval(slideInterval);
-                startSlider();
-            }
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentSlide = index;
-                    showSlide(currentSlide);
-                    resetSlider();
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
                 });
             });
 
-            showSlide(currentSlide);
-            startSlider();
+            // Button hover effects
+            const buttons = document.querySelectorAll('a, button');
+            buttons.forEach(button => {
+                if (!button.classList.contains('custom-slider-prev') && 
+                    !button.classList.contains('custom-slider-next') &&
+                    !button.classList.contains('custom-slider-dot')) {
+                    
+                    button.addEventListener('mouseenter', () => {
+                        button.style.transform = 'scale(1.05)';
+                    });
+                    
+                    button.addEventListener('mouseleave', () => {
+                        button.style.transform = 'scale(1)';
+                    });
+                }
+            });
+
+            // Image hover zoom effects
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.parentElement.classList.contains('group') || 
+                    img.parentElement.classList.contains('hover-scale')) {
+                    
+                    img.addEventListener('mouseenter', () => {
+                        img.style.transform = 'scale(1.1)';
+                        img.style.transition = 'transform 0.5s ease';
+                    });
+                    
+                    img.addEventListener('mouseleave', () => {
+                        img.style.transform = 'scale(1)';
+                    });
+                }
+            });
         });
     </script>
     
@@ -289,9 +405,9 @@
                     <div class="relative h-full flex items-center justify-center p-8 lg:p-12">
                         <div class="text-center">
                             <div class="inline-block rounded-full p-1 bg-gradient-to-r from-emerald-500 to-teal-400">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                <img src="{{ asset('storage/images/founder/founder.png') }}"  
                                      alt="Founder IDBC" 
-                                     class="rounded-full w-64 h-64 object-cover border-4 border-white shadow-xl">
+                                     class="rounded-full w-64 h-64 object-cover border-4 border-white shadow-xl hover:scale-105 transition-transform duration-300">
                             </div>
                         </div>
                     </div>
@@ -374,7 +490,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/wifi.png') }}"  
                              alt="Free Wifi Hotspot" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -389,7 +505,7 @@
                 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/asrama.png') }}"   
                              alt="Asrama & Tempat Belajar" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -404,7 +520,7 @@
                 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/bisnis-lab.png') }}"   
                              alt="Lab. Bisnis Entrepreneur" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -419,7 +535,7 @@
                 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/bookless.png') }}"   
                              alt="Bookless Library System" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -434,7 +550,7 @@
                 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/smart-lab.png') }}"   
                              alt="Laboratorium Digital Smart Lab" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -449,7 +565,7 @@
                 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                     <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
+                        <img src="{{ asset('storage/images/sarana/fashion-lab.png') }}"   
                              alt="Lab. Bisnis Fashion" 
                              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                     </div>
@@ -624,7 +740,7 @@
                         <span class="text-sm font-medium text-emerald-600">Acara Akademik</span>
                         <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Wisuda Angkatan ke-5 IDBC</h3>
                         <p class="text-gray-600 mb-4">Acara wisuda dengan tema "Menjadi Teknopreneur Berkarakter" diikuti oleh 120 lulusan terbaik</p>
-                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center">
+                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
                             Baca Selengkapnya
                             <i class="fas fa-arrow-right ml-2 text-sm"></i>
                         </a>
@@ -641,7 +757,7 @@
                         <span class="text-sm font-medium text-emerald-600">Kegiatan Kampus</span>
                         <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Seminar Ekonomi Islam</h3>
                         <p class="text-gray-600 mb-4">Diskusi tentang peluang bisnis syariah di era digital dengan praktisi ekonomi Islam terkemuka</p>
-                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center">
+                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
                             Baca Selengkapnya
                             <i class="fas fa-arrow-right ml-2 text-sm"></i>
                         </a>
@@ -658,7 +774,7 @@
                         <span class="text-sm font-medium text-emerald-600">Kegiatan Mahasiswa</span>
                         <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Kunjungan Industri Keuangan Syariah</h3>
                         <p class="text-gray-600 mb-4">Mahasiswa IDBC belajar langsung praktik bisnis syariah di perusahaan keuangan terkemuka</p>
-                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center">
+                        <a href="#" class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
                             Baca Selengkapnya
                             <i class="fas fa-arrow-right ml-2 text-sm"></i>
                         </a>
@@ -667,9 +783,9 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300">
+                <a href="#" class="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:scale-105">
                     Lihat Semua Berita
-                    <i class="fas fa-arrow-right ml-2"></i>
+                    <i class="fas fa-arrow-right ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
                 </a>
             </div>
         </div>
@@ -714,7 +830,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="https://www.youtube.com/@idbctv9935/videos" target="_blank" class="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700">
+                <a href="https://www.youtube.com/@idbctv9935/videos" target="_blank" class="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition-all duration-300 hover:translate-x-1">
                     <span>Lihat Lebih Banyak Video</span>
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
@@ -737,7 +853,7 @@
                     <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
                          alt="Kegiatan Belajar" 
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
                         <div>
                             <h3 class="text-white font-bold text-lg">Kegiatan Belajar</h3>
                             <p class="text-emerald-200 text-sm">Sesi pembelajaran interaktif</p>
@@ -749,7 +865,7 @@
                     <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1986&q=80" 
                          alt="Laboratorium Komputer" 
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
                         <div>
                             <h3 class="text-white font-bold text-lg">Laboratorium Komputer</h3>
                             <p class="text-emerald-200 text-sm">Fasilitas pembelajaran teknologi</p>
@@ -761,7 +877,7 @@
                     <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
                          alt="Perpustakaan Digital" 
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
                         <div>
                             <h3 class="text-white font-bold text-lg">Perpustakaan Digital</h3>
                             <p class="text-emerald-200 text-sm">Akses literasi tanpa batas</p>
@@ -773,7 +889,7 @@
                     <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" 
                          alt="Diskusi Kelompok" 
                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
                         <div>
                             <h3 class="text-white font-bold text-lg">Diskusi Kelompok</h3>
                             <p class="text-emerald-200 text-sm">Kolaborasi dalam pembelajaran</p>
@@ -783,9 +899,9 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-full font-semibold shadow-sm transition-all duration-300">
+                <a href="#" class="inline-flex items-center bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-full font-semibold shadow-sm transition-all duration-300 hover:scale-105">
                     Lihat Galeri Lengkap
-                    <i class="fas fa-images ml-2"></i>
+                    <i class="fas fa-images ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
                 </a>
             </div>
         </div>
@@ -798,17 +914,17 @@
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
-        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
             <img src="{{ asset('storage/images/support/alwustho.png') }}" 
                 alt="Alwustho Land Technologies" 
                 class="max-h-32 object-contain mb-4">
         </div>
-        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
             <img src="{{ asset('storage/images/support/aflaha.png') }}" 
                 alt="Aflaha Hijab Expert Syar'i" 
                 class="max-h-32 object-contain mb-4">
         </div>
-        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
             <img src="{{ asset('storage/images/support/kampungit.png') }}" 
                 alt="Kampung IT Solo" 
                 class="max-h-32 object-contain mb-4">

@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Models\Settings\webSettings;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,9 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
-
-        if ($this->app->environment('production')) {
-            URL::forceScheme('https');
-        }
+        // View Composer global untuk $web
+        View::composer('*', function ($view) {
+            $web = webSettings::where('id', 1)->first();
+            $view->with('web', $web);
+        });
     }
 }
