@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Pages;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Helpers\roleTrait;
+use App\Helpers\RoleTrait;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class WorkersController extends Controller
 {
-    use roleTrait;
+    use RoleTrait;
 
     // KHUSUS KELOLA DATA ROLE ADMIN
     public function indexAdmin()
