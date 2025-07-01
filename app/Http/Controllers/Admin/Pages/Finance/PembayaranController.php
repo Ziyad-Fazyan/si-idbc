@@ -28,4 +28,17 @@ class PembayaranController extends Controller
 
         return view('user.finance.pages.pembayaran-index', $data);
     }
+
+    public function unpaidMahasantri()
+    {
+        $data['prefix'] = $this->setPrefix();
+        $data['web'] = WebSettings::where('id', 1)->first();
+
+        // Get TagihanKuliah records where no related HistoryTagihan with stat=1 (paid) exists
+        $data['unpaidTagihan'] = TagihanKuliah::whereDoesntHave('historyTagihans', function ($query) {
+            $query->where('stat', 1);
+        })->with('mahasiswa')->get();
+
+        return view('user.finance.pages.unpaid-mahasantri', $data);
+    }
 }

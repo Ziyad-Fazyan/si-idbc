@@ -264,6 +264,7 @@ Route::group([
                 Route::post('/store', [PembayaranController::class, 'store'])->name('store');
                 Route::patch('/{code}/update', [PembayaranController::class, 'update'])->name('update');
                 Route::delete('/{code}/destroy', [PembayaranController::class, 'destroy'])->name('destroy');
+                Route::get('/unpaid-mahasantri', [PembayaranController::class, 'unpaidMahasantri'])->name('unpaid-mahasantri');
             });
 
             // Keuangan

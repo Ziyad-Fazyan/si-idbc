@@ -17,6 +17,9 @@
             <li class="submenu-item {{ Route::is($prefix . 'finance.pembayaran-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route($prefix . 'finance.pembayaran-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Pembayaran</a>
             </li>
+            <li class="submenu-item {{ Route::is($prefix . 'finance.unpaid-mahasantri') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                <a href="{{ route($prefix . 'finance.unpaid-mahasantri') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Mahasantri Belum Bayar Bulanan</a>
+            </li>
             <li class="submenu-item {{ Route::is($prefix . 'finance.keuangan-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route($prefix . 'finance.keuangan-index') }}" class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data Keuangan</a>
             </li>
