@@ -40,13 +40,17 @@
                 <!-- Top Bar -->
                 <div class="bg-teal-800 text-white py-2 px-4">
                     <div class="container mx-auto flex justify-between items-center">
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-3">
                             @if (isset($web->school_logo))
-                                <img src="{{ asset('storage/images/website/site-logo.png') }}"
-                                    alt="Logo {{ $web->school_name }}" class="h-10 w-auto">
+                                <div class="p-1 bg-white rounded-md shadow-sm hover:shadow transition-all">
+                                    <img src="{{ asset('storage/images/website/site-logo.png') }}"
+                                        alt="{{ $web->school_name ?? 'School' }} Logo"
+                                        class="h-10 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                                        width="auto" height="40" loading="lazy">
+                                </div>
                             @endif
                             <a href="{{ route('root.home-index') }}"
-                                class="text-xl font-bold text-white hover:text-teal-200 transition">
+                                class="text-xl md:text-2xl font-bold text-white hover:text-teal-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 rounded">
                                 {{ $web->school_name ?? 'Nama Sekolah' }}
                             </a>
                         </div>
