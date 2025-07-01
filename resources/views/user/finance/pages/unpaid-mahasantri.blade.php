@@ -39,9 +39,31 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($unpaidTagihan as $key => $item)
+                        @php $counter = 0; @endphp
+                        @foreach ($globalBills as $globalBill)
+                            @foreach ($globalBill['students'] as $student)
+                                <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">{{ ++$counter }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        {{ $globalBill['bill']->name ?? 'N/A' }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">{{ $student->mhs_name ?? 'N/A' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center uppercase">
+                                        {{ $globalBill['bill']->code }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">Rp.
+                                        {{ number_format($globalBill['bill']->price, 0, ',', '.') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="px-2 py-1 text-sm rounded-full bg-red-100 text-red-800">
+                                            UNPAID
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+
+                        @foreach ($individualBills as $key => $item)
                             <tr class="hover:bg-gray-50 transition-colors duration-150">
-                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ ++$key }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">{{ ++$counter }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">{{ $item->name ?? 'N/A' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     {{ $item->mahasiswa->mhs_name ?? 'N/A' }}</td>
@@ -55,9 +77,10 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @if ($unpaidTagihan->isEmpty())
+
+                        @if (count($globalBills) == 0 && count($individualBills) == 0)
                             <tr>
-                                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">Tidak ada
+                                <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">Tidak ada
                                     mahasantri yang belum membayar bulanan.</td>
                             </tr>
                         @endif

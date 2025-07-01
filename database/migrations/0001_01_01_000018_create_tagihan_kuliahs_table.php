@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tagihan_kuliahs', function (Blueprint $table) {
             $table->id();
             $table->string('author_id')->default(0);     // CREATOR TAGIHAN
-            $table->foreignId('proku_id')->constrained('program_kuliahs')->default(0);     // TAGIHAN KEPADA PROGRAM KULIAH TERTENTU
-            $table->foreignId('prodi_id')->constrained('program_studis')->default(0);     // TAGIHAN KEPADA PROGRAM STUDI TERTENTU
-            $table->foreignId('users_id')->constrained('mahasiswas')->default(0);     // TAGIHAN KEPADA MAHASISWA TERTENTU
+            $table->string('proku_id')->default(0);     // TAGIHAN KEPADA PROGRAM KULIAH TERTENTU
+            $table->string('prodi_id')->default(0);     // TAGIHAN KEPADA PROGRAM STUDI TERTENTU
+            $table->string('users_id')->default(0);     // TAGIHAN KEPADA MAHASISWA TERTENTU
             $table->string('name');                     // NAMA TAGIHAN
             $table->string('code')->unique();           // CODE TAGIHAN
             $table->string('price');                    // PRICE TAGIHAN

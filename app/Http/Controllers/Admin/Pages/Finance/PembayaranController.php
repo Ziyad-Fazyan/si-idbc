@@ -35,9 +35,44 @@ class PembayaranController extends Controller
         $data['web'] = WebSettings::where('id', 1)->first();
 
         // Get TagihanKuliah records where no related HistoryTagihan with stat=1 (paid) exists
-        $data['unpaidTagihan'] = TagihanKuliah::whereDoesntHave('historyTagihans', function ($query) {
+        $unpaidTagihan = TagihanKuliah::whereDoesntHave('historyTagihans', function ($query) {
             $query->where('stat', 1);
-        })->with('mahasiswa')->get();
+        })->get();
+
+        $globalBills = [];
+        $individualBills = [];
+
+        foreach ($unpaidTagihan as $bill) {
+            if ($bill->users_id == 0) {
+                // Global bill: find related students via kelas with matching proku_id or prodi_id
+                $kelasQuery = \App\Models\Kelas::query();
+                if ($bill->proku_id != 0) {
+                    $kelasQuery->orWhere('proku_id', $bill->proku_id);
+                }
+                if ($bill->prodi_id != 0) {
+                    $kelasQuery->orWhere('pstudi_id', $bill->prodi_id);
+                }
+                $kelasList = $kelasQuery->with('mahasiswa')->get();
+
+                $students = collect();
+                foreach ($kelasList as $kelas) {
+                    $students = $students->merge($kelas->mahasiswa);
+                }
+                $students = $students->unique('id');
+
+                $globalBills[] = [
+                    'bill' => $bill,
+                    'students' => $students,
+                ];
+            } else {
+                // Individual bill
+                $bill->load('mahasiswa');
+                $individualBills[] = $bill;
+            }
+        }
+
+        $data['globalBills'] = $globalBills;
+        $data['individualBills'] = $individualBills;
 
         return view('user.finance.pages.unpaid-mahasantri', $data);
     }

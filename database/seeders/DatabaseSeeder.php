@@ -251,18 +251,14 @@ class DatabaseSeeder extends Seeder
 
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
-            'users_id'    => '1',
             'proku_id'    => '1',
-            'prodi_id'    => '1',
             'name'    => 'Syahriah Bulan 1',
             'code'    => 'SPP-' . Str::random(8),
             'price'    => '1700000',
         ]);
         // TAGIHAN KULIAH
         \App\Models\TagihanKuliah::create([
-            'users_id'    => '1',
             'proku_id'    => '1',
-            'prodi_id'    => '1',
             'name'    => 'Syahriah Bulan 1',
             'code'    => 'SPP-' . Str::random(8),
             'price'    => '1700000',
