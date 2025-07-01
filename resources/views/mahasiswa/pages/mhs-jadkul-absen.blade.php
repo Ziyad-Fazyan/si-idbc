@@ -1,4 +1,4 @@
-@extends('base.base-dash-index')
+{{-- @extends('base.base-dash-index')
 @section('title')
     Absensi Perkuliahan - Siakad By Internal Developer
 @endsection
@@ -197,4 +197,4 @@
             document.getElementById('absen_time').value = timeString;
         }
     </script>
-@endsection
+@endsection --}}

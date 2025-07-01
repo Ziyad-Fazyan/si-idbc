@@ -289,23 +289,33 @@
             <footer class="bg-teal-800 text-white py-10 mt-10">
                 <div
                     class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 justify-items-start md:justify-items-center">
-                    <div class="flex flex-col items-start space-y-2">
+                    <div class="flex flex-col items-start space-y-3">
                         @if (isset($web->school_logo))
-                            <img src="{{ asset('storage/images/website/site-logo.png') }}"
-                                alt="Logo {{ $web->school_name ?? '' }}" class="h-auto max-h-60 mb-2">
+                            <div class="p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+                                <img src="{{ asset('storage/images/website/site-logo.png') }}"
+                                    alt="{{ $web->school_name ?? 'IDBC' }} Logo"
+                                    class="h-auto max-h-52 w-auto object-contain" loading="lazy" width="200"
+                                    height="auto">
+                            </div>
                         @endif
-                        <span class="font-bold text-lg">{{ $web->school_name ?? 'IDBC' }}</span>
-                        <div class="flex space-x-4 mt-2">
+
+                        <span
+                            class="font-bold text-xl text-gray-800 dark:text-white">{{ $web->school_name ?? 'IDBC' }}</span>
+
+                        <div class="flex space-x-5 mt-1">
                             <a href="https://www.facebook.com/share/19USmPhp8t/" target="_blank"
-                                class="hover:text-teal-300">
+                                class="text-gray-600 hover:text-teal-500 dark:text-gray-300 dark:hover:text-teal-300 transition-colors duration-200"
+                                aria-label="Facebook">
                                 <i class="fab fa-facebook fa-lg"></i>
                             </a>
                             <a href="https://www.instagram.com/idbc_official?igsh=MmJqbWZlb3l3b2U3" target="_blank"
-                                class="hover:text-teal-300">
+                                class="text-gray-600 hover:text-teal-500 dark:text-gray-300 dark:hover:text-teal-300 transition-colors duration-200"
+                                aria-label="Instagram">
                                 <i class="fab fa-instagram fa-lg"></i>
                             </a>
                             <a href="https://www.youtube.com/@idbctv9935/videos" target="_blank"
-                                class="hover:text-teal-300">
+                                class="text-gray-600 hover:text-teal-500 dark:text-gray-300 dark:hover:text-teal-300 transition-colors duration-200"
+                                aria-label="YouTube">
                                 <i class="fab fa-youtube fa-lg"></i>
                             </a>
                         </div>

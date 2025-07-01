@@ -31,8 +31,8 @@ Route::group([
 
     // ====== JADWAL KULIAH ======
     Route::get('/jadwal-kuliah', [HomeController::class, 'jadkulIndex'])->name('home-jadkul-index');
-    Route::get('/jadwal-kuliah/{code}/absen', [HomeController::class, 'jadkulAbsen'])->name('home-jadkul-absen');
-    Route::post('/jadwal-kuliah/store/absen', [HomeController::class, 'jadkulAbsenStore'])->name('home-jadkul-absen-store');
+    // Route::get('/jadwal-kuliah/{code}/absen', [HomeController::class, 'jadkulAbsen'])->name('home-jadkul-absen');
+    // Route::post('/jadwal-kuliah/store/absen', [HomeController::class, 'jadkulAbsenStore'])->name('home-jadkul-absen-store');
     Route::post('/jadwal-kuliah/store/{code}/feedback', [HomeController::class, 'storeFBPerkuliahan'])->name('jadkul.feedback-store');
 
     // ====== PROFILE (UPDATE) ======

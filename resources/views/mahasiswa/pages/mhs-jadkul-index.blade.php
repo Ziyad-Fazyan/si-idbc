@@ -38,33 +38,44 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 #
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nama Kelas
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Mata Kuliah
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Dosen
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Lokasi
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tanggal
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Hari
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Waktu
                             </th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
+                        @php
+                            $hariIni = \Carbon\Carbon::now()->translatedFormat('l'); // "Senin", "Selasa", dst
+                        @endphp
                         @foreach ($jadkul as $key => $item)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ++$key }}</td>
@@ -72,14 +83,15 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $item->matkul->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->dosen->dsn_name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {{ $item->ruang->gedung->name }}<br>
-                                    <span class="text-gray-500">{{ $item->ruang->name . ' - Lantai ' . $item->ruang->floor }}</span>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->dosen->dsn_name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {{ \Carbon\Carbon::parse($item->date)->isoFormat('dddd') }}<br>
-                                    <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->date)->isoFormat('D MMMM Y') }}</span>
+                                    {{ $item->ruang->gedung->name }}<br>
+                                    <span
+                                        class="text-gray-500">{{ $item->ruang->name . ' - Lantai ' . $item->ruang->floor }}</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $item->days_id }}<br>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $item->start }} <br>
@@ -89,18 +101,27 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <!-- Action buttons container -->
                                     <div class="flex flex-col space-y-2">
-                                        <a href="{{ route('mahasiswa.home-jadkul-absen', $item->code) }}"
+                                        {{-- <a href="{{ route('mahasiswa.home-jadkul-absen', $item->code) }}"
                                             class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                             <!-- Attendance icon -->
                                             <i class="fas fa-calendar-check mr-1"></i>
                                             Absensi
-                                        </a>
-                                        <button onclick="openModal('feedbackModal{{ $item->code }}')"
-                                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
-                                            <!-- Feedback icon -->
-                                            <i class="fas fa-star mr-1"></i>
-                                            Feedback
-                                        </button>
+                                        </a> --}}
+                                        @if ($item->days_id == $hariIni)
+                                            <button onclick="openModal('feedbackModal{{ $item->code }}')"
+                                                class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                                                <!-- Feedback icon -->
+                                                <i class="fas fa-star mr-1"></i>
+                                                Feedback
+                                            </button>
+                                        @else
+                                            <button disabled
+                                                class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-gray-400 cursor-not-allowed transition-colors">
+                                                <!-- Feedback icon -->
+                                                <i class="fas fa-star mr-1"></i>
+                                                Feedback
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

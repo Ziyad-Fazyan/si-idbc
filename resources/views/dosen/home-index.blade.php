@@ -398,12 +398,13 @@
                     </div>
                     <div class="p-6">
                         @php
+                            $todayIndex = \Carbon\Carbon::now()->dayOfWeek; // 0=Sunday, 1=Monday, etc.
                             $todaySchedules = \App\Models\JadwalKuliah::where(
                                 'dosen_id',
                                 Auth::guard('dosen')->user()->id,
                             )
-                                ->where('days_id', strtolower(\Carbon\Carbon::now()->translatedFormat('l')))
-                                ->with('matakuliah', 'kelas')
+                                ->where('days_id', $todayIndex)
+                                ->with('matkul', 'kelas')
                                 ->orderBy('start')
                                 ->get();
                         @endphp
@@ -415,35 +416,37 @@
                                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                                             <div class="flex-1">
                                                 <h4 class="font-bold text-gray-800 text-lg mb-2">
-                                                    {{ $schedule->matakuliah->name }}</h4>
+                                                    {{ $schedule->matkul->name ?? '-' }}</h4>
                                                 <div class="space-y-1 text-gray-600">
                                                     <p class="flex items-center text-sm">
                                                         <i class="fas fa-users w-4 mr-2"></i>
-                                                        <span class="font-medium">Kelas:</span> {{ $schedule->kelas->name }}
+                                                        <span class="font-medium">Kelas:</span>
+                                                        {{ $schedule->kelas->name ?? '-' }}
                                                     </p>
                                                     <p class="flex items-center text-sm">
                                                         <i class="fas fa-door-open w-4 mr-2"></i>
-                                                        <span class="font-medium">Ruang:</span> {{ $schedule->ruang }}
+                                                        <span class="font-medium">Ruang:</span>
+                                                        {{ $schedule->ruang->name ?? '-' }}
                                                     </p>
                                                     <p class="flex items-center text-sm">
                                                         <i class="fas fa-clock w-4 mr-2"></i>
                                                         <span class="font-medium">Waktu:</span>
-                                                        {{ \Carbon\Carbon::parse($schedule->jam_mulai)->format('H:i') }} -
-                                                        {{ \Carbon\Carbon::parse($schedule->jam_selesai)->format('H:i') }}
+                                                        {{ \Carbon\Carbon::parse($schedule->start)->format('H:i') }} -
+                                                        {{ \Carbon\Carbon::parse($schedule->ended)->format('H:i') }}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="mt-4 md:mt-0 md:ml-6">
                                                 <span
                                                     class="status-badge inline-block px-4 py-2 rounded-full text-sm font-semibold shadow-sm
-                                                        @if (\Carbon\Carbon::parse($schedule->jam_selesai)->lt(now())) bg-gray-100 text-gray-700
-                                                        @elseif(\Carbon\Carbon::parse($schedule->jam_mulai)->lte(now()) && \Carbon\Carbon::parse($schedule->jam_selesai)->gt(now()))
+                                                        @if (\Carbon\Carbon::parse($schedule->ended)->lt(now())) bg-gray-100 text-gray-700
+                                                        @elseif(\Carbon\Carbon::parse($schedule->start)->lte(now()) && \Carbon\Carbon::parse($schedule->ended)->gt(now()))
                                                             bg-green-100 text-green-800 pulse-ring
                                                         @else
                                                             bg-blue-100 text-blue-800 @endif">
-                                                    @if (\Carbon\Carbon::parse($schedule->jam_selesai)->lt(now()))
+                                                    @if (\Carbon\Carbon::parse($schedule->ended)->lt(now()))
                                                         <i class="fas fa-check-circle mr-1"></i> Selesai
-                                                    @elseif(\Carbon\Carbon::parse($schedule->jam_mulai)->lte(now()) && \Carbon\Carbon::parse($schedule->jam_selesai)->gt(now()))
+                                                    @elseif(\Carbon\Carbon::parse($schedule->start)->lte(now()) && \Carbon\Carbon::parse($schedule->ended)->gt(now()))
                                                         <i class="fas fa-play-circle mr-1"></i> Berlangsung
                                                     @else
                                                         <i class="fas fa-clock mr-1"></i> Akan Datang
@@ -585,7 +588,8 @@
             </div>
         @endforeach
     </section>
-
+@endsection
+@push('scripts')
     <script>
         // Enhanced modal handling with smooth animations
         function openModal(modalId) {
@@ -643,8 +647,6 @@
             document.documentElement.classList.add('scroll-smooth');
         });
     </script>
-@endsection
-@push('scripts')
     <script>
         var ajaxRunning = false;
 
@@ -657,7 +659,7 @@
                 // Show loading state
                 $('#grafikChart').html(
                     '<div class="flex items-center justify-center h-full"><div class="loading-shimmer w-32 h-32 rounded-full"></div></div>'
-                    );
+                );
 
                 $.ajax({
                     url: '{{ route('dosen.services.ajax.graphic.kepuasan-mengajar-dosen') }}',
@@ -727,8 +729,8 @@
                                                 formatter: function(w) {
                                                     return w.globals.seriesTotals.reduce((a,
                                                         b) => {
-                                                            return a + b
-                                                        }, 0)
+                                                        return a + b
+                                                    }, 0)
                                                 }
                                             },
                                             value: {
@@ -779,10 +781,9 @@
                                     fontFamily: 'Inter, system-ui, sans-serif'
                                 },
                                 y: {
-                                    formatter: function(value, {
-                                        seriesIndex,
-                                        w
-                                    }) {
+                                    formatter: function(value, opts) {
+                                        if (!opts || !opts.w) return value;
+                                        const w = opts.w;
                                         const total = w.globals.seriesTotals.reduce((a, b) =>
                                             a + b, 0);
                                         const percentage = ((value / total) * 100).toFixed(1);
