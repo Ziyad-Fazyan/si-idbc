@@ -77,7 +77,7 @@
                     Tagihan</a>
             </li>
             <li
-                class="{{ Route::is('web-admin.finance.pembayaran-*') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
+                class="{{ Route::is('web-admin.finance.pembayaran-index') ? 'bg-green-50 text-green-700 font-semibold rounded-md' : '' }}">
                 <a href="{{ route('web-admin.finance.pembayaran-index') }}"
                     class="block py-2 pl-3 pr-4 text-sm rounded-md hover:bg-green-100 hover:text-green-700 transition-colors duration-200">Data
                     Pembayaran</a>
