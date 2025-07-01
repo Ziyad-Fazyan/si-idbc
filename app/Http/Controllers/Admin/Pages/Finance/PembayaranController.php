@@ -60,9 +60,18 @@ class PembayaranController extends Controller
                 }
                 $students = $students->unique('id');
 
+                // Filter out students who have paid this global bill
+                $filteredStudents = $students->filter(function ($student) use ($bill) {
+                    $paid = \App\Models\HistoryTagihan::where('tagihan_code', $bill->code)
+                        ->where('users_id', $student->id)
+                        ->where('stat', 1)
+                        ->exists();
+                    return !$paid;
+                });
+
                 $globalBills[] = [
                     'bill' => $bill,
-                    'students' => $students,
+                    'students' => $filteredStudents,
                 ];
             } else {
                 // Individual bill
