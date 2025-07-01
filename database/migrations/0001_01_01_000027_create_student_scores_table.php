@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('stask_id')->constrained('student_tasks');
             $table->foreignId('student_id')->constrained('mahasiswas');
-            $table->foreignId('dosen_id')->constrained('dosens')->nullable();
+            $table->foreignId('dosen_id')->nullable()->constrained('dosens');
             $table->integer('score',)->nullable();
             $table->longText('desc');
             $table->string('file_1')->nullable();

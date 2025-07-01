@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ticket_supports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained('mahasiswas')->nullable();        // MAHASISWA ID
-            $table->foreignId('admin_id')->constrained('users')->nullable();        // STAFF ID
+            $table->foreignId('users_id')->nullable()->constrained('mahasiswas');        // MAHASISWA ID
+            $table->foreignId('admin_id')->nullable()->constrained('users');        // STAFF ID
             $table->string('code')->nullable()->unique();   // TICKET CODE
             $table->string('codr')->nullable();             // TICKET CODE REPLY
             $table->string('core')->unique();               // MESSAGE CODE
