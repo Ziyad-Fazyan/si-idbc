@@ -458,7 +458,7 @@
                             <!-- Main Photo with Shadow -->
                             <div
                                 class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-300 group-hover:scale-[1.02]">
-                                <img src="{{ asset('storage/images/founder/founder.png') }}" alt="Founder IDBC"
+                                <img src="{{ asset('storage/images/founder/founder.jpg') }}" alt="Founder IDBC"
                                     class="w-full h-auto aspect-[3/4] object-cover object-top">
 
                                 <!-- Signature Badge -->
