@@ -96,49 +96,31 @@
             &#10095; </button>
 
         <!-- Slide 1 -->
-        <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-1"
-            style="background-image: url('{{ asset('storage/images/gallery/album-c.png') }}');">
-            <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div
-                class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
-                <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Selamat Datang di IDBC</h1>
-                <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Mencetak generasi pemimpin masa depan
-                    melalui pendidikan berkualitas dan pengembangan karakter berbasis teknologi</p>
-                <a href="#pendaftaran"
-                    class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Daftar
-                    Sekarang</a>
-            </div>
-        </div>
+        @if (isset($landingContent['hero_slider']))
+            @foreach ($landingContent['hero_slider']->additional_content as $slide)
+                <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-1"
+                    style="background-image: url('{{ asset($slide['image']) }}');">
+                    <div class="absolute inset-0 hero-overlay z-10"></div>
+                    <div
+                        class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
+                        <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">{{ $slide['title'] }}
+                        </h1>
+                        <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">{{ $slide['subtitle'] }}</p>
+                        <a href="{{ $slide['button_link'] }}"
+                            class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">{{ $slide['button_text'] }}</a>
+                    </div>
+                </div>
+            @endforeach
+        @endif
 
-        <!-- Slide 2 -->
-        <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-2"
-            style="background-image: url('{{ asset('storage/images/gallery/album-a.png') }}');">
-            <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div
-                class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
-                <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Pendidikan Berbasis Teknologi
-                </h1>
-                <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Kurikulum inovatif yang dirancang untuk
-                    memenuhi tantangan global dengan fasilitas pendidikan terbaik</p>
-                <a href="#fakultas"
-                    class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Lihat
-                    Program Studi</a>
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-3"
-            style="background-image: url('{{ asset('storage/images/gallery/album-b .png') }}');">
-            <div class="absolute inset-0 hero-overlay z-10"></div>
-            <div
-                class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
-                <h1 class="text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">Kampus Modern & Nyaman</h1>
-                <p class="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed">Lingkungan kampus yang asri dilengkapi
-                    fasilitas modern untuk pengembangan diri</p>
-                <a href="#fasilitas"
-                    class="inline-block bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">Lihat
-                    Fasilitas</a>
-            </div>
+        <div class="custom-slider-nav absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
+            @if (isset($landingContent['hero_slider']))
+                @foreach ($landingContent['hero_slider']->additional_content as $index => $slide)
+                    <div class="w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer custom-slider-dot {{ $index === 0 ? 'bg-opacity-100' : '' }}"
+                        onclick="currentSlide({{ $index }})">
+                    </div>
+                @endforeach
+            @endif
         </div>
 
         <div class="custom-slider-nav absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
@@ -403,86 +385,83 @@
     <section id="sambutan-rektor" class="py-16 px-4 sm:px-6 bg-gradient-to-br from-gray-50 to-white">
         <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"> <!-- Reduced gap -->
-                <!-- Teks Sambutan -->
-                <div class="p-6 lg:p-10"> <!-- Reduced padding -->
-                    <div class="mb-5"> <!-- Reduced margin -->
-                        <h2 class="text-3xl lg:text-4xl font-bold text-teal-800 mb-12">Selamat Datang di IDBC</h2>
+                @if (isset($landingContent['founder']))
+                    <!-- Teks Sambutan -->
+                    <div class="p-6 lg:p-10"> <!-- Reduced padding -->
+                        <div class="mb-5"> <!-- Reduced margin -->
+                            <h2 class="text-3xl lg:text-4xl font-bold text-teal-800 mb-12">Selamat Datang di IDBC</h2>
+                        </div>
+
+                        <div class="prose prose-lg max-w-none">
+                            <p class="text-gray-600 mb-3"> <!-- Reduced margin -->
+                                Assalamualaikum Warahmatullahi Wabarakatuh.
+                            </p>
+                            @if (isset($landingContent['founder']->additional_content['quote']) &&
+                                    is_array($landingContent['founder']->additional_content['quote']))
+                                @foreach ($landingContent['founder']->additional_content['quote'] as $quote)
+                                    <p class="text-gray-600 mb-4">
+                                        {{ $quote }}
+                                    </p>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        <div class="mt-6"> <!-- Reduced margin -->
+                            <p class="text-lg font-bold text-gray-800">
+                                {{ $landingContent['founder']->additional_content['name'] ?? '' }}</p>
+                            <p class="text-emerald-600 font-medium">
+                                {{ $landingContent['founder']->additional_content['position'] ?? '' }}</p>
+                        </div>
                     </div>
 
-                    <div class="prose prose-lg max-w-none">
-                        <p class="text-gray-600 mb-3"> <!-- Reduced margin -->
-                            Assalamualaikum Warahmatullahi Wabarakatuh.
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            Di semua negara maju, hal yang paling menonjol adalah tentang kemajuan literasi,
-                            kedisiplinan, dan penghargaan terhadap profesi. Selain tentu saja kemajuan dalam hal
-                            informasi dan teknologi.
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            Dan yang lebih penting, bahwa yang mendasari semua kemajuan itu adalah faktor pendidikan.
-                            Sistem pendidikan, kurikulum, metode dan perhatian dari pemerintah, saling terkait dan tidak
-                            bisa dipisahkan.
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            Indonesia, dalam pendidikan dan literasi sangat ketinggalan jauh dari negara-negara maju.
-                            Sehingga kepedulian kita terhadap percepatan pendidikan melalui sarana prasarana IT dan
-                            digital, sangat diperlukan.
-                        </p>
-                        <p class="text-gray-600">
-                            Kampung IT Solo, sejak tahun 2014 sudah merintis dan memikirkan akan hal ini. Dan sampai
-                            tahun 2024 ini, Kampung IT Solo sudah banyak mewarnai dunia pendidikan dan dakwah baik di
-                            dalam maupun di luar negeri, melalui berbagai produk-produknya.
-                        </p>
-                    </div>
-
-                    <div class="mt-6"> <!-- Reduced margin -->
-                        <p class="text-lg font-bold text-gray-800">USTADZ JUNAEDY ALFAN</p>
-                        <p class="text-emerald-600 font-medium">Founder IDBC</p>
-                    </div>
-                </div>
-
-                <!-- Foto Founder -->
-                <div
-                    class="relative flex items-center justify-center p-6 lg:p-8 bg-gradient-to-br from-emerald-50 to-teal-50">
-                    <div class="relative w-full max-w-sm">
-                        <!-- Main Photo Container with Double Border Effect -->
-                        <div class="relative group">
-                            <!-- Outer Glow Effect -->
-                            <div
-                                class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 opacity-20 blur-sm group-hover:opacity-30 transition-opacity duration-300">
-                            </div>
-
-                            <!-- Inner White Border -->
-                            <div class="absolute inset-0 rounded-lg border-4 border-white/80"></div>
-
-                            <!-- Main Photo with Shadow -->
-                            <div
-                                class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-300 group-hover:scale-[1.02]">
-                                <img src="{{ asset('storage/images/founder/founder.jpg') }}" alt="Founder IDBC"
-                                    class="w-full h-auto aspect-[3/4] object-cover object-top">
-
-                                <!-- Signature Badge -->
+                    <!-- Foto Founder -->
+                    <div
+                        class="relative flex items-center justify-center p-6 lg:p-8 bg-gradient-to-br from-emerald-50 to-teal-50">
+                        <div class="relative w-full max-w-sm">
+                            <!-- Main Photo Container with Double Border Effect -->
+                            <div class="relative group">
+                                <!-- Outer Glow Effect -->
                                 <div
-                                    class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-teal-800 text-xs leading-tight">Ustadz Junaedy Alfan</p>
-                                    <p class="text-[0.65rem] text-emerald-600 mt-0.5">Founder IDBC</p>
+                                    class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 opacity-20 blur-sm group-hover:opacity-30 transition-opacity duration-300">
+                                </div>
+
+                                <!-- Inner White Border -->
+                                <div class="absolute inset-0 rounded-lg border-4 border-white/80"></div>
+
+                                <!-- Main Photo with Shadow -->
+                                <div
+                                    class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-300 group-hover:scale-[1.02]">
+                                    <img src="{{ asset($landingContent['founder']->image_path) }}"
+                                        alt="{{ $landingContent['founder']->additional_content['name'] }}"
+                                        class="w-full h-auto aspect-[3/4] object-cover object-top">
+
+                                    <!-- Signature Badge -->
+                                    <div
+                                        class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-sm border border-gray-100">
+                                        <p class="font-semibold text-teal-800 text-xs leading-tight">
+                                            {{ $landingContent['founder']->additional_content['name'] }}</p>
+                                        <p class="text-[0.65rem] text-emerald-600 mt-0.5">
+                                            {{ $landingContent['founder']->additional_content['position'] }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Decorative Corner Elements -->
+                                <div
+                                    class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-emerald-400 opacity-50 rounded-tl-lg">
+                                </div>
+                                <div
+                                    class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-teal-400 opacity-50 rounded-br-lg">
                                 </div>
                             </div>
 
-                            <!-- Decorative Corner Elements -->
-                            <div
-                                class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-emerald-400 opacity-50 rounded-tl-lg">
+                            <!-- Background Decorative Elements -->
+                            <div class="absolute -z-10 -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full opacity-30">
                             </div>
-                            <div
-                                class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-teal-400 opacity-50 rounded-br-lg">
+                            <div class="absolute -z-10 -bottom-4 -left-4 w-20 h-20 bg-teal-100 rounded-full opacity-30">
                             </div>
                         </div>
-
-                        <!-- Background Decorative Elements -->
-                        <div class="absolute -z-10 -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full opacity-30"></div>
-                        <div class="absolute -z-10 -bottom-4 -left-4 w-20 h-20 bg-teal-100 rounded-full opacity-30"></div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </section>
@@ -492,169 +471,66 @@
         <div class="container mx-auto text-center">
             <h2 class="text-4xl font-bold text-teal-800 mb-16">Visi & Misi IDBC</h2>
             <div class="mb-20">
-                <h3 class="text-3xl font-bold text-teal-700">Visi</h3>
+                <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['vision']->title }}</h3>
                 <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-6"></div>
                 <p class="max-w-3xl mx-auto text-gray-700 text-xl font-medium">
-                    Melahirkan Kader Da'i Teknopreneur (Programer & Entrepreneur)
+                    {{ $landingContent['vision']->content }}
                 </p>
             </div>
 
             <div>
-                <h3 class="text-3xl font-bold text-teal-700">Misi</h3>
+                <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['mission']->title }}</h3>
                 <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-10"></div>
 
                 <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                    <div
-                        class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                        <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
-                            <i class="fas fa-graduation-cap text-4xl text-teal-700"></i>
+                    @foreach ($landingContent['mission']->additional_content['points'] as $point)
+                        <div
+                            class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
+                                {!! $point['image'] !!}
+                            </div>
+                            <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
+                                {{ $point['Misi'] }}
+                            </h4>
                         </div>
-                        <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
-                            Menjadi alternatif pendidikan yang efisien sesuai dengan syariat dan tuntutan zaman
-                        </h4>
-                    </div>
-
-                    <div
-                        class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                        <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
-                            <i class="fas fa-network-wired text-4xl text-teal-700"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
-                            Optimalisasi & integrasi teknologi dalam pendidikan dan dakwah.
-                        </h4>
-                    </div>
-
-                    <div
-                        class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                        <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
-                            <i class="fas fa-mosque text-4xl text-teal-700"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
-                            Menerapkan konsep pendidikan robbany sesuai dengan manhaj salaf.
-                        </h4>
-                    </div>
-
-                    <div
-                        class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                        <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
-                            <i class="fas fa-hands-helping text-4xl text-teal-700"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
-                            Mewujudkan manusia menjadi hamba dan khalifah.
-                        </h4>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
-
         </div>
     </section>
 
 
     <!-- Fasilitas Kampus -->
-    <section id="fasilitas" class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-teal-800 mb-16">Sarana Pendukung Pendidikan IDBC</h2>
-                <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
-                    Fasilitas modern untuk mendukung proses belajar, praktik, dan pengembangan diri para santri
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/wifi.png') }}" alt="Free Wifi Hotspot"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-wifi text-xl text-emerald-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Free Wifi Hotspot</h3>
-                        <p class="text-gray-600">Akses internet nirkabel 24 jam di seluruh area kampus untuk menunjang
-                            kebutuhan belajar dan riset</p>
-                    </div>
+    @if (isset($landingContent['facility']))
+        <section id="fasilitas" class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['facility']->title }}</h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                        {{ $landingContent['facility']->content }}
+                    </p>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/asrama.png') }}" alt="Asrama & Tempat Belajar"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-bed text-xl text-emerald-600"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ($landingContent['facility']->additional_content['points'] as $point)
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+                            <div class="h-48 overflow-hidden">
+                                <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
+                                    {!! $point['icon'] !!}
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $point['name'] }}</h3>
+                                <p class="text-gray-600">{{ $point['description'] }}</p>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Asrama & Tempat Belajar</h3>
-                        <p class="text-gray-600">Lingkungan asrama yang nyaman dan kondusif, terintegrasi dengan ruang
-                            belajar bersama</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/bisnis-lab.png') }}" alt="Lab. Bisnis Entrepreneur"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-store text-xl text-emerald-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Lab. Bisnis Entrepreneur</h3>
-                        <p class="text-gray-600">Tempat praktik dan pengembangan jiwa kewirausahaan serta ide-ide bisnis
-                            inovatif</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/bookless.png') }}" alt="Bookless Library System"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-tablet-alt text-xl text-emerald-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Bookless Library System</h3>
-                        <p class="text-gray-600">Sistem perpustakaan modern dengan akses ke ribuan koleksi buku dan jurnal
-                            digital</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/smart-lab.png') }}" alt="Laboratorium Digital Smart Lab"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-laptop-code text-xl text-emerald-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Laboratorium Digital Smart Lab</h3>
-                        <p class="text-gray-600">Lab komputer dengan perangkat terkini untuk mendukung pembelajaran
-                            pemrograman dan teknologi</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('storage/images/sarana/fashion-lab.png') }}" alt="Lab. Bisnis Fashion"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                            <i class="fas fa-tshirt text-xl text-emerald-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Lab. Bisnis Fashion</h3>
-                        <p class="text-gray-600">Fasilitas untuk mengembangkan kreativitas, desain, dan keterampilan dalam
-                            bisnis fashion</p>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Triple Kompetensi -->
     <section id="prestasi" class="py-20 px-5 bg-gradient-to-br from-teal-50 to-white">

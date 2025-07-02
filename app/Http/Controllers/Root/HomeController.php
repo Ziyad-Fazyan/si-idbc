@@ -16,6 +16,7 @@ use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\SiteManage;
 
 class HomeController extends Controller
 {
@@ -55,6 +56,11 @@ class HomeController extends Controller
         $data['prefix'] = $this->setPrefix();
         $data['title'] = " - ESEC Academy";
         $data['menu'] = "Halaman Utama";
+        $data['landingContent'] = SiteManage::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->keyBy('section');
+        
         return view('root.root-index', $data);
     }
 

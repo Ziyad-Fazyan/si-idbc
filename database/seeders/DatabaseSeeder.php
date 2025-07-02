@@ -83,6 +83,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             MahasiswaSeeder::class,
+            LandingPageContentSeeder::class,
         ]);
 
         \App\Models\ProgramKuliah::create([

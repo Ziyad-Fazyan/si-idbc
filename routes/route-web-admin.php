@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Pages\LandingPageController;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TrashController;
@@ -125,6 +126,13 @@ Route::group([
 
         // MASTER DATA ROUTES
         Route::prefix('master')->name('master.')->group(function () {
+            // Landing Page Content Management
+            Route::prefix('landing-page')->name('landing-page.')->group(function () {
+                Route::get('/', [LandingPageController::class, 'index'])->name('index');
+                Route::get('/{id}/edit', [LandingPageController::class, 'edit'])->name('edit');
+                Route::put('/{id}', [LandingPageController::class, 'update'])->name('update');
+            });
+
             // Fakultas
             Route::prefix('data-fakultas')->name('fakultas-')->group(function () {
                 Route::get('/', [FakultasController::class, 'index'])->name('index');
