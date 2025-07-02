@@ -2,24 +2,32 @@
 
 namespace App\Http\Controllers\Admin\Pages;
 
-use App\Http\Controllers\Controller;
+use App\Helpers\RoleTrait;
 use App\Models\SiteManage;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Settings\WebSettings;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LandingPageController extends Controller
 {
+    use RoleTrait;
+
     public function index()
     {
-        $contents = SiteManage::orderBy('order')->get();
-        return view('admin.pages.landing-page.index', compact('contents'));
+        $data['prefix'] = $this->setPrefix();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['contents'] = SiteManage::orderBy('order')->paginate(15);
+        return view('user.sitemanager.landing.index', $data);
     }
 
     public function edit($id)
     {
-        $content = SiteManage::findOrFail($id);
-        return view('admin.pages.landing-page.edit', compact('content'));
+        $data['prefix'] = $this->setPrefix();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['content'] = SiteManage::findOrFail($id);
+        return view('user.sitemanager.landing.edit', $data);
     }
 
     public function update(Request $request, $id)

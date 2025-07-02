@@ -370,122 +370,127 @@
     </script>
 
     <!-- Sambutan Founder -->
-    <section id="sambutan-rektor" class="py-16 px-4 sm:px-6 bg-gradient-to-br from-gray-50 to-white">
-        <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"> <!-- Reduced gap -->
-                @if (isset($landingContent['founder']))
-                    <!-- Teks Sambutan -->
-                    <div class="p-6 lg:p-10"> <!-- Reduced padding -->
-                        <div class="mb-5"> <!-- Reduced margin -->
-                            <h2 class="text-3xl lg:text-4xl font-bold text-teal-800 mb-12">Selamat Datang di IDBC</h2>
+    @if (isset($landingContent['founder']))
+        <section id="sambutan-rektor" class="py-16 px-4 sm:px-6 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"> <!-- Reduced gap -->
+                    @if (isset($landingContent['founder']))
+                        <!-- Teks Sambutan -->
+                        <div class="p-6 lg:p-10"> <!-- Reduced padding -->
+                            <div class="mb-5"> <!-- Reduced margin -->
+                                <h2 class="text-3xl lg:text-4xl font-bold text-teal-800 mb-12">Selamat Datang di IDBC</h2>
+                            </div>
+
+                            <div class="prose prose-lg max-w-none">
+                                <p class="text-gray-600 mb-3"> <!-- Reduced margin -->
+                                    Assalamualaikum Warahmatullahi Wabarakatuh.
+                                </p>
+                                @if (isset($landingContent['founder']->additional_content['quote']) &&
+                                        is_array($landingContent['founder']->additional_content['quote']))
+                                    @foreach ($landingContent['founder']->additional_content['quote'] as $quote)
+                                        <p class="text-gray-600 mb-4">
+                                            {{ $quote }}
+                                        </p>
+                                    @endforeach
+                                @endif
+                            </div>
+
+                            <div class="mt-6"> <!-- Reduced margin -->
+                                <p class="text-lg font-bold text-gray-800">
+                                    {{ $landingContent['founder']->additional_content['name'] ?? '' }}</p>
+                                <p class="text-emerald-600 font-medium">
+                                    {{ $landingContent['founder']->additional_content['position'] ?? '' }}</p>
+                            </div>
                         </div>
 
-                        <div class="prose prose-lg max-w-none">
-                            <p class="text-gray-600 mb-3"> <!-- Reduced margin -->
-                                Assalamualaikum Warahmatullahi Wabarakatuh.
-                            </p>
-                            @if (isset($landingContent['founder']->additional_content['quote']) &&
-                                    is_array($landingContent['founder']->additional_content['quote']))
-                                @foreach ($landingContent['founder']->additional_content['quote'] as $quote)
-                                    <p class="text-gray-600 mb-4">
-                                        {{ $quote }}
-                                    </p>
-                                @endforeach
-                            @endif
-                        </div>
-
-                        <div class="mt-6"> <!-- Reduced margin -->
-                            <p class="text-lg font-bold text-gray-800">
-                                {{ $landingContent['founder']->additional_content['name'] ?? '' }}</p>
-                            <p class="text-emerald-600 font-medium">
-                                {{ $landingContent['founder']->additional_content['position'] ?? '' }}</p>
-                        </div>
-                    </div>
-
-                    <!-- Foto Founder -->
-                    <div
-                        class="relative flex items-center justify-center p-6 lg:p-8 bg-gradient-to-br from-emerald-50 to-teal-50">
-                        <div class="relative w-full max-w-sm">
-                            <!-- Main Photo Container with Double Border Effect -->
-                            <div class="relative group">
-                                <!-- Outer Glow Effect -->
-                                <div
-                                    class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 opacity-20 blur-sm group-hover:opacity-30 transition-opacity duration-300">
-                                </div>
-
-                                <!-- Inner White Border -->
-                                <div class="absolute inset-0 rounded-lg border-4 border-white/80"></div>
-
-                                <!-- Main Photo with Shadow -->
-                                <div
-                                    class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-300 group-hover:scale-[1.02]">
-                                    <img src="{{ asset($landingContent['founder']->image_path) }}"
-                                        alt="{{ $landingContent['founder']->additional_content['name'] }}"
-                                        class="w-full h-auto aspect-[3/4] object-cover object-top">
-
-                                    <!-- Signature Badge -->
+                        <!-- Foto Founder -->
+                        <div
+                            class="relative flex items-center justify-center p-6 lg:p-8 bg-gradient-to-br from-emerald-50 to-teal-50">
+                            <div class="relative w-full max-w-sm">
+                                <!-- Main Photo Container with Double Border Effect -->
+                                <div class="relative group">
+                                    <!-- Outer Glow Effect -->
                                     <div
-                                        class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-sm border border-gray-100">
-                                        <p class="font-semibold text-teal-800 text-xs leading-tight">
-                                            {{ $landingContent['founder']->additional_content['name'] }}</p>
-                                        <p class="text-[0.65rem] text-emerald-600 mt-0.5">
-                                            {{ $landingContent['founder']->additional_content['position'] }}</p>
+                                        class="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 opacity-20 blur-sm group-hover:opacity-30 transition-opacity duration-300">
+                                    </div>
+
+                                    <!-- Inner White Border -->
+                                    <div class="absolute inset-0 rounded-lg border-4 border-white/80"></div>
+
+                                    <!-- Main Photo with Shadow -->
+                                    <div
+                                        class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-300 group-hover:scale-[1.02]">
+                                        <img src="{{ asset($landingContent['founder']->image_path) }}"
+                                            alt="{{ $landingContent['founder']->additional_content['name'] }}"
+                                            class="w-full h-auto aspect-[3/4] object-cover object-top">
+
+                                        <!-- Signature Badge -->
+                                        <div
+                                            class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-md shadow-sm border border-gray-100">
+                                            <p class="font-semibold text-teal-800 text-xs leading-tight">
+                                                {{ $landingContent['founder']->additional_content['name'] }}</p>
+                                            <p class="text-[0.65rem] text-emerald-600 mt-0.5">
+                                                {{ $landingContent['founder']->additional_content['position'] }}</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Decorative Corner Elements -->
+                                    <div
+                                        class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-emerald-400 opacity-50 rounded-tl-lg">
+                                    </div>
+                                    <div
+                                        class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-teal-400 opacity-50 rounded-br-lg">
                                     </div>
                                 </div>
 
-                                <!-- Decorative Corner Elements -->
+                                <!-- Background Decorative Elements -->
                                 <div
-                                    class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-emerald-400 opacity-50 rounded-tl-lg">
+                                    class="absolute -z-10 -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full opacity-30">
                                 </div>
-                                <div
-                                    class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-teal-400 opacity-50 rounded-br-lg">
+                                <div class="absolute -z-10 -bottom-4 -left-4 w-20 h-20 bg-teal-100 rounded-full opacity-30">
                                 </div>
-                            </div>
-
-                            <!-- Background Decorative Elements -->
-                            <div class="absolute -z-10 -top-4 -right-4 w-24 h-24 bg-emerald-100 rounded-full opacity-30">
-                            </div>
-                            <div class="absolute -z-10 -bottom-4 -left-4 w-20 h-20 bg-teal-100 rounded-full opacity-30">
                             </div>
                         </div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </section>
-
-    <!-- VISI & MISI -->
-    <section id="visi-misi" class="py-16 px-5 bg-slate-50">
-        <div class="container mx-auto text-center">
-            <h2 class="text-4xl font-bold text-teal-800 mb-16">Visi & Misi IDBC</h2>
-            <div class="mb-20">
-                <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['vision']->title }}</h3>
-                <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-6"></div>
-                <p class="max-w-3xl mx-auto text-gray-700 text-xl font-medium">
-                    {{ $landingContent['vision']->content }}
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['mission']->title }}</h3>
-                <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-10"></div>
-
-                <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    @foreach ($landingContent['mission']->additional_content['points'] as $point)
-                        <div
-                            class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                            <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
-                                {!! $point['image'] !!}
-                            </div>
-                            <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
-                                {{ $point['Misi'] }}
-                            </h4>
-                        </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
+    <!-- VISI & MISI -->
+    @if (isset($landingContent['vision']) && isset($landingContent['mission']))
+        <section id="visi-misi" class="py-16 px-5 bg-slate-50">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-teal-800 mb-16">Visi & Misi IDBC</h2>
+                <div class="mb-20">
+                    <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['vision']->title }}</h3>
+                    <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-6"></div>
+                    <p class="max-w-3xl mx-auto text-gray-700 text-xl font-medium">
+                        {{ $landingContent['vision']->content }}
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-3xl font-bold text-teal-700">{{ $landingContent['mission']->title }}</h3>
+                    <div class="w-24 h-1 bg-teal-600 mx-auto mt-3 mb-10"></div>
+
+                    <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        @foreach ($landingContent['mission']->additional_content['points'] as $point)
+                            <div
+                                class="bg-white rounded-xl shadow-lg p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                                <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-xl bg-teal-100">
+                                    {!! $point['image'] !!}
+                                </div>
+                                <h4 class="text-base font-semibold text-gray-800 leading-relaxed">
+                                    {{ $point['Misi'] }}
+                                </h4>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 
 
     <!-- Fasilitas Kampus -->

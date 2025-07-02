@@ -48,6 +48,13 @@ Route::group([
         Route::get('/hasil-absen', [FaceRecognitionController::class, 'hasilAbsen'])->name('face-results');
         Route::post('/jadwal-kuliah/store/absen', [MahasiswaHomeController::class, 'jadkulAbsenStore'])->name('home-jadkul-absen-store');
 
+        // Landing Page Content Management
+        Route::prefix('landing-page')->name('landing-page.')->group(function () {
+            Route::get('/', [LandingPageController::class, 'index'])->name('index');
+            Route::get('/{id}/edit', [LandingPageController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [LandingPageController::class, 'update'])->name('update');
+        });
+
         // TRASH MANAGEMENT
         Route::prefix('trash')->name('trash.')->group(function () {
             Route::get('/', [TrashController::class, 'index'])->name('index');
@@ -126,12 +133,6 @@ Route::group([
 
         // MASTER DATA ROUTES
         Route::prefix('master')->name('master.')->group(function () {
-            // Landing Page Content Management
-            Route::prefix('landing-page')->name('landing-page.')->group(function () {
-                Route::get('/', [LandingPageController::class, 'index'])->name('index');
-                Route::get('/{id}/edit', [LandingPageController::class, 'edit'])->name('edit');
-                Route::put('/{id}', [LandingPageController::class, 'update'])->name('update');
-            });
 
             // Fakultas
             Route::prefix('data-fakultas')->name('fakultas-')->group(function () {
