@@ -122,18 +122,6 @@
                 @endforeach
             @endif
         </div>
-
-        <div class="custom-slider-nav absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-            <div
-                class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125">
-            </div>
-            <div
-                class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125">
-            </div>
-            <div
-                class="custom-slider-dot w-3 h-3 bg-white bg-opacity-70 rounded-full cursor-pointer transition-all duration-300 hover:bg-white hover:scale-125">
-            </div>
-        </div>
     </section>
 
     <script>
@@ -533,361 +521,179 @@
     @endif
 
     <!-- Triple Kompetensi -->
-    <section id="prestasi" class="py-20 px-5 bg-gradient-to-br from-teal-50 to-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-teal-800 mb-16">Triple Kompetensi IDBC</h2>
-                <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
-                    Kompetensi unggulan yang dikembangkan di IDBC untuk mencetak generasi pemimpin masa depan
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="competence-card bg-white rounded-2xl shadow-lg overflow-hidden border border-emerald-100">
-                    <div class="bg-gradient-to-r from-emerald-600 to-teal-500 py-8 text-center">
-                        <div class="text-white text-5xl mb-4"><i class="fas fa-user-tie"></i></div>
-                        <h3 class="text-3xl font-bold text-white">DA'I</h3>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-3">Memiliki:</h4>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Adab Islam yang Paripurna</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Worldview keislaman yang lurus</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Tahfidz & Tahsin Quran Kualitas Sanad</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Skill Jurnalistik yang baik</span>
-                            </li>
-                        </ul>
-
-                        <h4 class="text-lg font-bold text-emerald-700 mb-3">Menguasai:</h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Ilmu-ilmu Fardhu Ain</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Literasi dan Eksplorasi Digital</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Public Speaking yang baik</span>
-                            </li>
-                        </ul>
-                    </div>
+    @if (isset($landingContent['kompetensi']))
+        <section id="prestasi" class="py-20 px-5 bg-gradient-to-br from-teal-50 to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['kompetensi']->title }}</h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                        {{ $landingContent['kompetensi']->content }}
+                    </p>
                 </div>
 
-                <div class="competence-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
-                    <div class="bg-gradient-to-r from-blue-600 to-indigo-500 py-8 text-center">
-                        <div class="text-white text-5xl mb-4"><i class="fas fa-laptop-code"></i></div>
-                        <h3 class="text-3xl font-bold text-white">TECHNO</h3>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-lg font-bold text-blue-700 mb-3">Menguasai:</h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Teknik Jaringan Komputer</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Instalasi Hardware & Software serta Troubleshooting</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Desain Grafis</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Multimedia dan Animasi</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Web Programming</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Mobile Apps</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="competence-card bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100">
-                    <div class="bg-gradient-to-r from-amber-600 to-yellow-500 py-8 text-center">
-                        <div class="text-white text-5xl mb-4"><i class="fas fa-briefcase"></i></div>
-                        <h3 class="text-3xl font-bold text-white">PRENEUR</h3>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-lg font-bold text-amber-700 mb-3">I. Make Money (memiliki real income)</h4>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Mindset Entrepreneur</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Memahami Konsep Bisnis Online</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Menguasai Tool Digital Marketing</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Memiliki usaha dan income minimal Rp 1 juta/bln</span>
-                            </li>
-                        </ul>
-
-                        <h4 class="text-lg font-bold text-amber-700 mb-3">II. Make Business (merancang & membangun
-                            perusahaan)</h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Mampu membuat Business Model</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Menguasai 4 Pilar Bisnis</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
-                                <span class="text-gray-600">Memahami Fiqih Muamalah Klasik & Kontemporer</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    @foreach ($landingContent['kompetensi']->additional_content['points'] as $point)
+                        <div
+                            class="competence-card bg-white rounded-2xl shadow-lg overflow-hidden border border-emerald-100">
+                            <div class="bg-{{ $point['color'] }}-600 py-8 text-center">
+                                <div class="text-white text-5xl mb-4"><i class="fas fa-user-tie"></i></div>
+                                <h3 class="text-3xl font-bold text-white">{{ $point['name'] }}</h3>
+                            </div>
+                            <div class="p-6">
+                                @foreach ($point['points'] as $key => $values)
+                                    <h4 class="text-lg font-bold text-{{ $point['color'] }}-700 mb-3">{{ ucfirst($key) }}:
+                                    </h4>
+                                    <ul class="space-y-3 mb-6">
+                                        @foreach ($values as $value)
+                                            <li class="flex items-start">
+                                                <i
+                                                    class="fas fa-check-circle text-{{ $point['color'] }}-500 mt-1 mr-3"></i>
+                                                <span class="text-gray-600">{{ $value }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Berita IDBC -->
-    <section class="py-20 px-5 bg-gradient-to-br from-teal-50 to-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-teal-800 mb-16">Berita IDBC</h2>
-                <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
-                    Informasi terbaru seputar kegiatan dan prestasi IDBC
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
-                            alt="Wisuda IDBC"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <span class="text-sm font-medium text-emerald-600">Acara Akademik</span>
-                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Wisuda Angkatan ke-5 IDBC</h3>
-                        <p class="text-gray-600 mb-4">Acara wisuda dengan tema "Menjadi Teknopreneur Berkarakter" diikuti
-                            oleh 120 lulusan terbaik</p>
-                        <a href="#"
-                            class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
-                            Baca Selengkapnya
-                            <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
+    @if (isset($landingContent['news']))
+        <section class="py-20 px-5 bg-gradient-to-br from-teal-50 to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['news']->title }}</h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                        {{ $landingContent['news']->content }}
+                    </p>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80"
-                            alt="Seminar Ekonomi Islam"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <span class="text-sm font-medium text-emerald-600">Kegiatan Kampus</span>
-                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Seminar Ekonomi Islam</h3>
-                        <p class="text-gray-600 mb-4">Diskusi tentang peluang bisnis syariah di era digital dengan praktisi
-                            ekonomi Islam terkemuka</p>
-                        <a href="#"
-                            class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
-                            Baca Selengkapnya
-                            <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    @foreach ($landingContent['news']->additional_content['points'] as $point)
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
+                            <div class="h-56 overflow-hidden">
+                                <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <span class="text-sm font-medium text-emerald-600">{{ $point['category'] }}</span>
+                                <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">{{ $point['name'] }}</h3>
+                                <p class="text-gray-600 mb-4">{{ $point['description'] }}</p>
+                                <a href="{{ $point['link'] }}"
+                                    class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
+                                    Baca Selengkapnya
+                                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80"
-                            alt="Kunjungan Industri"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <span class="text-sm font-medium text-emerald-600">Kegiatan Mahasiswa</span>
-                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">Kunjungan Industri Keuangan Syariah</h3>
-                        <p class="text-gray-600 mb-4">Mahasiswa IDBC belajar langsung praktik bisnis syariah di perusahaan
-                            keuangan terkemuka</p>
-                        <a href="#"
-                            class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
-                            Baca Selengkapnya
-                            <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
+                <div class="text-center mt-12">
+                    <a href="#"
+                        class="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:scale-105">
+                        Lihat Semua Berita
+                        <i class="fas fa-arrow-right ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="text-center mt-12">
-                <a href="#"
-                    class="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:scale-105">
-                    Lihat Semua Berita
-                    <i class="fas fa-arrow-right ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- YouTube Video Section -->
-    <section class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-teal-800 mb-16">Kanal Youtube IDBC</h2>
-                <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
-                    Dokumentasi kegiatan dan informasi terbaru dari IDBC
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/LHMNqM3-RMk?autoplay=1&mute=1&rel=0&playsinline=1"
-                            allow="autoplay; encrypted-media" allowfullscreen title="Proses Pembelajaran di IDBC">
-                        </iframe>
-                    </div>
-                    <h3 class="text-xl font-bold mt-6 text-gray-800">Virtual Tour Kampus IDBC</h3>
-                    <p class="text-gray-600 mt-2">Jelajahi fasilitas kampus IDBC secara virtual</p>
+    @if (isset($landingContent['youtube_video']))
+        <section class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['youtube_video']->title }}</h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                        {{ $landingContent['youtube_video']->content }}
+                    </p>
                 </div>
 
-                <div>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/N0NIzGJrtpE?autoplay=1&mute=1&rel=0&playsinline=1"
-                            allow="autoplay; encrypted-media" allowfullscreen title="Judul Video">
-                        </iframe>
-                    </div>
-                    <h3 class="text-xl font-bold mt-6 text-gray-800">Proses Pembelajaran di IDBC</h3>
-                    <p class="text-gray-600 mt-2">Metode pembelajaran yang inovatif dan efektif</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    @foreach ($landingContent['youtube_video']->additional_content['points'] as $point)
+                        <div>
+                            <div class="video-container">
+                                <iframe src="{{ $point['link'] }}" allow="autoplay; encrypted-media" allowfullscreen
+                                    title="Proses Pembelajaran di IDBC">
+                                </iframe>
+                            </div>
+                            <h3 class="text-xl font-bold mt-6 text-gray-800">{{ $point['name'] }}</h3>
+                            <p class="text-gray-600 mt-2">{{ $point['description'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="https://www.youtube.com/@idbctv9935/videos" target="_blank"
+                        class="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition-all duration-300 hover:translate-x-1">
+                        <span>Lihat Lebih Banyak Video</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="text-center mt-12">
-                <a href="https://www.youtube.com/@idbctv9935/videos" target="_blank"
-                    class="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition-all duration-300 hover:translate-x-1">
-                    <span>Lihat Lebih Banyak Video</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Aktifitas Kampus -->
-    <section class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-teal-800 mb-16">Aktifitas IDBC</h2>
-                <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
-                    Dokumentasi kegiatan di lingkungan IDBC
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="relative group overflow-hidden rounded-2xl h-64">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
-                        alt="Kegiatan Belajar"
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div>
-                            <h3 class="text-white font-bold text-lg">Kegiatan Belajar</h3>
-                            <p class="text-emerald-200 text-sm">Sesi pembelajaran interaktif</p>
-                        </div>
-                    </div>
+    @if (isset($landingContent['activity']))
+        <section class="py-20 px-5 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['activity']->title }}</h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                        {{ $landingContent['activity']->content }}
+                    </p>
                 </div>
 
-                <div class="relative group overflow-hidden rounded-2xl h-64">
-                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1986&q=80"
-                        alt="Laboratorium Komputer"
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div>
-                            <h3 class="text-white font-bold text-lg">Laboratorium Komputer</h3>
-                            <p class="text-emerald-200 text-sm">Fasilitas pembelajaran teknologi</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach ($landingContent['activity']->additional_content['points'] as $point)
+                        <div class="relative group overflow-hidden rounded-2xl h-64">
+                            <img src="{{ asset($point['image']) }}" alt="Kegiatan Belajar"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <div>
+                                    <h3 class="text-white font-bold text-lg">{{ $point['name'] }}</h3>
+                                    <p class="text-emerald-200 text-sm">{{ $point['description'] }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
 
-                <div class="relative group overflow-hidden rounded-2xl h-64">
-                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
-                        alt="Perpustakaan Digital"
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div>
-                            <h3 class="text-white font-bold text-lg">Perpustakaan Digital</h3>
-                            <p class="text-emerald-200 text-sm">Akses literasi tanpa batas</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative group overflow-hidden rounded-2xl h-64">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
-                        alt="Diskusi Kelompok"
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div>
-                            <h3 class="text-white font-bold text-lg">Diskusi Kelompok</h3>
-                            <p class="text-emerald-200 text-sm">Kolaborasi dalam pembelajaran</p>
-                        </div>
-                    </div>
+                <div class="text-center mt-12">
+                    <a href="#"
+                        class="inline-flex items-center bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-full font-semibold shadow-sm transition-all duration-300 hover:scale-105">
+                        Lihat Galeri Lengkap
+                        <i class="fas fa-images ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="text-center mt-12">
-                <a href="#"
-                    class="inline-flex items-center bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-full font-semibold shadow-sm transition-all duration-300 hover:scale-105">
-                    Lihat Galeri Lengkap
-                    <i class="fas fa-images ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- SUPPORT PARTNER -->
-    <section id="support-partner" class="py-16 px-5 bg-gray-100">
-        <div class="text-center mb-12 relative">
-            <h2 class="text-4xl font-bold text-teal-800 mb-16">Support Partner IDBC</h2>
-        </div>
+    @if (isset($landingContent['partner']))
+        <section id="support-partner" class="py-16 px-5 bg-gray-100">
+            <div class="text-center mb-12 relative">
+                <h2 class="text-4xl font-bold text-teal-800 mb-16">{{ $landingContent['partner']->title }}</h2>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
-            <div
-                class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
-                <img src="{{ asset('storage/images/support/alwustho.png') }}" alt="Alwustho Land Technologies"
-                    class="max-h-32 object-contain mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
+                @foreach ($landingContent['partner']->additional_content['points'] as $point)
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                            class="max-h-32 object-contain mb-4">
+                    </div>
+                @endforeach
             </div>
-            <div
-                class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
-                <img src="{{ asset('storage/images/support/aflaha.png') }}" alt="Aflaha Hijab Expert Syar'i"
-                    class="max-h-32 object-contain mb-4">
-            </div>
-            <div
-                class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
-                <img src="{{ asset('storage/images/support/kampungit.png') }}" alt="Kampung IT Solo"
-                    class="max-h-32 object-contain mb-4">
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 @endsection
