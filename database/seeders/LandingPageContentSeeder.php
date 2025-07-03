@@ -15,21 +15,21 @@ class LandingPageContentSeeder extends Seeder
                 'title' => 'Hero Slider',
                 'additional_content' => [
                     [
-                        'image' => 'storage/images/gallery/album-c.png',
+                        'image_path' => 'storage/images/gallery/album-c.png',
                         'title' => 'Welcome to IDBC',
                         'subtitle' => 'Islamic Digital Boarding College',
                         'button_text' => 'Learn More',
                         'button_link' => '#pendaftaran'
                     ],
                     [
-                        'image' => 'storage/images/gallery/album-a.png',
+                        'image_path' => 'storage/images/gallery/album-a.png',
                         'title' => 'Discover Excellence',
                         'subtitle' => 'In Islamic Education',
                         'button_text' => 'Lihat Program Studi',
                         'button_link' => '#fakultas'
                     ],
                     [
-                        'image' => 'storage/images/gallery/album-b.png',
+                        'image_path' => 'storage/images/gallery/album-b.png',
                         'title' => 'Join Our Community',
                         'subtitle' => 'Build Your Future',
                         'button_text' => 'Lihat Fasilitas',
@@ -108,42 +108,42 @@ class LandingPageContentSeeder extends Seeder
                         [
                             'name' => 'Free Wifi Hotspot',
                             'icon' => '<i class="fas fa-wifi text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/wifi.png',
+                            'image_path' => 'storage/images/sarana/wifi.png',
                             'description' => 'Akses internet nirkabel 24 jam di seluruh area kampus untuk menunjang
                             kebutuhan belajar dan riset',
                         ],
                         [
                             'name' => 'Asrama & Tempat Belajar',
                             'icon' => '<i class="fas fa-bed text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/asrama.png',
+                            'image_path' => 'storage/images/sarana/asrama.png',
                             'description' => 'Lingkungan asrama yang nyaman dan kondusif, terintegrasi dengan ruang
                             belajar bersama',
                         ],
                         [
                             'name' => 'Lab. Bisnis Entrepreneur',
                             'icon' => '<i class="fas fa-store text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/bisnis-lab.png',
+                            'image_path' => 'storage/images/sarana/bisnis-lab.png',
                             'description' => 'Tempat praktik dan pengembangan jiwa kewirausahaan serta ide-ide bisnis
                             inovatif',
                         ],
                         [
                             'name' => 'Bookless Library System',
                             'icon' => '<i class="fas fa-tablet-alt text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/bookless.png',
+                            'image_path' => 'storage/images/sarana/bookless.png',
                             'description' => 'Sistem perpustakaan modern dengan akses ke ribuan koleksi buku dan jurnal
                             digital',
                         ],
                         [
                             'name' => 'Laboratorium Digital Smart Lab',
                             'icon' => '<i class="fas fa-laptop-code text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/smart-lab.png',
+                            'image_path' => 'storage/images/sarana/smart-lab.png',
                             'description' => 'Lab komputer dengan perangkat terkini untuk mendukung pembelajaran
                             pemrograman dan teknologi',
                         ],
                         [
                             'name' => 'Lab. Bisnis Fashion',
                             'icon' => '<i class="fas fa-tshirt text-xl text-emerald-600"></i>',
-                            'image' => 'storage/images/sarana/fashion-lab.png',
+                            'image_path' => 'storage/images/sarana/fashion-lab.png',
                             'description' => 'Fasilitas untuk mengembangkan kreativitas, desain, dan keterampilan dalam
                             bisnis fashion',
                         ]
@@ -196,13 +196,13 @@ class LandingPageContentSeeder extends Seeder
                             'color' => 'amber',
                             'icon' => '<i class="fas fa-user-tie"></i>',
                             'points' => [
-                                'I. Make Money (memiliki real income)' => [
+                                'memiliki' => [
                                     'Mindset Entrepreneur',
                                     'Memahami Konsep Bisnis Online',
                                     'Menguasai Tool Digital Marketing',
                                     'Memiliki usaha dan income minimal Rp 1 juta/bln'
                                 ],
-                                'II. Make Business (merancang & membangun perusahaan)' => [
+                                'menguasai' => [
                                     'Mampu membuat Business Model',
                                     'Menguasai 4 Pilar Bisnis',
                                     'Memahami Fiqih Muamalah Klasik & Kontemporer'
@@ -222,7 +222,7 @@ class LandingPageContentSeeder extends Seeder
                     'points' => [
                         [
                             'name' => 'Wisuda Angkatan ke-5 IDBC',
-                            'image' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
                             'description' => 'Acara wisuda dengan tema "Menjadi Teknopreneur Berkarakter"
                                 diikuti
                                 oleh 120 lulusan terbaik',
@@ -231,7 +231,7 @@ class LandingPageContentSeeder extends Seeder
                         ],
                         [
                             'name' => 'Seminar Ekonomi Islam',
-                            'image' => 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
                             'description' => 'Diskusi tentang peluang bisnis syariah di era digital dengan
                                 praktisi
                                 ekonomi Islam terkemuka',
@@ -240,7 +240,7 @@ class LandingPageContentSeeder extends Seeder
                         ],
                         [
                             'name' => 'Kunjungan Industri Keuangan Syariah',
-                            'image' => 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
                             'description' => 'Mahasiswa IDBC belajar langsung praktik bisnis syariah di
                                 perusahaan
                                 keuangan terkemuka',
@@ -282,22 +282,22 @@ class LandingPageContentSeeder extends Seeder
                         [
                             'name' => 'Kegiatan Belajar',
                             'description' => 'Sesi pembelajaran interaktif',
-                            'image' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
                         ],
                         [
                             'name' => 'Laboratorium Komputer',
                             'description' => 'Fasilitas pembelajaran teknologi',
-                            'image' => 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1986&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1986&q=80',
                         ],
                         [
                             'name' => 'Perpustakaan Digital',
                             'description' => 'Akses literasi tanpa batas',
-                            'image' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
                         ],
                         [
                             'name' => 'Diskusi Kelompok',
                             'description' => 'Kolaborasi dalam pembelajaran',
-                            'image' => 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
                         ],
                     ]
                 ],
@@ -312,15 +312,15 @@ class LandingPageContentSeeder extends Seeder
                     'points' => [
                         [
                             'name' => 'Al Wustho',
-                            'image' => 'storage/images/support/alwustho.png',
+                            'image_path' => 'storage/images/support/alwustho.png',
                         ],
                         [
                             'name' => 'Aflaha',
-                            'image' => 'storage/images/support/aflaha.png',
+                            'image_path' => 'storage/images/support/aflaha.png',
                         ],
                         [
                             'name' => 'Kampung IT',
-                            'image' => 'storage/images/support/kampungit.png',
+                            'image_path' => 'storage/images/support/kampungit.png',
                         ],
                     ]
                 ],

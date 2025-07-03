@@ -99,7 +99,7 @@
         @if (isset($landingContent['hero_slider']))
             @foreach ($landingContent['hero_slider']->additional_content as $slide)
                 <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-5 bg-cover bg-center transition-all duration-800 ease-in-out transform translate-x-full opacity-0 custom-hero-slide custom-hero-slide-1"
-                    style="background-image: url('{{ asset($slide['image']) }}');">
+                    style="background-image: url('{{ asset($slide['image_path']) }}');">
                     <div class="absolute inset-0 hero-overlay z-10"></div>
                     <div
                         class="relative z-20 max-w-4xl p-8 bg-white bg-opacity-90 rounded-xl shadow-xl text-center backdrop-blur-sm animate-in">
@@ -508,7 +508,7 @@
                     @foreach ($landingContent['facility']->additional_content['points'] as $point)
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                             <div class="h-48 overflow-hidden">
-                                <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                                <img src="{{ asset($point['image_path']) }}" alt="{{ $point['name'] }}"
                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                             </div>
                             <div class="p-6">
@@ -581,7 +581,7 @@
                     @foreach ($landingContent['news']->additional_content['points'] as $point)
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
                             <div class="h-56 overflow-hidden">
-                                <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                                <img src="{{ asset($point['image_path']) }}" alt="{{ $point['name'] }}"
                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                             </div>
                             <div class="p-6">
@@ -659,7 +659,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach ($landingContent['activity']->additional_content['points'] as $point)
                         <div class="relative group overflow-hidden rounded-2xl h-64">
-                            <img src="{{ asset($point['image']) }}" alt="Kegiatan Belajar"
+                            <img src="{{ asset($point['image_path']) }}" alt="Kegiatan Belajar"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -694,7 +694,7 @@
                 @foreach ($landingContent['partner']->additional_content['points'] as $point)
                     <div
                         class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset($point['image']) }}" alt="{{ $point['name'] }}"
+                        <img src="{{ asset($point['image_path']) }}" alt="{{ $point['name'] }}"
                             class="max-h-32 object-contain mb-4">
                     </div>
                 @endforeach

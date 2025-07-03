@@ -15,6 +15,7 @@ class SiteManage extends Model
     protected $casts = [
         'additional_content' => 'array',
         'is_active' => 'boolean',
+        'order' => 'integer',
     ];
 
     public static function getContent($section)

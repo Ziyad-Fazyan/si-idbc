@@ -90,13 +90,11 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Additional Content</label>
                                     <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
                                         @php
-                                            function renderAdditionalContent($data, $namePrefix = 'additional_content')
-                                            {
+                                            function renderAdditionalContent($data, $namePrefix = 'additional_content') {
                                                 foreach ($data as $key => $value) {
-                                                    $inputName =
-                                                        $namePrefix . '[' . (is_string($key) ? $key : $key) . ']';
+                                                    $inputName = $namePrefix . '[' . (is_string($key) ? $key : $key) . ']';
                                                     if (is_array($value)) {
-                                                        // Check if this is an array of arrays (list of items)
+                                                        // Check if this is a list of arrays (e.g. points)
                                                         $isListOfArrays = true;
                                                         foreach ($value as $subValue) {
                                                             if (!is_array($subValue)) {
@@ -112,12 +110,9 @@
                                                             foreach ($value as $index => $subArray) {
                                                                 echo '<div class="mb-4 pl-4 border-l-2 border-indigo-300">';
                                                                 echo '<label class="block font-semibold text-gray-600 mb-1">Item ' .
-                                                                    ($index + 1) .
+                                                                    ((int)$index + 1) .
                                                                     '</label>';
-                                                                renderAdditionalContent(
-                                                                    $subArray,
-                                                                    $inputName . '[' . $index . ']',
-                                                                );
+                                                                renderAdditionalContent($subArray, $inputName . "[$index]");
                                                                 echo '</div>';
                                                             }
                                                             echo '</div>';
@@ -131,7 +126,7 @@
                                                         }
                                                     } else {
                                                         if (
-                                                            $key === 'image' &&
+                                                            $key === 'image_path' &&
                                                             filter_var($value, FILTER_VALIDATE_URL) === false &&
                                                             !empty($value)
                                                         ) {
@@ -146,6 +141,8 @@
                                                             echo '<input type="file" name="' .
                                                                 $inputName .
                                                                 '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">';
+                                                            // Hidden input to keep old value if not changed
+                                                            echo '<input type="hidden" name="' . $inputName . '_old" value="' . e($value) . '">';
                                                             echo '</div>';
                                                         } else {
                                                             echo '<div class="mb-3">';
@@ -154,9 +151,7 @@
                                                                 '</label>';
                                                             echo '<input type="text" name="' .
                                                                 $inputName .
-                                                                '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="' .
-                                                                e($value) .
-                                                                '">';
+                                                                '" value="' . e($value) . '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="' . ucfirst(str_replace('_', ' ', $key)) . '">';
                                                             echo '</div>';
                                                         }
                                                     }
