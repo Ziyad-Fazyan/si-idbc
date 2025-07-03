@@ -9,6 +9,15 @@
         </a>
     </li>
 
+    <li
+        class="list-none {{ Route::is($prefix . 'landing-page.index', request()->path()) ? 'bg-green-50 border-l-3 border-green-600 text-green-700 font-semibold' : '' }}">
+        <a href="{{ route($prefix . 'landing-page.index') }}"
+            class="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:border-l-3 hover:border-green-600 hover:text-green-700 transition-all duration-200">
+            <i class="fa-solid fa-globe w-5 text-center mr-3"></i>
+            <span>Pengaturan Landing Page</span>
+        </a>
+    </li>
+
     <!-- Dropdown Menu -->
     <li class="list-none {{ Route::is($prefix . 'news.*', request()->path()) ? 'border-l-3 border-green-600' : '' }}">
         <button type="button"

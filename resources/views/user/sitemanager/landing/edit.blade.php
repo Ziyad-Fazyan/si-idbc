@@ -127,7 +127,7 @@
                                                     } else {
                                                         if (
                                                             $key === 'image_path' &&
-                                                            filter_var($value, FILTER_VALIDATE_URL) === false &&
+                                                            // filter_var($value, FILTER_VALIDATE_URL) === false &&
                                                             !empty($value)
                                                         ) {
                                                             // Show current image preview and file input to change image
