@@ -7,7 +7,7 @@
                     class="inline-flex items-center justify-center px-3 py-2 border border-[#0C6E71] text-[#0C6E71] rounded-md hover:bg-[#0C6E71] hover:text-white transition-colors duration-300">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
-                <button type="button"
+                <button type="button" x-data "$dispatch('close-modal', {name: 'create-taka'})"
                     class="inline-flex items-center justify-center px-3 py-2 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300"
                     x-on:click="$dispatch('close-modal', {name: 'createTaka'})">
                     <i class="fas fa-times"></i>
