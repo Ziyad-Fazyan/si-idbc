@@ -96,23 +96,69 @@
                                                     $inputName =
                                                         $namePrefix . '[' . (is_string($key) ? $key : $key) . ']';
                                                     if (is_array($value)) {
-                                                        echo '<div class="mb-4 pl-4 border-l-2 border-indigo-200">';
-                                                        echo '<label class="block font-medium text-gray-700 mb-2">' .
-                                                            ucfirst(str_replace('_', ' ', $key)) .
-                                                            '</label>';
-                                                        renderAdditionalContent($value, $inputName);
-                                                        echo '</div>';
+                                                        // Check if this is an array of arrays (list of items)
+                                                        $isListOfArrays = true;
+                                                        foreach ($value as $subValue) {
+                                                            if (!is_array($subValue)) {
+                                                                $isListOfArrays = false;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if ($isListOfArrays) {
+                                                            echo '<div class="mb-4 pl-4 border-l-2 border-indigo-200">';
+                                                            echo '<label class="block font-medium text-gray-700 mb-2">' .
+                                                                ucfirst(str_replace('_', ' ', $key)) .
+                                                                '</label>';
+                                                            foreach ($value as $index => $subArray) {
+                                                                echo '<div class="mb-4 pl-4 border-l-2 border-indigo-300">';
+                                                                echo '<label class="block font-semibold text-gray-600 mb-1">Item ' .
+                                                                    ($index + 1) .
+                                                                    '</label>';
+                                                                renderAdditionalContent(
+                                                                    $subArray,
+                                                                    $inputName . '[' . $index . ']',
+                                                                );
+                                                                echo '</div>';
+                                                            }
+                                                            echo '</div>';
+                                                        } else {
+                                                            echo '<div class="mb-4 pl-4 border-l-2 border-indigo-200">';
+                                                            echo '<label class="block font-medium text-gray-700 mb-2">' .
+                                                                ucfirst(str_replace('_', ' ', $key)) .
+                                                                '</label>';
+                                                            renderAdditionalContent($value, $inputName);
+                                                            echo '</div>';
+                                                        }
                                                     } else {
-                                                        echo '<div class="mb-3">';
-                                                        echo '<label class="block text-xs text-gray-500 mb-1">' .
-                                                            ucfirst(str_replace('_', ' ', $key)) .
-                                                            '</label>';
-                                                        echo '<input type="text" name="' .
-                                                            $inputName .
-                                                            '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="' .
-                                                            e($value) .
-                                                            '">';
-                                                        echo '</div>';
+                                                        if (
+                                                            $key === 'image' &&
+                                                            filter_var($value, FILTER_VALIDATE_URL) === false &&
+                                                            !empty($value)
+                                                        ) {
+                                                            // Show current image preview and file input to change image
+                                                            echo '<div class="mb-4">';
+                                                            echo '<label class="block text-xs text-gray-500 mb-1">' .
+                                                                ucfirst(str_replace('_', ' ', $key)) .
+                                                                '</label>';
+                                                            echo '<img src="' .
+                                                                asset($value) .
+                                                                '" alt="Current Image" class="mb-2 rounded-md border border-gray-300 max-h-24">';
+                                                            echo '<input type="file" name="' .
+                                                                $inputName .
+                                                                '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">';
+                                                            echo '</div>';
+                                                        } else {
+                                                            echo '<div class="mb-3">';
+                                                            echo '<label class="block text-xs text-gray-500 mb-1">' .
+                                                                ucfirst(str_replace('_', ' ', $key)) .
+                                                                '</label>';
+                                                            echo '<input type="text" name="' .
+                                                                $inputName .
+                                                                '" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="' .
+                                                                e($value) .
+                                                                '">';
+                                                            echo '</div>';
+                                                        }
                                                     }
                                                 }
                                             }
@@ -181,24 +227,54 @@
                             @endif
                             @if (!empty($content->additional_content))
                                 <div class="space-y-3">
-                                    @foreach ($content->additional_content as $key => $value)
-                                        @if (is_array($value))
-                                            <div class="pl-4 border-l-2 border-gray-200">
-                                                <h5 class="font-medium">{{ ucfirst(str_replace('_', ' ', $key)) }}</h5>
-                                                <ul class="list-disc pl-5 space-y-1">
-                                                    @foreach ($value as $item)
-                                                        <li>{{ $item }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @else
-                                            <div>
-                                                <span
-                                                    class="font-medium">{{ ucfirst(str_replace('_', ' ', $key)) }}:</span>
-                                                <span class="text-gray-600 ml-1">{{ $value }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                    @php
+                                        function renderPreviewContent($data)
+                                        {
+                                            foreach ($data as $key => $value) {
+                                                if (is_array($value)) {
+                                                    // Check if this is an array of arrays (list of items)
+                                                    $isListOfArrays = true;
+                                                    foreach ($value as $subValue) {
+                                                        if (!is_array($subValue)) {
+                                                            $isListOfArrays = false;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if ($isListOfArrays) {
+                                                        echo '<div class="pl-4 border-l-2 border-gray-200">';
+                                                        echo '<h5 class="font-medium">' .
+                                                            ucfirst(str_replace('_', ' ', $key)) .
+                                                            '</h5>';
+                                                        echo '<ul class="list-disc pl-5 space-y-1">';
+                                                        foreach ($value as $item) {
+                                                            echo '<li>';
+                                                            renderPreviewContent($item);
+                                                            echo '</li>';
+                                                        }
+                                                        echo '</ul>';
+                                                        echo '</div>';
+                                                    } else {
+                                                        echo '<div>';
+                                                        echo '<span class="font-medium">' .
+                                                            ucfirst(str_replace('_', ' ', $key)) .
+                                                            ':</span> ';
+                                                        echo '<span class="text-gray-600 ml-1">';
+                                                        renderPreviewContent($value);
+                                                        echo '</span>';
+                                                        echo '</div>';
+                                                    }
+                                                } else {
+                                                    echo '<div>';
+                                                    echo '<span class="font-medium">' .
+                                                        ucfirst(str_replace('_', ' ', $key)) .
+                                                        ':</span> ';
+                                                    echo '<span class="text-gray-600 ml-1">' . e($value) . '</span>';
+                                                    echo '</div>';
+                                                }
+                                            }
+                                        }
+                                        renderPreviewContent($content->additional_content);
+                                    @endphp
                                 </div>
                             @endif
                         </div>
