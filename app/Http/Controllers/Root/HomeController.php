@@ -45,6 +45,82 @@ class HomeController extends Controller
     }
 
 
+    public function kurikulumIndex()
+    {
+        $data['fakultas'] = Fakultas::all();
+        $data['proku'] = ProgramKuliah::all();
+        $data['album'] = GalleryAlbum::where('isPublish', 1)->latest()->paginate(3);
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['posts'] = NewsPost::latest()->paginate(7);
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
+        $data['prefix'] = $this->setPrefix();
+        $data['title'] = " - ESEC Academy";
+        $data['menu'] = "Halaman Utama";
+        $data['landingContent'] = SiteManage::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->keyBy('section');
+        
+        return view('root.pages.kurikulum-index', $data);
+    }
+
+    public function tentangKamiIndex()
+    {
+        $data['fakultas'] = Fakultas::all();
+        $data['proku'] = ProgramKuliah::all();
+        $data['album'] = GalleryAlbum::where('isPublish', 1)->latest()->paginate(3);
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['posts'] = NewsPost::latest()->paginate(7);
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
+        $data['prefix'] = $this->setPrefix();
+        $data['title'] = " - ESEC Academy";
+        $data['menu'] = "Halaman Utama";
+        $data['landingContent'] = SiteManage::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->keyBy('section');
+        
+        return view('root.pages.tentang-kami', $data);
+    }
+
+    public function designIndex()
+    {
+        $data['fakultas'] = Fakultas::all();
+        $data['proku'] = ProgramKuliah::all();
+        $data['album'] = GalleryAlbum::where('isPublish', 1)->latest()->paginate(3);
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['posts'] = NewsPost::latest()->paginate(7);
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
+        $data['prefix'] = $this->setPrefix();
+        $data['title'] = " - ESEC Academy";
+        $data['menu'] = "Halaman Utama";
+        $data['landingContent'] = SiteManage::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->keyBy('section');
+        
+        return view('root.pages.kompetensi-design', $data);
+    }
+
+    public function kompetensiIndex()
+    {
+        $data['fakultas'] = Fakultas::all();
+        $data['proku'] = ProgramKuliah::all();
+        $data['album'] = GalleryAlbum::where('isPublish', 1)->latest()->paginate(3);
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['posts'] = NewsPost::latest()->paginate(7);
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
+        $data['prefix'] = $this->setPrefix();
+        $data['title'] = " - ESEC Academy";
+        $data['menu'] = "Halaman Utama";
+        $data['landingContent'] = SiteManage::where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->keyBy('section');
+        
+        return view('root.pages.kompetensi-prog', $data);
+    }
+
     public function index()
     {
         $data['fakultas'] = Fakultas::all();

@@ -17,21 +17,13 @@ Route::get('/admission/{slug}', [HomeController::class, 'prodiIndex'])->name('ro
 Route::get('/program-kuliah/{code}', [HomeController::class, 'prokuIndex'])->name('root.home-proku');
 
 // KURIKULUM ROUTE
-Route::get('/kurikulum', function () {
-    return view('root.pages.kurikulum-index');
-})->name('root.kurikulum-index');
+Route::get('/kurikulum', [HomeController::class, 'kurikulumIndex'])->name('root.kurikulum-index');
 // TENTANG KAMI ROUTE
-Route::get('/tentang-kami', function () {
-    return view('root.pages.tentang-kami');
-})->name('root.tentang-kami');
+Route::get('/tentang-kami', [HomeController::class, 'tentangKamiIndex'])->name('root.tentang-kami');
 //KOMPETENSI ROUTE DESIGN
-Route::get('/kompetensi-design', function () {
-    return view('root.pages.kompetensi-design');
-})->name('root.kompetensi-design');
+Route::get('/kompetensi-design', [HomeController::class, 'designIndex'])->name('root.kompetensi-design');
 //KOMPETENSI ROUTE PROGRAMMER
-Route::get('/kompetensi-prog', function () {
-    return view('root.pages.kompetensi-prog');
-})->name('root.kompetensi-prog');
+Route::get('/kompetensi-prog', [HomeController::class, 'kompetensiIndex'])->name('root.kompetensi-prog');
 
 // FORMULIR PPDB
 Route::prefix('ppdb')->name('ppdb.')->group(function () {
