@@ -221,30 +221,24 @@ class LandingPageContentSeeder extends Seeder
                 'additional_content' => [
                     'points' => [
                         [
-                            'name' => 'Wisuda Angkatan ke-5 IDBC',
-                            'image_path' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
-                            'description' => 'Acara wisuda dengan tema "Menjadi Teknopreneur Berkarakter"
-                                diikuti
-                                oleh 120 lulusan terbaik',
-                            'category' => 'Acara Akademik',
-                            'link' => '#'
-                        ],
-                        [
-                            'name' => 'Seminar Ekonomi Islam',
-                            'image_path' => 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
-                            'description' => 'Diskusi tentang peluang bisnis syariah di era digital dengan
-                                praktisi
-                                ekonomi Islam terkemuka',
-                            'category' => 'Kegiatan Kampus',
-                            'link' => '#'
-                        ],
-                        [
-                            'name' => 'Kunjungan Industri Keuangan Syariah',
-                            'image_path' => 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
-                            'description' => 'Mahasiswa IDBC belajar langsung praktik bisnis syariah di
-                                perusahaan
-                                keuangan terkemuka',
+                            'name' => 'Aksi Bela Palestina',
+                            'image_path' => 'storage/images/news/palestina-1.png',
+                            'description' => 'Solo — Puluhan santri dari Islamic Digital Boarding College (IDBC) bersama komunitas ACA (Aksi Cinta Al-Aqsha) menggelar aksi damai bertajuk Bela Palestina di kawasan Tugu Yogyakarta. Aksi ini merupakan bentuk solidaritas atas penderitaan rakyat Palestina yang terus menjadi korban agresi militer.',
                             'category' => 'Kegiatan Mahasiswa',
+                            'link' => '#'
+                        ],
+                        [
+                            'name' => 'Aksi Berbagi Takjil pada Bulan Ramadhan',
+                            'image_path' => 'storage/images/news/ramadhan-1.png',
+                            'description' => 'Solo, Dalam semangat kepedulian dan berbagi di bulan suci, Islamic Digital Boarding College (IDBC) mengadakan aksi Berbagi Takjil kepada masyarakat sekitar kawasan Slamet Riyadi, Solo.',
+                            'category' => 'Kegiatan Mahasiswa',
+                            'link' => '#'
+                        ],
+                        [
+                            'name' => 'Seminar Affiliate Tiktok',
+                            'image_path' => 'storage/images/news/seminar-1.png',
+                            'description' => 'Solo, Untuk membekali santri dengan wawasan dunia digital, Islamic Digital Boarding College (IDBC) menyelenggarakan seminar bertajuk "Affiliate TikTok: Peluang Cuan di Era Digital" di Aula Utama IDBC.',
+                            'category' => 'Kegiatan Kampus',
                             'link' => '#'
                         ],
                     ]
@@ -282,22 +276,22 @@ class LandingPageContentSeeder extends Seeder
                         [
                             'name' => 'Kegiatan Belajar',
                             'description' => 'Sesi pembelajaran interaktif',
-                            'image_path' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'storage/images/aktivitas/foto-1.png',
                         ],
                         [
                             'name' => 'Laboratorium Komputer',
                             'description' => 'Fasilitas pembelajaran teknologi',
-                            'image_path' => 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1986&q=80',
+                            'image_path' => 'storage/images/aktivitas/foto-2.png',
                         ],
                         [
                             'name' => 'Perpustakaan Digital',
                             'description' => 'Akses literasi tanpa batas',
-                            'image_path' => 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'storage/images/aktivitas/foto-3.png',
                         ],
                         [
                             'name' => 'Diskusi Kelompok',
                             'description' => 'Kolaborasi dalam pembelajaran',
-                            'image_path' => 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
+                            'image_path' => 'storage/images/aktivitas/foto-4.png',
                         ],
                     ]
                 ],
