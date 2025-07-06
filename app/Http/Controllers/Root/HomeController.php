@@ -44,7 +44,6 @@ class HomeController extends Controller
         }
     }
 
-
     public function kurikulumIndex()
     {
         $data['fakultas'] = Fakultas::all();
@@ -54,7 +53,7 @@ class HomeController extends Controller
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Halaman Utama";
         $data['landingContent'] = SiteManage::where('is_active', true)
             ->orderBy('order')
@@ -73,7 +72,7 @@ class HomeController extends Controller
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Halaman Utama";
         $data['landingContent'] = SiteManage::where('is_active', true)
             ->orderBy('order')
@@ -92,7 +91,7 @@ class HomeController extends Controller
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Halaman Utama";
         $data['landingContent'] = SiteManage::where('is_active', true)
             ->orderBy('order')
@@ -111,7 +110,7 @@ class HomeController extends Controller
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Halaman Utama";
         $data['landingContent'] = SiteManage::where('is_active', true)
             ->orderBy('order')
@@ -130,7 +129,7 @@ class HomeController extends Controller
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Halaman Utama";
         $data['landingContent'] = SiteManage::where('is_active', true)
             ->orderBy('order')
@@ -149,7 +148,7 @@ class HomeController extends Controller
         // $data['album'] = GalleryAlbum::where('slug', $slug)->first();
         $data['albums'] = GalleryAlbum::latest()->paginate(24);
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Daftar Album Foto ";
         return view('root.pages.gallery-index', $data);
     }
@@ -163,7 +162,7 @@ class HomeController extends Controller
         $search = $request->input('search');
         $albums = GalleryAlbum::where('name', 'like', "%$search%")->paginate(24);
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Daftar Album Foto ";
         return view('root.pages.gallery-index', compact('albums'), $data);
     }
@@ -176,9 +175,23 @@ class HomeController extends Controller
         $data['album'] = GalleryAlbum::where('slug', $slug)->first();
         $data['albums'] = GalleryAlbum::latest()->paginate(7);
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Lihat Album " . $data['album']->name;
         return view('root.pages.gallery-view', $data);
+    }
+
+    public function newsIndex()
+    {
+        $data['fakultas'] = Fakultas::all();
+        $data['proku'] = ProgramKuliah::all();
+        $data['notify'] = Notification::whereIn('send_to', [0, 3])->get();
+        $data['web'] = WebSettings::where('id', 1)->first();
+        $data['posts'] = NewsPost::latest()->paginate(10);
+        $data['prefix'] = $this->setPrefix();
+        $data['title'] = " - IDBC";
+        $data['menu'] = "Semua Berita";
+
+        return view('root.pages.news-index', $data);
     }
 
     public function postView($slug)
@@ -190,7 +203,7 @@ class HomeController extends Controller
         $data['post'] = NewsPost::where('slug', $slug)->first();
         $data['posts'] = NewsPost::latest()->paginate(7);
         $data['prefix'] = $this->setPrefix();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Lihat Postingan " . $data['post']->name;
         return view('root.pages.news-view', $data);
     }
@@ -201,7 +214,7 @@ class HomeController extends Controller
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
         $data['web'] = WebSettings::where('id', 1)->first();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Download";
         $data['prefix'] = $this->setPrefix();
         $data['docs'] = DocsResource::orderBy('created_at', 'desc')->get();
@@ -213,7 +226,7 @@ class HomeController extends Controller
         $data['fakultas'] = Fakultas::all();
         $data['proku'] = ProgramKuliah::all();
         $data['web'] = WebSettings::where('id', 1)->first();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Kotak Saran";
         $data['prefix'] = $this->setPrefix();
         return view('root.pages.advice-index', $data);
@@ -224,7 +237,7 @@ class HomeController extends Controller
         $data['proku'] = ProgramKuliah::all();
         $data['web'] = WebSettings::where('id', 1)->first();
         $data['pstudi'] = ProgramStudi::where('slug', $slug)->first();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " - IDBC";
         $data['menu'] = "Program Studi " . $data['pstudi']->name;
         $data['prefix'] = $this->setPrefix();
         return view('root.pages.prodi-index', $data);
@@ -235,7 +248,7 @@ class HomeController extends Controller
         $data['proku'] = ProgramKuliah::all();
         $data['web'] = WebSettings::where('id', 1)->first();
         $data['pstudi'] = ProgramKuliah::where('code', $code)->first();
-        $data['title'] = " - ESEC Academy";
+        $data['title'] = " -IDBC";
         $data['menu'] = "Program Kuliah " . $data['pstudi']->name;
         $data['prefix'] = $this->setPrefix();
 
@@ -261,7 +274,7 @@ class HomeController extends Controller
                     'jaya.kusuma@internal-dev.id',
                     'mjaya69703@gmail.com'
                 ]);
-                $message->subject('[ SARAN ] - ESEC Academy - ' . $saran->subject);
+                $message->subject('[ SARAN ] - IDBC - ' . $saran->subject);
                 $message->from('admin@internal-dev.id', 'SIAKAD PT by Internal-Dev');
             });
 

@@ -11,10 +11,12 @@ Route::get('/advice', [HomeController::class, 'adviceIndex'])->name('root.home-a
 Route::post('/advice/store', [HomeController::class, 'adviceStore'])->name('root.home-advice-store');
 Route::get('/download', [HomeController::class, 'downloadIndex'])->name('root.home-download');
 Route::get('/album-foto', [HomeController::class, 'galleryIndex'])->name('root.gallery-index');
+Route::get('/berita', [HomeController::class, 'newsIndex'])->name('root.news-index');
 Route::get('/album-foto/search', [HomeController::class, 'gallerySearch'])->name('root.gallery-search');
 Route::get('/album-foto/show/{slug}', [HomeController::class, 'galleryShow'])->name('root.gallery-show');
 Route::get('/admission/{slug}', [HomeController::class, 'prodiIndex'])->name('root.home-prodi');
 Route::get('/program-kuliah/{code}', [HomeController::class, 'prokuIndex'])->name('root.home-proku');
+
 
 // KURIKULUM ROUTE
 Route::get('/kurikulum', [HomeController::class, 'kurikulumIndex'])->name('root.kurikulum-index');
