@@ -576,7 +576,6 @@
                         {{ $landingContent['news']->content }}
                     </p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach ($landingContent['news']->additional_content['points'] as $point)
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-scale">
@@ -588,18 +587,19 @@
                                 <span class="text-sm font-medium text-emerald-600">{{ $point['category'] }}</span>
                                 <h3 class="text-xl font-bold text-gray-800 mt-3 mb-3">{{ $point['name'] }}</h3>
                                 <p class="text-gray-600 mb-4">{{ $point['description'] }}</p>
-                                <a href="{{ $point['link'] }}"
+                                <a href="{{ route('root.news-index') }}"
                                     class="text-emerald-600 font-semibold hover:text-emerald-700 inline-flex items-center transition-all duration-300 hover:translate-x-1">
                                     Baca Selengkapnya
                                     <i class="fas fa-arrow-right ml-2 text-sm"></i>
                                 </a>
+
                             </div>
                         </div>
                     @endforeach
                 </div>
 
                 <div class="text-center mt-12">
-                    <a href="#"
+                    <a href="{{ route('root.news-index') }}"
                         class="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:scale-105">
                         Lihat Semua Berita
                         <i class="fas fa-arrow-right ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
@@ -673,7 +673,7 @@
                 </div>
 
                 <div class="text-center mt-12">
-                    <a href="#"
+                   <a href="{{ route('root.gallery-index') }}"
                         class="inline-flex items-center bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-full font-semibold shadow-sm transition-all duration-300 hover:scale-105">
                         Lihat Galeri Lengkap
                         <i class="fas fa-images ml-2 transition-all duration-300 group-hover:translate-x-1"></i>
